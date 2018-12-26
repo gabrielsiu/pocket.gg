@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6ABB43E9C7F2FB8424AA3063 /* Pods_pocket_gg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */; };
+		DA827FB821D330F70071769F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA827FB721D330F60071769F /* API.swift */; };
 		DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */; };
 		DAB09AAC21C56E7C00C413D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB09AAB21C56E7C00C413D8 /* ViewController.swift */; };
 		DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AAD21C56E7C00C413D8 /* Main.storyboard */; };
@@ -15,6 +17,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_gg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.debug.xcconfig"; sourceTree = "<group>"; };
+		C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.release.xcconfig"; sourceTree = "<group>"; };
+		DA827FB721D330F60071769F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAB09AA621C56E7C00C413D8 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB09AAB21C56E7C00C413D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6ABB43E9C7F2FB8424AA3063 /* Pods_pocket_gg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		200FB7755A24026D0316515C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */,
+				C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5FAB25028B63698C6AEE8D44 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DAB09A9D21C56E7C00C413D8 = {
 			isa = PBXGroup;
 			children = (
 				DAB09AA821C56E7C00C413D8 /* pocket.gg */,
 				DAB09AA721C56E7C00C413D8 /* Products */,
+				200FB7755A24026D0316515C /* Pods */,
+				5FAB25028B63698C6AEE8D44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +80,7 @@
 		DAB09AA821C56E7C00C413D8 /* pocket.gg */ = {
 			isa = PBXGroup;
 			children = (
+				DA827FB721D330F60071769F /* API.swift */,
 				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
 				DAB09AAB21C56E7C00C413D8 /* ViewController.swift */,
 				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
@@ -71,9 +98,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DAB09AB821C56E7E00C413D8 /* Build configuration list for PBXNativeTarget "pocket.gg" */;
 			buildPhases = (
+				113701A9CBFD9924FEF9F9CF /* [CP] Check Pods Manifest.lock */,
+				DA827FB621D32FB80071769F /* Generate Apollo GraphQL API */,
 				DAB09AA221C56E7C00C413D8 /* Sources */,
 				DAB09AA321C56E7C00C413D8 /* Frameworks */,
 				DAB09AA421C56E7C00C413D8 /* Resources */,
+				61A3B7E87FCF3D1EECA22E6D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -130,12 +160,74 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		113701A9CBFD9924FEF9F9CF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-pocket.gg-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		61A3B7E87FCF3D1EECA22E6D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA827FB621D32FB80071769F /* Generate Apollo GraphQL API */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Apollo GraphQL API";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DAB09AA221C56E7C00C413D8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				DAB09AAC21C56E7C00C413D8 /* ViewController.swift in Sources */,
+				DA827FB821D330F70071769F /* API.swift in Sources */,
 				DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +372,7 @@
 		};
 		DAB09AB921C56E7E00C413D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +391,7 @@
 		};
 		DAB09ABA21C56E7E00C413D8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

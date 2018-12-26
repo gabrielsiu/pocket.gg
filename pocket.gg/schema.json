@@ -1,0 +1,45 @@
+type Query {
+	# Returns an event given its id or slug
+	#
+	# Arguments
+	# id: [Not documented]
+	# slug: [Not documented]
+	event(id: Int, slug: String): Event
+	# Returns a league given its id or slug
+	#
+	# Arguments
+	# id: [Not documented]
+	# slug: [Not documented]
+	league(id: Int, slug: String): League
+	# Returns a phase given its id
+	#
+	# Arguments
+	# id: [Not documented]
+	phase(id: Int): Phase
+	# Returns a phase group given its id
+	#
+	# Arguments
+	# id: [Not documented]
+	phaseGroup(id: Int): PhaseGroup
+	# Returns a player given an id
+	#
+	# Arguments
+	# id: [Not documented]
+	player(id: Int!): Player
+	# Returns a set given its id
+	#
+	# Arguments
+	# id: [Not documented]
+	set(id: String!): Set
+	# Returns a tournament given its id or slug
+	#
+	# Arguments
+	# id: [Not documented]
+	# slug: [Not documented]
+	tournament(id: Int, slug: String): Tournament
+	# Paginated, filterable list of tournaments
+	#
+	# Arguments
+	# query: [Not documented]
+	tournaments(query: TournamentQuery!): TournamentConnection
+}
