@@ -8,9 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		6ABB43E9C7F2FB8424AA3063 /* Pods_pocket_gg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */; };
+		DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB321D33CA200A72697 /* TournamentCell.swift */; };
+		DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */; };
+		DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB921D3D94B00A72697 /* Constants.swift */; };
+		DA76BDBE21D3EBB000A72697 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDBC21D3EBB000A72697 /* SWRevealViewController.m */; };
+		DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDBF21D3F8CE00A72697 /* MainVC.swift */; };
+		DA76BDC221D3F92A00A72697 /* QuickFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDC121D3F92A00A72697 /* QuickFilterVC.swift */; };
 		DA827FB821D330F70071769F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA827FB721D330F60071769F /* API.swift */; };
 		DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */; };
-		DAB09AAC21C56E7C00C413D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB09AAB21C56E7C00C413D8 /* ViewController.swift */; };
 		DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AAD21C56E7C00C413D8 /* Main.storyboard */; };
 		DAB09AB121C56E7E00C413D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB021C56E7E00C413D8 /* Assets.xcassets */; };
 		DAB09AB421C56E7E00C413D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */; };
@@ -20,10 +25,17 @@
 		53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_gg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.debug.xcconfig"; sourceTree = "<group>"; };
 		C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.release.xcconfig"; sourceTree = "<group>"; };
+		DA76BDB321D33CA200A72697 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
+		DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDataService.swift; sourceTree = "<group>"; };
+		DA76BDB921D3D94B00A72697 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA76BDBB21D3EBAE00A72697 /* pocket.gg-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pocket.gg-Bridging-Header.h"; sourceTree = "<group>"; };
+		DA76BDBC21D3EBB000A72697 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		DA76BDBD21D3EBB000A72697 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		DA76BDBF21D3F8CE00A72697 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		DA76BDC121D3F92A00A72697 /* QuickFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickFilterVC.swift; sourceTree = "<group>"; };
 		DA827FB721D330F60071769F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAB09AA621C56E7C00C413D8 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DAB09AAB21C56E7C00C413D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DAB09AAE21C56E7C00C413D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAB09AB021C56E7E00C413D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAB09AB321C56E7E00C413D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +71,56 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DA76BDAD21D332B800A72697 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DA76BDB921D3D94B00A72697 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DA76BDB021D3330400A72697 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DA76BDBF21D3F8CE00A72697 /* MainVC.swift */,
+				DA76BDC121D3F92A00A72697 /* QuickFilterVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		DA76BDB121D3330E00A72697 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA76BDB321D33CA200A72697 /* TournamentCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DA76BDB221D3331200A72697 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DA76BDB521D33EFB00A72697 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DA76BDBD21D3EBB000A72697 /* SWRevealViewController.h */,
+				DA76BDBC21D3EBB000A72697 /* SWRevealViewController.m */,
+				DA76BDBB21D3EBAE00A72697 /* pocket.gg-Bridging-Header.h */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DA76BDB821D3D93C00A72697 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		DAB09A9D21C56E7C00C413D8 = {
 			isa = PBXGroup;
 			children = (
@@ -80,9 +142,14 @@
 		DAB09AA821C56E7C00C413D8 /* pocket.gg */ = {
 			isa = PBXGroup;
 			children = (
+				DA76BDB821D3D93C00A72697 /* Services */,
+				DA76BDAD21D332B800A72697 /* Utilities */,
+				DA76BDB221D3331200A72697 /* Model */,
+				DA76BDB121D3330E00A72697 /* View */,
+				DA76BDB021D3330400A72697 /* Controller */,
+				DA76BDB521D33EFB00A72697 /* Supporting Files */,
 				DA827FB721D330F60071769F /* API.swift */,
 				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
-				DAB09AAB21C56E7C00C413D8 /* ViewController.swift */,
 				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
 				DAB09AB021C56E7E00C413D8 /* Assets.xcassets */,
 				DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */,
@@ -126,6 +193,7 @@
 				TargetAttributes = {
 					DAB09AA521C56E7C00C413D8 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -226,7 +294,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAB09AAC21C56E7C00C413D8 /* ViewController.swift in Sources */,
+				DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */,
+				DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */,
+				DA76BDC221D3F92A00A72697 /* QuickFilterVC.swift in Sources */,
+				DA76BDBE21D3EBB000A72697 /* SWRevealViewController.m in Sources */,
+				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
+				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
 				DA827FB821D330F70071769F /* API.swift in Sources */,
 				DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */,
 			);
@@ -375,6 +448,7 @@
 			baseConfigurationReference = 7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5HY9QQ8RU;
 				INFOPLIST_FILE = pocket.gg/Info.plist;
@@ -384,6 +458,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "pocket.gg/Supporting Files/pocket.gg-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -394,6 +470,7 @@
 			baseConfigurationReference = C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5HY9QQ8RU;
 				INFOPLIST_FILE = pocket.gg/Info.plist;
@@ -403,6 +480,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "pocket.gg/Supporting Files/pocket.gg-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -7,6 +7,16 @@
 //
 
 import UIKit
+import Apollo
+
+let apollo: ApolloClient = {
+    let configuration = URLSessionConfiguration.default
+    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(AUTH_TOKEN)"]
+    
+    let url = URL(string: ENDPOINT)!
+    
+    return ApolloClient(networkTransport: HTTPNetworkTransport(url: url, configuration: configuration))
+}()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
