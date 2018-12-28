@@ -12,6 +12,8 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 
 let ENDPOINT = "https://api.smash.gg/gql/alpha"
 
+
+
 let allGames = [
     1: "Melee",
     2: "PM",
@@ -19,4 +21,8 @@ let allGames = [
     4: "Super Smash Bros.",
     5: "Brawl",
     6: "Other"
+]
+
+let BEARER_HEADER = [
+    "Authorization": "Bearer \(AUTH_TOKEN)"
 ]
