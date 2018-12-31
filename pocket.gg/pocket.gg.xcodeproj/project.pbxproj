@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6ABB43E9C7F2FB8424AA3063 /* Pods_pocket_gg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */; };
+		DA3B322B21D6DBD6007CCA33 /* TournamentDataService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */; };
+		DA3B323121D893B0007CCA33 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B323021D893B0007CCA33 /* API.swift */; };
+		DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B323421D8A522007CCA33 /* Tournament.swift */; };
 		DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB321D33CA200A72697 /* TournamentCell.swift */; };
 		DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */; };
 		DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB921D3D94B00A72697 /* Constants.swift */; };
@@ -19,12 +22,16 @@
 		DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AAD21C56E7C00C413D8 /* Main.storyboard */; };
 		DAB09AB121C56E7E00C413D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB021C56E7E00C413D8 /* Assets.xcassets */; };
 		DAB09AB421C56E7E00C413D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */; };
+		DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381121D9615200C0FCB3 /* DefaultsService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_gg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.debug.xcconfig"; sourceTree = "<group>"; };
 		C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.release.xcconfig"; sourceTree = "<group>"; };
+		DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TournamentDataService.graphql; sourceTree = "<group>"; };
+		DA3B323021D893B0007CCA33 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DA3B323421D8A522007CCA33 /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		DA76BDB321D33CA200A72697 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDataService.swift; sourceTree = "<group>"; };
 		DA76BDB921D3D94B00A72697 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -40,6 +47,7 @@
 		DAB09AB021C56E7E00C413D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAB09AB321C56E7E00C413D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB09AB521C56E7E00C413D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAFE381121D9615200C0FCB3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +82,7 @@
 		DA64819E21D5753200BE17C3 /* GraphQL Files */ = {
 			isa = PBXGroup;
 			children = (
+				DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */,
 			);
 			path = "GraphQL Files";
 			sourceTree = "<group>";
@@ -107,6 +116,7 @@
 		DA76BDB221D3331200A72697 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DA3B323421D8A522007CCA33 /* Tournament.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -125,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */,
+				DAFE381121D9615200C0FCB3 /* DefaultsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -157,6 +168,7 @@
 				DA76BDB121D3330E00A72697 /* View */,
 				DA76BDB021D3330400A72697 /* Controller */,
 				DA76BDB521D33EFB00A72697 /* Supporting Files */,
+				DA3B323021D893B0007CCA33 /* API.swift */,
 				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
 				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
 				DAB09AB021C56E7E00C413D8 /* Assets.xcassets */,
@@ -230,6 +242,7 @@
 			files = (
 				DAB09AB421C56E7E00C413D8 /* LaunchScreen.storyboard in Resources */,
 				DAB09AB121C56E7E00C413D8 /* Assets.xcassets in Resources */,
+				DA3B322B21D6DBD6007CCA33 /* TournamentDataService.graphql in Resources */,
 				DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,9 +319,12 @@
 				DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */,
 				DA76BDC221D3F92A00A72697 /* QuickFilterVC.swift in Sources */,
 				DA76BDBE21D3EBB000A72697 /* SWRevealViewController.m in Sources */,
+				DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */,
 				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
+				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
 				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
 				DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */,
+				DA3B323121D893B0007CCA33 /* API.swift in Sources */,
 				DA76BDC421D4A0AF00A72697 /* AuthToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

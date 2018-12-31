@@ -49,26 +49,27 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G3x-J7-f8x">
-                                                    <rect key="frame" x="15" y="17.5" width="80" height="80"/>
+                                                    <rect key="frame" x="15" y="21" width="80" height="80"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="V2X-BP-dUa"/>
                                                         <constraint firstAttribute="width" secondItem="G3x-J7-f8x" secondAttribute="height" multiplier="1:1" id="h1f-j0-1Qe"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GENESIS 6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jfW-Tm-jBu">
-                                                    <rect key="frame" x="111" y="17.5" width="85" height="24"/>
+                                                    <rect key="frame" x="111" y="21" width="85" height="24"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Melee, Super Smash Bros. Ultimate, Rivals of Aether" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aai-ST-73V">
-                                                    <rect key="frame" x="111" y="46.5" width="264" height="38.5"/>
+                                                    <rect key="frame" x="111" y="50" width="264" height="38.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="February 1st-3rd 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxk-ws-Mt3">
-                                                    <rect key="frame" x="111" y="90" width="132" height="18"/>
+                                                    <rect key="frame" x="111" y="93.5" width="132" height="18"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -79,7 +80,9 @@
                                                 <constraint firstItem="jfW-Tm-jBu" firstAttribute="leading" secondItem="G3x-J7-f8x" secondAttribute="trailing" constant="16" id="DmR-2q-zsB"/>
                                                 <constraint firstItem="aai-ST-73V" firstAttribute="top" secondItem="jfW-Tm-jBu" secondAttribute="bottom" constant="5" id="Fwl-a4-XLs"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="leading" secondItem="zh6-Ik-rA5" secondAttribute="leadingMargin" id="K6j-jv-vkh"/>
+                                                <constraint firstAttribute="bottom" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="10" id="MhU-sy-bqu"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="centerY" secondItem="zh6-Ik-rA5" secondAttribute="centerY" id="TDP-XC-cjA"/>
+                                                <constraint firstItem="G3x-J7-f8x" firstAttribute="top" secondItem="zh6-Ik-rA5" secondAttribute="topMargin" constant="10" id="chZ-Tg-OVd"/>
                                                 <constraint firstItem="jfW-Tm-jBu" firstAttribute="top" secondItem="G3x-J7-f8x" secondAttribute="top" id="er1-bo-7Bq"/>
                                                 <constraint firstAttribute="trailing" secondItem="aai-ST-73V" secondAttribute="trailing" id="i2C-yB-CMs"/>
                                                 <constraint firstItem="xxk-ws-Mt3" firstAttribute="leading" secondItem="aai-ST-73V" secondAttribute="leading" id="kij-cw-rpL"/>
@@ -89,12 +92,40 @@
                                         <connections>
                                             <outlet property="tournamentDate" destination="xxk-ws-Mt3" id="kjf-9k-54E"/>
                                             <outlet property="tournamentGames" destination="aai-ST-73V" id="g1I-1H-mEI"/>
-                                            <outlet property="tournamentImage" destination="G3x-J7-f8x" id="Q0w-Do-Eu4"/>
+                                            <outlet property="tournamentImage" destination="G3x-J7-f8x" id="Usz-Db-kyO"/>
                                             <outlet property="tournamentName" destination="jfW-Tm-jBu" id="mvm-4F-SOW"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p6h-fx-al0">
+                                <rect key="frame" x="60" y="86" width="122" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="boc-iw-rZC">
+                                        <rect key="frame" x="4" y="23" width="45" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                        <state key="normal" title="getList">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="testBtnPressed:" destination="Klh-79-pdb" eventType="touchUpInside" id="EhC-og-Uvv"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dT-za-Mce">
+                                        <rect key="frame" x="57" y="32" width="43" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.25882352939999997" green="0.3294117647" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="reload"/>
+                                        <connections>
+                                            <action selector="reloadBtnPressed:" destination="Klh-79-pdb" eventType="touchUpInside" id="mNz-q6-8ab"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.022732125530000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -116,6 +147,7 @@
                     <connections>
                         <outlet property="menuBtn" destination="y38-ws-QTL" id="Nke-lW-zy9"/>
                         <outlet property="optionsBtn" destination="i75-O9-kK2" id="70u-RF-lmE"/>
+                        <outlet property="tableView" destination="3C4-qq-wt0" id="TL3-Sy-8qI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pk9-Zs-p0q" userLabel="First Responder" sceneMemberID="firstResponder"/>

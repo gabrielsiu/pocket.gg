@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
 
 class TournamentCell: UITableViewCell {
     
@@ -22,11 +24,22 @@ class TournamentCell: UITableViewCell {
         // Initialization code
     }
     
-    func updateView(tournamentImage: UIImage, tournamentTitle: String, tournamentGames: String, tournamentDate: String) {
-        self.tournamentImage.image = tournamentImage
-        self.tournamentName.text = tournamentTitle
-        self.tournamentGames.text = tournamentGames
-        self.tournamentDate.text = tournamentDate
+    func updateView(tournament: Tournament) {
+        self.tournamentName.text = tournament.name
+        self.tournamentGames.text = tournament.games
+        self.tournamentDate.text = tournament.date
+        //self.tournamentImage.image = tournament.image
+    }
+    
+    func updateTournamentPicture(imageUrl: String) {
+        Alamofire.request(imageUrl).responseImage { (response) in
+            if response.result.error == nil {
+                self.tournamentImage.image = response.result.value
+            }
+            else {
+                debugPrint("Error updating the tournament picture")
+            }
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

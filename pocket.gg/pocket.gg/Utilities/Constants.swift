@@ -13,7 +13,7 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 let ENDPOINT = "https://api.smash.gg/gql/alpha"
 
 
-
+//Look up faster way of looking up game IDs (hash table maybe?)
 let allGames = [
     1: "Melee",
     2: "PM",

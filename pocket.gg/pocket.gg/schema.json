@@ -406,7 +406,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -478,7 +478,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -646,7 +646,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1035,7 +1035,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1394,7 +1394,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1418,7 +1418,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1514,7 +1514,7 @@
         },
         {
           "kind": "SCALAR",
-          "name": "Timestamp",
+          "name": "Int",
           "description": "Represents a Unix Timestamp. Supports up to 53 bit int values,\n\t\tas that is JavaScript's internal memory allocation for integer values.",
           "fields": null,
           "inputFields": null,
@@ -1719,7 +1719,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1898,7 +1898,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1982,7 +1982,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -3041,7 +3041,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -3305,7 +3305,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -3960,7 +3960,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4212,7 +4212,7 @@
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4456,7 +4456,7 @@
               "description": null,
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "defaultValue": null
@@ -4466,7 +4466,7 @@
               "description": null,
               "type": {
                 "kind": "SCALAR",
-                "name": "Timestamp",
+                "name": "Int",
                 "ofType": null
               },
               "defaultValue": null
