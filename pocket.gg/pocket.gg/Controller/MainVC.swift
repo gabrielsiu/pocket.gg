@@ -33,8 +33,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         menuBtn.target = self.revealViewController()
         menuBtn.action = #selector(SWRevealViewController.revealToggle(_:))
-        menuBtn.image = UIImage(named: "options.png")
-        optionsBtn.image = UIImage(named: "gear.png")
+        menuBtn.image = UIImage(named: "menu.png")
+        optionsBtn.image = UIImage(named: "settings.png")
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
  
@@ -53,7 +53,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func testBtnPressed(_ sender: Any) {
-        TournamentDataService.instance.getTournamentList(perPage: 3, videogameIds: [1], featured: true) { (success) in
+        TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
             if success {
                 print("tournament list gotten successfully")
             } else {
@@ -62,8 +62,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    @IBAction func optionsBtnPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "toSettingsVC", sender: nil)
+    }
+    
+    
     func getListOfTournaments() {
-        TournamentDataService.instance.getTournamentList(perPage: 3, videogameIds: [1], featured: true) { (success) in
+        TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1/*CHANGE FOR INFINITE SCROLLING*/, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
             if success {
                 print("should be reloading data....")
                 self.tableView.reloadData()
@@ -88,6 +93,14 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             return UITableViewCell()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destNavController = segue.destination as! UINavigationController
+        let targetVC = destNavController.topViewController
+        if let settingsVC = targetVC as? SettingsVC {
+            print("hi")
         }
     }
 }

@@ -22,10 +22,9 @@ class TournamentDataService {
     private var imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
     
     
-    func getTournamentList(perPage: Int, videogameIds: [Int], featured: Bool, completion: @escaping CompletionHandler) {
-        resetTournamentInfo()
+    func getTournamentList(perPage: Int, pageNum: Int, videogameIds: [Int], filters: [String: Bool], completion: @escaping CompletionHandler) {
         
-        apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: perPage, videogameIds: videogameIds, featured: featured)) { (result, error) in
+        apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: perPage, pageNum: pageNum, videogameIds: videogameIds, featured: filters["featured"], upcoming: filters["upcoming"])) { (result, error) in
             //Initial error check
             if error != nil {
                 debugPrint("Error while fetching tournament data from smash.gg")
@@ -74,14 +73,19 @@ class TournamentDataService {
                     debugPrint("Error while fetching images for the tournament")
                     return
                 }
+                
+                var lowestRatio = 10.0
                 for element in images {
-                    if element?.ratio == 1.0 {
+                    let ratio = element?.ratio ?? 10.0
+                    if ratio < lowestRatio {
+                        lowestRatio = ratio
                         self.imageUrl = element?.url ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
                     }
                 }
 
                 let tournament = Tournament(name: name, games: self.gamesString, date: self.dateString, imageName: self.imageUrl)
                 self.tournaments.append(tournament)
+                self.resetTournamentInfo()
             }
             completion(true)
         }

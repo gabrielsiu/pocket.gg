@@ -4,27 +4,31 @@ import Apollo
 
 public final class UpcomingTournamentsByVideogamesQuery: GraphQLQuery {
   public let operationDefinition =
-    "query UpcomingTournamentsByVideogames($perPage: Int, $videogameIds: [Int], $featured: Boolean) {\n  tournaments(query: {perPage: $perPage, page: 1, sortBy: \"startAt asc\", filter: {upcoming: true, videogameIds: $videogameIds, isFeatured: $featured}}) {\n    __typename\n    nodes {\n      __typename\n      name\n      startAt\n      endAt\n      images {\n        __typename\n        url\n        ratio\n      }\n      events {\n        __typename\n        videogameId\n      }\n    }\n  }\n}"
+    "query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [Int], $featured: Boolean, $upcoming: Boolean) {\n  tournaments(query: {perPage: $perPage, page: $pageNum, sortBy: \"startAt asc\", filter: {upcoming: $upcoming, videogameIds: $videogameIds, isFeatured: $featured}}) {\n    __typename\n    nodes {\n      __typename\n      name\n      startAt\n      endAt\n      images {\n        __typename\n        url\n        ratio\n      }\n      events {\n        __typename\n        videogameId\n      }\n    }\n  }\n}"
 
   public var perPage: Int?
+  public var pageNum: Int?
   public var videogameIds: [Int?]?
   public var featured: Bool?
+  public var upcoming: Bool?
 
-  public init(perPage: Int? = nil, videogameIds: [Int?]? = nil, featured: Bool? = nil) {
+  public init(perPage: Int? = nil, pageNum: Int? = nil, videogameIds: [Int?]? = nil, featured: Bool? = nil, upcoming: Bool? = nil) {
     self.perPage = perPage
+    self.pageNum = pageNum
     self.videogameIds = videogameIds
     self.featured = featured
+    self.upcoming = upcoming
   }
 
   public var variables: GraphQLMap? {
-    return ["perPage": perPage, "videogameIds": videogameIds, "featured": featured]
+    return ["perPage": perPage, "pageNum": pageNum, "videogameIds": videogameIds, "featured": featured, "upcoming": upcoming]
   }
 
   public struct Data: GraphQLSelectionSet {
     public static let possibleTypes = ["Query"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("tournaments", arguments: ["query": ["perPage": GraphQLVariable("perPage"), "page": 1, "sortBy": "startAt asc", "filter": ["upcoming": true, "videogameIds": GraphQLVariable("videogameIds"), "isFeatured": GraphQLVariable("featured")]]], type: .object(Tournament.selections)),
+      GraphQLField("tournaments", arguments: ["query": ["perPage": GraphQLVariable("perPage"), "page": GraphQLVariable("pageNum"), "sortBy": "startAt asc", "filter": ["upcoming": GraphQLVariable("upcoming"), "videogameIds": GraphQLVariable("videogameIds"), "isFeatured": GraphQLVariable("featured")]]], type: .object(Tournament.selections)),
     ]
 
     public private(set) var resultMap: ResultMap

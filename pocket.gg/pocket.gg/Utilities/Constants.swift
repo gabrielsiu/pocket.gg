@@ -12,7 +12,6 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 
 let ENDPOINT = "https://api.smash.gg/gql/alpha"
 
-
 //Look up faster way of looking up game IDs (hash table maybe?)
 let allGames = [
     1: "Melee",
@@ -22,6 +21,11 @@ let allGames = [
     5: "Brawl",
     6: "Other"
 ]
+
+//User Defaults
+let PER_PAGE_KEY = "tournamentsPerPage"
+let GAMES_KEY = "preferredGames"
+let FILTERS_KEY = "preferredFilters"
 
 let BEARER_HEADER = [
     "Authorization": "Bearer \(AUTH_TOKEN)"

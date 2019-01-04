@@ -1,10 +1,10 @@
-query UpcomingTournamentsByVideogames($perPage: Int, $videogameIds: [Int], $featured: Boolean) {
+query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [Int], $featured: Boolean, $upcoming: Boolean) {
     tournaments(query: {
                 perPage: $perPage
-                page: 1
+                page: $pageNum
                 sortBy: "startAt asc"
                 filter: {
-                upcoming: true
+                upcoming: $upcoming
                 videogameIds: $videogameIds
                 isFeatured: $featured
                 }
