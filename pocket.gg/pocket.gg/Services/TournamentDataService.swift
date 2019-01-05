@@ -53,12 +53,12 @@ class TournamentDataService {
                     self.unsortedArray.append(element?.videogameId ?? 0)
                 }
                 let gamesArray = Array(Set(self.unsortedArray)).sorted()
-                //Later, get the actual list of video games instead of just their IDs
+
                 for (index, element) in gamesArray.enumerated() {
                     if index != (gamesArray.count - 1) {
-                        self.gamesString.append("\(element), ")
+                        self.gamesString.append("\(gamesDict[element] ?? "Invalid video game"), ")
                     } else {
-                        self.gamesString.append("\(element)")
+                        self.gamesString.append("\(gamesDict[element] ?? "Invalid video game")")
                     }
                 }
                 

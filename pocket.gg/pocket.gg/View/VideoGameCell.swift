@@ -9,6 +9,12 @@
 import UIKit
 
 class VideoGameCell: UITableViewCell {
+    
+    //Outlets
+    @IBOutlet weak var videoGameName: UILabel!
+    @IBOutlet weak var videoGameSwitch: UISwitch!
+    
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -44,7 +44,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tournamentCell" rowHeight="150" id="Epv-jZ-ChT" customClass="TournamentCell" customModule="pocket_gg" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epv-jZ-ChT" id="zh6-Ik-rA5">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epv-jZ-ChT" id="zh6-Ik-rA5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -82,7 +82,7 @@
                                                 <constraint firstItem="aai-ST-73V" firstAttribute="top" secondItem="jfW-Tm-jBu" secondAttribute="bottom" constant="5" id="Fwl-a4-XLs"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="leading" secondItem="zh6-Ik-rA5" secondAttribute="leadingMargin" id="K6j-jv-vkh"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xxk-ws-Mt3" secondAttribute="trailing" constant="8" id="LvM-Ob-B6k"/>
-                                                <constraint firstAttribute="bottom" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="10" id="MhU-sy-bqu"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="3" id="MhU-sy-bqu"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="centerY" secondItem="zh6-Ik-rA5" secondAttribute="centerY" id="TDP-XC-cjA"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="top" secondItem="zh6-Ik-rA5" secondAttribute="topMargin" constant="10" id="chZ-Tg-OVd"/>
                                                 <constraint firstItem="jfW-Tm-jBu" firstAttribute="top" secondItem="G3x-J7-f8x" secondAttribute="top" id="er1-bo-7Bq"/>
@@ -322,7 +322,7 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="videoGameCell" rowHeight="50" id="VHK-C0-wif">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="videoGameCell" rowHeight="50" id="VHK-C0-wif" customClass="VideoGameCell" customModule="pocket_gg" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VHK-C0-wif" id="INg-W7-8k1">
@@ -347,6 +347,10 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="aXg-k2-pkZ" secondAttribute="trailing" id="hsu-wl-5uz"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="videoGameName" destination="hR2-kS-53t" id="n3B-AW-LSG"/>
+                                            <outlet property="videoGameSwitch" destination="aXg-k2-pkZ" id="ttN-k5-8j5"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

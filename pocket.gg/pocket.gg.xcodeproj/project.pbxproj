@@ -24,6 +24,7 @@
 		DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A25D21DD924C00185801 /* SettingsVC.swift */; };
 		DAD5A26021DF176F00185801 /* GameSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A25F21DF176F00185801 /* GameSelectionVC.swift */; };
 		DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26321DF1D9800185801 /* VideoGameCell.swift */; };
+		DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26521E05D3600185801 /* VideoGames.swift */; };
 		DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381121D9615200C0FCB3 /* DefaultsService.swift */; };
 		DAFE381421D9CC1E00C0FCB3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381321D9CC1E00C0FCB3 /* API.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		DAD5A25D21DD924C00185801 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		DAD5A25F21DF176F00185801 /* GameSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionVC.swift; sourceTree = SOURCE_ROOT; };
 		DAD5A26321DF1D9800185801 /* VideoGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameCell.swift; sourceTree = "<group>"; };
+		DAD5A26521E05D3600185801 /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
 		DAFE381121D9615200C0FCB3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
 		DAFE381321D9CC1E00C0FCB3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +100,7 @@
 			children = (
 				DA76BDB921D3D94B00A72697 /* Constants.swift */,
 				DA76BDC321D4A0AF00A72697 /* AuthToken.swift */,
+				DAD5A26521E05D3600185801 /* VideoGames.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */,
 				DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */,
 				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
+				DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */,
 				DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */,
 				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
 				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,

@@ -12,15 +12,6 @@ typealias CompletionHandler = (_ Success: Bool) -> ()
 
 let ENDPOINT = "https://api.smash.gg/gql/alpha"
 
-//Look up faster way of looking up game IDs (hash table maybe?)
-let allGames = [
-    1: "Melee",
-    2: "PM",
-    3: "Super Smash Bros. for Wii U",
-    4: "Super Smash Bros.",
-    5: "Brawl",
-    6: "Other"
-]
 
 //User Defaults
 let PER_PAGE_KEY = "tournamentsPerPage"
