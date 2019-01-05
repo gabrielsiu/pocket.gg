@@ -28,7 +28,6 @@ class TournamentCell: UITableViewCell {
         self.tournamentName.text = tournament.name
         self.tournamentGames.text = tournament.games
         self.tournamentDate.text = tournament.date
-        //self.tournamentImage.image = tournament.image
     }
     
     func updateTournamentPicture(imageUrl: String) {

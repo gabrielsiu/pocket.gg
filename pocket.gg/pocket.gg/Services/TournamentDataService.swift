@@ -56,9 +56,9 @@ class TournamentDataService {
 
                 for (index, element) in gamesArray.enumerated() {
                     if index != (gamesArray.count - 1) {
-                        self.gamesString.append("\(gamesDict[element] ?? "Invalid video game"), ")
+                        self.gamesString.append("\(gamesDict[element] ?? "Invalid video game ID"), ")
                     } else {
-                        self.gamesString.append("\(gamesDict[element] ?? "Invalid video game")")
+                        self.gamesString.append("\(gamesDict[element] ?? "Invalid video game ID")")
                     }
                 }
                 

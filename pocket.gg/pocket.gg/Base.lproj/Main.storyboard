@@ -329,8 +329,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Super Smash Bros. Melee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hR2-kS-53t">
-                                                    <rect key="frame" x="15" y="14.5" width="196.5" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Super Smash Bros. Melee" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hR2-kS-53t">
+                                                    <rect key="frame" x="15" y="14.5" width="196.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -344,7 +344,7 @@
                                                 <constraint firstItem="aXg-k2-pkZ" firstAttribute="centerY" secondItem="INg-W7-8k1" secondAttribute="centerY" id="AQq-np-Xre"/>
                                                 <constraint firstItem="aXg-k2-pkZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hR2-kS-53t" secondAttribute="trailing" constant="8" id="E1O-7S-r0q"/>
                                                 <constraint firstItem="hR2-kS-53t" firstAttribute="centerY" secondItem="INg-W7-8k1" secondAttribute="centerY" id="Vjw-RU-A80"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="aXg-k2-pkZ" secondAttribute="trailing" id="hsu-wl-5uz"/>
+                                                <constraint firstItem="aXg-k2-pkZ" firstAttribute="trailing" secondItem="INg-W7-8k1" secondAttribute="trailingMargin" id="ann-cr-lWb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -367,6 +367,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AGR-I9-5bn"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="a8D-zh-oHC" id="ZVz-8k-yRn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zN0-Yv-ehQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

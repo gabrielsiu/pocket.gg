@@ -8,15 +8,49 @@
 
 import UIKit
 
-class GameSelectionVC: UIViewController {
+class GameSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.navigationItem.title = "Video Game Selection"
-        // Do any additional setup after loading the view.
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
+    
+    //Table View Methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return gamesDict.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "videoGameCell", for: indexPath) as? VideoGameCell {
+
+            //gameKey will iterate over every single video game as the table view loads
+            let gameKey = gameIdArray[indexPath.row]
+            //'status' records whether the user selected a particular video game or not
+            var status = false
+            
+            //See if the current game in gameKey is any one of the user's preferred games; if it is, then the switch will be enabled when it's cell is dequeued
+            for element in DefaultsService.instance.preferredGames {
+                if element == gameKey {
+                    status = true
+                    break
+                }
+            }
+            
+            let videoGame = VideoGame(name: gamesDict[gameIdArray[indexPath.row]] ?? "INVALID VIDEO GAME", enabled: status)
+            cell.updateView(videoGame: videoGame)
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
 
     /*
     // MARK: - Navigation
