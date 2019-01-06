@@ -192,6 +192,9 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YyT-BI-uSX">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="featuredToggled:" destination="QEc-8x-SjM" eventType="valueChanged" id="Lvk-oE-yIx"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Featured" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGs-1d-7bx">
                                                     <rect key="frame" x="16" y="11.5" width="68.5" height="21"/>
@@ -218,6 +221,9 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nqT-66-AgF">
                                                     <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="upcomingToggled:" destination="QEc-8x-SjM" eventType="valueChanged" id="yxJ-Ys-jg3"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcoming" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7j-cY-AzJ">
                                                     <rect key="frame" x="16" y="11.5" width="79" height="21"/>
@@ -301,6 +307,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="featuredSwitch" destination="YyT-BI-uSX" id="CNg-xP-2of"/>
+                        <outlet property="upcomingSwitch" destination="nqT-66-AgF" id="BnT-xC-EKa"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="STA-v0-P04" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

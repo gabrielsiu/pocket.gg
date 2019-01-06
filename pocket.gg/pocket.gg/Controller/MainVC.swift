@@ -72,11 +72,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func getListOfTournaments() {
         TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1/*CHANGE FOR INFINITE SCROLLING*/, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
             if success {
-                print("should be reloading data....")
                 self.tableView.reloadData()
-                print("data has been reloaded...")
             } else {
-                print("somehow failed....")
+                debugPrint("Error getting list of tournaments")
             }
         }
     }

@@ -9,11 +9,18 @@
 import UIKit
 
 class SettingsVC: UITableViewController {
-
+    
+    //Outlets
+    @IBOutlet weak var featuredSwitch: UISwitch!
+    @IBOutlet weak var upcomingSwitch: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.rowHeight = 44
+
+        featuredSwitch.setOn(DefaultsService.instance.filters["featured"] ?? true, animated: true)
+        upcomingSwitch.setOn(DefaultsService.instance.filters["upcoming"] ?? true, animated: true)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -24,6 +31,22 @@ class SettingsVC: UITableViewController {
     
     @IBAction func doneBtnPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func featuredToggled(_ sender: Any) {
+        if featuredSwitch.isOn == true {
+            DefaultsService.instance.filters["featured"] = true
+        } else {
+            DefaultsService.instance.filters["featured"] = false
+        }
+    }
+    
+    @IBAction func upcomingToggled(_ sender: Any) {
+        if upcomingSwitch.isOn == true {
+            DefaultsService.instance.filters["upcoming"] = true
+        } else {
+            DefaultsService.instance.filters["upcoming"] = false
+        }
     }
     
     // MARK: - Table view data source
