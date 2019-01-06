@@ -12,7 +12,6 @@ import Apollo
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //Outlets
-    @IBOutlet weak var menuBtn: UIBarButtonItem!
     @IBOutlet weak var optionsBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,12 +30,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-        menuBtn.target = self.revealViewController()
-        menuBtn.action = #selector(SWRevealViewController.revealToggle(_:))
-        menuBtn.image = UIImage(named: "menu.png")
         optionsBtn.image = UIImage(named: "settings.png")
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        self.view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
  
     }
     
@@ -62,6 +56,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 print("error getting tournaments")
             }
         }
+    }
+    
+    @IBAction func goToTournaments(_ sender: Any) {
+        self.performSegue(withIdentifier: "mainToTournamentVC", sender: nil)
+    }
+    
+    
+    
+    @IBAction func searchBtnPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "toSearchVC", sender: nil)
     }
     
     @IBAction func optionsBtnPressed(_ sender: Any) {
@@ -95,7 +99,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destNavController = segue.destination as! UINavigationController
         let targetVC = destNavController.topViewController
@@ -103,4 +107,5 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             print("hi")
         }
     }
+ */
 }

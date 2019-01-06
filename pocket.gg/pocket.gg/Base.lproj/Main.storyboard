@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vgk-zy-hmM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KT5-7D-oMA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,24 +10,48 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Reveal View Controller-->
-        <scene sceneID="jib-am-b3N">
+        <!--Search-->
+        <scene sceneID="qum-H1-NIP">
             <objects>
-                <viewController id="Vgk-zy-hmM" customClass="SWRevealViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="7WN-Ws-070">
+                <viewController id="Q8T-6P-XrA" customClass="SearchVC" customModule="pocket_gg" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kjl-Q7-91W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2x-8e-8DI">
+                                <rect key="frame" x="46" y="316" width="290" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="GO TO TOURNAMENTS VC"/>
+                                <connections>
+                                    <action selector="goToTournamentsBtn:" destination="Q8T-6P-XrA" eventType="touchUpInside" id="mUD-do-PIw"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search all smash.gg tournaments..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lf2-YK-bsv">
+                                <rect key="frame" x="63" y="89" width="249" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="Nuz-z4-DPF"/>
+                        <viewLayoutGuide key="safeArea" id="dTK-1O-mvX"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Search" id="c5S-It-Ztp">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="3xr-mr-hlh">
+                            <connections>
+                                <action selector="doneBtnPressed:" destination="Q8T-6P-XrA" id="ig9-oq-ky3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <segue destination="0mE-PQ-WJi" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="MaF-Xf-RzL"/>
-                        <segue destination="KT5-7D-oMA" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="cVM-kx-b0x"/>
+                        <segue destination="XT3-Wq-7bZ" kind="show" identifier="searchToTournamentVC" id="W5Y-7t-jmw"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qqk-ON-Xe1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tQq-BN-pF0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="321" y="203"/>
+            <point key="canvasLocation" x="3241" y="-987"/>
         </scene>
         <!--Tournaments-->
         <scene sceneID="hch-AX-q89">
@@ -101,7 +125,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p6h-fx-al0">
-                                <rect key="frame" x="60" y="86" width="122" height="62"/>
+                                <rect key="frame" x="60" y="86" width="239" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="boc-iw-rZC">
@@ -125,6 +149,16 @@
                                             <action selector="reloadBtnPressed:" destination="Klh-79-pdb" eventType="touchUpInside" id="mNz-q6-8ab"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDm-QY-Xog">
+                                        <rect key="frame" x="105" y="25" width="121" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="goToTournaments">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="goToTournaments:" destination="Klh-79-pdb" eventType="touchUpInside" id="eFG-Lx-Ul4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.022732125530000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -139,7 +173,11 @@
                         <viewLayoutGuide key="safeArea" id="0A3-U3-Cym"/>
                     </view>
                     <navigationItem key="navigationItem" title="Tournaments" id="7Sc-Y3-2s4">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="y38-ws-QTL"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="y38-ws-QTL">
+                            <connections>
+                                <action selector="searchBtnPressed:" destination="Klh-79-pdb" id="bUz-Dm-05h"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="i75-O9-kK2">
                             <connections>
                                 <action selector="optionsBtnPressed:" destination="Klh-79-pdb" id="Vzx-fJ-RGy"/>
@@ -147,30 +185,40 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="menuBtn" destination="y38-ws-QTL" id="Nke-lW-zy9"/>
                         <outlet property="optionsBtn" destination="i75-O9-kK2" id="70u-RF-lmE"/>
                         <outlet property="tableView" destination="3C4-qq-wt0" id="TL3-Sy-8qI"/>
                         <segue destination="zUq-Um-syS" kind="presentation" identifier="toSettingsVC" id="n60-wp-Qes"/>
+                        <segue destination="XT3-Wq-7bZ" kind="show" identifier="mainToTournamentVC" id="rXU-Lo-4OP"/>
+                        <segue destination="FJw-B2-h5O" kind="presentation" identifier="toSearchVC" id="JaY-Yg-20F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pk9-Zs-p0q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2279.1999999999998" y="-199.25037481259372"/>
         </scene>
-        <!--Quick FilterVC-->
-        <scene sceneID="XBI-FM-gbC">
+        <!--TournamentVC-->
+        <scene sceneID="Ngo-Fa-ZTc">
             <objects>
-                <viewController id="0mE-PQ-WJi" customClass="QuickFilterVC" customModule="pocket_gg" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="296-J4-tCl">
+                <viewController id="XT3-Wq-7bZ" customClass="TournamentVC" customModule="pocket_gg" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="v70-wy-96j">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AT TOURNAMENTVC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hv-YF-Pse">
+                                <rect key="frame" x="69" y="281" width="236" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="4Ph-IC-d5X"/>
+                        <viewLayoutGuide key="safeArea" id="o5N-9G-qL5"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XfI-yb-IUp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qnI-DM-txx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1343" y="576"/>
+            <point key="canvasLocation" x="3241" y="-199"/>
         </scene>
         <!--Settings-->
         <scene sceneID="16H-Za-4EM">
@@ -425,6 +473,27 @@
             </objects>
             <point key="canvasLocation" x="2279" y="575"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xZi-Sj-H95">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FJw-B2-h5O" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="v8q-59-Bng">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Q8T-6P-XrA" kind="relationship" relationship="rootViewController" id="hhK-tq-Apa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="smr-9S-soQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2279" y="-987"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="W5Y-7t-jmw"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.74117647060000003" green="0.1176470588" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
 </document>

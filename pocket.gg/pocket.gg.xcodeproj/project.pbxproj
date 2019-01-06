@@ -13,9 +13,7 @@
 		DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB321D33CA200A72697 /* TournamentCell.swift */; };
 		DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */; };
 		DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB921D3D94B00A72697 /* Constants.swift */; };
-		DA76BDBE21D3EBB000A72697 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDBC21D3EBB000A72697 /* SWRevealViewController.m */; };
 		DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDBF21D3F8CE00A72697 /* MainVC.swift */; };
-		DA76BDC221D3F92A00A72697 /* QuickFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDC121D3F92A00A72697 /* QuickFilterVC.swift */; };
 		DA76BDC421D4A0AF00A72697 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDC321D4A0AF00A72697 /* AuthToken.swift */; };
 		DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */; };
 		DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AAD21C56E7C00C413D8 /* Main.storyboard */; };
@@ -27,6 +25,8 @@
 		DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26521E05D3600185801 /* VideoGames.swift */; };
 		DAD5A26821E067A200185801 /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26721E067A200185801 /* VideoGame.swift */; };
 		DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26B21E1E02F00185801 /* VideoGameService.swift */; };
+		DAD5A26E21E2687500185801 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26D21E2687500185801 /* SearchVC.swift */; };
+		DAD5A27021E268BF00185801 /* TournamentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26F21E268BF00185801 /* TournamentVC.swift */; };
 		DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381121D9615200C0FCB3 /* DefaultsService.swift */; };
 		DAFE381421D9CC1E00C0FCB3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381321D9CC1E00C0FCB3 /* API.swift */; };
 /* End PBXBuildFile section */
@@ -40,11 +40,7 @@
 		DA76BDB321D33CA200A72697 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDataService.swift; sourceTree = "<group>"; };
 		DA76BDB921D3D94B00A72697 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		DA76BDBB21D3EBAE00A72697 /* pocket.gg-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pocket.gg-Bridging-Header.h"; sourceTree = "<group>"; };
-		DA76BDBC21D3EBB000A72697 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		DA76BDBD21D3EBB000A72697 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		DA76BDBF21D3F8CE00A72697 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
-		DA76BDC121D3F92A00A72697 /* QuickFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickFilterVC.swift; sourceTree = "<group>"; };
 		DA76BDC321D4A0AF00A72697 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		DAB09AA621C56E7C00C413D8 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +54,8 @@
 		DAD5A26521E05D3600185801 /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
 		DAD5A26721E067A200185801 /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		DAD5A26B21E1E02F00185801 /* VideoGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameService.swift; sourceTree = "<group>"; };
+		DAD5A26D21E2687500185801 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		DAD5A26F21E268BF00185801 /* TournamentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentVC.swift; sourceTree = "<group>"; };
 		DAFE381121D9615200C0FCB3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
 		DAFE381321D9CC1E00C0FCB3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,9 +111,10 @@
 			isa = PBXGroup;
 			children = (
 				DA76BDBF21D3F8CE00A72697 /* MainVC.swift */,
-				DA76BDC121D3F92A00A72697 /* QuickFilterVC.swift */,
 				DAD5A25D21DD924C00185801 /* SettingsVC.swift */,
 				DAD5A25F21DF176F00185801 /* GameSelectionVC.swift */,
+				DAD5A26D21E2687500185801 /* SearchVC.swift */,
+				DAD5A26F21E268BF00185801 /* TournamentVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -136,16 +135,6 @@
 				DAD5A26721E067A200185801 /* VideoGame.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		DA76BDB521D33EFB00A72697 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				DA76BDBD21D3EBB000A72697 /* SWRevealViewController.h */,
-				DA76BDBC21D3EBB000A72697 /* SWRevealViewController.m */,
-				DA76BDBB21D3EBAE00A72697 /* pocket.gg-Bridging-Header.h */,
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		DA76BDB821D3D93C00A72697 /* Services */ = {
@@ -185,7 +174,6 @@
 				DA76BDB221D3331200A72697 /* Model */,
 				DA76BDB121D3330E00A72697 /* View */,
 				DA76BDB021D3330400A72697 /* Controller */,
-				DA76BDB521D33EFB00A72697 /* Supporting Files */,
 				DAFE381321D9CC1E00C0FCB3 /* API.swift */,
 				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
 				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
@@ -337,14 +325,14 @@
 				DAD5A26021DF176F00185801 /* GameSelectionVC.swift in Sources */,
 				DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */,
 				DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */,
-				DA76BDC221D3F92A00A72697 /* QuickFilterVC.swift in Sources */,
-				DA76BDBE21D3EBB000A72697 /* SWRevealViewController.m in Sources */,
 				DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */,
 				DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */,
 				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
 				DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */,
+				DAD5A26E21E2687500185801 /* SearchVC.swift in Sources */,
 				DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */,
 				DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */,
+				DAD5A27021E268BF00185801 /* TournamentVC.swift in Sources */,
 				DAD5A26821E067A200185801 /* VideoGame.swift in Sources */,
 				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
 				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
@@ -506,7 +494,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "pocket.gg/Supporting Files/pocket.gg-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -528,7 +515,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "pocket.gg/Supporting Files/pocket.gg-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
