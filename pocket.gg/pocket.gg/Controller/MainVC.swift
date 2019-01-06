@@ -40,6 +40,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
  
     }
     
+    //Pull to Refresh Control
+    
     @objc func refresh(_ refreshControl: UIRefreshControl) {
         TournamentDataService.instance.clearTournaments()
         TournamentDataService.instance.resetTournamentInfo()

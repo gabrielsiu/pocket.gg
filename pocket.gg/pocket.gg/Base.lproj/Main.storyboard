@@ -337,6 +337,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXg-k2-pkZ">
                                                     <rect key="frame" x="311" y="9.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="videoGameToggled:" destination="VHK-C0-wif" eventType="valueChanged" id="8of-81-rPC"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -368,6 +371,7 @@
                         <viewLayoutGuide key="safeArea" id="AGR-I9-5bn"/>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="YsV-XF-j8S" id="CKc-AS-aL2"/>
                         <outlet property="tableView" destination="a8D-zh-oHC" id="ZVz-8k-yRn"/>
                     </connections>
                 </viewController>

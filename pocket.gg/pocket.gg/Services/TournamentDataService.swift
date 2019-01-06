@@ -103,6 +103,7 @@ class TournamentDataService {
         unsortedArray.removeAll()
         gamesString = ""
         dateString = ""
+        tournamentImage = UIImage()
         imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
     }
  

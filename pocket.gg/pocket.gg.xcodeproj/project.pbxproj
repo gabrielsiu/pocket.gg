@@ -26,7 +26,7 @@
 		DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26321DF1D9800185801 /* VideoGameCell.swift */; };
 		DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26521E05D3600185801 /* VideoGames.swift */; };
 		DAD5A26821E067A200185801 /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26721E067A200185801 /* VideoGame.swift */; };
-		DAD5A26A21E0762200185801 /* VideoGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26921E0762200185801 /* VideoGameService.swift */; };
+		DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26B21E1E02F00185801 /* VideoGameService.swift */; };
 		DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381121D9615200C0FCB3 /* DefaultsService.swift */; };
 		DAFE381421D9CC1E00C0FCB3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381321D9CC1E00C0FCB3 /* API.swift */; };
 /* End PBXBuildFile section */
@@ -57,7 +57,7 @@
 		DAD5A26321DF1D9800185801 /* VideoGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameCell.swift; sourceTree = "<group>"; };
 		DAD5A26521E05D3600185801 /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
 		DAD5A26721E067A200185801 /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
-		DAD5A26921E0762200185801 /* VideoGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameService.swift; sourceTree = "<group>"; };
+		DAD5A26B21E1E02F00185801 /* VideoGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameService.swift; sourceTree = "<group>"; };
 		DAFE381121D9615200C0FCB3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
 		DAFE381321D9CC1E00C0FCB3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */,
-				DAD5A26921E0762200185801 /* VideoGameService.swift */,
+				DAD5A26B21E1E02F00185801 /* VideoGameService.swift */,
 				DAFE381121D9615200C0FCB3 /* DefaultsService.swift */,
 			);
 			path = Services;
@@ -344,7 +344,7 @@
 				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
 				DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */,
 				DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */,
-				DAD5A26A21E0762200185801 /* VideoGameService.swift in Sources */,
+				DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */,
 				DAD5A26821E067A200185801 /* VideoGame.swift in Sources */,
 				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
 				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
