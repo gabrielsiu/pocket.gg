@@ -27,8 +27,8 @@
 		DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26B21E1E02F00185801 /* VideoGameService.swift */; };
 		DAD5A26E21E2687500185801 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26D21E2687500185801 /* SearchVC.swift */; };
 		DAD5A27021E268BF00185801 /* TournamentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26F21E268BF00185801 /* TournamentVC.swift */; };
+		DAD5A27421EAD8EB00185801 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A27321EAD8EB00185801 /* API.swift */; };
 		DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381121D9615200C0FCB3 /* DefaultsService.swift */; };
-		DAFE381421D9CC1E00C0FCB3 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381321D9CC1E00C0FCB3 /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +56,8 @@
 		DAD5A26B21E1E02F00185801 /* VideoGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameService.swift; sourceTree = "<group>"; };
 		DAD5A26D21E2687500185801 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		DAD5A26F21E268BF00185801 /* TournamentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentVC.swift; sourceTree = "<group>"; };
+		DAD5A27321EAD8EB00185801 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAFE381121D9615200C0FCB3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
-		DAFE381321D9CC1E00C0FCB3 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +174,7 @@
 				DA76BDB221D3331200A72697 /* Model */,
 				DA76BDB121D3330E00A72697 /* View */,
 				DA76BDB021D3330400A72697 /* Controller */,
-				DAFE381321D9CC1E00C0FCB3 /* API.swift */,
+				DAD5A27321EAD8EB00185801 /* API.swift */,
 				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
 				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
 				DAB09AB021C56E7E00C413D8 /* Assets.xcassets */,
@@ -321,7 +321,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAFE381421D9CC1E00C0FCB3 /* API.swift in Sources */,
 				DAD5A26021DF176F00185801 /* GameSelectionVC.swift in Sources */,
 				DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */,
 				DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */,
@@ -337,6 +336,7 @@
 				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
 				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
 				DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */,
+				DAD5A27421EAD8EB00185801 /* API.swift in Sources */,
 				DA76BDC421D4A0AF00A72697 /* AuthToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

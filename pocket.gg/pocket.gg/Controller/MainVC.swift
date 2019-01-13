@@ -44,26 +44,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         refreshControl.endRefreshing()
     }
     
-    @IBAction func reloadBtnPressed(_ sender: Any) {
-        self.tableView.reloadData()
-    }
-    
-    @IBAction func testBtnPressed(_ sender: Any) {
-        TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
-            if success {
-                print("tournament list gotten successfully")
-            } else {
-                print("error getting tournaments")
-            }
-        }
-    }
-    
-    @IBAction func goToTournaments(_ sender: Any) {
-        self.performSegue(withIdentifier: "mainToTournamentVC", sender: nil)
-    }
-    
-    
-    
     @IBAction func searchBtnPressed(_ sender: Any) {
         self.performSegue(withIdentifier: "toSearchVC", sender: nil)
     }

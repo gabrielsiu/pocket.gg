@@ -8,7 +8,6 @@ query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameId
                 videogameIds: $videogameIds
                 isFeatured: $featured
                 }
-                
                 }) {
         nodes {
             name
@@ -21,6 +20,18 @@ query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameId
             events {
                 videogameId
             }
+        }
+    }
+}
+
+query AllTournaments($perPage: Int, $pageNum: Int) {
+    tournaments(query: {
+                perPage: $perPage
+                page: $pageNum
+                }) {
+        nodes {
+            name
+            id
         }
     }
 }
