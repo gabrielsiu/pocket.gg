@@ -18,24 +18,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2x-8e-8DI">
-                                <rect key="frame" x="46" y="316" width="290" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="GO TO TOURNAMENTS VC"/>
-                                <connections>
-                                    <action selector="goToTournamentsBtn:" destination="Q8T-6P-XrA" eventType="touchUpInside" id="mUD-do-PIw"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search all smash.gg tournaments..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lf2-YK-bsv">
-                                <rect key="frame" x="63" y="89" width="249" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search all smash.gg tournaments..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lf2-YK-bsv">
+                                <rect key="frame" x="0.0" y="64" width="375" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YiO-az-0F2">
+                                <rect key="frame" x="0.0" y="94" width="375" height="573"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tournamentSearchCell" id="8fJ-j6-ObH">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8fJ-j6-ObH" id="V5y-OU-ugD">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GENESIS 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aD-52-xRv">
+                                                    <rect key="frame" x="15" y="11.5" width="360" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7aD-52-xRv" firstAttribute="centerY" secondItem="V5y-OU-ugD" secondAttribute="centerY" id="cA4-ql-CM3"/>
+                                                <constraint firstItem="7aD-52-xRv" firstAttribute="leading" secondItem="V5y-OU-ugD" secondAttribute="leadingMargin" id="cYP-Es-1Wm"/>
+                                                <constraint firstAttribute="trailing" secondItem="7aD-52-xRv" secondAttribute="trailing" id="zId-OE-Qyz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Lf2-YK-bsv" firstAttribute="top" secondItem="dTK-1O-mvX" secondAttribute="top" id="DzI-zl-pmM"/>
+                            <constraint firstItem="dTK-1O-mvX" firstAttribute="trailing" secondItem="YiO-az-0F2" secondAttribute="trailing" id="QXf-MC-KJf"/>
+                            <constraint firstItem="Lf2-YK-bsv" firstAttribute="leading" secondItem="dTK-1O-mvX" secondAttribute="leading" id="cxt-qg-Veu"/>
+                            <constraint firstItem="dTK-1O-mvX" firstAttribute="bottom" secondItem="YiO-az-0F2" secondAttribute="bottom" id="eZn-xh-wYa"/>
+                            <constraint firstItem="YiO-az-0F2" firstAttribute="top" secondItem="Lf2-YK-bsv" secondAttribute="bottom" id="lT2-UH-Zkq"/>
+                            <constraint firstItem="YiO-az-0F2" firstAttribute="leading" secondItem="dTK-1O-mvX" secondAttribute="leading" id="m1I-nK-zTj"/>
+                            <constraint firstItem="dTK-1O-mvX" firstAttribute="trailing" secondItem="Lf2-YK-bsv" secondAttribute="trailing" id="puJ-N8-oUl"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="dTK-1O-mvX"/>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="c5S-It-Ztp">
@@ -46,6 +72,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="Lf2-YK-bsv" id="UMd-6K-9mS"/>
+                        <outlet property="tableView" destination="YiO-az-0F2" id="oMj-hV-Os3"/>
                         <segue destination="XT3-Wq-7bZ" kind="show" identifier="searchToTournamentVC" id="W5Y-7t-jmw"/>
                     </connections>
                 </viewController>
@@ -68,7 +96,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tournamentCell" rowHeight="150" id="Epv-jZ-ChT" customClass="TournamentCell" customModule="pocket_gg" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epv-jZ-ChT" id="zh6-Ik-rA5">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epv-jZ-ChT" id="zh6-Ik-rA5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -80,20 +108,20 @@
                                                         <constraint firstAttribute="width" secondItem="G3x-J7-f8x" secondAttribute="height" multiplier="1:1" id="h1f-j0-1Qe"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11111111222222233333333444444455555566666" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jfW-Tm-jBu">
-                                                    <rect key="frame" x="111" y="21" width="264" height="41"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GENESIS 6" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jfW-Tm-jBu">
+                                                    <rect key="frame" x="111" y="21" width="264" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Melee, Super Smash Bros. Ultimate, Rivals of Aether" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aai-ST-73V">
-                                                    <rect key="frame" x="111" y="67" width="264" height="33.5"/>
+                                                    <rect key="frame" x="111" y="46.5" width="264" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="February 1st-3rd 2019" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xxk-ws-Mt3">
-                                                    <rect key="frame" x="111" y="105.5" width="136" height="16"/>
+                                                    <rect key="frame" x="111" y="85" width="136" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -106,7 +134,7 @@
                                                 <constraint firstItem="aai-ST-73V" firstAttribute="top" secondItem="jfW-Tm-jBu" secondAttribute="bottom" constant="5" id="Fwl-a4-XLs"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="leading" secondItem="zh6-Ik-rA5" secondAttribute="leadingMargin" id="K6j-jv-vkh"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xxk-ws-Mt3" secondAttribute="trailing" constant="8" id="LvM-Ob-B6k"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="3" id="MhU-sy-bqu"/>
+                                                <constraint firstAttribute="bottom" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="3" id="MhU-sy-bqu"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="centerY" secondItem="zh6-Ik-rA5" secondAttribute="centerY" id="TDP-XC-cjA"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="top" secondItem="zh6-Ik-rA5" secondAttribute="topMargin" constant="10" id="chZ-Tg-OVd"/>
                                                 <constraint firstItem="jfW-Tm-jBu" firstAttribute="top" secondItem="G3x-J7-f8x" secondAttribute="top" id="er1-bo-7Bq"/>

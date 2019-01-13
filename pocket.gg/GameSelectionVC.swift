@@ -68,6 +68,7 @@ class GameSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searching = true
+        self.searchBar(searchBar, textDidChange: searchBar.text ?? "")
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {

@@ -9,6 +9,11 @@
 import UIKit
 
 class SearchVC: UIViewController {
+    
+    //Outlets
+    @IBOutlet weak var searchBar: UITextField!
+    @IBOutlet weak var tableView: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +24,6 @@ class SearchVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func goToTournamentsBtn(_ sender: Any) {
-        self.performSegue(withIdentifier: "searchToTournamentVC", sender: nil)
-    }
     
     /*
     // MARK: - Navigation
