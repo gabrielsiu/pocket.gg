@@ -21,6 +21,9 @@ class TournamentDataService {
     private var tournamentImage = UIImage()
     private var imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
     
+    private var tournamentNames: [String] = []
+    private var tournamentIDs: [Int] = []
+    
     
     func getTournamentList(perPage: Int, pageNum: Int, videogameIds: [Int], filters: [String: Bool], completion: @escaping CompletionHandler) {
         
@@ -89,6 +92,10 @@ class TournamentDataService {
             }
             completion(true)
         }
+    }
+    
+    func searchTournaments() {
+        
     }
     
     func getTournaments() -> [Tournament] {

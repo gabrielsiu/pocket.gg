@@ -96,7 +96,7 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tournamentCell" rowHeight="150" id="Epv-jZ-ChT" customClass="TournamentCell" customModule="pocket_gg" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epv-jZ-ChT" id="zh6-Ik-rA5">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Epv-jZ-ChT" id="zh6-Ik-rA5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -134,7 +134,7 @@
                                                 <constraint firstItem="aai-ST-73V" firstAttribute="top" secondItem="jfW-Tm-jBu" secondAttribute="bottom" constant="5" id="Fwl-a4-XLs"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="leading" secondItem="zh6-Ik-rA5" secondAttribute="leadingMargin" id="K6j-jv-vkh"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xxk-ws-Mt3" secondAttribute="trailing" constant="8" id="LvM-Ob-B6k"/>
-                                                <constraint firstAttribute="bottom" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="3" id="MhU-sy-bqu"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xxk-ws-Mt3" secondAttribute="bottom" constant="3" id="MhU-sy-bqu"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="centerY" secondItem="zh6-Ik-rA5" secondAttribute="centerY" id="TDP-XC-cjA"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="top" secondItem="zh6-Ik-rA5" secondAttribute="topMargin" constant="10" id="chZ-Tg-OVd"/>
                                                 <constraint firstItem="jfW-Tm-jBu" firstAttribute="top" secondItem="G3x-J7-f8x" secondAttribute="top" id="er1-bo-7Bq"/>
@@ -298,6 +298,7 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9JK-3k-PQr" secondAttribute="trailing" constant="3" id="3ah-yd-XmZ"/>
                                                 <constraint firstItem="9JK-3k-PQr" firstAttribute="centerY" secondItem="lAq-p6-KWN" secondAttribute="centerY" id="8NN-WQ-ySW"/>
                                                 <constraint firstItem="9JK-3k-PQr" firstAttribute="leading" secondItem="lAq-p6-KWN" secondAttribute="leadingMargin" id="geK-4L-zs4"/>
                                             </constraints>
@@ -327,6 +328,7 @@
                                             <constraints>
                                                 <constraint firstItem="WyU-my-e5H" firstAttribute="centerY" secondItem="Gl9-BO-JhR" secondAttribute="centerY" id="SAQ-CT-NrI"/>
                                                 <constraint firstItem="WyU-my-e5H" firstAttribute="leading" secondItem="Gl9-BO-JhR" secondAttribute="leadingMargin" id="hQD-kw-J7v"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WyU-my-e5H" secondAttribute="trailing" constant="3" id="pUE-yD-Y9b"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -341,16 +343,18 @@
                     <navigationItem key="navigationItem" title="Settings" id="5N4-AF-NfS">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="8E6-9x-BtS">
                             <connections>
-                                <action selector="doneBtnPressed:" destination="QEc-8x-SjM" id="u6q-9E-dFR"/>
+                                <action selector="doneBtnPressed:" destination="QEc-8x-SjM" id="0a4-46-Vzu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="featuredSwitch" destination="YyT-BI-uSX" id="CNg-xP-2of"/>
                         <outlet property="upcomingSwitch" destination="nqT-66-AgF" id="BnT-xC-EKa"/>
+                        <segue destination="Q9V-wb-rYK" kind="unwind" identifier="unwindToMainVC" unwindAction="prepareForUnwindWithSegue:" id="FuU-K1-WTK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="STA-v0-P04" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Q9V-wb-rYK" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3241" y="575"/>
         </scene>

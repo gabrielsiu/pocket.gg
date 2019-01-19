@@ -71,7 +71,6 @@ class VideoGameCell: UITableViewCell {
         //Save the new preferred games array to the user defaults
         DefaultsService.instance.preferredGames = preferredArray
         preferredArray.removeAll()
-        print("now default array is \(DefaultsService.instance.preferredGames)")
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

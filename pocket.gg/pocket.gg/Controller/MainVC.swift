@@ -30,17 +30,20 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 140.0
+        
         optionsBtn.image = UIImage(named: "settings.png")
- 
+        
+        getListOfTournaments()
     }
-    
+
     //Pull to Refresh Control
     
     @objc func refresh(_ refreshControl: UIRefreshControl) {
         TournamentDataService.instance.clearTournaments()
         TournamentDataService.instance.resetTournamentInfo()
         getListOfTournaments()
-        self.tableView.reloadData()
         refreshControl.endRefreshing()
     }
     
@@ -49,9 +52,25 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func optionsBtnPressed(_ sender: Any) {
-        self.performSegue(withIdentifier: "toSettingsVC", sender: nil)
+        self.performSegue(withIdentifier: "toSettingsVC", sender: self)
     }
     
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+        if segue.identifier == "unwindToMainVC" {
+            if let settingsVC = segue.source as? SettingsVC {
+                if settingsVC.dataChanged == true {
+                    clearMainPage()
+                    self.tableView.reloadData()
+                    getListOfTournaments()
+                }
+            }
+        }
+    }
+    
+    func clearMainPage() {
+        TournamentDataService.instance.clearTournaments()
+        TournamentDataService.instance.resetTournamentInfo()
+    }
     
     func getListOfTournaments() {
         TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1/*CHANGE FOR INFINITE SCROLLING*/, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
@@ -79,13 +98,4 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destNavController = segue.destination as! UINavigationController
-        let targetVC = destNavController.topViewController
-        if let settingsVC = targetVC as? SettingsVC {
-            print("hi")
-        }
-    }
- */
 }

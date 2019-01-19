@@ -9,6 +9,11 @@
 import UIKit
 
 class SettingsVC: UITableViewController {
+
+    var dataChanged = false
+    
+    var featuredInitialStatus = true
+    var upcomingInitialStatus = true
     
     //Outlets
     @IBOutlet weak var featuredSwitch: UISwitch!
@@ -16,21 +21,30 @@ class SettingsVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.rowHeight = 44.0
         
-        self.tableView.rowHeight = 44
+        featuredInitialStatus = DefaultsService.instance.filters["featured"] ?? true
+        upcomingInitialStatus = DefaultsService.instance.filters["upcoming"] ?? true
 
-        featuredSwitch.setOn(DefaultsService.instance.filters["featured"] ?? true, animated: true)
-        upcomingSwitch.setOn(DefaultsService.instance.filters["upcoming"] ?? true, animated: true)
-
+        featuredSwitch.setOn(featuredInitialStatus, animated: true)
+        upcomingSwitch.setOn(upcomingInitialStatus, animated: true)
+        
+        dataChanged = false
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+
     
     @IBAction func doneBtnPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        //Only let MainVC know to refresh content if settings were actually changed
+        if (DefaultsService.instance.filters["featured"] != featuredInitialStatus) || (DefaultsService.instance.filters["upcoming"] != upcomingInitialStatus) {
+            dataChanged = true
+        }
+        performSegue(withIdentifier: "unwindToMainVC", sender: self)
     }
     
     @IBAction func featuredToggled(_ sender: Any) {
