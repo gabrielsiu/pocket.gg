@@ -14,9 +14,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //Outlets
     @IBOutlet weak var optionsBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        spinner.isHidden = true
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
@@ -60,7 +63,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             if let settingsVC = segue.source as? SettingsVC {
                 if settingsVC.dataChanged == true {
                     clearMainPage()
-                    self.tableView.reloadData()
                     getListOfTournaments()
                 }
             }
@@ -73,8 +75,14 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func getListOfTournaments() {
+        spinner.isHidden = false
+        spinner.startAnimating()
+        
+        self.tableView.reloadData()
         TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1/*CHANGE FOR INFINITE SCROLLING*/, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
             if success {
+                self.spinner.isHidden = true
+                self.spinner.stopAnimating()
                 self.tableView.reloadData()
             } else {
                 debugPrint("Error getting list of tournaments")

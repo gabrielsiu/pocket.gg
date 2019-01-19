@@ -115,7 +115,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Melee, Super Smash Bros. Ultimate, Rivals of Aether" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aai-ST-73V">
-                                                    <rect key="frame" x="111" y="46.5" width="264" height="33.5"/>
+                                                    <rect key="frame" x="111" y="46.5" width="235.5" height="33.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -138,7 +138,7 @@
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="centerY" secondItem="zh6-Ik-rA5" secondAttribute="centerY" id="TDP-XC-cjA"/>
                                                 <constraint firstItem="G3x-J7-f8x" firstAttribute="top" secondItem="zh6-Ik-rA5" secondAttribute="topMargin" constant="10" id="chZ-Tg-OVd"/>
                                                 <constraint firstItem="jfW-Tm-jBu" firstAttribute="top" secondItem="G3x-J7-f8x" secondAttribute="top" id="er1-bo-7Bq"/>
-                                                <constraint firstAttribute="trailing" secondItem="aai-ST-73V" secondAttribute="trailing" id="i2C-yB-CMs"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aai-ST-73V" secondAttribute="trailing" constant="3" id="i2C-yB-CMs"/>
                                                 <constraint firstItem="xxk-ws-Mt3" firstAttribute="leading" secondItem="aai-ST-73V" secondAttribute="leading" id="kij-cw-rpL"/>
                                                 <constraint firstItem="aai-ST-73V" firstAttribute="leading" secondItem="jfW-Tm-jBu" secondAttribute="leading" id="m5X-Nw-uqQ"/>
                                             </constraints>
@@ -152,13 +152,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="d1z-3E-GFW">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0A3-U3-Cym" firstAttribute="bottom" secondItem="3C4-qq-wt0" secondAttribute="bottom" id="DRT-Wo-afN"/>
                             <constraint firstItem="3C4-qq-wt0" firstAttribute="leading" secondItem="0A3-U3-Cym" secondAttribute="leading" id="Ljf-vb-NpE"/>
                             <constraint firstItem="3C4-qq-wt0" firstAttribute="top" secondItem="0A3-U3-Cym" secondAttribute="top" id="OFL-zJ-NHy"/>
+                            <constraint firstItem="d1z-3E-GFW" firstAttribute="centerY" secondItem="qct-oR-VbM" secondAttribute="centerY" id="QUa-4J-DBy"/>
                             <constraint firstItem="0A3-U3-Cym" firstAttribute="trailing" secondItem="3C4-qq-wt0" secondAttribute="trailing" id="fnR-SH-KZe"/>
+                            <constraint firstItem="d1z-3E-GFW" firstAttribute="centerX" secondItem="qct-oR-VbM" secondAttribute="centerX" id="vIA-re-JAs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0A3-U3-Cym"/>
                     </view>
@@ -176,6 +182,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="optionsBtn" destination="i75-O9-kK2" id="70u-RF-lmE"/>
+                        <outlet property="spinner" destination="d1z-3E-GFW" id="IVD-zB-eKk"/>
                         <outlet property="tableView" destination="3C4-qq-wt0" id="TL3-Sy-8qI"/>
                         <segue destination="zUq-Um-syS" kind="presentation" identifier="toSettingsVC" id="n60-wp-Qes"/>
                         <segue destination="XT3-Wq-7bZ" kind="show" identifier="mainToTournamentVC" id="rXU-Lo-4OP"/>
