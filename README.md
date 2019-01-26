@@ -13,6 +13,6 @@ An iOS mobile client for the [smash.gg](https://smash.gg/) website
 
 ## Dependencies
 
-* ![Alamofire](https://github.com/Alamofire/Alamofire)
-* ![AlamofireImage](https://github.com/Alamofire/AlamofireImage)
-* ![Apollo iOS](https://github.com/apollographql/apollo-ios)
+* [Alamofire](https://github.com/Alamofire/Alamofire)
+* [AlamofireImage](https://github.com/Alamofire/AlamofireImage)
+* [Apollo iOS](https://github.com/apollographql/apollo-ios)
