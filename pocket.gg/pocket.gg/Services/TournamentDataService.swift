@@ -25,7 +25,7 @@ class TournamentDataService {
     private var tournamentIDs: [Int] = []
     
     
-    func getTournamentList(perPage: Int, pageNum: Int, videogameIds: [Int], filters: [String: Bool], completion: @escaping CompletionHandler) {
+    func getTournamentList(perPage: Int, pageNum: Int, videogameIds: [String], filters: [String: Bool], completion: @escaping CompletionHandler) {
         
         apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: perPage, pageNum: pageNum, videogameIds: videogameIds, featured: filters["featured"], upcoming: filters["upcoming"])) { (result, error) in
             //Initial error check
@@ -34,11 +34,18 @@ class TournamentDataService {
                 completion(false)
                 return
             }
+            /*
+            debugPrint("perpage: \(perPage)")
+            debugPrint("pagenum: \(pageNum)")
+            debugPrint("videogameids: \(videogameIds)")
+            debugPrint("featured: \(filters["featured"])")
+            debugPrint("upcoming: \(filters["upcoming"])")
+            */
             
             //Get tournament nodes
             guard let nodes = result?.data?.tournaments?.nodes else {
                 completion(false)
-                print("Error while fetching tournament nodes")
+                debugPrint("Error while fetching tournament nodes")
                 return
             }
 
@@ -66,8 +73,11 @@ class TournamentDataService {
                 }
                 
                 //Tournament Dates
-                let startDate = NSDate(timeIntervalSince1970: Double(item?.startAt ?? 0)).startFormattedISO8601
-                let endDate = NSDate(timeIntervalSince1970: Double(item?.endAt ?? 0)).endFormattedISO8601
+                let startDateDouble = Double(item?.startAt ?? 0)
+                let endDateDouble = Double(item?.endAt ?? 0)
+                
+                let startDate = NSDate(timeIntervalSince1970: startDateDouble).startFormattedISO8601
+                let endDate = NSDate(timeIntervalSince1970: endDateDouble).endFormattedISO8601
                 self.dateString = startDate + endDate
                 
                 //Tournament Logo URL
@@ -93,7 +103,7 @@ class TournamentDataService {
             completion(true)
         }
     }
-    
+ 
     func searchTournaments() {
         
     }

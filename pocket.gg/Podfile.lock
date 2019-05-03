@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (4.8.0)
-  - AlamofireImage (3.5.0):
+  - Alamofire (4.8.2)
+  - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
-  - Apollo (0.9.4):
-    - Apollo/Core (= 0.9.4)
-  - Apollo/Core (0.9.4)
+  - Apollo (0.10.1):
+    - Apollo/Core (= 0.10.1)
+  - Apollo/Core (0.10.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -18,9 +18,9 @@ SPEC REPOS:
     - Apollo
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
-  Apollo: 450856adbdebcdf28c3c671f81732ac3f9944065
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
+  Apollo: 4d690a9b2e48e8820182df4b988d7a253e1ee589
 
 PODFILE CHECKSUM: 11bb7a5934b9be746b1927bbb945809797a6f9c1
 

@@ -16,6 +16,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
+    //Instantiate Alert Controller
+    let alertController = UIAlertController(title: "Error getting list of tournaments", message: "No tournaments available for the selected game(s)", preferredStyle: .alert)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,6 +26,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+        let okAction = UIAlertAction(title: "Ok", style: .default) { (result: UIAlertAction) -> Void in
+        }
+        self.alertController.addAction(okAction)
         
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
@@ -79,12 +86,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         spinner.startAnimating()
         
         self.tableView.reloadData()
-        TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1/*CHANGE FOR INFINITE SCROLLING*/, videogameIds: DefaultsService.instance.preferredGames, filters: DefaultsService.instance.filters) { (success) in
+        TournamentDataService.instance.getTournamentList(perPage: DefaultsService.instance.tournamentsPerPage, pageNum: 1/*CHANGE FOR INFINITE SCROLLING*/, videogameIds: DefaultsService.instance.preferredGames.map { String($0)}, filters: DefaultsService.instance.filters) { (success) in
             if success {
                 self.spinner.isHidden = true
                 self.spinner.stopAnimating()
                 self.tableView.reloadData()
             } else {
+                self.spinner.isHidden = true
+                self.spinner.stopAnimating()
+                self.tableView.reloadData()
+                self.present(self.alertController, animated: true, completion: nil)
                 debugPrint("Error getting list of tournaments")
             }
         }

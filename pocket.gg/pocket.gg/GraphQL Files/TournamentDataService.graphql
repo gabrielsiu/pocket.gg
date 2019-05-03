@@ -1,4 +1,4 @@
-query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [Int], $featured: Boolean, $upcoming: Boolean) {
+query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {
     tournaments(query: {
                 perPage: $perPage
                 page: $pageNum

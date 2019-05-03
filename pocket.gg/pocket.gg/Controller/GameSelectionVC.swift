@@ -41,7 +41,7 @@ class GameSelectionVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func isGameSelected(gameKey: Int) -> Bool {
         //Check if the current game in gameKey is any one of the user's preferred games; if it is, then the switch will be enabled when its cell is dequeued
         for element in DefaultsService.instance.preferredGames {
-            if element == gameKey {
+            if (element == gameKey) {
                 return true
             }
         }
