@@ -19,7 +19,6 @@ class VideoGameCell: UITableViewCell {
         
         let maxWidth = UIScreen.main.bounds.size.width - 30 - videoGameSwitch.frame.width
         videoGameName.preferredMaxLayoutWidth = maxWidth
-        // Initialization code
     }
     
     func updateView(videoGame: VideoGame) {

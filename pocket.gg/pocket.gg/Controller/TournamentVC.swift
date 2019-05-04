@@ -8,23 +8,37 @@
 
 import UIKit
 
-class TournamentVC: UIViewController {
+class TournamentVC: UITableViewController, sendTournamentDataProtocol {
+    
+    //Outlets
+    @IBOutlet weak var tournamentLabel: UINavigationItem!
+    @IBOutlet weak var tournamentImage: UIImageView!
+    @IBOutlet weak var tournamentGames: UILabel!
+    @IBOutlet weak var tournamentDate: UILabel!
+    
+    
+    //Variables
+    var name: String!
+    var games: String!
+    var date: String!
+    var image: UIImage!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        tournamentLabel.title = name
+        tournamentImage.image = image
+        tournamentGames.text = games
+        tournamentDate.text = date
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    //Delegate Method
+    func sendDataToTournamentVC(name: String, games: String, date: String, image: UIImage) {
+        self.name = name
+        self.games = games
+        self.date = date
+        self.image = image
     }
-    */
+
 
 }

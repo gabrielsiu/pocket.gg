@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6ABB43E9C7F2FB8424AA3063 /* Pods_pocket_gg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */; };
 		DA3B322B21D6DBD6007CCA33 /* TournamentDataService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */; };
 		DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B323421D8A522007CCA33 /* Tournament.swift */; };
 		DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB321D33CA200A72697 /* TournamentCell.swift */; };
@@ -33,7 +32,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pocket_gg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.debug.xcconfig"; sourceTree = "<group>"; };
 		C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.release.xcconfig"; sourceTree = "<group>"; };
 		DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TournamentDataService.graphql; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6ABB43E9C7F2FB8424AA3063 /* Pods_pocket_gg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,14 +78,6 @@
 				C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		5FAB25028B63698C6AEE8D44 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				53D0E9008B7F66C654A5D2D6 /* Pods_pocket_gg.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DA64819E21D5753200BE17C3 /* GraphQL Files */ = {
@@ -155,7 +144,6 @@
 				DAB09AA821C56E7C00C413D8 /* pocket.gg */,
 				DAB09AA721C56E7C00C413D8 /* Products */,
 				200FB7755A24026D0316515C /* Pods */,
-				5FAB25028B63698C6AEE8D44 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -222,7 +210,7 @@
 				TargetAttributes = {
 					DAB09AA521C56E7C00C413D8 = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -499,7 +487,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -519,7 +507,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

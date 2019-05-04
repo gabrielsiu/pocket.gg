@@ -1,5 +1,5 @@
 //
-//  TimestampAlias.swift
+//  Timestamp.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2019-05-03.

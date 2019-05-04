@@ -18,7 +18,6 @@ class TournamentCell: UITableViewCell {
     @IBOutlet weak var tournamentGames: UILabel!
     @IBOutlet weak var tournamentDate: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

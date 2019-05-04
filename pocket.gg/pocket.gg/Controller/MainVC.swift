@@ -9,12 +9,24 @@
 import UIKit
 import Apollo
 
+protocol sendTournamentDataProtocol {
+    func sendDataToTournamentVC(name: String, games: String, date: String, image: UIImage)
+}
+
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //Outlets
     @IBOutlet weak var optionsBtn: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    //Variables
+    var delegate: sendTournamentDataProtocol? = nil //Delegate variable
+    var tournamentClickedName: String? = nil
+    var tournamentClickedGames: String? = nil
+    var tournamentClickedDate: String? = nil
+    var tournamentClickedImage: UIImage? = nil
+    
     
     //Instantiate Alert Controller
     let alertController = UIAlertController(title: "Error getting list of tournaments", message: "No tournaments available for the selected game(s)", preferredStyle: .alert)
@@ -40,12 +52,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 140.0
-        
         optionsBtn.image = UIImage(named: "settings.png")
         
         getListOfTournaments()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
     }
 
     //Pull to Refresh Control
@@ -115,6 +127,32 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //When selecting the row, a segue is performed. Right before the transition, prepareForSegue is called, where the delegate of MainVC (which is TournamentVC) is set. Then the tournament data is passed to the delegate
+        performSegue(withIdentifier: "mainToTournamentVC", sender: self)
+        
+        //Access the tapped cell
+        let currentCell = tableView.cellForRow(at: indexPath) as! TournamentCell
+        //Grab the current cell's information and store them in temporary variables
+        tournamentClickedName = currentCell.tournamentName.text
+        tournamentClickedGames = currentCell.tournamentGames.text
+        tournamentClickedDate = currentCell.tournamentDate.text
+        tournamentClickedImage = currentCell.tournamentImage.image
+        //Pass the information from the temporary variables to the delegate
+        self.delegate?.sendDataToTournamentVC(name: tournamentClickedName!, games: tournamentClickedGames!, date: tournamentClickedDate!, image: tournamentClickedImage!)
+        
+        //Unhighlight the row after it's tapped
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Set the delegate of MainVC as TournamentVC
+        if let tournamentVC = segue.destination as? TournamentVC {
+            self.delegate = tournamentVC
         }
     }
 }
