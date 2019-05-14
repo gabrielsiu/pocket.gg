@@ -7,6 +7,6 @@
 //
 
 import Foundation
-
 import Apollo
+
 public typealias Timestamp = Int

@@ -24,14 +24,23 @@ query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameId
     }
 }
 
-query AllTournaments($perPage: Int, $pageNum: Int) {
+query EventsByID($id: ID) {
     tournaments(query: {
-                perPage: $perPage
-                page: $pageNum
-                }) {
-        nodes {
-            name
-            id
+        filter:{
+            id: $id
         }
+    }) {
+    nodes {
+        events {
+            name
+            startAt
+            videogameId
+            videogame {
+                images {
+                    url
+                }
+            }
+        }
+    }
     }
 }

@@ -18,8 +18,8 @@ class TournamentDataService {
     private var unsortedArray: [Int] = []
     private var gamesString = ""
     private var dateString = ""
-    private var tournamentImage = UIImage()
-    private var imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
+    private var tournamentImage: UIImage?
+    private var imageUrl = IMAGE_URL
     
     private var tournamentNames: [String] = []
     private var tournamentIDs: [Int] = []
@@ -34,14 +34,7 @@ class TournamentDataService {
                 completion(false)
                 return
             }
-            /*
-            debugPrint("perpage: \(perPage)")
-            debugPrint("pagenum: \(pageNum)")
-            debugPrint("videogameids: \(videogameIds)")
-            debugPrint("featured: \(filters["featured"])")
-            debugPrint("upcoming: \(filters["upcoming"])")
-            */
-            
+
             //Get tournament nodes
             guard let nodes = result?.data?.tournaments?.nodes else {
                 completion(false)
@@ -92,7 +85,7 @@ class TournamentDataService {
                     let ratio = element?.ratio ?? 10.0
                     if ratio < lowestRatio {
                         lowestRatio = ratio
-                        self.imageUrl = element?.url ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
+                        self.imageUrl = element?.url ?? IMAGE_URL
                     }
                 }
 
@@ -104,10 +97,6 @@ class TournamentDataService {
         }
     }
  
-    func searchTournaments() {
-        
-    }
-    
     func getTournaments() -> [Tournament] {
         return tournaments
     }
@@ -120,8 +109,8 @@ class TournamentDataService {
         unsortedArray.removeAll()
         gamesString = ""
         dateString = ""
-        tournamentImage = UIImage()
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
+        tournamentImage = nil
+        imageUrl = IMAGE_URL
     }
  
 }

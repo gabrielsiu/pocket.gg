@@ -8,6 +8,19 @@
 
 import UIKit
 
+
+class DataSource: NSObject, UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+}
+
+
 class TournamentVC: UITableViewController, sendTournamentDataProtocol {
     
     //Outlets
@@ -16,12 +29,16 @@ class TournamentVC: UITableViewController, sendTournamentDataProtocol {
     @IBOutlet weak var tournamentGames: UILabel!
     @IBOutlet weak var tournamentDate: UILabel!
     
+    @IBOutlet weak var eventsTableView: UITableView!
+    
     
     //Variables
     var name: String!
     var games: String!
     var date: String!
     var image: UIImage!
+    
+    var dataSource = DataSource()
     
 
     override func viewDidLoad() {
@@ -30,6 +47,9 @@ class TournamentVC: UITableViewController, sendTournamentDataProtocol {
         tournamentImage.image = image
         tournamentGames.text = games
         tournamentDate.text = date
+        
+        eventsTableView.delegate = dataSource
+        eventsTableView.dataSource = dataSource
     }
     
     //Delegate Method
@@ -40,5 +60,9 @@ class TournamentVC: UITableViewController, sendTournamentDataProtocol {
         self.image = image
     }
 
-
+    @IBAction func press(_ sender: Any) {
+        EventsDataService.instance.getEvents(id: "72577") { (success) in
+            print("done")
+        }
+    }
 }

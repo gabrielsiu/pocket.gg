@@ -60,7 +60,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.estimatedRowHeight = 100
     }
 
-    //Pull to Refresh Control
+    // MARK: - Pull to Refresh Control
     
     @objc func refresh(_ refreshControl: UIRefreshControl) {
         TournamentDataService.instance.clearTournaments()
@@ -113,7 +113,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    //Table View Methods
+    // MARK: - Table View Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return TournamentDataService.instance.getTournaments().count
@@ -136,11 +136,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         //Access the tapped cell
         let currentCell = tableView.cellForRow(at: indexPath) as! TournamentCell
+        
         //Grab the current cell's information and store them in temporary variables
         tournamentClickedName = currentCell.tournamentName.text
         tournamentClickedGames = currentCell.tournamentGames.text
         tournamentClickedDate = currentCell.tournamentDate.text
         tournamentClickedImage = currentCell.tournamentImage.image
+        
         //Pass the information from the temporary variables to the delegate
         self.delegate?.sendDataToTournamentVC(name: tournamentClickedName!, games: tournamentClickedGames!, date: tournamentClickedDate!, image: tournamentClickedImage!)
         

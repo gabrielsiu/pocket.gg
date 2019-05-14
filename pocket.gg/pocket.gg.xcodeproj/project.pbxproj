@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DA3B322B21D6DBD6007CCA33 /* TournamentDataService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */; };
 		DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B323421D8A522007CCA33 /* Tournament.swift */; };
+		DA71AF9922806D890004D674 /* EventsDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71AF9822806D890004D674 /* EventsDataService.swift */; };
+		DA71AF9B2280707F0004D674 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71AF9A2280707F0004D674 /* Event.swift */; };
 		DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB321D33CA200A72697 /* TournamentCell.swift */; };
 		DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */; };
 		DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB921D3D94B00A72697 /* Constants.swift */; };
@@ -18,7 +20,7 @@
 		DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AAD21C56E7C00C413D8 /* Main.storyboard */; };
 		DAB09AB121C56E7E00C413D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB021C56E7E00C413D8 /* Assets.xcassets */; };
 		DAB09AB421C56E7E00C413D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */; };
-		DAC12BAF227C971500B33155 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC12BAE227C971500B33155 /* API.swift */; };
+		DAB8FE122288FBC700913452 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB8FE112288FBC700913452 /* API.swift */; };
 		DAC12BB1227C980600B33155 /* Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC12BB0227C980600B33155 /* Timestamp.swift */; };
 		DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A25D21DD924C00185801 /* SettingsVC.swift */; };
 		DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26321DF1D9800185801 /* VideoGameCell.swift */; };
@@ -36,6 +38,8 @@
 		C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.release.xcconfig"; sourceTree = "<group>"; };
 		DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TournamentDataService.graphql; sourceTree = "<group>"; };
 		DA3B323421D8A522007CCA33 /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
+		DA71AF9822806D890004D674 /* EventsDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDataService.swift; sourceTree = "<group>"; };
+		DA71AF9A2280707F0004D674 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA76BDB321D33CA200A72697 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDataService.swift; sourceTree = "<group>"; };
 		DA76BDB921D3D94B00A72697 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -47,7 +51,7 @@
 		DAB09AB021C56E7E00C413D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAB09AB321C56E7E00C413D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB09AB521C56E7E00C413D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAC12BAE227C971500B33155 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DAB8FE112288FBC700913452 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAC12BB0227C980600B33155 /* Timestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timestamp.swift; sourceTree = "<group>"; };
 		DAD5A25D21DD924C00185801 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		DAD5A26321DF1D9800185801 /* VideoGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameCell.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 			children = (
 				DA3B323421D8A522007CCA33 /* Tournament.swift */,
 				DAD5A26721E067A200185801 /* VideoGame.swift */,
+				DA71AF9A2280707F0004D674 /* Event.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */,
+				DA71AF9822806D890004D674 /* EventsDataService.swift */,
 				DAD5A26B21E1E02F00185801 /* VideoGameService.swift */,
 				DAFE381121D9615200C0FCB3 /* DefaultsService.swift */,
 			);
@@ -164,7 +170,7 @@
 				DA76BDB221D3331200A72697 /* Model */,
 				DA76BDB121D3330E00A72697 /* View */,
 				DA76BDB021D3330400A72697 /* Controller */,
-				DAC12BAE227C971500B33155 /* API.swift */,
+				DAB8FE112288FBC700913452 /* API.swift */,
 				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
 				DAC12BB0227C980600B33155 /* Timestamp.swift */,
 				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
@@ -316,6 +322,7 @@
 				DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */,
 				DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */,
 				DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */,
+				DA71AF9B2280707F0004D674 /* Event.swift in Sources */,
 				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
 				DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */,
 				DAD5A26E21E2687500185801 /* SearchVC.swift in Sources */,
@@ -325,10 +332,11 @@
 				DAD5A27021E268BF00185801 /* TournamentVC.swift in Sources */,
 				DAD5A26821E067A200185801 /* VideoGame.swift in Sources */,
 				DAD5A27621FC080600185801 /* GameSelectionVC.swift in Sources */,
+				DAB8FE122288FBC700913452 /* API.swift in Sources */,
 				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
+				DA71AF9922806D890004D674 /* EventsDataService.swift in Sources */,
 				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
 				DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */,
-				DAC12BAF227C971500B33155 /* API.swift in Sources */,
 				DA76BDC421D4A0AF00A72697 /* AuthToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
