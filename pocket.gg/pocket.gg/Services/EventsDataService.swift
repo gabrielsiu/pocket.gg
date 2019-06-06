@@ -14,7 +14,7 @@ class EventsDataService {
     
     //Variables
     private var events = [Event]()
-    private var videogameImageUrl: String = ""
+    private var videogameImageUrl: String?
     
     func getEvents(id: String, completion: @escaping CompletionHandler) {
         events.removeAll()
@@ -40,7 +40,7 @@ class EventsDataService {
                 let name = item?.name ?? ""
                 
                 //Event Start Day/Time
-                let startAt = String(item?.startAt as! Int)
+                let startAt = item?.startAt
                 
                 //Event Videogame ID
                 let videogame = item?.videogameId ?? -1
@@ -52,9 +52,21 @@ class EventsDataService {
                     self.videogameImageUrl = item?.videogame?.images?[0]?.url ?? IMAGE_URL
                 }
                 
-                let event = Event(name: name, date: startAt, game: videogame, imageUrl: self.videogameImageUrl)
+                let event = Event(name: name, date: startAt ?? "0", game: videogame, imageUrl: self.videogameImageUrl ?? IMAGE_URL)
                 self.events.append(event)
             }
         }
+    }
+    
+    func getEvents() -> [Event] {
+        return events
+    }
+    
+    func clearEvents() {
+        events.removeAll()
+    }
+    
+    func resetEventInfo() {
+        videogameImageUrl = nil
     }
 }

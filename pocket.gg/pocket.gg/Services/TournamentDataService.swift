@@ -20,6 +20,7 @@ class TournamentDataService {
     private var dateString = ""
     private var tournamentImage: UIImage?
     private var imageUrl = IMAGE_URL
+    private var id = ""
     
     private var tournamentNames: [String] = []
     private var tournamentIDs: [Int] = []
@@ -31,6 +32,7 @@ class TournamentDataService {
             //Initial error check
             if error != nil {
                 debugPrint("Error while fetching tournament data from smash.gg")
+                debugPrint(error as Any)
                 completion(false)
                 return
             }
@@ -66,11 +68,11 @@ class TournamentDataService {
                 }
                 
                 //Tournament Dates
-                let startDateDouble = Double(item?.startAt ?? 0)
-                let endDateDouble = Double(item?.endAt ?? 0)
+                let startDateDouble = Double(item?.startAt ?? "0")
+                let endDateDouble = Double(item?.endAt ?? "0")
                 
-                let startDate = NSDate(timeIntervalSince1970: startDateDouble).startFormattedISO8601
-                let endDate = NSDate(timeIntervalSince1970: endDateDouble).endFormattedISO8601
+                let startDate = NSDate(timeIntervalSince1970: startDateDouble!).startFormattedISO8601
+                let endDate = NSDate(timeIntervalSince1970: endDateDouble!).endFormattedISO8601
                 self.dateString = startDate + endDate
                 
                 //Tournament Logo URL
@@ -88,8 +90,11 @@ class TournamentDataService {
                         self.imageUrl = element?.url ?? IMAGE_URL
                     }
                 }
+                
+                //Tournament ID
+                self.id = (item?.id)!
 
-                let tournament = Tournament(name: name, games: self.gamesString, date: self.dateString, imageName: self.imageUrl)
+                let tournament = Tournament(name: name, games: self.gamesString, date: self.dateString, imageName: self.imageUrl, id: self.id)
                 self.tournaments.append(tournament)
                 self.resetTournamentInfo()
             }
@@ -111,6 +116,7 @@ class TournamentDataService {
         dateString = ""
         tournamentImage = nil
         imageUrl = IMAGE_URL
+        id = ""
     }
  
 }

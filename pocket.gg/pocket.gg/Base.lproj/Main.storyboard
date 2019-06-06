@@ -224,18 +224,11 @@
                                                                 <constraint firstAttribute="height" constant="120" id="yd5-JD-tjm"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gza-rR-Ip9">
-                                                            <rect key="frame" x="128" y="0.0" width="46" height="30"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <connections>
-                                                                <action selector="press:" destination="cmY-UZ-wjR" eventType="touchUpInside" id="kNQ-cp-XnH"/>
-                                                            </connections>
-                                                        </button>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xWr-xm-za5">
-                                                            <rect key="frame" x="182" y="0.0" width="163" height="81.5"/>
+                                                            <rect key="frame" x="128" y="0.0" width="217" height="81.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="lQl-Mb-WDS">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="163" height="43"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="206.5" height="43"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAMES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdw-vO-xd6">
                                                                             <rect key="frame" x="0.0" y="0.0" width="43.5" height="14"/>
@@ -244,7 +237,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Melee, Super Smash Bros. Ultimate, Rivals of Aether" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dH-lM-7hL">
-                                                                            <rect key="frame" x="0.0" y="14" width="163" height="29"/>
+                                                                            <rect key="frame" x="0.0" y="14" width="206.5" height="29"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="60" id="8mJ-wl-sgI"/>
                                                                             </constraints>
@@ -298,7 +291,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="148"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <prototypes>
-                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="wbJ-VU-UE2">
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventCell" rowHeight="100" id="wbJ-VU-UE2" customClass="EventCell" customModule="pocket_gg" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wbJ-VU-UE2" id="qUy-VX-zA7">
@@ -337,9 +330,19 @@
                                                                     <constraint firstItem="tcp-cn-6Jm" firstAttribute="centerY" secondItem="qUy-VX-zA7" secondAttribute="centerY" id="hhA-ci-8cl"/>
                                                                 </constraints>
                                                             </tableViewCellContentView>
+                                                            <connections>
+                                                                <outlet property="eventDate" destination="5fi-Bn-2LO" id="e6l-YO-thN"/>
+                                                                <outlet property="eventImage" destination="EU8-5H-Nhp" id="Ifw-kP-kyR"/>
+                                                                <outlet property="eventName" destination="xuZ-UH-jPk" id="58E-Y5-aR2"/>
+                                                            </connections>
                                                         </tableViewCell>
                                                     </prototypes>
                                                 </tableView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4pL-iw-wpU">
+                                                    <rect key="frame" x="169" y="56" width="37" height="37"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="HWK-cC-RC7" firstAttribute="leading" secondItem="4Vp-Wo-Awv" secondAttribute="leading" id="I7X-4o-jkh"/>
@@ -360,6 +363,7 @@
                     <navigationItem key="navigationItem" title="TournamentName" id="bLQ-16-UFI"/>
                     <connections>
                         <outlet property="eventsTableView" destination="HWK-cC-RC7" id="P53-J8-6Ja"/>
+                        <outlet property="spinner" destination="4pL-iw-wpU" id="BzP-VU-7yA"/>
                         <outlet property="tournamentDate" destination="C8M-cR-1zm" id="Vmw-CZ-niW"/>
                         <outlet property="tournamentGames" destination="8dH-lM-7hL" id="r1F-3x-dD0"/>
                         <outlet property="tournamentImage" destination="4qu-NX-Wvm" id="ygT-co-Upi"/>

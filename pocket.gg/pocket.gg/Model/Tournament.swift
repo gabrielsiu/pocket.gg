@@ -13,11 +13,14 @@ struct Tournament {
     public private(set) var games: String!
     public private(set) var date: String!
     public private(set) var imageName: String!
+    public private(set) var id: String!
     
-    init(name: String, games: String, date: String, imageName: String) {
+    
+    init(name: String, games: String, date: String, imageName: String, id: String) {
         self.name = name
         self.games = games
         self.date = date
         self.imageName = imageName
+        self.id = id
     }
 }

@@ -4,7 +4,7 @@ import Apollo
 
 public final class UpcomingTournamentsByVideogamesQuery: GraphQLQuery {
   public let operationDefinition =
-    "query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {\n  tournaments(query: {perPage: $perPage, page: $pageNum, sortBy: \"startAt asc\", filter: {upcoming: $upcoming, videogameIds: $videogameIds, isFeatured: $featured}}) {\n    __typename\n    nodes {\n      __typename\n      name\n      startAt\n      endAt\n      images {\n        __typename\n        url\n        ratio\n      }\n      events {\n        __typename\n        videogameId\n      }\n    }\n  }\n}"
+    "query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {\n  tournaments(query: {perPage: $perPage, page: $pageNum, sortBy: \"startAt asc\", filter: {upcoming: $upcoming, videogameIds: $videogameIds, isFeatured: $featured}}) {\n    __typename\n    nodes {\n      __typename\n      name\n      id\n      startAt\n      endAt\n      images {\n        __typename\n        url\n        ratio\n      }\n      events {\n        __typename\n        videogameId\n      }\n    }\n  }\n}"
 
   public var perPage: Int?
   public var pageNum: Int?
@@ -93,8 +93,9 @@ public final class UpcomingTournamentsByVideogamesQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("name", type: .scalar(String.self)),
-          GraphQLField("startAt", type: .scalar(Timestamp.self)),
-          GraphQLField("endAt", type: .scalar(Timestamp.self)),
+          GraphQLField("id", type: .scalar(GraphQLID.self)),
+          GraphQLField("startAt", type: .scalar(String.self)),
+          GraphQLField("endAt", type: .scalar(String.self)),
           GraphQLField("images", type: .list(.object(Image.selections))),
           GraphQLField("events", type: .list(.object(Event.selections))),
         ]
@@ -105,8 +106,8 @@ public final class UpcomingTournamentsByVideogamesQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(name: String? = nil, startAt: Timestamp? = nil, endAt: Timestamp? = nil, images: [Image?]? = nil, events: [Event?]? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Tournament", "name": name, "startAt": startAt, "endAt": endAt, "images": images.flatMap { (value: [Image?]) -> [ResultMap?] in value.map { (value: Image?) -> ResultMap? in value.flatMap { (value: Image) -> ResultMap in value.resultMap } } }, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }])
+        public init(name: String? = nil, id: GraphQLID? = nil, startAt: String? = nil, endAt: String? = nil, images: [Image?]? = nil, events: [Event?]? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Tournament", "name": name, "id": id, "startAt": startAt, "endAt": endAt, "images": images.flatMap { (value: [Image?]) -> [ResultMap?] in value.map { (value: Image?) -> ResultMap? in value.flatMap { (value: Image) -> ResultMap in value.resultMap } } }, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }])
         }
 
         public var __typename: String {
@@ -128,10 +129,19 @@ public final class UpcomingTournamentsByVideogamesQuery: GraphQLQuery {
           }
         }
 
-        /// When the tournament Starts
-        public var startAt: Timestamp? {
+        public var id: GraphQLID? {
           get {
-            return resultMap["startAt"] as? Timestamp
+            return resultMap["id"] as? GraphQLID
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        /// When the tournament Starts
+        public var startAt: String? {
+          get {
+            return resultMap["startAt"] as? String
           }
           set {
             resultMap.updateValue(newValue, forKey: "startAt")
@@ -139,9 +149,9 @@ public final class UpcomingTournamentsByVideogamesQuery: GraphQLQuery {
         }
 
         /// When the tournament ends
-        public var endAt: Timestamp? {
+        public var endAt: String? {
           get {
-            return resultMap["endAt"] as? Timestamp
+            return resultMap["endAt"] as? String
           }
           set {
             resultMap.updateValue(newValue, forKey: "endAt")
@@ -374,7 +384,7 @@ public final class EventsByIdQuery: GraphQLQuery {
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("name", type: .scalar(String.self)),
-            GraphQLField("startAt", type: .scalar(Timestamp.self)),
+            GraphQLField("startAt", type: .scalar(String.self)),
             GraphQLField("videogameId", type: .scalar(Int.self)),
             GraphQLField("videogame", type: .object(Videogame.selections)),
           ]
@@ -385,7 +395,7 @@ public final class EventsByIdQuery: GraphQLQuery {
             self.resultMap = unsafeResultMap
           }
 
-          public init(name: String? = nil, startAt: Timestamp? = nil, videogameId: Int? = nil, videogame: Videogame? = nil) {
+          public init(name: String? = nil, startAt: String? = nil, videogameId: Int? = nil, videogame: Videogame? = nil) {
             self.init(unsafeResultMap: ["__typename": "Event", "name": name, "startAt": startAt, "videogameId": videogameId, "videogame": videogame.flatMap { (value: Videogame) -> ResultMap in value.resultMap }])
           }
 
@@ -409,9 +419,9 @@ public final class EventsByIdQuery: GraphQLQuery {
           }
 
           /// When does this event start?
-          public var startAt: Timestamp? {
+          public var startAt: String? {
             get {
-              return resultMap["startAt"] as? Timestamp
+              return resultMap["startAt"] as? String
             }
             set {
               resultMap.updateValue(newValue, forKey: "startAt")

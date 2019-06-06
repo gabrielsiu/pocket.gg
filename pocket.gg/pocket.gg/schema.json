@@ -3587,6 +3587,18 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "isExhibition",
+              "description": "Is the phase an exhibition or not.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -4422,6 +4434,18 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "JSON",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "numRounds",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -9914,6 +9938,33 @@
               "defaultValue": "\"No longer supported\""
             }
           ]
+        },
+        {
+          "name": "publicCache",
+          "description": "Specify a query to be read from gql-public. Will use the configured cacheAge on the query resolve configuration, or the override value passed through the directive as publicCache(cacheAge: INT) argument.",
+          "locations": [
+            "FIELD"
+          ],
+          "args": [
+            {
+              "name": "cacheAge",
+              "description": "Optional override for the query-level cacheAge value.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ]
+        },
+        {
+          "name": "userData",
+          "description": "Specify a field to only be included in the response if the user is logged in.",
+          "locations": [
+            "FIELD"
+          ],
+          "args": []
         }
       ]
     }

@@ -10,7 +10,7 @@ import UIKit
 import Apollo
 
 protocol sendTournamentDataProtocol {
-    func sendDataToTournamentVC(name: String, games: String, date: String, image: UIImage)
+    func sendDataToTournamentVC(name: String, games: String, date: String, image: UIImage, id: String)
 }
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -26,6 +26,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var tournamentClickedGames: String? = nil
     var tournamentClickedDate: String? = nil
     var tournamentClickedImage: UIImage? = nil
+    var tournamentClickedID: String? = nil
     
     
     //Instantiate Alert Controller
@@ -143,8 +144,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tournamentClickedDate = currentCell.tournamentDate.text
         tournamentClickedImage = currentCell.tournamentImage.image
         
+        
         //Pass the information from the temporary variables to the delegate
-        self.delegate?.sendDataToTournamentVC(name: tournamentClickedName!, games: tournamentClickedGames!, date: tournamentClickedDate!, image: tournamentClickedImage!)
+        self.delegate?.sendDataToTournamentVC(name: tournamentClickedName!, games: tournamentClickedGames!, date: tournamentClickedDate!, image: tournamentClickedImage!, id: tournamentClickedID!)
         
         //Unhighlight the row after it's tapped
         tableView.deselectRow(at: indexPath, animated: true)

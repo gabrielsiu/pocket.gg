@@ -11,6 +11,7 @@ query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameId
                 }) {
         nodes {
             name
+            id
             startAt
             endAt
             images {
