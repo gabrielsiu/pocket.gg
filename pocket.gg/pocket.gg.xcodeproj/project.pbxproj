@@ -7,20 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
+		DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */; };
+		DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
-		DA7E51A223E46EAB0037E757 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E51A123E46EAB0037E757 /* ViewController.swift */; };
-		DA7E51A523E46EAB0037E757 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A323E46EAB0037E757 /* Main.storyboard */; };
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentList.swift; sourceTree = "<group>"; };
+		DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DA7E51A123E46EAB0037E757 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DA7E51A423E46EAB0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA7E51A623E46EAC0037E757 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA7E51A923E46EAC0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +39,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA56559223E50C3E003FEF20 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DA56559323E50C51003FEF20 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DA759E5E23E4FECD00D4B3E7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DA7E519123E46EAB0037E757 = {
 			isa = PBXGroup;
 			children = (
@@ -56,15 +74,24 @@
 		DA7E519C23E46EAB0037E757 /* pocket.gg */ = {
 			isa = PBXGroup;
 			children = (
+				DA759E5E23E4FECD00D4B3E7 /* View */,
+				DA7E51B123E475500037E757 /* Controller */,
+				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
-				DA7E51A123E46EAB0037E757 /* ViewController.swift */,
-				DA7E51A323E46EAB0037E757 /* Main.storyboard */,
 				DA7E51A623E46EAC0037E757 /* Assets.xcassets */,
 				DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */,
 				DA7E51AB23E46EAC0037E757 /* Info.plist */,
 			);
 			path = pocket.gg;
+			sourceTree = "<group>";
+		};
+		DA7E51B123E475500037E757 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +154,6 @@
 			files = (
 				DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */,
 				DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */,
-				DA7E51A523E46EAB0037E757 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +164,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA7E51A223E46EAB0037E757 /* ViewController.swift in Sources */,
+				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
+				DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
+				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DA7E51A323E46EAB0037E757 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DA7E51A423E46EAB0037E757 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
