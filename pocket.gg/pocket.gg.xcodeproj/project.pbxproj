@@ -7,65 +7,58 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA36B4E42298C74700B8342F /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA36B4E32298C74700B8342F /* EventCell.swift */; };
-		DA36B4E8229E01B100B8342F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA36B4E7229E01B000B8342F /* API.swift */; };
-		DA3B322B21D6DBD6007CCA33 /* TournamentDataService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */; };
-		DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3B323421D8A522007CCA33 /* Tournament.swift */; };
-		DA71AF9922806D890004D674 /* EventsDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71AF9822806D890004D674 /* EventsDataService.swift */; };
-		DA71AF9B2280707F0004D674 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA71AF9A2280707F0004D674 /* Event.swift */; };
-		DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB321D33CA200A72697 /* TournamentCell.swift */; };
-		DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */; };
-		DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDB921D3D94B00A72697 /* Constants.swift */; };
-		DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDBF21D3F8CE00A72697 /* MainVC.swift */; };
-		DA76BDC421D4A0AF00A72697 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA76BDC321D4A0AF00A72697 /* AuthToken.swift */; };
-		DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */; };
-		DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AAD21C56E7C00C413D8 /* Main.storyboard */; };
-		DAB09AB121C56E7E00C413D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB021C56E7E00C413D8 /* Assets.xcassets */; };
-		DAB09AB421C56E7E00C413D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */; };
-		DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A25D21DD924C00185801 /* SettingsVC.swift */; };
-		DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26321DF1D9800185801 /* VideoGameCell.swift */; };
-		DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26521E05D3600185801 /* VideoGames.swift */; };
-		DAD5A26821E067A200185801 /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26721E067A200185801 /* VideoGame.swift */; };
-		DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26B21E1E02F00185801 /* VideoGameService.swift */; };
-		DAD5A26E21E2687500185801 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26D21E2687500185801 /* SearchVC.swift */; };
-		DAD5A27021E268BF00185801 /* TournamentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A26F21E268BF00185801 /* TournamentVC.swift */; };
-		DAD5A27621FC080600185801 /* GameSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A27521FC080600185801 /* GameSelectionVC.swift */; };
-		DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFE381121D9615200C0FCB3 /* DefaultsService.swift */; };
+		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
+		DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */; };
+		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
+		DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D323E7D24E00E5DB3A /* VideoGames.swift */; };
+		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
+		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
+		DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */; };
+		DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */; };
+		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
+		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
+		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
+		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DA2939E023E7E35B00E5DB3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA7E519223E46EAB0037E757 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA7E519923E46EAB0037E757;
+			remoteInfo = pocket.gg;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.debug.xcconfig"; sourceTree = "<group>"; };
-		C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pocket.gg.release.xcconfig"; path = "Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg.release.xcconfig"; sourceTree = "<group>"; };
-		DA36B4E32298C74700B8342F /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
-		DA36B4E7229E01B000B8342F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TournamentDataService.graphql; sourceTree = "<group>"; };
-		DA3B323421D8A522007CCA33 /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
-		DA71AF9822806D890004D674 /* EventsDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDataService.swift; sourceTree = "<group>"; };
-		DA71AF9A2280707F0004D674 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		DA76BDB321D33CA200A72697 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
-		DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentDataService.swift; sourceTree = "<group>"; };
-		DA76BDB921D3D94B00A72697 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		DA76BDBF21D3F8CE00A72697 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
-		DA76BDC321D4A0AF00A72697 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
-		DAB09AA621C56E7C00C413D8 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DAB09AAE21C56E7C00C413D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		DAB09AB021C56E7E00C413D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DAB09AB321C56E7E00C413D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DAB09AB521C56E7E00C413D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAD5A25D21DD924C00185801 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
-		DAD5A26321DF1D9800185801 /* VideoGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameCell.swift; sourceTree = "<group>"; };
-		DAD5A26521E05D3600185801 /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
-		DAD5A26721E067A200185801 /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
-		DAD5A26B21E1E02F00185801 /* VideoGameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameService.swift; sourceTree = "<group>"; };
-		DAD5A26D21E2687500185801 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		DAD5A26F21E268BF00185801 /* TournamentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentVC.swift; sourceTree = "<group>"; };
-		DAD5A27521FC080600185801 /* GameSelectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSelectionVC.swift; sourceTree = "<group>"; };
-		DAFE381121D9615200C0FCB3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
+		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
+		DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		DA2939D323E7D24E00E5DB3A /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
+		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA2939DF23E7E35B00E5DB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentList.swift; sourceTree = "<group>"; };
+		DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
+		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DA7E51A623E46EAC0037E757 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA7E51A923E46EAC0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		DAB09AA321C56E7C00C413D8 /* Frameworks */ = {
+		DA2939D823E7E35B00E5DB3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA7E519723E46EAB0037E757 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -75,125 +68,128 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		200FB7755A24026D0316515C /* Pods */ = {
+		DA2939C823E7CAE300E5DB3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */,
-				C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		DA64819E21D5753200BE17C3 /* GraphQL Files */ = {
-			isa = PBXGroup;
-			children = (
-				DA3B322A21D6DBD6007CCA33 /* TournamentDataService.graphql */,
-			);
-			path = "GraphQL Files";
-			sourceTree = "<group>";
-		};
-		DA76BDAD21D332B800A72697 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				DA76BDB921D3D94B00A72697 /* Constants.swift */,
-				DA76BDC321D4A0AF00A72697 /* AuthToken.swift */,
-				DAD5A26521E05D3600185801 /* VideoGames.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		DA76BDB021D3330400A72697 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				DAD5A27521FC080600185801 /* GameSelectionVC.swift */,
-				DA76BDBF21D3F8CE00A72697 /* MainVC.swift */,
-				DAD5A25D21DD924C00185801 /* SettingsVC.swift */,
-				DAD5A26D21E2687500185801 /* SearchVC.swift */,
-				DAD5A26F21E268BF00185801 /* TournamentVC.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		DA76BDB121D3330E00A72697 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				DA76BDB321D33CA200A72697 /* TournamentCell.swift */,
-				DAD5A26321DF1D9800185801 /* VideoGameCell.swift */,
-				DA36B4E32298C74700B8342F /* EventCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		DA76BDB221D3331200A72697 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DA3B323421D8A522007CCA33 /* Tournament.swift */,
-				DAD5A26721E067A200185801 /* VideoGame.swift */,
-				DA71AF9A2280707F0004D674 /* Event.swift */,
+				DA2939C923E7CAF400E5DB3A /* Tournament.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		DA76BDB821D3D93C00A72697 /* Services */ = {
+		DA2939CB23E7CD0000E5DB3A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DA76BDB621D3D8C000A72697 /* TournamentDataService.swift */,
-				DA71AF9822806D890004D674 /* EventsDataService.swift */,
-				DAD5A26B21E1E02F00185801 /* VideoGameService.swift */,
-				DAFE381121D9615200C0FCB3 /* DefaultsService.swift */,
+				DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DA2939D023E7D1C800E5DB3A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DA2939D123E7D1D800E5DB3A /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		DAB09A9D21C56E7C00C413D8 = {
+		DA2939DC23E7E35B00E5DB3A /* pocket.ggTests */ = {
 			isa = PBXGroup;
 			children = (
-				DAB09AA821C56E7C00C413D8 /* pocket.gg */,
-				DAB09AA721C56E7C00C413D8 /* Products */,
-				200FB7755A24026D0316515C /* Pods */,
+				DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */,
+				DA2939DF23E7E35B00E5DB3A /* Info.plist */,
+			);
+			path = pocket.ggTests;
+			sourceTree = "<group>";
+		};
+		DA56559223E50C3E003FEF20 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DA56559323E50C51003FEF20 /* Constants.swift */,
+				DA2939D323E7D24E00E5DB3A /* VideoGames.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DA759E5E23E4FECD00D4B3E7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DA7E519123E46EAB0037E757 = {
+			isa = PBXGroup;
+			children = (
+				DA7E519C23E46EAB0037E757 /* pocket.gg */,
+				DA2939DC23E7E35B00E5DB3A /* pocket.ggTests */,
+				DA7E519B23E46EAB0037E757 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		DAB09AA721C56E7C00C413D8 /* Products */ = {
+		DA7E519B23E46EAB0037E757 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DAB09AA621C56E7C00C413D8 /* pocket.gg.app */,
+				DA7E519A23E46EAB0037E757 /* pocket.gg.app */,
+				DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DAB09AA821C56E7C00C413D8 /* pocket.gg */ = {
+		DA7E519C23E46EAB0037E757 /* pocket.gg */ = {
 			isa = PBXGroup;
 			children = (
-				DA76BDB821D3D93C00A72697 /* Services */,
-				DA64819E21D5753200BE17C3 /* GraphQL Files */,
-				DA76BDAD21D332B800A72697 /* Utilities */,
-				DA76BDB221D3331200A72697 /* Model */,
-				DA76BDB121D3330E00A72697 /* View */,
-				DA76BDB021D3330400A72697 /* Controller */,
-				DA36B4E7229E01B000B8342F /* API.swift */,
-				DAB09AA921C56E7C00C413D8 /* AppDelegate.swift */,
-				DAB09AAD21C56E7C00C413D8 /* Main.storyboard */,
-				DAB09AB021C56E7E00C413D8 /* Assets.xcassets */,
-				DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */,
-				DAB09AB521C56E7E00C413D8 /* Info.plist */,
+				DA2939D023E7D1C800E5DB3A /* Services */,
+				DA2939C823E7CAE300E5DB3A /* Model */,
+				DA759E5E23E4FECD00D4B3E7 /* View */,
+				DA7E51B123E475500037E757 /* Controller */,
+				DA56559223E50C3E003FEF20 /* Utilities */,
+				DA2939CB23E7CD0000E5DB3A /* Extensions */,
+				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
+				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
+				DA7E51A623E46EAC0037E757 /* Assets.xcassets */,
+				DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */,
+				DA7E51AB23E46EAC0037E757 /* Info.plist */,
 			);
 			path = pocket.gg;
+			sourceTree = "<group>";
+		};
+		DA7E51B123E475500037E757 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DAB09AA521C56E7C00C413D8 /* pocket.gg */ = {
+		DA2939DA23E7E35B00E5DB3A /* pocket.ggTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DAB09AB821C56E7E00C413D8 /* Build configuration list for PBXNativeTarget "pocket.gg" */;
+			buildConfigurationList = DA2939E223E7E35B00E5DB3A /* Build configuration list for PBXNativeTarget "pocket.ggTests" */;
 			buildPhases = (
-				113701A9CBFD9924FEF9F9CF /* [CP] Check Pods Manifest.lock */,
-				DA827FB621D32FB80071769F /* Generate Apollo GraphQL API */,
-				DAB09AA221C56E7C00C413D8 /* Sources */,
-				DAB09AA321C56E7C00C413D8 /* Frameworks */,
-				DAB09AA421C56E7C00C413D8 /* Resources */,
-				61A3B7E87FCF3D1EECA22E6D /* [CP] Embed Pods Frameworks */,
+				DA2939D723E7E35B00E5DB3A /* Sources */,
+				DA2939D823E7E35B00E5DB3A /* Frameworks */,
+				DA2939D923E7E35B00E5DB3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA2939E123E7E35B00E5DB3A /* PBXTargetDependency */,
+			);
+			name = pocket.ggTests;
+			productName = pocket.ggTests;
+			productReference = DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DA7E519923E46EAB0037E757 /* pocket.gg */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA7E51AE23E46EAC0037E757 /* Build configuration list for PBXNativeTarget "pocket.gg" */;
+			buildPhases = (
+				DA7E519623E46EAB0037E757 /* Sources */,
+				DA7E519723E46EAB0037E757 /* Frameworks */,
+				DA7E519823E46EAB0037E757 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -201,26 +197,29 @@
 			);
 			name = pocket.gg;
 			productName = pocket.gg;
-			productReference = DAB09AA621C56E7C00C413D8 /* pocket.gg.app */;
+			productReference = DA7E519A23E46EAB0037E757 /* pocket.gg.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		DAB09A9E21C56E7C00C413D8 /* Project object */ = {
+		DA7E519223E46EAB0037E757 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Gabriel Siu";
 				TargetAttributes = {
-					DAB09AA521C56E7C00C413D8 = {
-						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1020;
+					DA2939DA23E7E35B00E5DB3A = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = DA7E519923E46EAB0037E757;
+					};
+					DA7E519923E46EAB0037E757 = {
+						CreatedOnToolsVersion = 11.3.1;
 					};
 				};
 			};
-			buildConfigurationList = DAB09AA121C56E7C00C413D8 /* Build configuration list for PBXProject "pocket.gg" */;
+			buildConfigurationList = DA7E519523E46EAB0037E757 /* Build configuration list for PBXProject "pocket.gg" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -228,134 +227,76 @@
 				en,
 				Base,
 			);
-			mainGroup = DAB09A9D21C56E7C00C413D8;
-			productRefGroup = DAB09AA721C56E7C00C413D8 /* Products */;
+			mainGroup = DA7E519123E46EAB0037E757;
+			productRefGroup = DA7E519B23E46EAB0037E757 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DAB09AA521C56E7C00C413D8 /* pocket.gg */,
+				DA7E519923E46EAB0037E757 /* pocket.gg */,
+				DA2939DA23E7E35B00E5DB3A /* pocket.ggTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		DAB09AA421C56E7C00C413D8 /* Resources */ = {
+		DA2939D923E7E35B00E5DB3A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAB09AB421C56E7E00C413D8 /* LaunchScreen.storyboard in Resources */,
-				DAB09AB121C56E7E00C413D8 /* Assets.xcassets in Resources */,
-				DA3B322B21D6DBD6007CCA33 /* TournamentDataService.graphql in Resources */,
-				DAB09AAF21C56E7C00C413D8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA7E519823E46EAB0037E757 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */,
+				DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		113701A9CBFD9924FEF9F9CF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-pocket.gg-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		61A3B7E87FCF3D1EECA22E6D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/Apollo/Apollo.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Apollo.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pocket.gg/Pods-pocket.gg-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DA827FB621D32FB80071769F /* Generate Apollo GraphQL API */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Apollo GraphQL API";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "APOLLO_FRAMEWORK_PATH=\"$(eval find $FRAMEWORK_SEARCH_PATHS -name \"Apollo.framework\" -maxdepth 1)\"\n\nif [ -z \"$APOLLO_FRAMEWORK_PATH\" ]; then\necho \"error: Couldn't find Apollo.framework in FRAMEWORK_SEARCH_PATHS; make sure to add the framework to your project.\"\nexit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n$APOLLO_FRAMEWORK_PATH/check-and-run-apollo-cli.sh codegen:generate --queries=\"$(find . -name '*.graphql')\" --schema=schema.json API.swift\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		DAB09AA221C56E7C00C413D8 /* Sources */ = {
+		DA2939D723E7E35B00E5DB3A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA76BDB721D3D8C000A72697 /* TournamentDataService.swift in Sources */,
-				DA76BDB421D33CA200A72697 /* TournamentCell.swift in Sources */,
-				DAD5A25E21DD924C00185801 /* SettingsVC.swift in Sources */,
-				DA3B323521D8A522007CCA33 /* Tournament.swift in Sources */,
-				DA71AF9B2280707F0004D674 /* Event.swift in Sources */,
-				DA76BDBA21D3D94B00A72697 /* Constants.swift in Sources */,
-				DAD5A26621E05D3600185801 /* VideoGames.swift in Sources */,
-				DAD5A26E21E2687500185801 /* SearchVC.swift in Sources */,
-				DAD5A26421DF1D9800185801 /* VideoGameCell.swift in Sources */,
-				DAD5A26C21E1E02F00185801 /* VideoGameService.swift in Sources */,
-				DAD5A27021E268BF00185801 /* TournamentVC.swift in Sources */,
-				DAD5A26821E067A200185801 /* VideoGame.swift in Sources */,
-				DA36B4E8229E01B100B8342F /* API.swift in Sources */,
-				DA36B4E42298C74700B8342F /* EventCell.swift in Sources */,
-				DAD5A27621FC080600185801 /* GameSelectionVC.swift in Sources */,
-				DAFE381221D9615200C0FCB3 /* DefaultsService.swift in Sources */,
-				DA71AF9922806D890004D674 /* EventsDataService.swift in Sources */,
-				DA76BDC021D3F8CE00A72697 /* MainVC.swift in Sources */,
-				DAB09AAA21C56E7C00C413D8 /* AppDelegate.swift in Sources */,
-				DA76BDC421D4A0AF00A72697 /* AuthToken.swift in Sources */,
+				DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA7E519623E46EAB0037E757 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */,
+				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
+				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
+				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
+				DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */,
+				DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */,
+				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
+				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
+				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		DAB09AAD21C56E7C00C413D8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DAB09AAE21C56E7C00C413D8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		DA2939E123E7E35B00E5DB3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA7E519923E46EAB0037E757 /* pocket.gg */;
+			targetProxy = DA2939E023E7E35B00E5DB3A /* PBXContainerItemProxy */;
 		};
-		DAB09AB221C56E7E00C413D8 /* LaunchScreen.storyboard */ = {
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DAB09AB321C56E7E00C413D8 /* Base */,
+				DA7E51A923E46EAC0037E757 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -363,7 +304,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		DAB09AB621C56E7E00C413D8 /* Debug */ = {
+		DA2939E323E7E35B00E5DB3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H5HY9QQ8RU;
+				INFOPLIST_FILE = pocket.ggTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-ggTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pocket.gg.app/pocket.gg";
+			};
+			name = Debug;
+		};
+		DA2939E423E7E35B00E5DB3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H5HY9QQ8RU;
+				INFOPLIST_FILE = pocket.ggTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-ggTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pocket.gg.app/pocket.gg";
+			};
+			name = Release;
+		};
+		DA7E51AC23E46EAC0037E757 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -395,7 +376,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -414,7 +394,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -424,7 +404,7 @@
 			};
 			name = Debug;
 		};
-		DAB09AB721C56E7E00C413D8 /* Release */ = {
+		DA7E51AD23E46EAC0037E757 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -456,7 +436,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -469,7 +448,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -479,12 +458,10 @@
 			};
 			name = Release;
 		};
-		DAB09AB921C56E7E00C413D8 /* Debug */ = {
+		DA7E51AF23E46EAC0037E757 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F4E9C3AFBD4B72B860E85B6 /* Pods-pocket.gg.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5HY9QQ8RU;
 				INFOPLIST_FILE = pocket.gg/Info.plist;
@@ -492,20 +469,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
+				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		DAB09ABA21C56E7E00C413D8 /* Release */ = {
+		DA7E51B023E46EAC0037E757 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6020265811DB506F6092B80 /* Pods-pocket.gg.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5HY9QQ8RU;
 				INFOPLIST_FILE = pocket.gg/Info.plist;
@@ -513,7 +487,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.siuapps.pocket-gg";
+				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-gg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -523,25 +497,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DAB09AA121C56E7C00C413D8 /* Build configuration list for PBXProject "pocket.gg" */ = {
+		DA2939E223E7E35B00E5DB3A /* Build configuration list for PBXNativeTarget "pocket.ggTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DAB09AB621C56E7E00C413D8 /* Debug */,
-				DAB09AB721C56E7E00C413D8 /* Release */,
+				DA2939E323E7E35B00E5DB3A /* Debug */,
+				DA2939E423E7E35B00E5DB3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DAB09AB821C56E7E00C413D8 /* Build configuration list for PBXNativeTarget "pocket.gg" */ = {
+		DA7E519523E46EAB0037E757 /* Build configuration list for PBXProject "pocket.gg" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DAB09AB921C56E7E00C413D8 /* Debug */,
-				DAB09ABA21C56E7E00C413D8 /* Release */,
+				DA7E51AC23E46EAC0037E757 /* Debug */,
+				DA7E51AD23E46EAC0037E757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA7E51AE23E46EAC0037E757 /* Build configuration list for PBXNativeTarget "pocket.gg" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA7E51AF23E46EAC0037E757 /* Debug */,
+				DA7E51B023E46EAC0037E757 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = DAB09A9E21C56E7C00C413D8 /* Project object */;
+	rootObject = DA7E519223E46EAB0037E757 /* Project object */;
 }

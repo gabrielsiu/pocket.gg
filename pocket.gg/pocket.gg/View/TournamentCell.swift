@@ -2,42 +2,25 @@
 //  TournamentCell.swift
 //  pocket.gg
 //
-//  Created by Gabriel Siu on 2018-12-25.
-//  Copyright © 2018 Gabriel Siu. All rights reserved.
+//  Created by Gabriel Siu on 2020-01-31.
+//  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
 import UIKit
-import Alamofire
-import AlamofireImage
 
 class TournamentCell: UITableViewCell {
     
-    //Outlets
-    @IBOutlet weak var tournamentImage: UIImageView!
-    @IBOutlet weak var tournamentName: UILabel!
-    @IBOutlet weak var tournamentGames: UILabel!
-    @IBOutlet weak var tournamentDate: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: tournamentCellIdentifier)
     }
     
-    func updateView(tournament: Tournament) {
-        self.tournamentName.text = tournament.name
-        self.tournamentGames.text = tournament.games
-        self.tournamentDate.text = tournament.date
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    func updateTournamentPicture(imageUrl: String) {
-        Alamofire.request(imageUrl).responseImage { (response) in
-            if response.result.error == nil {
-                self.tournamentImage.image = response.result.value
-            }
-            else {
-                debugPrint("Error updating the tournament picture")
-            }
-        }
+    func updateView(name: String, imageUrl: String, date: String, games: [Int]) {
+        textLabel?.text = name
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

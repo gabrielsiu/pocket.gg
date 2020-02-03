@@ -2,25 +2,18 @@
 //  Constants.swift
 //  pocket.gg
 //
-//  Created by Gabriel Siu on 2018-12-26.
-//  Copyright © 2018 Gabriel Siu. All rights reserved.
+//  Created by Gabriel Siu on 2020-01-31.
+//  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-typealias CompletionHandler = (_ Success: Bool) -> ()
+// MARK: UI/Structure Constants
+let tournamentCellIdentifier = "tournamentCell"
+let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)
 
-let ENDPOINT = "https://api.smash.gg/gql/alpha"
-
-
-//User Defaults
-let PER_PAGE_KEY = "tournamentsPerPage"
-let GAMES_KEY = "preferredGames"
-let FILTERS_KEY = "preferredFilters"
-
-let BEARER_HEADER = [
-    "Authorization": "Bearer \(AUTH_TOKEN)"
-]
-
-let
-IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Smash_Ball.png/200px-Smash_Ball.png"
+// MARK: Error Messages
+let urlGenerationError = "Error generating URL from provided string: "
+let networkRequestError = "Network request failed with error: "
+let missingDataError = "Missing data from network request."
+let imageFromDataError = "Error creating image from given data."

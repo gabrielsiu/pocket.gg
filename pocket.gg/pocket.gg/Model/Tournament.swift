@@ -2,25 +2,24 @@
 //  Tournament.swift
 //  pocket.gg
 //
-//  Created by Gabriel Siu on 2018-12-30.
-//  Copyright © 2018 Gabriel Siu. All rights reserved.
+//  Created by Gabriel Siu on 2020-02-02.
+//  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
 import Foundation
 
 struct Tournament {
-    public private(set) var name: String!
-    public private(set) var games: String!
-    public private(set) var date: String!
-    public private(set) var imageName: String!
-    public private(set) var id: String!
+    var name: String
+    var imageUrl: String
+    var date: String
+    var id: Int
+    var games: [Int]
     
-    
-    init(name: String, games: String, date: String, imageName: String, id: String) {
+    init(name: String, imageUrl: String, date: String, id: Int, games: [Int]) {
         self.name = name
-        self.games = games
+        self.imageUrl = imageUrl
         self.date = date
-        self.imageName = imageName
         self.id = id
+        self.games = games
     }
 }
