@@ -12,7 +12,7 @@ class TournamentList: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "test")
+        tableView.register(TournamentCell.self, forCellReuseIdentifier: tournamentCellIdentifier)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
