@@ -11,6 +11,7 @@
 		DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D323E7D24E00E5DB3A /* VideoGames.swift */; };
+		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */; };
 		DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */; };
@@ -20,11 +21,24 @@
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DA2939E023E7E35B00E5DB3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA7E519223E46EAB0037E757 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA7E519923E46EAB0037E757;
+			remoteInfo = pocket.gg;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DA2939D323E7D24E00E5DB3A /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
+		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA2939DF23E7E35B00E5DB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentList.swift; sourceTree = "<group>"; };
 		DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
@@ -37,6 +51,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DA2939D823E7E35B00E5DB3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA7E519723E46EAB0037E757 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,6 +92,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		DA2939DC23E7E35B00E5DB3A /* pocket.ggTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */,
+				DA2939DF23E7E35B00E5DB3A /* Info.plist */,
+			);
+			path = pocket.ggTests;
+			sourceTree = "<group>";
+		};
 		DA56559223E50C3E003FEF20 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7E519C23E46EAB0037E757 /* pocket.gg */,
+				DA2939DC23E7E35B00E5DB3A /* pocket.ggTests */,
 				DA7E519B23E46EAB0037E757 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				DA7E519A23E46EAB0037E757 /* pocket.gg.app */,
+				DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,6 +165,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DA2939DA23E7E35B00E5DB3A /* pocket.ggTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA2939E223E7E35B00E5DB3A /* Build configuration list for PBXNativeTarget "pocket.ggTests" */;
+			buildPhases = (
+				DA2939D723E7E35B00E5DB3A /* Sources */,
+				DA2939D823E7E35B00E5DB3A /* Frameworks */,
+				DA2939D923E7E35B00E5DB3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA2939E123E7E35B00E5DB3A /* PBXTargetDependency */,
+			);
+			name = pocket.ggTests;
+			productName = pocket.ggTests;
+			productReference = DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DA7E519923E46EAB0037E757 /* pocket.gg */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA7E51AE23E46EAC0037E757 /* Build configuration list for PBXNativeTarget "pocket.gg" */;
@@ -160,6 +210,10 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Gabriel Siu";
 				TargetAttributes = {
+					DA2939DA23E7E35B00E5DB3A = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = DA7E519923E46EAB0037E757;
+					};
 					DA7E519923E46EAB0037E757 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -179,11 +233,19 @@
 			projectRoot = "";
 			targets = (
 				DA7E519923E46EAB0037E757 /* pocket.gg */,
+				DA2939DA23E7E35B00E5DB3A /* pocket.ggTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DA2939D923E7E35B00E5DB3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA7E519823E46EAB0037E757 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +258,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DA2939D723E7E35B00E5DB3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA7E519623E46EAB0037E757 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -214,6 +284,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DA2939E123E7E35B00E5DB3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA7E519923E46EAB0037E757 /* pocket.gg */;
+			targetProxy = DA2939E023E7E35B00E5DB3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -226,6 +304,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DA2939E323E7E35B00E5DB3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H5HY9QQ8RU;
+				INFOPLIST_FILE = pocket.ggTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-ggTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pocket.gg.app/pocket.gg";
+			};
+			name = Debug;
+		};
+		DA2939E423E7E35B00E5DB3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H5HY9QQ8RU;
+				INFOPLIST_FILE = pocket.ggTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-ggTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pocket.gg.app/pocket.gg";
+			};
+			name = Release;
+		};
 		DA7E51AC23E46EAC0037E757 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -379,6 +497,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DA2939E223E7E35B00E5DB3A /* Build configuration list for PBXNativeTarget "pocket.ggTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA2939E323E7E35B00E5DB3A /* Debug */,
+				DA2939E423E7E35B00E5DB3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DA7E519523E46EAB0037E757 /* Build configuration list for PBXProject "pocket.gg" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
