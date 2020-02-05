@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Apollo
 class NetworkService {
     
     func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {

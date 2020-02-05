@@ -1,0 +1,11 @@
+query AllTournaments($perPage: Int, $pageNum: Int) {
+    tournaments(query: {
+                perPage: $perPage
+                page: $pageNum
+                }) {
+        nodes {
+            name
+            id
+        }
+    }
+}
