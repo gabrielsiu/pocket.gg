@@ -8,6 +8,9 @@
 
 import UIKit
 
+// MARK: smash.gg GraphQL API
+let endpoint = "https://api.smash.gg/gql/alpha"
+
 // MARK: UI/Structure Constants
 let tournamentCellIdentifier = "tournamentCell"
 let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)

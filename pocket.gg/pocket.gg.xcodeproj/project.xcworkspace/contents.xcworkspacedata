@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:pocket.gg.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

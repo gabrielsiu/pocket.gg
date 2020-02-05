@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Apollo
+
+let apollo: ApolloClient = {
+    let configuration = URLSessionConfiguration.default
+    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(authToken)"]
+    let url = URL(string: endpoint)!
+    return ApolloClient(networkTransport: HTTPNetworkTransport(url: url, session: URLSession(configuration: configuration)))
+}()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
