@@ -10,7 +10,7 @@ import UIKit
 import Apollo
 class NetworkService {
     
-    func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
+    public static func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
         guard let url = generateUrl(from: imageUrl) else {
             complete(false, nil)
             return
@@ -37,7 +37,7 @@ class NetworkService {
     
     // MARK: - Private Helpers
     
-    private func generateUrl(from urlString: String) -> URL? {
+    private static func generateUrl(from urlString: String) -> URL? {
         guard let url = URL(string: urlString) else {
             debugPrint(urlGenerationError, urlString)
             return nil
