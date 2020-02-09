@@ -12,6 +12,8 @@ final class TournamentList: UITableViewController {
     
     var tournaments = [Tournament]()
 
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(TournamentCell.self, forCellReuseIdentifier: tournamentCellIdentifier)

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 //  Adapted from https://stackoverflow.com/a/30593673
+//
 
 import Foundation
 

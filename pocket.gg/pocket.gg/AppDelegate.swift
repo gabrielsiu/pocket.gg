@@ -12,7 +12,9 @@ import Apollo
 let apollo: ApolloClient = {
     let configuration = URLSessionConfiguration.default
     configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(authToken)"]
-    let url = URL(string: endpoint)!
+    guard let url = URL(string: endpoint) else {
+        fatalError()
+    }
     return ApolloClient(networkTransport: HTTPNetworkTransport(url: url, session: URLSession(configuration: configuration)))
 }()
 

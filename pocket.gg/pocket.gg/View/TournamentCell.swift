@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TournamentCell: UITableViewCell {
+final class TournamentCell: UITableViewCell {
     
     var imageViewFrame:       CGRect? = nil
     var textLabelFrame:       CGRect? = nil
@@ -44,7 +44,7 @@ class TournamentCell: UITableViewCell {
         }
     }
     
-    func updateView(name: String, imageUrl: String, date: String) {
+    public func updateView(name: String, imageUrl: String, date: String) {
         textLabel?.text = name
         NetworkService.requestImage(imageUrl: imageUrl) { [weak self] (complete, image) in
             DispatchQueue.main.async {
@@ -53,11 +53,4 @@ class TournamentCell: UITableViewCell {
         }
         detailTextLabel?.text = date
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

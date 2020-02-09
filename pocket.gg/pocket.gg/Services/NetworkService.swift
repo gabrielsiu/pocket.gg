@@ -11,6 +11,8 @@ import Apollo
 
 final class NetworkService {
     
+    // MARK: - Public Methods
+    
     public static func getUpcomingTournamentsByVideogames(pageNum: Int, complete: @escaping (_ success: Bool, _ tournaments: [Tournament]?) -> Void) {
         apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
             switch result {
@@ -54,7 +56,8 @@ final class NetworkService {
     }
     
     public static func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
-        guard let url = generateUrl(from: imageUrl) else {
+        guard let url = URL(string: imageUrl) else {
+            debugPrint(urlGenerationError, imageUrl)
             complete(false, nil)
             return
         }
@@ -76,15 +79,5 @@ final class NetworkService {
             }
             complete(true, image)
         }.resume()
-    }
-    
-    // MARK: - Private Helpers
-    
-    private static func generateUrl(from urlString: String) -> URL? {
-        guard let url = URL(string: urlString) else {
-            debugPrint(urlGenerationError, urlString)
-            return nil
-        }
-        return url
     }
 }

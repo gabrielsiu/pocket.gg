@@ -6,6 +6,7 @@
 //  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 //  List adapted from https://docs.google.com/spreadsheets/d/1Iq-gueeLYeoVbf1oxVzh5942rX9RG8E6Wxn-yhSbvbQ
+//
 
 import Foundation
 
