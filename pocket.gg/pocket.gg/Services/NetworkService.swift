@@ -8,7 +8,50 @@
 
 import UIKit
 import Apollo
-class NetworkService {
+
+final class NetworkService {
+    
+    public static func getUpcomingTournamentsByVideogames(pageNum: Int, complete: @escaping (_ success: Bool, _ tournaments: [Tournament]?) -> Void) {
+        apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
+            switch result {
+            case .failure(let error):
+                debugPrint(apolloFetchError, error as Any)
+                complete(false, nil)
+            case .success(let graphQLResult):
+                var tournaments = [Tournament]()
+                
+                guard let nodes = graphQLResult.data?.tournaments?.nodes else {
+                    debugPrint(nodesError)
+                    complete(false, nil)
+                    return
+                }
+                
+                for event in nodes {
+                    let name = event?.name ?? ""
+                    let id = Int(event?.id ?? "6") ?? 6
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .medium
+                    let start = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(event?.startAt ?? "0") ?? 0))
+                    let end = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(event?.endAt ?? "3137983740") ?? 3137983740))
+                    
+                    // TODO: Rework logic of getting best image URL to be more concise if possible
+                    var lowestRatio = 10.0
+                    var imageUrl = ""
+                    if let images = event?.images {
+                        for image in images {
+                            let ratio = image?.ratio ?? 10.0
+                            if ratio < lowestRatio {
+                                lowestRatio = ratio
+                                imageUrl = image?.url ?? ""
+                            }
+                        }
+                    }
+                    tournaments.append(Tournament(name: name, imageUrl: imageUrl, date: "\(start) - \(end)", id: id))
+                }
+                complete(true, tournaments)
+            }
+        }
+    }
     
     public static func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
         guard let url = generateUrl(from: imageUrl) else {

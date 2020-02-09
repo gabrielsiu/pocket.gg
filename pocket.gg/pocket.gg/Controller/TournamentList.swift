@@ -8,7 +8,9 @@
 
 import UIKit
 
-class TournamentList: UITableViewController {
+final class TournamentList: UITableViewController {
+    
+    var tournaments = [Tournament]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,9 @@ class TournamentList: UITableViewController {
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refreshTournamentList), for: .valueChanged)
         tableView.rowHeight = 75
+        
+        refreshTournamentList()
+        refreshControl?.beginRefreshing()
     }
 
     // MARK: - UI Setup
@@ -31,21 +36,30 @@ class TournamentList: UITableViewController {
     // MARK: - Actions
     
     @objc private func refreshTournamentList() {
-        // TODO: Add GraphQL query
-        refreshControl?.endRefreshing()
+        tournaments.removeAll()
+        NetworkService.getUpcomingTournamentsByVideogames(pageNum: 1) { [weak self] (complete, tournaments) in
+            guard let tournaments = tournaments, complete else {
+                // TODO: Add failed request popup
+                return
+            }
+            self?.tournaments = tournaments
+            self?.tableView.reloadData()
+            self?.refreshControl?.endRefreshing()
+        }
     }
     
     // MARK: - Table View Data Source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return tournaments.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: tournamentCellIdentifier, for: indexPath) as? TournamentCell {
-            cell.updateView(name: "TestTitle", imageUrl: "https://www.bleepstatic.com/content/hl-images/2017/03/18/apple-swift.jpg", date: "testDate")
-//            cell.layer.borderWidth = CGFloat(10)
-//            cell.layer.borderColor = tableView.backgroundColor?.cgColor
+            guard let tournament = tournaments[safe: indexPath.row] else {
+                return UITableViewCell()
+            }
+            cell.updateView(name: tournament.name, imageUrl: tournament.imageUrl, date: tournament.date)
             return cell
         }
         return UITableViewCell()

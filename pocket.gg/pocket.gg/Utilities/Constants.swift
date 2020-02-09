@@ -20,3 +20,6 @@ let urlGenerationError = "Error generating URL from provided string: "
 let networkRequestError = "Network request failed with error: "
 let missingDataError = "Missing data from network request."
 let imageFromDataError = "Error creating image from given data."
+
+let apolloFetchError = "Error fetching GraphQL query: "
+let nodesError = "Error while fetching tournamet nodes."

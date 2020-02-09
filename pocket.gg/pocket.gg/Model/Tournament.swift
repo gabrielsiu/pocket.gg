@@ -13,13 +13,11 @@ struct Tournament {
     var imageUrl: String
     var date: String
     var id: Int
-    var games: [Int]
     
-    init(name: String, imageUrl: String, date: String, id: Int, games: [Int]) {
+    init(name: String, imageUrl: String, date: String, id: Int) {
         self.name = name
         self.imageUrl = imageUrl
         self.date = date
         self.id = id
-        self.games = games
     }
 }
