@@ -11,10 +11,8 @@ import Apollo
 
 final class NetworkService {
     
-    // MARK: - Public Methods
-    
-    public static func getUpcomingTournamentsByVideogames(pageNum: Int, complete: @escaping (_ success: Bool, _ tournaments: [Tournament]?) -> Void) {
-        apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
+    public static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ success: Bool, _ tournaments: [Tournament]?) -> Void) {
+        apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
             switch result {
             case .failure(let error):
                 debugPrint(apolloFetchError, error as Any)
