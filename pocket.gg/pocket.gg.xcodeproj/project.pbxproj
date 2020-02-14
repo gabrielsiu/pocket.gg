@@ -17,6 +17,8 @@
 		DA4CE1F623EBC8E400BDE107 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1F523EBC8E400BDE107 /* API.swift */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
+		DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8A23F5010D00268A85 /* SettingsViewController.swift */; };
+		DA637A8D23F5012B00268A85 /* VideoGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */; };
 		DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
@@ -49,6 +51,8 @@
 		DA4CE1F523EBC8E400BDE107 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA637A8A23F5010D00268A85 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameViewController.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentList.swift; sourceTree = "<group>"; };
 		DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +128,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		DA637A8923F500EF00268A85 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DA637A8A23F5010D00268A85 /* SettingsViewController.swift */,
+				DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		DA759E5E23E4FECD00D4B3E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				DA759E5A23E4FE5500D4B3E7 /* TournamentList.swift */,
+				DA637A8923F500EF00268A85 /* Settings */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -329,12 +343,14 @@
 				DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
+				DA637A8D23F5012B00268A85 /* VideoGameViewController.swift in Sources */,
 				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */,
 				DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
+				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 				DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */,
 			);

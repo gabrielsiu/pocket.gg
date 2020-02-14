@@ -13,7 +13,13 @@ let endpoint = "https://api.smash.gg/gql/alpha"
 
 // MARK: UI/Structure Constants
 let tournamentCellIdentifier = "tournamentCell"
+let videoGameCellIdentifier = "videoGameCell"
 let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)
+
+// MARK: User Defaults
+let featuredTournaments = "featuredTournaments"
+let upcomingTournaments = "upcomingTournaments"
+let preferredVideoGames = "preferredVideoGames"
 
 // MARK: Error Messages
 let urlGenerationError = "Error generating URL from provided string: "

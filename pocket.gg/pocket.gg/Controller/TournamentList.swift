@@ -12,7 +12,7 @@ final class TournamentList: UITableViewController {
     
     var tournaments = [Tournament]()
 
-    // MARK: - Lifecycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ final class TournamentList: UITableViewController {
     private func setupNavigationBar() {
         navigationItem.title = "Tournaments"
         navigationItem.setLeftBarButton(UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil), animated: false)
-        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: nil, action: nil), animated: false)
+        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsTapped)), animated: false)
     }
     
     // MARK: - Actions
@@ -48,6 +48,10 @@ final class TournamentList: UITableViewController {
             self?.tableView.reloadData()
             self?.refreshControl?.endRefreshing()
         }
+    }
+    
+    @objc private func settingsTapped() {
+        present(UINavigationController(rootViewController: SettingsViewController(style: .grouped)), animated: true, completion: nil)
     }
     
     // MARK: - Table View Data Source
