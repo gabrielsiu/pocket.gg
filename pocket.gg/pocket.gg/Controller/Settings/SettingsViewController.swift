@@ -31,8 +31,8 @@ final class SettingsViewController: UITableViewController {
     // MARK: - Setup
     
     private func setupCells() {
-        featuredSwitch.isOn = UserDefaults.standard.bool(forKey: featuredTournaments)
-        upcomingSwitch.isOn = UserDefaults.standard.bool(forKey: upcomingTournaments)
+        featuredSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
+        upcomingSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
         
         featuredSwitch.addTarget(self, action: #selector(featuredSwitchToggled(_:)), for: .valueChanged)
         upcomingSwitch.addTarget(self, action: #selector(upcomingSwitchToggled(_:)), for: .valueChanged)
@@ -59,11 +59,11 @@ final class SettingsViewController: UITableViewController {
     }
     
     @objc private func featuredSwitchToggled(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: featuredTournaments)
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.featuredTournaments)
     }
     
     @objc private func upcomingSwitchToggled(_ sender: UISwitch) {
-        UserDefaults.standard.set(sender.isOn, forKey: upcomingTournaments)
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.upcomingTournaments)
     }
     
     // MARK: - Table View Data Source
@@ -116,7 +116,7 @@ final class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            let preferredGames = UserDefaults.standard.array(forKey: preferredVideoGames) as? [Int] ?? [1]
+            let preferredGames = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
             navigationController?.pushViewController(VideoGamesViewController(preferredGames: preferredGames), animated: true)
         case 2:
             // TODO: Add About page

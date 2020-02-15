@@ -29,11 +29,11 @@ final class VideoGamesViewController: UITableViewController {
         super.viewDidLoad()
         title = "Video Game Selection"
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: videoGameCellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.videoGameCellIdentifier)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        UserDefaults.standard.set(preferredGames, forKey: preferredVideoGames)
+        UserDefaults.standard.set(preferredGames, forKey: k.UserDefaults.preferredVideoGames)
     }
     
     // MARK: - Actions
@@ -57,7 +57,7 @@ final class VideoGamesViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: videoGameCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.videoGameCellIdentifier, for: indexPath)
         let gameId = gameIds[indexPath.row]
         cell.textLabel?.text = videoGames[gameId]
         cell.selectionStyle = .none

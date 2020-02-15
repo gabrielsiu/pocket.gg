@@ -17,13 +17,13 @@ final class NetworkService {
         apollo.fetch(query: UpcomingTournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
             switch result {
             case .failure(let error):
-                debugPrint(apolloFetchError, error as Any)
+                debugPrint(k.Error.apolloFetch, error as Any)
                 complete(false, nil)
             case .success(let graphQLResult):
                 var tournaments = [Tournament]()
                 
                 guard let nodes = graphQLResult.data?.tournaments?.nodes else {
-                    debugPrint(nodesError)
+                    debugPrint(k.Error.tournamentNodes)
                     complete(false, nil)
                     return
                 }
@@ -57,23 +57,23 @@ final class NetworkService {
     
     public static func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
         guard let url = URL(string: imageUrl) else {
-            debugPrint(urlGenerationError, imageUrl)
+            debugPrint(k.Error.urlGeneration, imageUrl)
             complete(false, nil)
             return
         }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard error == nil else {
-                debugPrint(networkRequestError, error as Any)
+                debugPrint(k.Error.networkRequest, error as Any)
                 complete(false, nil)
                 return
             }
             guard let data = data else {
-                debugPrint(missingDataError)
+                debugPrint(k.Error.missingData)
                 complete(false, nil)
                 return
             }
             guard let image = UIImage(data: data) else {
-                debugPrint(imageFromDataError)
+                debugPrint(k.Error.imageFromData)
                 complete(false, nil)
                 return
             }

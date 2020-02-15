@@ -16,7 +16,7 @@ final class TournamentList: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(TournamentCell.self, forCellReuseIdentifier: tournamentCellIdentifier)
+        tableView.register(TournamentCell.self, forCellReuseIdentifier: k.Identifiers.tournamentCellIdentifier)
         
         setupNavigationBar()
         refreshControl = UIRefreshControl()
@@ -61,7 +61,7 @@ final class TournamentList: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: tournamentCellIdentifier, for: indexPath) as? TournamentCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentCellIdentifier, for: indexPath) as? TournamentCell {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }

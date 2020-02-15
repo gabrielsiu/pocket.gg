@@ -8,25 +8,45 @@
 
 import UIKit
 
-// MARK: smash.gg GraphQL API
-let endpoint = "https://api.smash.gg/gql/alpha"
+public struct Constants {
+    
+    // MARK: - smash.gg GraphQL API
+    
+    struct API {
+        static let endpoint = "https://api.smash.gg/gql/alpha"
+    }
+    
+    // MARK: - UI/Structure Constants
+    
+    struct Identifiers {
+        static let tournamentCellIdentifier = "tournamentCell"
+        static let videoGameCellIdentifier = "videoGameCell"
+    }
+    
+    struct Colors {
+        static let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)
+    }
+    
+    // MARK: - User Defaults
+    
+    struct UserDefaults {
+        static let featuredTournaments = "featuredTournaments"
+        static let upcomingTournaments = "upcomingTournaments"
+        static let preferredVideoGames = "preferredVideoGames"
+    }
+    
+    // MARK: - Error Messages
+    
+    struct Error {
+        static let urlGeneration = "Error generating URL from provided string: "
+        static let networkRequest = "Network request failed with error: "
+        static let missingData = "ERROR: Missing data from network request."
+        static let imageFromData = "ERROR: Could not create image from given data."
 
-// MARK: UI/Structure Constants
-let tournamentCellIdentifier = "tournamentCell"
-let videoGameCellIdentifier = "videoGameCell"
-let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)
+        static let endpointUrl = "ERROR: Could not make URL from endpoint."
+        static let apolloFetch = "Error fetching GraphQL query: "
+        static let tournamentNodes = "ERROR: Could not fetch tournament nodes."
+    }
+}
 
-// MARK: User Defaults
-let featuredTournaments = "featuredTournaments"
-let upcomingTournaments = "upcomingTournaments"
-let preferredVideoGames = "preferredVideoGames"
-
-// MARK: Error Messages
-let urlGenerationError = "Error generating URL from provided string: "
-let networkRequestError = "Network request failed with error: "
-let missingDataError = "ERROR: Missing data from network request."
-let imageFromDataError = "ERROR: Could not create image from given data."
-
-let endpointUrlError = "ERROR: Could not make URL from endpoint."
-let apolloFetchError = "Error fetching GraphQL query: "
-let nodesError = "ERROR: Could not fetch tournament nodes."
+typealias k = Constants
