@@ -53,29 +53,35 @@ final class NetworkService {
         }
     }
     
-    public static func requestImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
-        guard let url = URL(string: imageUrl) else {
-            debugPrint(urlGenerationError, imageUrl)
-            complete(false, nil)
+    public static func getImage(imageUrl: String, complete: @escaping (_ success: Bool, _ image: UIImage?) -> Void) {
+        if let cachedImage = ImageCacheService.getCachedImage(with: imageUrl) {
+            complete(true, cachedImage)
             return
+        } else {
+            guard let url = URL(string: imageUrl) else {
+                debugPrint(urlGenerationError, imageUrl)
+                complete(false, nil)
+                return
+            }
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard error == nil else {
+                    debugPrint(networkRequestError, error as Any)
+                    complete(false, nil)
+                    return
+                }
+                guard let data = data else {
+                    debugPrint(missingDataError)
+                    complete(false, nil)
+                    return
+                }
+                guard let image = UIImage(data: data) else {
+                    debugPrint(imageFromDataError)
+                    complete(false, nil)
+                    return
+                }
+                ImageCacheService.saveImageToCache(image: image, with: imageUrl)
+                complete(true, image)
+            }.resume()
         }
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard error == nil else {
-                debugPrint(networkRequestError, error as Any)
-                complete(false, nil)
-                return
-            }
-            guard let data = data else {
-                debugPrint(missingDataError)
-                complete(false, nil)
-                return
-            }
-            guard let image = UIImage(data: data) else {
-                debugPrint(imageFromDataError)
-                complete(false, nil)
-                return
-            }
-            complete(true, image)
-        }.resume()
     }
 }
