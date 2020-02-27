@@ -119,10 +119,8 @@ final class SettingsViewController: UITableViewController {
             let preferredGames = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
             navigationController?.pushViewController(VideoGamesViewController(preferredGames: preferredGames), animated: true)
         case 2:
-            // TODO: Add About page
-            print("hi")
+            navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
         default: return
         }
     }
-    
 }
