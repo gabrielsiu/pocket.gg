@@ -42,6 +42,7 @@ final class TournamentList: UITableViewController {
         NetworkService.getUpcomingTournamentsByVideogames(pageNum: 1) { [weak self] (complete, tournaments) in
             guard let tournaments = tournaments, complete else {
                 // TODO: Add failed request popup
+                self?.refreshControl?.endRefreshing()
                 return
             }
             self?.tournaments = tournaments

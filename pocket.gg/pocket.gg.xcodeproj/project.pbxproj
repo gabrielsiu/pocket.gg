@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
-		DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D323E7D24E00E5DB3A /* VideoGames.swift */; };
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
-		DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DA2939D323E7D24E00E5DB3A /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
 		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,7 +100,6 @@
 		DA2939CB23E7CD0000E5DB3A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */,
 				DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */,
 			);
 			path = Extensions;
@@ -359,7 +356,6 @@
 				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentList.swift in Sources */,
-				DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,

@@ -19,6 +19,7 @@ final class NetworkService {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
                 complete(false, nil)
+                return
             case .success(let graphQLResult):
                 var tournaments = [Tournament]()
                 
