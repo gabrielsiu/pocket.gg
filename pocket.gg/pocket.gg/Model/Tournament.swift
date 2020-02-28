@@ -9,15 +9,32 @@
 import Foundation
 
 struct Tournament {
-    var name: String
-    var imageUrl: String
-    var date: String
-    var id: Int
+    let name: String
+    let logoUrl: String
+    let date: String
+    let id: Int
     
-    init(name: String, imageUrl: String, date: String, id: Int) {
-        self.name = name
-        self.imageUrl = imageUrl
-        self.date = date
-        self.id = id
+    var location: Location?
+    var events: [Event]?
+    var streams: [Stream]?
+    
+    struct Location {
+        let address: String?
+        let longitude: Double?
+        let latitude: Double?
+    }
+    
+    struct Event {
+        let name: String?
+        let videogameId: Int?
+        
+        // TODO: Add other event properties for when a user chooses an event
+    }
+
+    struct Stream {
+        let name: String?
+        let game: String?
+        let logoUrl: String?
+        let sourceUrl: String?
     }
 }

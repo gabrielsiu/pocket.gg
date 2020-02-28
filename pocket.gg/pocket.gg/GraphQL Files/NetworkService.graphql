@@ -22,31 +22,22 @@ query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID],
     }
 }
 
-query TournamentById($id: ID) {
-  tournament(id: $id) {
-    venueAddress
-    lng
-    lat
-    primaryContact
-    primaryContactType
-    events {
-      name,
-      videogameId
+query TournamentDetailsById($id: ID) {
+    tournament(id: $id) {
+        venueName
+        venueAddress
+        lng
+        lat
+        primaryContact
+        events {
+            name,
+            videogameId
+        }
+        streams {
+            streamName
+            streamGame
+            streamLogo
+            streamSource
+        }
     }
-    streams {
-      id
-      streamId
-      streamType
-      streamName
-      streamGame
-      streamLogo
-      streamSource
-      streamTypeId
-      streamStatus
-      isOnline
-      numSetups
-      removesTasks
-      parentStreamId
-    }
-  }
 }

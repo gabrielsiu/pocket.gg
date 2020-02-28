@@ -15,7 +15,6 @@
 		DA2939E923E80BBE00E5DB3A /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DA2939E823E80BBE00E5DB3A /* Apollo */; };
 		DA2939EB23E80E7900E5DB3A /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DA2939EA23E80E7900E5DB3A /* schema.json */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
-		DA4CE20223EFD37400BDE107 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE20123EFD37300BDE107 /* API.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
 		DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */; };
 		DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */; };
@@ -28,6 +27,7 @@
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
+		DADBE41F2408AABC005B707F /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41E2408AABB005B707F /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		DA2939EA23E80E7900E5DB3A /* schema.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
-		DA4CE20123EFD37300BDE107 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
 		DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentGeneralInfoCell.swift; sourceTree = "<group>"; };
@@ -65,6 +64,7 @@
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
+		DADBE41E2408AABB005B707F /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,7 +168,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DA4CE20123EFD37300BDE107 /* API.swift */,
+				DADBE41E2408AABB005B707F /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA2939EA23E80E7900E5DB3A /* schema.json */,
@@ -338,12 +338,12 @@
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
+				DADBE41F2408AABC005B707F /* API.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
 				DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
-				DA4CE20223EFD37400BDE107 /* API.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 				DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */,

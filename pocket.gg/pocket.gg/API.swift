@@ -294,18 +294,18 @@ public final class TournamentsByVideogamesQuery: GraphQLQuery {
   }
 }
 
-public final class TournamentByIdQuery: GraphQLQuery {
+public final class TournamentDetailsByIdQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition =
     """
-    query TournamentById($id: ID) {
+    query TournamentDetailsById($id: ID) {
       tournament(id: $id) {
         __typename
+        venueName
         venueAddress
         lng
         lat
         primaryContact
-        primaryContactType
         events {
           __typename
           name
@@ -313,25 +313,16 @@ public final class TournamentByIdQuery: GraphQLQuery {
         }
         streams {
           __typename
-          id
-          streamId
-          streamType
           streamName
           streamGame
           streamLogo
           streamSource
-          streamTypeId
-          streamStatus
-          isOnline
-          numSetups
-          removesTasks
-          parentStreamId
         }
       }
     }
     """
 
-  public let operationName = "TournamentById"
+  public let operationName = "TournamentDetailsById"
 
   public var id: GraphQLID?
 
@@ -375,11 +366,11 @@ public final class TournamentByIdQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("venueName", type: .scalar(String.self)),
         GraphQLField("venueAddress", type: .scalar(String.self)),
         GraphQLField("lng", type: .scalar(Double.self)),
         GraphQLField("lat", type: .scalar(Double.self)),
         GraphQLField("primaryContact", type: .scalar(String.self)),
-        GraphQLField("primaryContactType", type: .scalar(String.self)),
         GraphQLField("events", type: .list(.object(Event.selections))),
         GraphQLField("streams", type: .list(.object(Stream.selections))),
       ]
@@ -390,8 +381,8 @@ public final class TournamentByIdQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(venueAddress: String? = nil, lng: Double? = nil, lat: Double? = nil, primaryContact: String? = nil, primaryContactType: String? = nil, events: [Event?]? = nil, streams: [Stream?]? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Tournament", "venueAddress": venueAddress, "lng": lng, "lat": lat, "primaryContact": primaryContact, "primaryContactType": primaryContactType, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }, "streams": streams.flatMap { (value: [Stream?]) -> [ResultMap?] in value.map { (value: Stream?) -> ResultMap? in value.flatMap { (value: Stream) -> ResultMap in value.resultMap } } }])
+      public init(venueName: String? = nil, venueAddress: String? = nil, lng: Double? = nil, lat: Double? = nil, primaryContact: String? = nil, events: [Event?]? = nil, streams: [Stream?]? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Tournament", "venueName": venueName, "venueAddress": venueAddress, "lng": lng, "lat": lat, "primaryContact": primaryContact, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }, "streams": streams.flatMap { (value: [Stream?]) -> [ResultMap?] in value.map { (value: Stream?) -> ResultMap? in value.flatMap { (value: Stream) -> ResultMap in value.resultMap } } }])
       }
 
       public var __typename: String {
@@ -400,6 +391,15 @@ public final class TournamentByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var venueName: String? {
+        get {
+          return resultMap["venueName"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "venueName")
         }
       }
 
@@ -436,15 +436,6 @@ public final class TournamentByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "primaryContact")
-        }
-      }
-
-      public var primaryContactType: String? {
-        get {
-          return resultMap["primaryContactType"] as? String
-        }
-        set {
-          resultMap.updateValue(newValue, forKey: "primaryContactType")
         }
       }
 
@@ -520,19 +511,10 @@ public final class TournamentByIdQuery: GraphQLQuery {
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("id", type: .scalar(GraphQLID.self)),
-          GraphQLField("streamId", type: .scalar(String.self)),
-          GraphQLField("streamType", type: .scalar(Int.self)),
           GraphQLField("streamName", type: .scalar(String.self)),
           GraphQLField("streamGame", type: .scalar(String.self)),
           GraphQLField("streamLogo", type: .scalar(String.self)),
           GraphQLField("streamSource", type: .scalar(StreamSource.self)),
-          GraphQLField("streamTypeId", type: .scalar(Int.self)),
-          GraphQLField("streamStatus", type: .scalar(String.self)),
-          GraphQLField("isOnline", type: .scalar(Bool.self)),
-          GraphQLField("numSetups", type: .scalar(Int.self)),
-          GraphQLField("removesTasks", type: .scalar(Bool.self)),
-          GraphQLField("parentStreamId", type: .scalar(Int.self)),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -541,8 +523,8 @@ public final class TournamentByIdQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(id: GraphQLID? = nil, streamId: String? = nil, streamType: Int? = nil, streamName: String? = nil, streamGame: String? = nil, streamLogo: String? = nil, streamSource: StreamSource? = nil, streamTypeId: Int? = nil, streamStatus: String? = nil, isOnline: Bool? = nil, numSetups: Int? = nil, removesTasks: Bool? = nil, parentStreamId: Int? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Streams", "id": id, "streamId": streamId, "streamType": streamType, "streamName": streamName, "streamGame": streamGame, "streamLogo": streamLogo, "streamSource": streamSource, "streamTypeId": streamTypeId, "streamStatus": streamStatus, "isOnline": isOnline, "numSetups": numSetups, "removesTasks": removesTasks, "parentStreamId": parentStreamId])
+        public init(streamName: String? = nil, streamGame: String? = nil, streamLogo: String? = nil, streamSource: StreamSource? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Streams", "streamName": streamName, "streamGame": streamGame, "streamLogo": streamLogo, "streamSource": streamSource])
         }
 
         public var __typename: String {
@@ -551,33 +533,6 @@ public final class TournamentByIdQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "__typename")
-          }
-        }
-
-        public var id: GraphQLID? {
-          get {
-            return resultMap["id"] as? GraphQLID
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "id")
-          }
-        }
-
-        public var streamId: String? {
-          get {
-            return resultMap["streamId"] as? String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "streamId")
-          }
-        }
-
-        public var streamType: Int? {
-          get {
-            return resultMap["streamType"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "streamType")
           }
         }
 
@@ -614,60 +569,6 @@ public final class TournamentByIdQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "streamSource")
-          }
-        }
-
-        public var streamTypeId: Int? {
-          get {
-            return resultMap["streamTypeId"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "streamTypeId")
-          }
-        }
-
-        public var streamStatus: String? {
-          get {
-            return resultMap["streamStatus"] as? String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "streamStatus")
-          }
-        }
-
-        public var isOnline: Bool? {
-          get {
-            return resultMap["isOnline"] as? Bool
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "isOnline")
-          }
-        }
-
-        public var numSetups: Int? {
-          get {
-            return resultMap["numSetups"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "numSetups")
-          }
-        }
-
-        public var removesTasks: Bool? {
-          get {
-            return resultMap["removesTasks"] as? Bool
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "removesTasks")
-          }
-        }
-
-        public var parentStreamId: Int? {
-          get {
-            return resultMap["parentStreamId"] as? Int
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "parentStreamId")
           }
         }
       }

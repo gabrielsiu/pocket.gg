@@ -24,3 +24,12 @@ let imageFromDataError = "ERROR: Could not create image from given data."
 let endpointUrlError = "ERROR: Could not make URL from endpoint."
 let apolloFetchError = "Error fetching GraphQL query: "
 let nodesError = "ERROR: Could not fetch tournament nodes."
+
+//
+let Streams = [
+    "TWITCH": "twitch.tv",
+    "HITBOX": "smashcast.tv",
+    "STREAMME": "stream.me",
+    "MIXER": "mixer.com"
+]
+let tournamentFromId = "ERROR: Could not create tournament from its ID."

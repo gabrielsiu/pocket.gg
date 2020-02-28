@@ -12,11 +12,13 @@ import Apollo
 final class NetworkService {
     
     public static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ success: Bool, _ tournaments: [Tournament]?) -> Void) {
+        // TODO: Modify function & query to read video game IDs and other parameters from UserDefaults
         apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
             switch result {
             case .failure(let error):
                 debugPrint(apolloFetchError, error as Any)
                 complete(false, nil)
+                return
             case .success(let graphQLResult):
                 var tournaments = [Tournament]()
                 
@@ -36,19 +38,52 @@ final class NetworkService {
                     
                     // TODO: Rework logic of getting best image URL to be more concise if possible
                     var lowestRatio = 10.0
-                    var imageUrl = ""
+                    var logoUrl = ""
                     if let images = event?.images {
                         for image in images {
                             let ratio = image?.ratio ?? 10.0
                             if ratio < lowestRatio {
                                 lowestRatio = ratio
-                                imageUrl = image?.url ?? ""
+                                logoUrl = image?.url ?? ""
                             }
                         }
                     }
-                    tournaments.append(Tournament(name: name, imageUrl: imageUrl, date: "\(start) - \(end)", id: id))
+                    tournaments.append(Tournament(name: name, logoUrl: logoUrl, date: "\(start) - \(end)", id: id))
                 }
                 complete(true, tournaments)
+            }
+        }
+    }
+    
+    public static func getTournamentDetailsById(id: Int, complete: @escaping (_ success: Bool, _ tournament: [String: Any?]?) -> Void) {
+        apollo.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(apolloFetchError, error as Any)
+                complete(false, nil)
+                return
+            case .success(let graphQLResult):
+                guard let tournament = graphQLResult.data?.tournament else {
+                    debugPrint(tournamentFromId)
+                    complete(false, nil)
+                    return
+                }
+                
+                let events = tournament.events?.compactMap({ (event) -> Tournament.Event? in
+                    guard let event = event else { return nil } 
+                    return Tournament.Event(name: event.name, videogameId: event.videogameId)
+                })
+                let streams = tournament.streams?.compactMap({ (stream) -> Tournament.Stream? in
+                    guard let stream = stream else { return nil }
+                    return Tournament.Stream(name: stream.streamName, game: stream.streamGame, logoUrl: stream.streamLogo, sourceUrl: stream.streamSource?.rawValue)
+                })
+                
+                complete(true, ["venueName": tournament.venueName,
+                                "location": Tournament.Location(address: tournament.venueAddress, longitude: tournament.lng, latitude: tournament.lat),
+                                "contact": tournament.primaryContact,
+                                "events": events,
+                                "streams": streams
+                ])
             }
         }
     }
