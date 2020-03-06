@@ -74,14 +74,14 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.widthAnchor.constraint(equalToConstant: logoSize).isActive = true
+        logoImageView.widthAnchor.constraint(equalToConstant: k.Sizes.logoSize).isActive = true
         logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor).isActive = true
         
         totalStackView.translatesAutoresizingMaskIntoConstraints = false
-        totalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: margin).isActive = true
-        totalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -margin).isActive = true
-        totalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: margin).isActive = true
-        totalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -margin).isActive = true
+        totalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: k.Sizes.margin).isActive = true
+        totalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -k.Sizes.margin).isActive = true
+        totalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: k.Sizes.margin).isActive = true
+        totalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -k.Sizes.margin).isActive = true
     }
     
     func updateView(location: String, _ complete: @escaping () -> Void) {
