@@ -15,7 +15,7 @@ final class TournamentCell: UITableViewCell {
     var detailTextLabelFrame: CGRect? = nil
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: tournamentCellIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: k.Identifiers.tournamentCellIdentifier)
         
         imageView?.image = UIImage(named: "placeholder")
     }

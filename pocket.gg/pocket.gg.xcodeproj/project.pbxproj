@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		DA1C92772411EFAA00E5BA96 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C92762411EFAA00E5BA96 /* API.swift */; };
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
-		DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D323E7D24E00E5DB3A /* VideoGames.swift */; };
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
@@ -20,6 +19,8 @@
 		DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */; };
 		DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */; };
+		DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8A23F5010D00268A85 /* SettingsViewController.swift */; };
+		DA637A8D23F5012B00268A85 /* VideoGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */; };
 		DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
@@ -28,6 +29,9 @@
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
+		DADBE41524074A38005B707F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41424074A38005B707F /* AboutViewController.swift */; };
+		DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41624074AC5005B707F /* AboutInfoCell.swift */; };
+		DADBE41924074BB7005B707F /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41824074BB7005B707F /* VideoGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +47,6 @@
 /* Begin PBXFileReference section */
 		DA1C92762411EFAA00E5BA96 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
-		DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DA2939D323E7D24E00E5DB3A /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
 		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +58,8 @@
 		DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
 		DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentGeneralInfoCell.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
+		DA637A8A23F5010D00268A85 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameViewController.swift; sourceTree = "<group>"; };
 		DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +70,9 @@
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
+		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		DADBE41624074AC5005B707F /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
+		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				DA2939C923E7CAF400E5DB3A /* Tournament.swift */,
+				DADBE41824074BB7005B707F /* VideoGame.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -97,7 +106,6 @@
 		DA2939CB23E7CD0000E5DB3A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DA2939CC23E7CD2700E5DB3A /* UIView+Constraints.swift */,
 				DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */,
 			);
 			path = Extensions;
@@ -131,11 +139,22 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		DA637A8923F500EF00268A85 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DA637A8A23F5010D00268A85 /* SettingsViewController.swift */,
+				DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */,
+				DADBE41424074A38005B707F /* AboutViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		DA759E5E23E4FECD00D4B3E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */,
 				DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */,
+				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,6 +203,7 @@
 			children = (
 				DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */,
 				DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */,
+				DA637A8923F500EF00268A85 /* Settings */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -335,16 +355,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */,
+				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
+				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
+				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,
+				DA637A8D23F5012B00268A85 /* VideoGameViewController.swift in Sources */,
 				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
 				DA1C92772411EFAA00E5BA96 /* API.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
-				DA2939CD23E7CD2700E5DB3A /* UIView+Constraints.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
+				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 				DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */,
 				DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */,

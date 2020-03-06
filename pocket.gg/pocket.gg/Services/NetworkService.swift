@@ -16,14 +16,14 @@ final class NetworkService {
         apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
             switch result {
             case .failure(let error):
-                debugPrint(apolloFetchError, error as Any)
+                debugPrint(k.Error.apolloFetch, error as Any)
                 complete(nil)
                 return
             case .success(let graphQLResult):
                 var tournaments = [Tournament]()
                 
                 guard let nodes = graphQLResult.data?.tournaments?.nodes else {
-                    debugPrint(nodesError)
+                    debugPrint(k.Error.tournamentNodes)
                     complete(nil)
                     return
                 }
