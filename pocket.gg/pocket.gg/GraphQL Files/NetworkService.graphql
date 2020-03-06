@@ -1,4 +1,4 @@
-query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {
+query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {
     tournaments(query: {
                 perPage: $perPage
                 page: $pageNum
@@ -18,9 +18,28 @@ query UpcomingTournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameId
                 url
                 ratio
             }
-            events {
-                videogameId
+        }
+    }
+}
+
+query TournamentDetailsById($id: ID) {
+    tournament(id: $id) {
+        venueName
+        venueAddress
+        lng
+        lat
+        primaryContact
+        events {
+            name,
+            videogame {
+                id
             }
+        }
+        streams {
+            streamName
+            streamGame
+            streamLogo
+            streamSource
         }
     }
 }

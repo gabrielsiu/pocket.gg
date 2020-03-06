@@ -1,5 +1,5 @@
 //
-//  TournamentList.swift
+//  TournamentListViewController.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-01-31.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class TournamentList: UITableViewController {
+final class TournamentListViewController: UITableViewController {
     
     var tournaments = [Tournament]()
 
@@ -39,8 +39,8 @@ final class TournamentList: UITableViewController {
     
     @objc private func refreshTournamentList() {
         tournaments.removeAll()
-        NetworkService.getUpcomingTournamentsByVideogames(pageNum: 1) { [weak self] (complete, tournaments) in
-            guard let tournaments = tournaments, complete else {
+        NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (tournaments) in
+            guard let tournaments = tournaments else {
                 // TODO: Add failed request popup
                 self?.refreshControl?.endRefreshing()
                 return
@@ -66,9 +66,13 @@ final class TournamentList: UITableViewController {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }
-            cell.updateView(name: tournament.name, imageUrl: tournament.imageUrl, date: tournament.date)
+            cell.updateView(name: tournament.name, imageUrl: tournament.logoUrl, date: tournament.date)
             return cell
         }
         return UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.pushViewController(TournamentViewController(tournament: tournaments[indexPath.row]), animated: true)
     }
 }

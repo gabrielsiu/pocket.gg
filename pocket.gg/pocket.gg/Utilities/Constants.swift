@@ -14,6 +14,12 @@ public struct Constants {
     
     struct API {
         static let endpoint = "https://api.smash.gg/gql/alpha"
+        static let streams = [
+            "TWITCH": "twitch.tv",
+            "HITBOX": "smashcast.tv",
+            "STREAMME": "stream.me",
+            "MIXER": "mixer.com"
+        ]
     }
     
     struct URL {
@@ -31,6 +37,11 @@ public struct Constants {
     
     struct Colors {
         static let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)
+    }
+    
+    struct Sizes {
+        static let logoSize: CGFloat = 100
+        static let margin: CGFloat = 16
     }
     
     // MARK: - User Defaults
@@ -52,6 +63,7 @@ public struct Constants {
         static let endpointUrl = "ERROR: Could not make URL from endpoint."
         static let apolloFetch = "Error fetching GraphQL query: "
         static let tournamentNodes = "ERROR: Could not fetch tournament nodes."
+        static let tournamentFromId = "ERROR: Could not create tournament from its ID."
     }
 }
 
