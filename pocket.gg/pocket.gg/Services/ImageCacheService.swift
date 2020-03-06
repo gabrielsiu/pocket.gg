@@ -12,11 +12,11 @@ final class ImageCacheService {
     
     static let cache = NSCache<NSString, UIImage>()
     
-    public static func getCachedImage(with key: String) -> UIImage? {
+    static func getCachedImage(with key: String) -> UIImage? {
         return cache.object(forKey: key as NSString)
     }
     
-    public static func saveImageToCache(image: UIImage, with key: String) {
+    static func saveImageToCache(image: UIImage, with key: String) {
         cache.setObject(image, forKey: key as NSString)
     }
 }

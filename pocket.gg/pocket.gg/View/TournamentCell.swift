@@ -46,7 +46,7 @@ final class TournamentCell: UITableViewCell {
     
     public func updateView(name: String, imageUrl: String, date: String) {
         textLabel?.text = name
-        NetworkService.getImage(imageUrl: imageUrl) { [weak self] (complete, image) in
+        NetworkService.getImage(imageUrl: imageUrl) { [weak self] (image) in
             DispatchQueue.main.async {
                 self?.imageView?.image = image ?? UIImage(named: "placeholder")
             }

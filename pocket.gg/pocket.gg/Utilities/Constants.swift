@@ -33,3 +33,7 @@ let Streams = [
     "MIXER": "mixer.com"
 ]
 let tournamentFromId = "ERROR: Could not create tournament from its ID."
+//sizes
+let logoSize: CGFloat = 100
+let mediumCellHeight: CGFloat = 150
+let margin: CGFloat = 16

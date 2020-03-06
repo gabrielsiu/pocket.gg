@@ -13,6 +13,7 @@ struct Tournament {
     let logoUrl: String
     let date: String
     let id: Int
+    var headerImage: (url: String, ratio: Double)
     
     var location: Location?
     var events: [Event]?

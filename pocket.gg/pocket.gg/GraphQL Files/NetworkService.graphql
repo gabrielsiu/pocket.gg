@@ -31,7 +31,9 @@ query TournamentDetailsById($id: ID) {
         primaryContact
         events {
             name,
-            videogameId
+            videogame {
+                id
+            }
         }
         streams {
             streamName

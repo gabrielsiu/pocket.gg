@@ -39,8 +39,8 @@ final class TournamentListViewController: UITableViewController {
     
     @objc private func refreshTournamentList() {
         tournaments.removeAll()
-        NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (complete, tournaments) in
-            guard let tournaments = tournaments, complete else {
+        NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (tournaments) in
+            guard let tournaments = tournaments else {
                 // TODO: Add failed request popup
                 return
             }

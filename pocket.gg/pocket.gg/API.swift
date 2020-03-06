@@ -309,7 +309,10 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         events {
           __typename
           name
-          videogameId
+          videogame {
+            __typename
+            id
+          }
         }
         streams {
           __typename
@@ -463,7 +466,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("name", type: .scalar(String.self)),
-          GraphQLField("videogameId", type: .scalar(Int.self)),
+          GraphQLField("videogame", type: .object(Videogame.selections)),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -472,8 +475,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(name: String? = nil, videogameId: Int? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Event", "name": name, "videogameId": videogameId])
+        public init(name: String? = nil, videogame: Videogame? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Event", "name": name, "videogame": videogame.flatMap { (value: Videogame) -> ResultMap in value.resultMap }])
         }
 
         public var __typename: String {
@@ -495,13 +498,49 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           }
         }
 
-        /// Id of the videogame associated with this event
-        public var videogameId: Int? {
+        public var videogame: Videogame? {
           get {
-            return resultMap["videogameId"] as? Int
+            return (resultMap["videogame"] as? ResultMap).flatMap { Videogame(unsafeResultMap: $0) }
           }
           set {
-            resultMap.updateValue(newValue, forKey: "videogameId")
+            resultMap.updateValue(newValue?.resultMap, forKey: "videogame")
+          }
+        }
+
+        public struct Videogame: GraphQLSelectionSet {
+          public static let possibleTypes = ["Videogame"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .scalar(GraphQLID.self)),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(id: GraphQLID? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Videogame", "id": id])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID? {
+            get {
+              return resultMap["id"] as? GraphQLID
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "id")
+            }
           }
         }
       }
