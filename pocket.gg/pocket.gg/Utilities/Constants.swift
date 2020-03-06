@@ -8,7 +8,7 @@
 
 import UIKit
 
-public struct Constants {
+struct Constants {
     
     // MARK: - URLs
     

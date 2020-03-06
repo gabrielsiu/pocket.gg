@@ -10,9 +10,11 @@ import UIKit
 
 final class TournamentCell: UITableViewCell {
     
-    var imageViewFrame:       CGRect? = nil
-    var textLabelFrame:       CGRect? = nil
+    var imageViewFrame: CGRect? = nil
+    var textLabelFrame: CGRect? = nil
     var detailTextLabelFrame: CGRect? = nil
+    
+    // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: k.Identifiers.tournamentCellIdentifier)
@@ -44,7 +46,9 @@ final class TournamentCell: UITableViewCell {
         }
     }
     
-    public func updateView(name: String, imageUrl: String, date: String) {
+    // MARK: - Public Methods
+    
+    func updateView(name: String, imageUrl: String, date: String) {
         textLabel?.text = name
         NetworkService.getImage(imageUrl: imageUrl) { [weak self] (image) in
             DispatchQueue.main.async {

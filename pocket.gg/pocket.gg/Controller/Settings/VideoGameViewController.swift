@@ -14,7 +14,7 @@ final class VideoGamesViewController: UITableViewController {
     var filteredGames: [VideoGame]?
     var searchBar = UISearchBar()
     
-    // MARK: Initialization
+    // MARK: - Initialization
     
     init(preferredGames: [Int]) {
         self.preferredGames = preferredGames
@@ -25,7 +25,7 @@ final class VideoGamesViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

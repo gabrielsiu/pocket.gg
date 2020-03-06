@@ -21,6 +21,8 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     let labelStackView = UIStackView()
     let totalStackView = UIStackView()
     
+    // MARK: - Initialization
+    
     init(_ tournament: Tournament) {
         super.init(style: .default, reuseIdentifier: nil)
         
@@ -32,6 +34,8 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - UI Setup
     
     private func setupViews(logoUrl: String, name: String, date: String) {
         spinner.startAnimating()
@@ -83,6 +87,8 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         totalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: k.Sizes.margin).isActive = true
         totalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -k.Sizes.margin).isActive = true
     }
+    
+    // MARK: - Public Methods
     
     func updateView(location: String, _ complete: @escaping () -> Void) {
         DispatchQueue.main.async { [weak self] in

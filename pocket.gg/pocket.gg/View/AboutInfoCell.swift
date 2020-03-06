@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AboutInfoCell: UITableViewCell {
+final class AboutInfoCell: UITableViewCell {
     
     let appNameLabel = UILabel()
     let authorLabel = UILabel()
