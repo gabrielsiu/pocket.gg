@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DA1C92772411EFAA00E5BA96 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C92762411EFAA00E5BA96 /* API.swift */; };
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
+		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D323E7D24E00E5DB3A /* VideoGames.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		DA1C92762411EFAA00E5BA96 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
+		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DA2939D323E7D24E00E5DB3A /* VideoGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGames.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		DA2939CB23E7CD0000E5DB3A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */,
 				DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */,
 			);
 			path = Extensions;
@@ -360,6 +363,7 @@
 				DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */,
 				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
+				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,

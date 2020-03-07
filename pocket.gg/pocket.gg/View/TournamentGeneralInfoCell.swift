@@ -25,10 +25,8 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     
     init(_ tournament: Tournament) {
         super.init(style: .default, reuseIdentifier: nil)
-        
-        setupViews(logoUrl: tournament.logoUrl, name: tournament.name, date: tournament.date)
-        setupConstraints()
         selectionStyle = .none
+        setupViews(logoUrl: tournament.logoUrl, name: tournament.name, date: tournament.date)
     }
     
     required init?(coder: NSCoder) {
@@ -68,23 +66,10 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         totalStackView.spacing = 10
         
         contentView.addSubview(totalStackView)
-    }
-    
-    private func setupConstraints() {
-        // TODO: If this sort of setup a lot, make constriants extension file
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.widthAnchor.constraint(equalToConstant: k.Sizes.logoSize).isActive = true
-        logoImageView.heightAnchor.constraint(equalTo: logoImageView.widthAnchor).isActive = true
-        
-        totalStackView.translatesAutoresizingMaskIntoConstraints = false
-        totalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: k.Sizes.margin).isActive = true
-        totalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -k.Sizes.margin).isActive = true
-        totalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: k.Sizes.margin).isActive = true
-        totalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -k.Sizes.margin).isActive = true
+        spinner.setAxisConstraints(xAnchor: contentView.centerXAnchor, yAnchor: contentView.centerYAnchor)
+        logoImageView.setSquareAspectRatio(sideLength: k.Sizes.logoSize)
+        totalStackView.setEdgeConstraints(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets.init(top: k.Sizes.margin, left: k.Sizes.margin, bottom: k.Sizes.margin, right: k.Sizes.margin))
     }
     
     // MARK: - Public Methods

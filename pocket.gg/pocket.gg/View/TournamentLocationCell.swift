@@ -22,7 +22,6 @@ final class TournamentLocationCell: UITableViewCell {
         
         // WORK ON THIS
         setupViews()
-        setupConstraints()
         selectionStyle = .none
     }
     
@@ -36,14 +35,8 @@ final class TournamentLocationCell: UITableViewCell {
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
         contentView.addSubview(mapView)
-    }
-    
-    private func setupConstraints() {
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        mapView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        mapView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        mapView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        mapView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        
+        mapView.setEdgeConstraints(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor)
     }
     
     private func setupLocationNotAvailableView() {
@@ -59,14 +52,9 @@ final class TournamentLocationCell: UITableViewCell {
         
         view.addSubview(label)
         contentView.addSubview(view)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        
+        label.setAxisConstraints(xAnchor: view.centerXAnchor, yAnchor: view.centerYAnchor)
+        view.setEdgeConstraints(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor)
     }
     
     // MARK: - Public Methods

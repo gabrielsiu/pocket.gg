@@ -63,18 +63,13 @@ final class AboutInfoCell: UITableViewCell {
             aboutInfoStackView.spacing = 10
             
             contentView.addSubview(aboutInfoStackView)
-            setupConstraints(aboutInfoStackView)
+            
+            aboutInfoStackView.setAxisConstraints(xAnchor: contentView.centerXAnchor, yAnchor: contentView.centerYAnchor)
         } else {
             labelStackView.alignment = .center
             contentView.addSubview(labelStackView)
-            setupConstraints(labelStackView)
+            labelStackView.setAxisConstraints(xAnchor: contentView.centerXAnchor, yAnchor: contentView.centerYAnchor)
         }
-    }
-    
-    private func setupConstraints(_ stackView: UIStackView) {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
     
     // MARK: - Actions
