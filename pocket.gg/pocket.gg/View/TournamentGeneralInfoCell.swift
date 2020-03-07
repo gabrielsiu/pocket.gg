@@ -50,7 +50,6 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         nameLabel.text = name
         nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
         dateLabel.text = "📅 \(date)"
-        locationLabel.text = "📍 "
         
         nameLabel.numberOfLines = 0
         locationLabel.numberOfLines = 0
@@ -93,7 +92,7 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     func updateView(location: String, _ complete: @escaping () -> Void) {
         DispatchQueue.main.async { [weak self] in
             self?.spinner.stopAnimating()
-            self?.locationLabel.text?.append(location)
+            self?.locationLabel.text = "📍 \(location)"
             complete()
         }
     }

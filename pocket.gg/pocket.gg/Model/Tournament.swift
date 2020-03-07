@@ -20,6 +20,7 @@ struct Tournament {
     var streams: [Stream]?
     
     struct Location {
+        let venueName: String?
         let address: String?
         let longitude: Double?
         let latitude: Double?

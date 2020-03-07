@@ -12,6 +12,7 @@ final class TournamentViewController: UITableViewController {
     
     var headerImageView: UIImageView?
     let generalInfoCell: TournamentGeneralInfoCell
+    let locationCell: TournamentLocationCell
     
     let tournament: Tournament
     
@@ -20,6 +21,7 @@ final class TournamentViewController: UITableViewController {
     init(tournament: Tournament) {
         self.tournament = tournament
         generalInfoCell = TournamentGeneralInfoCell(tournament)
+        locationCell = TournamentLocationCell()
         super.init(style: .grouped)
     }
     
@@ -69,6 +71,7 @@ final class TournamentViewController: UITableViewController {
                     self?.tableView.beginUpdates()
                     self?.tableView.endUpdates()
                 })
+                self?.locationCell.updateView(location: location)
             }
         }
     }
@@ -76,12 +79,14 @@ final class TournamentViewController: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 // TODO: Add other sections
+        return 2 // TODO: Add other sections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
+            return 1
+        case 1:
             return 1
             // TODO: Add rows for other sections
         default:
@@ -92,7 +97,26 @@ final class TournamentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0: return generalInfoCell
+        case 1: return locationCell
         default: return UITableViewCell()
+        }
+    }
+    
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 1: return "Location"
+        default: return ""
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 1:
+            return k.Sizes.mapHeight
+        default:
+            return UITableView.automaticDimension
         }
     }
 }

@@ -11,7 +11,7 @@ import Apollo
 
 final class NetworkService {
     
-    public static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
+    static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
         // TODO: Modify function & query to read video game IDs and other parameters from UserDefaults
         apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
             switch result {
@@ -61,7 +61,7 @@ final class NetworkService {
         }
     }
     
-    public static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
+    static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
         apollo.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
             switch result {
             case .failure(let error):
@@ -84,8 +84,7 @@ final class NetworkService {
                     return Tournament.Stream(name: stream.streamName, game: stream.streamGame, logoUrl: stream.streamLogo, sourceUrl: stream.streamSource?.rawValue)
                 })
                 
-                complete(["venueName": tournament.venueName,
-                          "location": Tournament.Location(address: tournament.venueAddress, longitude: tournament.lng, latitude: tournament.lat),
+                complete(["location": Tournament.Location(venueName: tournament.venueName, address: tournament.venueAddress, longitude: tournament.lng, latitude: tournament.lat),
                           "contact": tournament.primaryContact,
                           "events": events,
                           "streams": streams
@@ -94,7 +93,7 @@ final class NetworkService {
         }
     }
     
-    public static func getImage(imageUrl: String?, complete: @escaping (_ image: UIImage?) -> Void) {
+    static func getImage(imageUrl: String?, complete: @escaping (_ image: UIImage?) -> Void) {
         guard let imageUrl = imageUrl else {
             complete(nil)
             return

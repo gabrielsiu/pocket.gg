@@ -42,6 +42,7 @@ struct Constants {
     struct Sizes {
         static let logoSize: CGFloat = 100
         static let margin: CGFloat = 16
+        static let mapHeight: CGFloat = 300
     }
     
     // MARK: - User Defaults
