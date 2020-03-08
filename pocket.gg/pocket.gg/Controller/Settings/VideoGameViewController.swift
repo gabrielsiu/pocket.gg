@@ -31,7 +31,7 @@ final class VideoGamesViewController: UITableViewController {
         super.viewDidLoad()
         title = "Video Game Selection"
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.videoGameCellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.videoGameCell)
         
         searchBar.frame = CGRect(x: 0, y: 0, width: 0, height: searchBar.intrinsicContentSize.height)
         searchBar.placeholder = "Search"
@@ -66,7 +66,7 @@ final class VideoGamesViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.videoGameCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.videoGameCell, for: indexPath)
         
         let id: Int
         let name: String

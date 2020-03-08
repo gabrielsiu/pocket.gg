@@ -31,8 +31,9 @@ struct Constants {
     // MARK: - UI/Structure Constants
     
     struct Identifiers {
-        static let tournamentCellIdentifier = "tournamentCell"
-        static let videoGameCellIdentifier = "videoGameCell"
+        static let tournamentCell = "tournamentCell"
+        static let videoGameCell = "videoGameCell"
+        static let eventCell = "eventCell"
     }
     
     struct Colors {
@@ -43,6 +44,8 @@ struct Constants {
         static let logoSize: CGFloat = 100
         static let margin: CGFloat = 16
         static let mapHeight: CGFloat = 300
+        
+        static let eventImageRatio: CGFloat = 0.75
     }
     
     // MARK: - User Defaults

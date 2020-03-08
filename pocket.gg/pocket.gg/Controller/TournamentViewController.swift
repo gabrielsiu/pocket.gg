@@ -14,7 +14,7 @@ final class TournamentViewController: UITableViewController {
     let generalInfoCell: TournamentGeneralInfoCell
     let locationCell: TournamentLocationCell
     
-    let tournament: Tournament
+    var tournament: Tournament
     
     // MARK: - Initialization
     
@@ -37,6 +37,7 @@ final class TournamentViewController: UITableViewController {
         view.backgroundColor = .white
         title = tournament.name
         
+        tableView.register(EventCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         
@@ -66,38 +67,53 @@ final class TournamentViewController: UITableViewController {
     
     private func loadTournamentDetails() {
         NetworkService.getTournamentDetailsById(id: tournament.id) { [weak self] (details) in
-            if let location = details?["location"] as? Tournament.Location, let address = location.address {
-                self?.generalInfoCell.updateView(location: address, {
-                    self?.tableView.beginUpdates()
-                    self?.tableView.endUpdates()
-                })
-                self?.locationCell.updateView(location: location)
+            guard let details = details else {
+                // TODO: Add failed request popup
+                return
             }
+            
+            self?.tournament.location = details["location"] as? Tournament.Location
+            self?.tournament.contactInfo = details["contact"] as? String
+            self?.tournament.events = details["events"] as? [Tournament.Event]
+            self?.tournament.streams = details["streams"] as? [Tournament.Stream]
+            
+            self?.generalInfoCell.updateView(location: self?.tournament.location?.address, {
+                self?.tableView.beginUpdates()
+                self?.tableView.endUpdates()
+            })
+            self?.locationCell.updateView(location: self?.tournament.location)
+            self?.tableView.reloadSections([1], with: .automatic)
         }
     }
     
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2 // TODO: Add other sections
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 1
-        case 1:
-            return 1
-            // TODO: Add rows for other sections
-        default:
-            return 0
+        case 0: return 1
+        case 1: return tournament.events?.count ?? 0
+        case 2: return 1
+        default: return 0
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0: return generalInfoCell
-        case 1: return locationCell
+        case 1:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? EventCell {
+                guard let event = tournament.events?[safe: indexPath.row] else {
+                    return UITableViewCell()
+                }
+                cell.updateView(name: event.name, videogameImage: event.videogameImage, date: event.startDate)
+                return cell
+            }
+            return UITableViewCell()
+        case 2: return locationCell
         default: return UITableViewCell()
         }
     }
@@ -106,14 +122,15 @@ final class TournamentViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 1: return "Location"
+        case 1: return "Events"
+        case 2: return "Location"
         default: return ""
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 1:
+        case 2:
             return k.Sizes.mapHeight
         default:
             return UITableView.automaticDimension

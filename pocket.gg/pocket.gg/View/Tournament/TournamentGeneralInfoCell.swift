@@ -50,6 +50,7 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         dateLabel.text = "📅 \(date)"
         
         nameLabel.numberOfLines = 0
+        dateLabel.numberOfLines = 0
         locationLabel.numberOfLines = 0
         
         labelStackView.addArrangedSubview(nameLabel)
@@ -74,8 +75,12 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func updateView(location: String, _ complete: @escaping () -> Void) {
+    func updateView(location: String?, _ complete: @escaping () -> Void) {
         DispatchQueue.main.async { [weak self] in
+            guard let location = location else {
+                complete()
+                return
+            }
             self?.spinner.stopAnimating()
             self?.locationLabel.text = "📍 \(location)"
             complete()

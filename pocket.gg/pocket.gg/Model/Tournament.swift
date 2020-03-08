@@ -15,6 +15,7 @@ struct Tournament {
     let id: Int
     var headerImage: (url: String, ratio: Double)
     
+    var contactInfo: String?
     var location: Location?
     var events: [Event]?
     var streams: [Stream]?
@@ -28,7 +29,8 @@ struct Tournament {
     
     struct Event {
         let name: String?
-        let videogameId: Int?
+        let startDate: String?
+        let videogameImage: (url: String?, ratio: Double?)?
         
         // TODO: Add other event properties for when a user chooses an event
     }

@@ -17,7 +17,7 @@ final class TournamentCell: UITableViewCell {
     // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: k.Identifiers.tournamentCellIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: k.Identifiers.tournamentCell)
         
         imageView?.image = UIImage(named: "placeholder")
     }

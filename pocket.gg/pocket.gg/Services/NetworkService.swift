@@ -77,14 +77,22 @@ final class NetworkService {
                 
                 let events = tournament.events?.compactMap({ (event) -> Tournament.Event? in
                     guard let event = event else { return nil }
-                    return Tournament.Event(name: event.name, videogameId: Int(event.videogame?.id ?? "6"))
+                    return Tournament.Event(name: event.name,
+                                            startDate: event.startAt,
+                                            videogameImage: event.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
                 })
                 let streams = tournament.streams?.compactMap({ (stream) -> Tournament.Stream? in
                     guard let stream = stream else { return nil }
-                    return Tournament.Stream(name: stream.streamName, game: stream.streamGame, logoUrl: stream.streamLogo, sourceUrl: stream.streamSource?.rawValue)
+                    return Tournament.Stream(name: stream.streamName,
+                                             game: stream.streamGame,
+                                             logoUrl: stream.streamLogo,
+                                             sourceUrl: stream.streamSource?.rawValue)
                 })
                 
-                complete(["location": Tournament.Location(venueName: tournament.venueName, address: tournament.venueAddress, longitude: tournament.lng, latitude: tournament.lat),
+                complete(["location": Tournament.Location(venueName:tournament.venueName,
+                                                          address: tournament.venueAddress,
+                                                          longitude: tournament.lng,
+                                                          latitude: tournament.lat),
                           "contact": tournament.primaryContact,
                           "events": events,
                           "streams": streams

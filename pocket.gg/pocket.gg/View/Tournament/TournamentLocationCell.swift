@@ -59,13 +59,13 @@ final class TournamentLocationCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func updateView(location: Tournament.Location) {
-        if let lat = location.latitude, let lng = location.longitude {
+    func updateView(location: Tournament.Location?) {
+        if let lat = location?.latitude, let lng = location?.longitude {
             let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lng), latitudinalMeters: 1000, longitudinalMeters: 1000)
             let annotation = MKPointAnnotation()
             annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-            annotation.title = location.venueName
-            annotation.subtitle = location.address
+            annotation.title = location?.venueName
+            annotation.subtitle = location?.address
             mapView.setRegion(region, animated: false)
             mapView.addAnnotation(annotation)
         } else {
