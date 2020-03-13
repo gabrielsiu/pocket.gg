@@ -33,6 +33,6 @@ class EventCell: UITableViewCell {
                 self?.imageView?.image = image?.cropToRatio(k.Sizes.eventImageRatio, from: CGFloat(videogameImage?.ratio ?? 1))
             }
         }
-        detailTextLabel?.text = date
+        detailTextLabel?.text = DateFormatter.shared.dateFromTimestamp(date)
     }
 }

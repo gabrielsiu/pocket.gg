@@ -31,10 +31,8 @@ final class NetworkService {
                 for event in nodes {
                     let name = event?.name ?? ""
                     let id = Int(event?.id ?? "6") ?? 6
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .medium
-                    let start = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(event?.startAt ?? "0") ?? 0))
-                    let end = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(event?.endAt ?? "3137983740") ?? 3137983740))
+                    let start = DateFormatter.shared.dateFromTimestamp(event?.startAt)
+                    let end = DateFormatter.shared.dateFromTimestamp(event?.endAt)
                     
                     let logo = event?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
                         guard let url = image?.url else { return smallestImage }
