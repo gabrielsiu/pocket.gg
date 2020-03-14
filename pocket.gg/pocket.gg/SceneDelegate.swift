@@ -20,7 +20,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = UINavigationController(rootViewController: TournamentListViewController())
+        
+        let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
+                           UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 1)]
+        let tabBarVCs = [UINavigationController(rootViewController: TournamentListViewController()),
+                         UINavigationController(rootViewController: SettingsViewController(style: .grouped))]
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
+            navController.navigationBar.prefersLargeTitles = true
+            navController.tabBarItem = tabBarItems[index]
+            return navController
+        })
+        tabBarController.selectedIndex = 0
+        
+        window?.rootViewController = tabBarController
         window?.tintColor = k.Colors.smashGgRed
         window?.makeKeyAndVisible()
     }

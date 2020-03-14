@@ -1,5 +1,5 @@
 //
-//  VideoGameViewController.swift
+//  VideoGamesViewController.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-02-12.
@@ -12,12 +12,12 @@ final class VideoGamesViewController: UITableViewController {
     
     var preferredGames: [Int]
     var filteredGames: [VideoGame]?
-    var searchBar = UISearchBar()
+    let searchBar = UISearchBar()
     
     // MARK: - Initialization
     
-    init(preferredGames: [Int]) {
-        self.preferredGames = preferredGames
+    init() {
+        preferredGames = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
         super.init(style: .grouped)
     }
     
@@ -39,7 +39,8 @@ final class VideoGamesViewController: UITableViewController {
         tableView.tableHeaderView = searchBar
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         UserDefaults.standard.set(preferredGames, forKey: k.UserDefaults.preferredVideoGames)
     }
     

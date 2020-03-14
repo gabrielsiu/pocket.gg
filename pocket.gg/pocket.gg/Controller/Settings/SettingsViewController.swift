@@ -15,47 +15,41 @@ final class SettingsViewController: UITableViewController {
     var videoGameSelectionCell = UITableViewCell()
     var aboutCell = UITableViewCell()
     
-    var featuredSwitch = UISwitch()
-    var upcomingSwitch = UISwitch()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
-        navigationItem.setRightBarButton(UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissVC)), animated: true)
-        
         setupCells()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // TODO: Save any preferences if they were changed
     }
     
     // MARK: - Setup
     
     private func setupCells() {
+        let featuredSwitch = UISwitch()
         featuredSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
-        upcomingSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
-        
         featuredSwitch.addTarget(self, action: #selector(featuredSwitchToggled(_:)), for: .valueChanged)
-        upcomingSwitch.addTarget(self, action: #selector(upcomingSwitchToggled(_:)), for: .valueChanged)
-        
         featuredCell.accessoryView = featuredSwitch
-        upcomingCell.accessoryView = upcomingSwitch
-        videoGameSelectionCell.accessoryType = .disclosureIndicator
-        aboutCell.accessoryType = .disclosureIndicator
-        
         featuredCell.selectionStyle = .none
-        upcomingCell.selectionStyle = .none
-        
         featuredCell.textLabel?.text = "Featured"
+        
+        let upcomingSwitch = UISwitch()
+        upcomingSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
+        upcomingSwitch.addTarget(self, action: #selector(upcomingSwitchToggled(_:)), for: .valueChanged)
+        upcomingCell.accessoryView = upcomingSwitch
+        upcomingCell.selectionStyle = .none
         upcomingCell.textLabel?.text = "Upcoming"
+        
+        videoGameSelectionCell.accessoryType = .disclosureIndicator
         videoGameSelectionCell.textLabel?.text = "Video Game Selection"
+        
+        aboutCell.accessoryType = .disclosureIndicator
         aboutCell.textLabel?.text = "About"
-    }
-    
-    // MARK: - Actions
-    
-    @objc private func dismissVC() {
-        dismiss(animated: true, completion: nil)
-        // TODO: Refresh main tournament list if any preferences were changed
     }
     
     @objc private func featuredSwitchToggled(_ sender: UISwitch) {
@@ -89,16 +83,8 @@ final class SettingsViewController: UITableViewController {
             case 1: return upcomingCell
             default: fatalError("Invalid row in section 0")
             }
-        case 1:
-            switch indexPath.row {
-            case 0: return videoGameSelectionCell
-            default: fatalError("Invalid row in section 1")
-            }
-        case 2:
-            switch indexPath.row {
-            case 0: return aboutCell
-            default: fatalError("Invalid row in section 2")
-            }
+        case 1: return videoGameSelectionCell
+        case 2: return aboutCell
         default: fatalError("Invalid section")
         }
     }
@@ -107,17 +93,23 @@ final class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Enable/Disable Filters"
+        case 0: return "Tournament Filters"
         case 1, 2: return ""
         default: fatalError("Invalid section")
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch section {
+        case 0: return "Enable/Disable these to change the types of tournaments that show up on the main screen."
+        default: return ""
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            let preferredGames = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
-            navigationController?.pushViewController(VideoGamesViewController(preferredGames: preferredGames), animated: true)
+            navigationController?.pushViewController(VideoGamesViewController(), animated: true)
         case 2:
             navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
         default: return

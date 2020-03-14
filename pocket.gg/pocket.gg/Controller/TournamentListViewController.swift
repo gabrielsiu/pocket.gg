@@ -16,23 +16,14 @@ final class TournamentListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Tournaments"
         tableView.register(TournamentCell.self, forCellReuseIdentifier: k.Identifiers.tournamentCell)
         
-        setupNavigationBar()
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refreshTournamentList), for: .valueChanged)
         tableView.rowHeight = 75
         
         refreshTournamentList()
-        refreshControl?.beginRefreshing()
-    }
-
-    // MARK: - UI Setup
-    
-    private func setupNavigationBar() {
-        navigationItem.title = "Tournaments"
-        navigationItem.setLeftBarButton(UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: nil), animated: false)
-        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsTapped)), animated: false)
     }
     
     // MARK: - Actions
@@ -49,10 +40,6 @@ final class TournamentListViewController: UITableViewController {
             self?.tableView.reloadData()
             self?.refreshControl?.endRefreshing()
         }
-    }
-    
-    @objc private func settingsTapped() {
-        present(UINavigationController(rootViewController: SettingsViewController(style: .grouped)), animated: true, completion: nil)
     }
     
     // MARK: - Table View Data Source
@@ -75,6 +62,11 @@ final class TournamentListViewController: UITableViewController {
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(TournamentViewController(tournament: tournaments[indexPath.row]), animated: true)
+        guard let tournament = tournaments[safe: indexPath.row] else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        // TODO: get rid of parameter names for all single parameter functions
+        navigationController?.pushViewController(TournamentViewController(tournament: tournament), animated: true)
     }
 }

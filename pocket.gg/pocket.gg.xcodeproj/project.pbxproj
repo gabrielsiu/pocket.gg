@@ -19,7 +19,7 @@
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
 		DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8A23F5010D00268A85 /* SettingsViewController.swift */; };
-		DA637A8D23F5012B00268A85 /* VideoGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */; };
+		DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */; };
 		DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */; };
 		DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */; };
 		DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */; };
@@ -63,7 +63,7 @@
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA637A8A23F5010D00268A85 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameViewController.swift; sourceTree = "<group>"; };
+		DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGamesViewController.swift; sourceTree = "<group>"; };
 		DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
 		DA637A9223F7B1A800268A85 /* TournamentGeneralInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentGeneralInfoCell.swift; sourceTree = "<group>"; };
 		DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+FromTimestamp.swift"; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				DA637A8A23F5010D00268A85 /* SettingsViewController.swift */,
-				DA637A8C23F5012B00268A85 /* VideoGameViewController.swift */,
+				DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */,
 				DADBE41424074A38005B707F /* AboutViewController.swift */,
 			);
 			path = Settings;
@@ -385,7 +385,7 @@
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DA1C9285241377F900E5BA96 /* EventCell.swift in Sources */,
 				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,
-				DA637A8D23F5012B00268A85 /* VideoGameViewController.swift in Sources */,
+				DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */,
 				DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */,
 				DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */,
 				DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */,
