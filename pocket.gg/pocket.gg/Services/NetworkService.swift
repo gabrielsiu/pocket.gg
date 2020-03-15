@@ -52,7 +52,10 @@ final class NetworkService {
                         return widestImage
                     })
                     
-                    tournaments.append(Tournament(name: name, logoUrl: logo?.0 ?? "", date: "\(start) - \(end)", id: id, headerImage: header ?? ("", 0)))
+                    tournaments.append(Tournament(name: name,
+                                                  logoUrl: logo?.0 ?? "",
+                                                  date: "\(start) - \(end)",
+                                                  id: id, headerImage: header ?? ("", 0)))
                 }
                 complete(tournaments)
             }
@@ -75,8 +78,11 @@ final class NetworkService {
                 
                 let events = tournament.events?.compactMap({ (event) -> Tournament.Event? in
                     guard let event = event else { return nil }
+                    var id: Int?
+                    if let unwrappedId = event.id { id = Int(unwrappedId) }
                     return Tournament.Event(name: event.name,
                                             startDate: event.startAt,
+                                            id: id,
                                             videogameImage: event.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
                 })
                 let streams = tournament.streams?.compactMap({ (stream) -> Tournament.Stream? in
@@ -93,7 +99,9 @@ final class NetworkService {
                                                           latitude: tournament.lat),
                           "contact": tournament.primaryContact,
                           "events": events,
-                          "streams": streams
+                          "streams": streams,
+                          "registration": (tournament.isRegistrationOpen, tournament.registrationClosesAt),
+                          "slug": tournament.slug
                 ])
             }
         }

@@ -46,5 +46,24 @@ query TournamentDetailsById($id: ID) {
             streamLogo
             streamSource
         }
+        isRegistrationOpen
+        registrationClosesAt
+        slug
+    }
+}
+
+query EventById($id: ID) {
+    event(id: $id) {
+        standings(query: {
+                  perPage: 8,
+                  }) {
+            nodes {
+                placement
+                entrant {
+                    id
+                    name
+                }
+            }
+        }
     }
 }

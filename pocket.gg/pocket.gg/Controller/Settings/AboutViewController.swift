@@ -12,9 +12,8 @@ import SafariServices
 final class AboutViewController: UITableViewController {
 
     var aboutInfoCell = AboutInfoCell()
+    var smashGgAPICell = UITableViewCell()
     var apolloiOSCell = UITableViewCell()
-    var placeholderIconCell = UITableViewCell()
-    var settingsIconCell = UITableViewCell()
     
     // MARK: - Life Cycle
     
@@ -28,13 +27,11 @@ final class AboutViewController: UITableViewController {
     // MARK: - Setup
     
     private func setupCells() {
-        apolloiOSCell.accessoryType = .disclosureIndicator
-        placeholderIconCell.accessoryType = .disclosureIndicator
-        settingsIconCell.accessoryType = .disclosureIndicator
+        smashGgAPICell.accessoryType = .disclosureIndicator
+        smashGgAPICell.textLabel?.text = "smash.gg GraphQL API"
         
+        apolloiOSCell.accessoryType = .disclosureIndicator
         apolloiOSCell.textLabel?.text = "Apollo iOS"
-        placeholderIconCell.textLabel?.text = "iOS Application Placeholder icon by Icons8"
-        settingsIconCell.textLabel?.text = "Settings icon by Icons8"
     }
     
     // MARK: - Actions
@@ -56,7 +53,7 @@ final class AboutViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return 3
+        case 1: return 2
         default: fatalError("Invalid number of sections")
         }
     }
@@ -70,9 +67,8 @@ final class AboutViewController: UITableViewController {
             }
         case 1:
             switch indexPath.row {
-            case 0: return apolloiOSCell
-            case 1: return placeholderIconCell
-            case 2: return settingsIconCell
+            case 0: return smashGgAPICell
+            case 1: return apolloiOSCell
             default: fatalError("Invalid row in section 1")
             }
         default: fatalError("Invalid section")
@@ -93,9 +89,8 @@ final class AboutViewController: UITableViewController {
         switch indexPath.section {
         case 1:
             switch indexPath.row {
-            case 0: showWebpage(with: k.URL.apolloiOS)
-            case 1: showWebpage(with: k.URL.placeholderIcon)
-            case 2: showWebpage(with: k.URL.settingsIcon)
+            case 0: showWebpage(with: k.URL.smashGgAPI)
+            case 1: showWebpage(with: k.URL.apolloiOS)
             default: fatalError("Invalid row tapped")
             }
         default: return

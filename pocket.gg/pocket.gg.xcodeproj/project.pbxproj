@@ -25,6 +25,7 @@
 		DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */; };
 		DA64A2F2241D810200481280 /* StreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2F1241D810200481280 /* StreamCell.swift */; };
 		DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2F5241DADB000481280 /* SubtitleCell.swift */; };
+		DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2FC241DF1AA00481280 /* EventViewController.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */; };
 		DA759E5D23E4FEC700D4B3E7 /* TournamentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
@@ -33,12 +34,13 @@
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
-		DAAF591724140740008F79DA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59162414073F008F79DA /* API.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
 		DADBE41524074A38005B707F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41424074A38005B707F /* AboutViewController.swift */; };
 		DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41624074AC5005B707F /* AboutInfoCell.swift */; };
 		DADBE41924074BB7005B707F /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41824074BB7005B707F /* VideoGame.swift */; };
+		DAF618E7241E02ED00AB4D93 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E6241E02EC00AB4D93 /* API.swift */; };
+		DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,7 @@
 		DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+FromTimestamp.swift"; sourceTree = "<group>"; };
 		DA64A2F1241D810200481280 /* StreamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamCell.swift; sourceTree = "<group>"; };
 		DA64A2F5241DADB000481280 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
+		DA64A2FC241DF1AA00481280 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		DA759E5C23E4FEC700D4B3E7 /* TournamentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentCell.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,11 +85,12 @@
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
-		DAAF59162414073F008F79DA /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		DADBE41624074AC5005B707F /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
 		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
+		DAF618E6241E02EC00AB4D93 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Setup.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,9 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */,
-				DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */,
+				DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */,
 				DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */,
 				DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */,
+				DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -177,6 +182,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DA64A2F9241DF04E00481280 /* Tournament */ = {
+			isa = PBXGroup;
+			children = (
+				DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */,
+				DA64A2FC241DF1AA00481280 /* EventViewController.swift */,
+			);
+			path = Tournament;
+			sourceTree = "<group>";
+		};
 		DA759E5E23E4FECD00D4B3E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,7 +230,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DAAF59162414073F008F79DA /* API.swift */,
+				DAF618E6241E02EC00AB4D93 /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA2939EA23E80E7900E5DB3A /* schema.json */,
@@ -231,7 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */,
-				DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */,
+				DA64A2F9241DF04E00481280 /* Tournament */,
 				DA637A8923F500EF00268A85 /* Settings */,
 			);
 			path = Controller;
@@ -384,11 +398,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA2939D423E7D24E00E5DB3A /* VideoGames.swift in Sources */,
+				DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */,
 				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA64A2F2241D810200481280 /* StreamCell.swift in Sources */,
+				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
+				DAF618E7241E02ED00AB4D93 /* API.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DA1C9285241377F900E5BA96 /* EventCell.swift in Sources */,
 				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,
@@ -401,7 +418,6 @@
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
-				DAAF591724140740008F79DA /* API.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */,
 				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,

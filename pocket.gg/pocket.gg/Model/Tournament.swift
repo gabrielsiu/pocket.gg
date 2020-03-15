@@ -19,6 +19,8 @@ struct Tournament {
     var location: Location?
     var events: [Event]?
     var streams: [Stream]?
+    var registration: (isOpen: Bool?, closeDate: String?)?
+    var slug: String?
     
     struct Location {
         let venueName: String?
@@ -30,6 +32,7 @@ struct Tournament {
     struct Event {
         let name: String?
         let startDate: String?
+        let id: Int?
         let videogameImage: (url: String?, ratio: Double?)?
         
         // TODO: Add other event properties for when a user chooses an event

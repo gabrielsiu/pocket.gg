@@ -24,8 +24,7 @@ struct Constants {
     
     struct URL {
         static let apolloiOS = "https://www.apollographql.com/docs/ios/"
-        static let placeholderIcon = "https://icons8.com/icon/62863/ios-application-placeholder"
-        static let settingsIcon = "https://icons8.com/icon/59996/settings"
+        static let smashGgAPI = "https://developer.smash.gg/docs/intro"
     }
     
     // MARK: - UI/Structure Constants

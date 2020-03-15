@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 final class TournamentViewController: UITableViewController {
     
@@ -34,7 +35,6 @@ final class TournamentViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
         title = tournament.name
         
         tableView.register(EventCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
@@ -77,20 +77,22 @@ final class TournamentViewController: UITableViewController {
             self?.tournament.contactInfo = details["contact"] as? String
             self?.tournament.events = details["events"] as? [Tournament.Event]
             self?.tournament.streams = details["streams"] as? [Tournament.Stream]
+            self?.tournament.registration = details["registration"] as? (Bool, String)
+            self?.tournament.slug = details["slug"] as? String
             
             self?.generalInfoCell.updateView(location: self?.tournament.location?.address, {
                 self?.tableView.beginUpdates()
                 self?.tableView.endUpdates()
             })
             self?.locationCell.updateView(location: self?.tournament.location)
-            self?.tableView.reloadSections([1], with: .automatic)
+            self?.tableView.reloadSections([1, 2], with: .automatic)
         }
     }
     
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,6 +101,7 @@ final class TournamentViewController: UITableViewController {
         case 1: return tournament.events?.count ?? 1
         case 2: return tournament.streams?.count ?? 1
         case 3: return 1
+        case 4: return 1
         default: return 0
         }
     }
@@ -110,8 +113,8 @@ final class TournamentViewController: UITableViewController {
         case 1:
             guard !(tournament.events?.isEmpty ?? true) else {
                 let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-                cell.textLabel?.text = "No events currently available."
-                cell.selectionStyle = .none
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = "No events currently available"
                 return cell
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? EventCell {
@@ -127,8 +130,8 @@ final class TournamentViewController: UITableViewController {
         case 2:
             guard !(tournament.streams?.isEmpty ?? true) else {
                 let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-                cell.textLabel?.text = "No streams currently available."
-                cell.selectionStyle = .none
+                cell.isUserInteractionEnabled = false
+                cell.textLabel?.text = "No streams currently available"
                 return cell
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? StreamCell {
@@ -142,6 +145,15 @@ final class TournamentViewController: UITableViewController {
             
         case 3: return locationCell
             
+        case 4:
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+            let registrationOpen = tournament.registration?.isOpen ?? false
+            cell.isUserInteractionEnabled = registrationOpen
+            cell.textLabel?.textColor = view.tintColor
+            cell.textLabel?.text = registrationOpen ? "Register" : "Registration not available"
+            cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate))"
+            return cell
+            
         default: return UITableViewCell()
         }
     }
@@ -153,6 +165,7 @@ final class TournamentViewController: UITableViewController {
         case 1: return "Events"
         case 2: return "Streams"
         case 3: return "Location"
+        case 4: return "Registration"
         default: return ""
         }
     }
@@ -163,6 +176,24 @@ final class TournamentViewController: UITableViewController {
             return k.Sizes.mapHeight
         default:
             return UITableView.automaticDimension
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let event = tournament.events?[safe: indexPath.row] else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        switch indexPath.section {
+        case 1: navigationController?.pushViewController(EventViewController(event), animated: true)
+        case 4:
+            guard let slug = tournament.slug else { return }
+            guard let url = URL(string: "https://smash.gg/\(slug)/register") else {
+                debugPrint(k.Error.urlGeneration, "https://smash.gg/\(slug)/register")
+                return
+            }
+            present(SFSafariViewController(url: url), animated: true)
+        default: return
         }
     }
 }
