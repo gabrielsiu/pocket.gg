@@ -30,6 +30,7 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     init(_ tournament: Tournament) {
         super.init(style: .default, reuseIdentifier: nil)
         selectionStyle = .none
+        
         setupViews(logoUrl: tournament.logoUrl, name: tournament.name, date: tournament.date)
         setupStackViews()
         setConstraints()
@@ -45,6 +46,8 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         spinner.startAnimating()
         contentView.addSubview(spinner)
         
+        logoImageView.layer.cornerRadius = k.Sizes.cornerRadius
+        logoImageView.layer.masksToBounds = true
         NetworkService.getImage(imageUrl: logoUrl) { [weak self] (logo) in
             DispatchQueue.main.async {
                 self?.logoImageView.image = logo

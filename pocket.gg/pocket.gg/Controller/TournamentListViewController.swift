@@ -66,7 +66,6 @@ final class TournamentListViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        // TODO: get rid of parameter names for all single parameter functions
-        navigationController?.pushViewController(TournamentViewController(tournament: tournament), animated: true)
+        navigationController?.pushViewController(TournamentViewController(tournament), animated: true)
     }
 }

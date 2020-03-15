@@ -19,7 +19,7 @@ final class TournamentViewController: UITableViewController {
     
     // MARK: - Initialization
     
-    init(tournament: Tournament) {
+    init(_ tournament: Tournament) {
         self.tournament = tournament
         generalInfoCell = TournamentGeneralInfoCell(tournament)
         locationCell = TournamentLocationCell()

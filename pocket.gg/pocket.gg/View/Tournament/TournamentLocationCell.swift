@@ -19,10 +19,9 @@ final class TournamentLocationCell: UITableViewCell {
     
     init() {
         super.init(style: .default, reuseIdentifier: nil)
-        
-        // WORK ON THIS
-        setupViews()
         selectionStyle = .none
+        
+        setupViews()
     }
     
     required init?(coder: NSCoder) {

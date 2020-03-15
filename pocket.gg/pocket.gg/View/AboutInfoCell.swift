@@ -40,10 +40,7 @@ final class AboutInfoCell: UITableViewCell {
         
         authorLabel.text = "Created by Gabriel Siu"
         
-        labelStackView.addArrangedSubview(appNameLabel)
-        labelStackView.addArrangedSubview(authorLabel)
-        labelStackView.axis = .vertical
-        labelStackView.spacing = 10
+        labelStackView.setup(subviews: [appNameLabel, authorLabel], axis: .vertical, spacing: 10)
         
         if let appIcon = appIcon {
             labelStackView.alignment = .leading
@@ -56,11 +53,9 @@ final class AboutInfoCell: UITableViewCell {
             iconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(iconImageViewTapped)))
             iconImageView.isUserInteractionEnabled = true
             
-            aboutInfoStackView = UIStackView(arrangedSubviews: [iconImageView, labelStackView])
+            aboutInfoStackView = UIStackView()
             guard let aboutInfoStackView = aboutInfoStackView else { return }
-            aboutInfoStackView.axis = .horizontal
-            aboutInfoStackView.alignment = .top
-            aboutInfoStackView.spacing = 10
+            aboutInfoStackView.setup(subviews: [iconImageView, labelStackView], axis: .horizontal, alignment: .top, spacing: 10)
             
             contentView.addSubview(aboutInfoStackView)
             

@@ -46,6 +46,8 @@ struct Constants {
         static let mapHeight: CGFloat = 300
         
         static let eventImageRatio: CGFloat = 0.75
+        
+        static let cornerRadius: CGFloat = 5
     }
     
     // MARK: - User Defaults

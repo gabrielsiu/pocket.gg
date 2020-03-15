@@ -37,6 +37,9 @@ class SubtitleCell: UITableViewCell {
     func updateView(text: String?, imageInfo: (url: String?, ratio: Double?)?, detailText: String?, placeholderName: String, newRatio: CGFloat? = nil) {
         textLabel?.text = text
         detailTextLabel?.text = detailText
+        
+        imageView?.layer.cornerRadius = k.Sizes.cornerRadius
+        imageView?.layer.masksToBounds = true
         NetworkService.getImage(imageUrl: imageInfo?.url) { [weak self] (image) in
             
             guard let image = image else {
@@ -46,7 +49,7 @@ class SubtitleCell: UITableViewCell {
                 }
                 return
             }
-            // TODO: If possible, find a way to crop the image to the exact same size as the placeholder (currently, some of the text labels' frames are being slightly shifting upon the cell being tapped)
+            // TODO: If possible, find a way to crop the image to the exact same size as the placeholder (currently, some of the text labels' frames are being slightly shifted upon the cell being tapped)
             var finalImage: UIImage?
             if let newRatio = newRatio, let prevRatio = imageInfo?.ratio {
                 finalImage = image.cropToRatio(newRatio, from: CGFloat(prevRatio))
