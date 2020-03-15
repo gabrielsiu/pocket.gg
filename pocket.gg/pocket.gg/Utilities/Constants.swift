@@ -34,6 +34,7 @@ struct Constants {
         static let tournamentCell = "tournamentCell"
         static let videoGameCell = "videoGameCell"
         static let eventCell = "eventCell"
+        static let streamCell = "streamCell"
     }
     
     struct Colors {

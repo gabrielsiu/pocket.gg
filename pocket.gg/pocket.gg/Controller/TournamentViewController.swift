@@ -38,6 +38,7 @@ final class TournamentViewController: UITableViewController {
         title = tournament.name
         
         tableView.register(EventCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
+        tableView.register(StreamCell.self, forCellReuseIdentifier: k.Identifiers.streamCell)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         
@@ -89,14 +90,15 @@ final class TournamentViewController: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return tournament.events?.count ?? 0
-        case 2: return 1
+        case 1: return tournament.events?.count ?? 1
+        case 2: return tournament.streams?.count ?? 1
+        case 3: return 1
         default: return 0
         }
     }
@@ -104,16 +106,42 @@ final class TournamentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0: return generalInfoCell
+            
         case 1:
+            guard !(tournament.events?.isEmpty ?? true) else {
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+                cell.textLabel?.text = "No events currently available."
+                cell.selectionStyle = .none
+                return cell
+            }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? EventCell {
                 guard let event = tournament.events?[safe: indexPath.row] else {
                     return UITableViewCell()
                 }
-                cell.updateView(name: event.name, videogameImage: event.videogameImage, date: event.startDate)
+                let dateText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: dateText, placeholderName: "game-controller", newRatio: k.Sizes.eventImageRatio)
                 return cell
             }
             return UITableViewCell()
-        case 2: return locationCell
+            
+        case 2:
+            guard !(tournament.streams?.isEmpty ?? true) else {
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+                cell.textLabel?.text = "No streams currently available."
+                cell.selectionStyle = .none
+                return cell
+            }
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? StreamCell {
+                guard let stream = tournament.streams?[safe: indexPath.row] else {
+                    return UITableViewCell()
+                }
+                cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game, placeholderName: "placeholder")
+                return cell
+            }
+            return UITableViewCell()
+            
+        case 3: return locationCell
+            
         default: return UITableViewCell()
         }
     }
@@ -123,14 +151,15 @@ final class TournamentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 1: return "Events"
-        case 2: return "Location"
+        case 2: return "Streams"
+        case 3: return "Location"
         default: return ""
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 2:
+        case 3:
             return k.Sizes.mapHeight
         default:
             return UITableView.automaticDimension

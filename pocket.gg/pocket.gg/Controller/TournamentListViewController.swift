@@ -53,7 +53,7 @@ final class TournamentListViewController: UITableViewController {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }
-            cell.updateView(name: tournament.name, imageUrl: tournament.logoUrl, date: tournament.date)
+            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: tournament.date, placeholderName: "placeholder")
             return cell
         }
         return UITableViewCell()
