@@ -35,7 +35,7 @@ struct Tournament {
         let id: Int?
         let videogameImage: (url: String?, ratio: Double?)?
         
-        // TODO: Add other event properties for when a user chooses an event
+        var topStandings: [(name: String?, placement: Int?)]?
     }
 
     struct Stream {

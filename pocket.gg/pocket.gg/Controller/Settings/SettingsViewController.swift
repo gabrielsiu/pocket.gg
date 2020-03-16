@@ -112,7 +112,7 @@ final class SettingsViewController: UITableViewController {
         case 1:
             navigationController?.pushViewController(VideoGamesViewController(), animated: true)
         case 2:
-            navigationController?.pushViewController(AboutViewController(style: .grouped), animated: true)
+            navigationController?.pushViewController(AboutViewController(style: .insetGrouped), animated: true)
         default: return
         }
     }

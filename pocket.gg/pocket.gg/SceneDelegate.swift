@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
                            UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 1)]
         let tabBarVCs = [UINavigationController(rootViewController: TournamentListViewController()),
-                         UINavigationController(rootViewController: SettingsViewController(style: .grouped))]
+                         UINavigationController(rootViewController: SettingsViewController(style: .insetGrouped))]
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
             navController.navigationBar.prefersLargeTitles = true

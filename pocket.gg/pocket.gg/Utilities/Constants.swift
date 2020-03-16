@@ -34,6 +34,7 @@ struct Constants {
         static let videoGameCell = "videoGameCell"
         static let eventCell = "eventCell"
         static let streamCell = "streamCell"
+        static let standingCell = "standingCell"
     }
     
     struct Colors {
@@ -70,6 +71,7 @@ struct Constants {
         static let apolloFetch = "Error fetching GraphQL query: "
         static let tournamentNodes = "ERROR: Could not fetch tournament nodes."
         static let tournamentFromId = "ERROR: Could not create tournament from its ID."
+        static let standingsNodes = "ERROR: Could not fetch event standings nodes."
     }
 }
 

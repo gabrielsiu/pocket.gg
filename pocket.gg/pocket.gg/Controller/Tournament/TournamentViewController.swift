@@ -37,8 +37,8 @@ final class TournamentViewController: UITableViewController {
         
         title = tournament.name
         
-        tableView.register(EventCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
-        tableView.register(StreamCell.self, forCellReuseIdentifier: k.Identifiers.streamCell)
+        tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
+        tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.streamCell)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         
@@ -92,6 +92,12 @@ final class TournamentViewController: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
+        // Sections:
+        // 0 - General Info
+        // 1 - Events
+        // 2 - Streams
+        // 3 - Location
+        // 4 - Registration
         return 5
     }
 
@@ -117,12 +123,13 @@ final class TournamentViewController: UITableViewController {
                 cell.textLabel?.text = "No events currently available"
                 return cell
             }
-            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? EventCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? SubtitleCell {
                 guard let event = tournament.events?[safe: indexPath.row] else {
                     return UITableViewCell()
                 }
                 let dateText = DateFormatter.shared.dateFromTimestamp(event.startDate)
-                cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: dateText, placeholderName: "game-controller", newRatio: k.Sizes.eventImageRatio)
+                cell.setPlaceholder("game-controller")
+                cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: dateText, newRatio: k.Sizes.eventImageRatio)
                 return cell
             }
             return UITableViewCell()
@@ -134,11 +141,12 @@ final class TournamentViewController: UITableViewController {
                 cell.textLabel?.text = "No streams currently available"
                 return cell
             }
-            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? StreamCell {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
                 guard let stream = tournament.streams?[safe: indexPath.row] else {
                     return UITableViewCell()
                 }
-                cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game, placeholderName: "placeholder")
+                cell.setPlaceholder("placeholder")
+                cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game)
                 return cell
             }
             return UITableViewCell()
@@ -152,6 +160,7 @@ final class TournamentViewController: UITableViewController {
             cell.textLabel?.textColor = view.tintColor
             cell.textLabel?.text = registrationOpen ? "Register" : "Registration not available"
             cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate))"
+            cell.accessoryType = registrationOpen ? .disclosureIndicator : .none
             return cell
             
         default: return UITableViewCell()

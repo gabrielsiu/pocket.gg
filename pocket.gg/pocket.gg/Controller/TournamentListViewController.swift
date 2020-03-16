@@ -17,7 +17,7 @@ final class TournamentListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tournaments"
-        tableView.register(TournamentCell.self, forCellReuseIdentifier: k.Identifiers.tournamentCell)
+        tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.tournamentCell)
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refreshTournamentList), for: .valueChanged)
@@ -49,11 +49,12 @@ final class TournamentListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? TournamentCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? SubtitleCell {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }
-            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: tournament.date, placeholderName: "placeholder")
+            cell.setPlaceholder("placeholder")
+            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: tournament.date)
             return cell
         }
         return UITableViewCell()

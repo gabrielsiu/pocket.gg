@@ -63,7 +63,7 @@ final class NetworkService {
     }
     
     static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
-        apollo.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
+        apollo.fetch(query: TournamentDetailsByIdQuery(id: "2018")) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -103,6 +103,29 @@ final class NetworkService {
                           "registration": (tournament.isRegistrationOpen, tournament.registrationClosesAt),
                           "slug": tournament.slug
                 ])
+            }
+        }
+    }
+    
+    static func getEventById(id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
+        apollo.fetch(query: EventByIdQuery(id: "\(id)")) { (result) in
+            switch result {
+                case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                complete(nil)
+                return
+                
+            case .success(let graphQLResult):
+                guard let nodes = graphQLResult.data?.event?.standings?.nodes else {
+                    debugPrint(k.Error.standingsNodes)
+                    complete(nil)
+                    return
+                }
+                var standings = [(name: String?, placement: Int?)]()
+                for standing in nodes {
+                    standings.append((standing?.entrant?.name, standing?.placement))
+                }
+                complete(["standings": standings])
             }
         }
     }

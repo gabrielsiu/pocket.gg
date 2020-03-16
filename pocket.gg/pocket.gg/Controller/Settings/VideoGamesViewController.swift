@@ -12,7 +12,10 @@ final class VideoGamesViewController: UITableViewController {
     
     var preferredGames: [Int]
     var filteredGames: [VideoGame]?
-    let searchBar = UISearchBar()
+    let searchController = UISearchController(searchResultsController: nil)
+    var searchBarText: String? {
+        return searchController.searchBar.text
+    }
     
     // MARK: - Initialization
     
@@ -30,13 +33,13 @@ final class VideoGamesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Video Game Selection"
-        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.videoGameCell)
         
-        searchBar.frame = CGRect(x: 0, y: 0, width: 0, height: searchBar.intrinsicContentSize.height)
-        searchBar.placeholder = "Search"
-        searchBar.delegate = self
-        tableView.tableHeaderView = searchBar
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,24 +94,16 @@ final class VideoGamesViewController: UITableViewController {
     }
 }
 
-// MARK: - Search Bar Delegate
+// MARK: - Search Controller Protocol
 
-extension VideoGamesViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard searchText.count != 0 else {
+extension VideoGamesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchBarText, !(searchBarText?.isEmpty ?? true) else {
             filteredGames = nil
             tableView.reloadData()
             return
         }
-        
-        filteredGames = videoGames.filter { (videoGame) -> Bool in
-            return videoGame.name.lowercased().contains(searchText.lowercased())
-        }
+        filteredGames = videoGames.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         tableView.reloadData()
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
     }
 }

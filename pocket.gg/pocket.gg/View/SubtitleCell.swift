@@ -8,11 +8,24 @@
 
 import UIKit
 
-class SubtitleCell: UITableViewCell {
+final class SubtitleCell: UITableViewCell {
     
     var imageViewFrame: CGRect? = nil
     var textLabelFrame: CGRect? = nil
     var detailTextLabelFrame: CGRect? = nil
+    
+    // MARK: - Initialization
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        accessoryType = .disclosureIndicator
+        contentView.clipsToBounds = true
+        imageView?.contentMode = .scaleAspectFill
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -34,21 +47,20 @@ class SubtitleCell: UITableViewCell {
         }
     }
     
-    func updateView(text: String?, imageInfo: (url: String?, ratio: Double?)?, detailText: String?, placeholderName: String, newRatio: CGFloat? = nil) {
+    // MARK: - Public Methods
+    
+    func setPlaceholder(_ named: String) {
+        imageView?.image = UIImage(named: named)
+    }
+    
+    func updateView(text: String?, imageInfo: (url: String?, ratio: Double?)?, detailText: String?, newRatio: CGFloat? = nil) {
         textLabel?.text = text
         detailTextLabel?.text = detailText
         
         imageView?.layer.cornerRadius = k.Sizes.cornerRadius
         imageView?.layer.masksToBounds = true
         NetworkService.getImage(imageUrl: imageInfo?.url) { [weak self] (image) in
-            
-            guard let image = image else {
-                DispatchQueue.main.async {
-                    // TODO: Currently observing that when a cell gets dequeued and the image is nil, the imageView of the cell takes on an image from another cell. If it's possible to fix this behaviour, then we don't need to explicitly set the image to the placeholder again.
-                    self?.imageView?.image = UIImage(named: placeholderName)
-                }
-                return
-            }
+            guard let image = image else { return }
             // TODO: If possible, find a way to crop the image to the exact same size as the placeholder (currently, some of the text labels' frames are being slightly shifted upon the cell being tapped)
             var finalImage: UIImage?
             if let newRatio = newRatio, let prevRatio = imageInfo?.ratio {

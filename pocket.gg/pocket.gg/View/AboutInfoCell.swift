@@ -24,6 +24,7 @@ final class AboutInfoCell: UITableViewCell {
     init() {
         super.init(style: .default, reuseIdentifier: nil)
         selectionStyle = .none
+        backgroundColor = .clear
         
         setupViews()
     }
