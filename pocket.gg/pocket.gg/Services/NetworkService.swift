@@ -12,8 +12,10 @@ import Apollo
 final class NetworkService {
     
     static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
-        // TODO: Modify function & query to read video game IDs and other parameters from UserDefaults
-        apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: ["1"], featured: true, upcoming: true)) { result in
+        let videogameIDs = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
+        let featured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
+        let upcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
+        apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: videogameIDs.map { String($0) }, featured: featured, upcoming: upcoming)) { result in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -31,6 +33,7 @@ final class NetworkService {
                 for event in nodes {
                     let name = event?.name ?? ""
                     let id = Int(event?.id ?? "6") ?? 6
+                    // TODO: Don't show end date if it's the same as the start date
                     let start = DateFormatter.shared.dateFromTimestamp(event?.startAt)
                     let end = DateFormatter.shared.dateFromTimestamp(event?.endAt)
                     
@@ -142,6 +145,11 @@ final class NetworkService {
             complete(cachedImage)
             return
         } else {
+            guard !imageUrl.isEmpty else {
+                debugPrint(k.Error.emptyUrl)
+                complete(nil)
+                return
+            }
             guard let url = URL(string: imageUrl) else {
                 debugPrint(k.Error.urlGeneration, imageUrl)
                 complete(nil)

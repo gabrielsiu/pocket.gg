@@ -97,16 +97,13 @@ final class EventViewController: UITableViewController {
                     cell.updateView(text: standing.name ?? "", detailText: nil)
                     return cell
                 }
-                guard placementNum != 0 else {
-                    cell.updateView(text: standing.name ?? "", detailText: nil)
-                    return cell
-                }
                 
                 let placement: String
-                switch indexPath.row {
-                case 0: placement = "🥇 "
-                case 1: placement = "🥈 "
-                case 2: placement = "🥉 "
+                switch placementNum {
+                case 0: placement = ""
+                case 1: placement = "🥇 "
+                case 2: placement = "🥈 "
+                case 3: placement = "🥉 "
                 default: placement = " \(placementNum):  "
                 }
                 cell.updateView(text: placement + (standing.name ?? ""), detailText: nil)

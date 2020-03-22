@@ -196,12 +196,13 @@ final class TournamentViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let event = tournament.events?[safe: indexPath.row] else {
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
         switch indexPath.section {
-        case 1: navigationController?.pushViewController(EventViewController(event), animated: true)
+        case 1:
+            guard let event = tournament.events?[safe: indexPath.row] else {
+                tableView.deselectRow(at: indexPath, animated: true)
+                return
+            }
+            navigationController?.pushViewController(EventViewController(event), animated: true)
         case 3:
             switch indexPath.row {
             case 1:

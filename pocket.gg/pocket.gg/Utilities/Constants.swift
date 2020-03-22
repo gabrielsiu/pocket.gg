@@ -63,6 +63,7 @@ struct Constants {
     
     struct Error {
         static let genericTitle = "Error"
+        static let emptyUrl = "ERROR: No URL provided."
         static let urlGeneration = "Error generating URL from provided string: "
         static let networkRequest = "Network request failed with error: "
         static let missingData = "ERROR: Missing data from network request."
