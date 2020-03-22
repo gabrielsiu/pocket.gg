@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import MapKit
 
 final class TournamentViewController: UITableViewController {
     
@@ -87,7 +88,7 @@ final class TournamentViewController: UITableViewController {
                 self?.tableView.endUpdates()
             })
             self?.locationCell.updateView(location: self?.tournament.location)
-            self?.tableView.reloadSections([1, 2], with: .automatic)
+            self?.tableView.reloadSections([1, 2, 3], with: .automatic)
         }
     }
     
@@ -108,7 +109,9 @@ final class TournamentViewController: UITableViewController {
         case 0: return 1
         case 1: return tournament.events?.count ?? 1
         case 2: return tournament.streams?.count ?? 1
-        case 3: return 1
+        case 3:
+            guard tournament.location?.latitude != nil, tournament.location?.longitude != nil else { return 1 }
+            return 2
         case 4: return 1
         default: return 0
         }
@@ -120,10 +123,7 @@ final class TournamentViewController: UITableViewController {
             
         case 1:
             guard !(tournament.events?.isEmpty ?? true) else {
-                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-                cell.isUserInteractionEnabled = false
-                cell.textLabel?.text = "No events currently available"
-                return cell
+                return UITableViewCell().setupDisabled("No events currently available")
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? SubtitleCell {
                 guard let event = tournament.events?[safe: indexPath.row] else {
@@ -138,10 +138,7 @@ final class TournamentViewController: UITableViewController {
             
         case 2:
             guard !(tournament.streams?.isEmpty ?? true) else {
-                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-                cell.isUserInteractionEnabled = false
-                cell.textLabel?.text = "No streams currently available"
-                return cell
+                return UITableViewCell().setupDisabled("No streams currently available")
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
                 guard let stream = tournament.streams?[safe: indexPath.row] else {
@@ -153,7 +150,12 @@ final class TournamentViewController: UITableViewController {
             }
             return UITableViewCell()
             
-        case 3: return locationCell
+        case 3:
+            switch indexPath.row {
+            case 0: return locationCell
+            case 1: return UITableViewCell().setupActive(textColor: view.tintColor, text: "Get Directions")
+            default: return UITableViewCell()
+            }
             
         case 4:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
@@ -184,7 +186,10 @@ final class TournamentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 3:
-            return k.Sizes.mapHeight
+            switch indexPath.row {
+            case 0: return k.Sizes.mapHeight
+            default: return UITableView.automaticDimension
+            }
         default:
             return UITableView.automaticDimension
         }
@@ -197,6 +202,18 @@ final class TournamentViewController: UITableViewController {
         }
         switch indexPath.section {
         case 1: navigationController?.pushViewController(EventViewController(event), animated: true)
+        case 3:
+            switch indexPath.row {
+            case 1:
+                tableView.deselectRow(at: indexPath, animated: true)
+                if let lat = tournament.location?.latitude, let lng = tournament.location?.longitude {
+                    let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
+                    let mapItem = MKMapItem(placemark: placemark)
+                    mapItem.name = tournament.location?.venueName ?? tournament.location?.address
+                    mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+                }
+            default: return
+            }
         case 4:
             guard let slug = tournament.slug else { return }
             guard let url = URL(string: "https://smash.gg/\(slug)/register") else {

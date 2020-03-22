@@ -36,6 +36,7 @@ struct Tournament {
         let videogameImage: (url: String?, ratio: Double?)?
         
         var topStandings: [(name: String?, placement: Int?)]?
+        var slug: String?
     }
 
     struct Stream {

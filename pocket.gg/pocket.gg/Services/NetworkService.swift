@@ -121,11 +121,14 @@ final class NetworkService {
                     complete(nil)
                     return
                 }
-                var standings = [(name: String?, placement: Int?)]()
+                var topStandings = [(name: String?, placement: Int?)]()
                 for standing in nodes {
-                    standings.append((standing?.entrant?.name, standing?.placement))
+                    topStandings.append((standing?.entrant?.name, standing?.placement))
                 }
-                complete(["standings": standings])
+                // At the moment, the smash.gg API returns a slug with 'event' instead of 'events', leading to an incorrect URL
+                let slug = graphQLResult.data?.event?.slug?.replacingOccurrences(of: "event", with: "events")
+                complete(["topStandings": topStandings,
+                          "slug": slug])
             }
         }
     }

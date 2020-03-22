@@ -10,7 +10,7 @@ import UIKit
 
 final class ImageCacheService {
     
-    static let cache = NSCache<NSString, UIImage>()
+    private static let cache = NSCache<NSString, UIImage>()
     
     static func getCachedImage(with key: String) -> UIImage? {
         return cache.object(forKey: key as NSString)

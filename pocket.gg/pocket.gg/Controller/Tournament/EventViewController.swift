@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 final class EventViewController: UITableViewController {
     
@@ -55,61 +56,63 @@ final class EventViewController: UITableViewController {
                 
                 return
             }
-            self?.event.topStandings = details["standings"] as? [(String, Int)]
-            self?.tableView.reloadSections([0], with: .automatic)
+            self?.event.topStandings = details["topStandings"] as? [(String, Int)]
+            self?.event.slug = details["slug"] as? String
+            self?.tableView.reloadSections([1], with: .automatic)
         }
     }
 
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return numTopStandings
+        case 0: return 1
+        case 1: return numTopStandings
         default: fatalError("Invalid number of sections")
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard numTopStandings != 1 else {
-            let cell = UITableViewCell()
-            cell.isUserInteractionEnabled = false
-            cell.textLabel?.text = "No standings found"
-            return cell
-        }
-        
-        if indexPath.row == 8 {
-            let cell = UITableViewCell()
-            cell.textLabel?.textColor = view.tintColor
-            cell.textLabel?.text = "View all standings"
-            return cell
-        }
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.standingCell, for: indexPath) as? StandingCell {
-            guard let standing = event.topStandings?[safe: indexPath.row] else {
-                return UITableViewCell()
-            }
-            guard let placementNum = standing.placement else {
-                cell.updateView(text: standing.name ?? "", detailText: nil)
-                return cell
-            }
-            guard placementNum != 0 else {
-                cell.updateView(text: standing.name ?? "", detailText: nil)
-                return cell
+        switch indexPath.section {
+        case 0:
+            return UITableViewCell().setupActive(textColor: view.tintColor, text: "View brackets on smash.gg")
+        case 1:
+            guard numTopStandings != 1 else {
+                return UITableViewCell().setupDisabled("No standings found")
             }
             
-            let placement: String
-            switch indexPath.row {
-            case 0: placement = "🥇 "
-            case 1: placement = "🥈 "
-            case 2: placement = "🥉 "
-            default: placement = " \(placementNum):  "
+            if indexPath.row == 8 {
+                return UITableViewCell().setupActive(textColor: view.tintColor, text: "View all standings")
             }
-            cell.updateView(text: placement + (standing.name ?? ""), detailText: nil)
-            return cell
+            
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.standingCell, for: indexPath) as? StandingCell {
+                guard let standing = event.topStandings?[safe: indexPath.row] else {
+                    return UITableViewCell()
+                }
+                guard let placementNum = standing.placement else {
+                    cell.updateView(text: standing.name ?? "", detailText: nil)
+                    return cell
+                }
+                guard placementNum != 0 else {
+                    cell.updateView(text: standing.name ?? "", detailText: nil)
+                    return cell
+                }
+                
+                let placement: String
+                switch indexPath.row {
+                case 0: placement = "🥇 "
+                case 1: placement = "🥈 "
+                case 2: placement = "🥉 "
+                default: placement = " \(placementNum):  "
+                }
+                cell.updateView(text: placement + (standing.name ?? ""), detailText: nil)
+                return cell
+            }
+        default: return UITableViewCell()
         }
         return UITableViewCell()
     }
@@ -118,8 +121,22 @@ final class EventViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Standings"
+        case 0: return "Brackets"
+        case 1: return "Standings"
         default: return ""
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            guard let slug = event.slug else { return }
+            guard let url = URL(string: "https://smash.gg/\(slug)/brackets") else {
+                debugPrint(k.Error.urlGeneration, "https://smash.gg/\(slug)/brackets")
+                return
+            }
+            present(SFSafariViewController(url: url), animated: true)
+        default: return
         }
     }
 }

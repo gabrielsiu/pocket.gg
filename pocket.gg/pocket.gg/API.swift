@@ -744,6 +744,7 @@ public final class EventByIdQuery: GraphQLQuery {
             }
           }
         }
+        slug
       }
     }
     """
@@ -793,6 +794,7 @@ public final class EventByIdQuery: GraphQLQuery {
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("standings", arguments: ["query": ["perPage": 8]], type: .object(Standing.selections)),
+        GraphQLField("slug", type: .scalar(String.self)),
       ]
 
       public private(set) var resultMap: ResultMap
@@ -801,8 +803,8 @@ public final class EventByIdQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(standings: Standing? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Event", "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }])
+      public init(standings: Standing? = nil, slug: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Event", "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }, "slug": slug])
       }
 
       public var __typename: String {
@@ -821,6 +823,15 @@ public final class EventByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue?.resultMap, forKey: "standings")
+        }
+      }
+
+      public var slug: String? {
+        get {
+          return resultMap["slug"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "slug")
         }
       }
 
