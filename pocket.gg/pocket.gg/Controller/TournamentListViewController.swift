@@ -32,7 +32,10 @@ final class TournamentListViewController: UITableViewController {
         tournaments.removeAll()
         NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (tournaments) in
             guard let tournaments = tournaments else {
-                // TODO: Add failed request popup
+                let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getTournamentsMessage, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self?.present(alert, animated: true)
+                
                 self?.refreshControl?.endRefreshing()
                 return
             }

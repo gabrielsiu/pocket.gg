@@ -11,12 +11,18 @@ import UIKit
 final class EventViewController: UITableViewController {
     
     var event: Tournament.Event
+    var numTopStandings: Int {
+        guard let numStandings = event.topStandings?.count else { return 1 }
+        guard numStandings != 0 else { return 1 }
+        guard numStandings == 8 else { return numStandings }
+        return numStandings + 1
+    }
     
     // MARK: - Initialization
     
     init(_ event: Tournament.Event) {
         self.event = event
-        super.init(style: .grouped)
+        super.init(style: .insetGrouped)
     }
     
     required init?(coder: NSCoder) {
@@ -30,17 +36,23 @@ final class EventViewController: UITableViewController {
         title = event.name
         tableView.register(StandingCell.self, forCellReuseIdentifier: k.Identifiers.standingCell)
         
+        // TODO: Create cell with progress spinner
         loadEventDetails()
     }
     
     private func loadEventDetails() {
         guard let id = event.id else {
-            // TODO: Show nil id alert
+            let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true)
             return
         }
         NetworkService.getEventById(id: id) { [weak self] (details) in
             guard let details = details else {
-                // TODO: Add failed request popup
+                let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self?.present(alert, animated: true)
+                
                 return
             }
             self?.event.topStandings = details["standings"] as? [(String, Int)]
@@ -56,18 +68,47 @@ final class EventViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return event.topStandings?.count ?? 1
+        case 0: return numTopStandings
         default: fatalError("Invalid number of sections")
         }
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard numTopStandings != 1 else {
+            let cell = UITableViewCell()
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.text = "No standings found"
+            return cell
+        }
+        
+        if indexPath.row == 8 {
+            let cell = UITableViewCell()
+            cell.textLabel?.textColor = view.tintColor
+            cell.textLabel?.text = "View all standings"
+            return cell
+        }
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.standingCell, for: indexPath) as? StandingCell {
             guard let standing = event.topStandings?[safe: indexPath.row] else {
                 return UITableViewCell()
             }
-            cell.updateView(text: standing.name, detailText: nil) // TODO
+            guard let placementNum = standing.placement else {
+                cell.updateView(text: standing.name ?? "", detailText: nil)
+                return cell
+            }
+            guard placementNum != 0 else {
+                cell.updateView(text: standing.name ?? "", detailText: nil)
+                return cell
+            }
+            
+            let placement: String
+            switch indexPath.row {
+            case 0: placement = "🥇 "
+            case 1: placement = "🥈 "
+            case 2: placement = "🥉 "
+            default: placement = " \(placementNum):  "
+            }
+            cell.updateView(text: placement + (standing.name ?? ""), detailText: nil)
             return cell
         }
         return UITableViewCell()

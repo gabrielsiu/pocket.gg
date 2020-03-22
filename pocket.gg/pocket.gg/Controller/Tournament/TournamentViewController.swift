@@ -69,7 +69,9 @@ final class TournamentViewController: UITableViewController {
     private func loadTournamentDetails() {
         NetworkService.getTournamentDetailsById(id: tournament.id) { [weak self] (details) in
             guard let details = details else {
-                // TODO: Add failed request popup
+                let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateTournamentMessage, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self?.present(alert, animated: true)
                 return
             }
             
@@ -203,6 +205,13 @@ final class TournamentViewController: UITableViewController {
             }
             present(SFSafariViewController(url: url), animated: true)
         default: return
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch section {
+        case 4: return tournament.registration?.isOpen ?? false ? "Registering for a tournament will take you to smash.gg." : ""
+        default: return ""
         }
     }
 }

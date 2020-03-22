@@ -63,7 +63,7 @@ final class NetworkService {
     }
     
     static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
-        apollo.fetch(query: TournamentDetailsByIdQuery(id: "2018")) { (result) in
+        apollo.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)

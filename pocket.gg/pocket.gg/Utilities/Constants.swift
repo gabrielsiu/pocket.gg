@@ -62,6 +62,7 @@ struct Constants {
     // MARK: - Error Messages
     
     struct Error {
+        static let genericTitle = "Error"
         static let urlGeneration = "Error generating URL from provided string: "
         static let networkRequest = "Network request failed with error: "
         static let missingData = "ERROR: Missing data from network request."
@@ -72,6 +73,12 @@ struct Constants {
         static let tournamentNodes = "ERROR: Could not fetch tournament nodes."
         static let tournamentFromId = "ERROR: Could not create tournament from its ID."
         static let standingsNodes = "ERROR: Could not fetch event standings nodes."
+        
+        static let requestTitle = "Request error"
+        static let getTournamentsMessage = "Unable to fetch tournaments from smash.gg"
+        static let generateTournamentMessage = "Unable to load tournament details"
+        static let generateEventMessage = "Unable to load event"
+        static let getEventDetailsMessage = "Unable to fetch event details"
     }
 }
 

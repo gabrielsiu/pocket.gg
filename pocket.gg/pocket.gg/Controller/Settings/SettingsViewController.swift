@@ -23,11 +23,6 @@ final class SettingsViewController: UITableViewController {
         setupCells()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // TODO: Save any preferences if they were changed
-    }
-    
     // MARK: - Setup
     
     private func setupCells() {
