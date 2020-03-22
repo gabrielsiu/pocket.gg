@@ -67,7 +67,6 @@ final class VideoGamesViewController: UITableViewController {
         }
         return videoGames.count
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.videoGameCell, for: indexPath)

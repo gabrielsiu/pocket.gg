@@ -15,7 +15,12 @@ final class NetworkService {
         let videogameIDs = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
         let featured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         let upcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
-        apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10, pageNum: 1, videogameIds: videogameIDs.map { String($0) }, featured: featured, upcoming: upcoming)) { result in
+        
+        apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10,
+                                                         pageNum: 1,
+                                                         videogameIds: videogameIDs.map { String($0) },
+                                                         featured: featured,
+                                                         upcoming: upcoming)) { result in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -40,18 +45,14 @@ final class NetworkService {
                     let logo = event?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
                         guard let url = image?.url else { return smallestImage }
                         guard let ratio = image?.ratio else { return smallestImage }
-                        if ratio < smallestImage.1 {
-                            return (url, ratio)
-                        }
+                        if ratio < smallestImage.1 { return (url, ratio) }
                         return smallestImage
                     })
                     
                     let header = event?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
                         guard let url = image?.url else { return widestImage }
                         guard let ratio = image?.ratio else { return widestImage }
-                        if ratio > widestImage.1 {
-                            return (url, ratio)
-                        }
+                        if ratio > widestImage.1 { return (url, ratio) }
                         return widestImage
                     })
                     
@@ -96,7 +97,7 @@ final class NetworkService {
                                              sourceUrl: stream.streamSource?.rawValue)
                 })
                 
-                complete(["location": Tournament.Location(venueName:tournament.venueName,
+                complete(["location": Tournament.Location(venueName: tournament.venueName,
                                                           address: tournament.venueAddress,
                                                           longitude: tournament.lng,
                                                           latitude: tournament.lat),
@@ -113,7 +114,7 @@ final class NetworkService {
     static func getEventById(id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
         apollo.fetch(query: EventByIdQuery(id: "\(id)")) { (result) in
             switch result {
-                case .failure(let error):
+            case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
                 complete(nil)
                 return
@@ -155,7 +156,7 @@ final class NetworkService {
                 complete(nil)
                 return
             }
-            URLSession.shared.dataTask(with: url) { (data, response, error) in
+            URLSession.shared.dataTask(with: url) { (data, _, error) in
                 guard error == nil else {
                     debugPrint(k.Error.networkRequest, error as Any)
                     complete(nil)

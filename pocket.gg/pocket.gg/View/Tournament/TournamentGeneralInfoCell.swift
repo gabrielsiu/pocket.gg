@@ -83,7 +83,10 @@ final class TournamentGeneralInfoCell: UITableViewCell {
                                           bottom: contentView.bottomAnchor,
                                           leading: contentView.leadingAnchor,
                                           trailing: contentView.trailingAnchor,
-                                          padding: UIEdgeInsets.init(top: k.Sizes.margin, left: k.Sizes.margin, bottom: k.Sizes.margin, right: k.Sizes.margin))
+                                          padding: UIEdgeInsets.init(top: k.Sizes.margin,
+                                                                     left: k.Sizes.margin,
+                                                                     bottom: k.Sizes.margin,
+                                                                     right: k.Sizes.margin))
     }
     
     // MARK: - Public Methods

@@ -282,6 +282,7 @@
 			buildConfigurationList = DA7E51AE23E46EAC0037E757 /* Build configuration list for PBXNativeTarget "pocket.gg" */;
 			buildPhases = (
 				DA2B3B6323E80FC40013362D /* Generate Apollo GraphQL API */,
+				DA04E3AB2427F1FD00AB2EF0 /* SwiftLint */,
 				DA7E519623E46EAB0037E757 /* Sources */,
 				DA7E519723E46EAB0037E757 /* Frameworks */,
 				DA7E519823E46EAB0037E757 /* Resources */,
@@ -361,6 +362,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		DA04E3AB2427F1FD00AB2EF0 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		DA2B3B6323E80FC40013362D /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

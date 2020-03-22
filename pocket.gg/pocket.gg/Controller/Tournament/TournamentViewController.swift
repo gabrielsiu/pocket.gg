@@ -160,10 +160,11 @@ final class TournamentViewController: UITableViewController {
         case 4:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
             let registrationOpen = tournament.registration?.isOpen ?? false
+            let closeDate = DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate)
             cell.isUserInteractionEnabled = registrationOpen
             cell.textLabel?.textColor = view.tintColor
             cell.textLabel?.text = registrationOpen ? "Register" : "Registration not available"
-            cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate))"
+            cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(closeDate)"
             cell.accessoryType = registrationOpen ? .disclosureIndicator : .none
             return cell
             

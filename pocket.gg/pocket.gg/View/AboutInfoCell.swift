@@ -73,22 +73,23 @@ final class AboutInfoCell: UITableViewCell {
     @objc private func iconImageViewTapped() {
         guard appIconVisible else { return }
         guard let iconImageView = iconImageView else { return }
-        guard let image = UIImage(named: "placeholder") else { return } // TODO: Replace with another icon of the same size
+        // TODO: Replace with another icon of the same size
+        guard let image = UIImage(named: "placeholder") else { return }
         appIconVisible = false
         
         UIView.transition(with: iconImageView, duration: 0.3, options: .transitionFlipFromRight, animations: { [weak self] in
             self?.iconImageView?.image = image
-        }) { [weak self] (_) in
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                guard let iconImageView = self?.iconImageView else { return }
+            }, completion: { [weak self] _ in
                 
-                UIView.transition(with: iconImageView, duration: 0.3, options: .transitionFlipFromLeft, animations: {
-                    self?.iconImageView?.image = self?.appIcon
-                }) { (_) in
-                    self?.appIconVisible = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    guard let iconImageView = self?.iconImageView else { return }
+                    
+                    UIView.transition(with: iconImageView, duration: 0.3, options: .transitionFlipFromLeft, animations: {
+                        self?.iconImageView?.image = self?.appIcon
+                    }, completion: { [weak self] _ in
+                        self?.appIconVisible = true
+                    })
                 }
-            }
-        }
+        })
     }
 }

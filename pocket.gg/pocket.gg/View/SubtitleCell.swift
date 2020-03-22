@@ -10,9 +10,9 @@ import UIKit
 
 final class SubtitleCell: UITableViewCell {
     
-    var imageViewFrame: CGRect? = nil
-    var textLabelFrame: CGRect? = nil
-    var detailTextLabelFrame: CGRect? = nil
+    var imageViewFrame: CGRect?
+    var textLabelFrame: CGRect?
+    var detailTextLabelFrame: CGRect?
     
     // MARK: - Initialization
     

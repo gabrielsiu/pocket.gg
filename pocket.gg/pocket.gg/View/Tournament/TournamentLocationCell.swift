@@ -35,7 +35,10 @@ final class TournamentLocationCell: UITableViewCell {
         mapView.isZoomEnabled = false
         contentView.addSubview(mapView)
         
-        mapView.setEdgeConstraints(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor)
+        mapView.setEdgeConstraints(top: contentView.topAnchor,
+                                   bottom: contentView.bottomAnchor,
+                                   leading: contentView.leadingAnchor,
+                                   trailing: contentView.trailingAnchor)
     }
     
     private func setupLocationNotAvailableView() {
@@ -53,14 +56,19 @@ final class TournamentLocationCell: UITableViewCell {
         contentView.addSubview(view)
         
         label.setAxisConstraints(xAnchor: view.centerXAnchor, yAnchor: view.centerYAnchor)
-        view.setEdgeConstraints(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor)
+        view.setEdgeConstraints(top: contentView.topAnchor,
+                                bottom: contentView.bottomAnchor,
+                                leading: contentView.leadingAnchor,
+                                trailing: contentView.trailingAnchor)
     }
     
     // MARK: - Public Methods
     
     func updateView(location: Tournament.Location?) {
         if let lat = location?.latitude, let lng = location?.longitude {
-            let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lng), latitudinalMeters: 1000, longitudinalMeters: 1000)
+            let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lng),
+                                            latitudinalMeters: 1000,
+                                            longitudinalMeters: 1000)
             let annotation = MKPointAnnotation()
             annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
             annotation.title = location?.venueName

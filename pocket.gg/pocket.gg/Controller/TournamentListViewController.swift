@@ -62,7 +62,7 @@ final class TournamentListViewController: UITableViewController {
         }
         return UITableViewCell()
     }
-    
+
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

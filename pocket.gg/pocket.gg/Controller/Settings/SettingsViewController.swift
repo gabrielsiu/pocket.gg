@@ -68,7 +68,6 @@ final class SettingsViewController: UITableViewController {
         default: fatalError("Invalid number of sections")
         }
     }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
