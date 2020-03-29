@@ -26,6 +26,7 @@
 		DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */; };
 		DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2F5241DADB000481280 /* SubtitleCell.swift */; };
 		DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2FC241DF1AA00481280 /* EventViewController.swift */; };
+		DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6424300B0A006DB38F /* LoadingCell.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
@@ -73,6 +74,7 @@
 		DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+FromTimestamp.swift"; sourceTree = "<group>"; };
 		DA64A2F5241DADB000481280 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		DA64A2FC241DF1AA00481280 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
+		DA6CBE6424300B0A006DB38F /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				DA64A2F5241DADB000481280 /* SubtitleCell.swift */,
+				DA6CBE6424300B0A006DB38F /* LoadingCell.swift */,
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
 				DA1C92862413780200E5BA96 /* Tournament */,
 			);
@@ -435,6 +438,7 @@
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */,
+				DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */,
 				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 				DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */,

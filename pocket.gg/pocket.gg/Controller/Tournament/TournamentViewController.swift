@@ -17,6 +17,7 @@ final class TournamentViewController: UITableViewController {
     let locationCell: TournamentLocationCell
     
     var tournament: Tournament
+    var doneRequest = false // TODO: Add pull-to-refresh control, setting this back to false when data is refreshed (for all applicable screens)
     
     // MARK: - Initialization
     
@@ -69,6 +70,7 @@ final class TournamentViewController: UITableViewController {
     
     private func loadTournamentDetails() {
         NetworkService.getTournamentDetailsById(id: tournament.id) { [weak self] (details) in
+            self?.doneRequest = true
             guard let details = details else {
                 let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateTournamentMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -123,7 +125,7 @@ final class TournamentViewController: UITableViewController {
             
         case 1:
             guard !(tournament.events?.isEmpty ?? true) else {
-                return UITableViewCell().setupDisabled("No events currently available")
+                return doneRequest ? UITableViewCell().setupDisabled("No events currently available") : LoadingCell()
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? SubtitleCell {
                 guard let event = tournament.events?[safe: indexPath.row] else {
@@ -138,7 +140,7 @@ final class TournamentViewController: UITableViewController {
             
         case 2:
             guard !(tournament.streams?.isEmpty ?? true) else {
-                return UITableViewCell().setupDisabled("No streams currently available")
+                return doneRequest ? UITableViewCell().setupDisabled("No streams currently available") : LoadingCell()
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
                 guard let stream = tournament.streams?[safe: indexPath.row] else {
@@ -158,6 +160,7 @@ final class TournamentViewController: UITableViewController {
             }
             
         case 4:
+            guard doneRequest else { return LoadingCell() }
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
             let registrationOpen = tournament.registration?.isOpen ?? false
             let closeDate = DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate)

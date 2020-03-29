@@ -9,6 +9,7 @@
 import Foundation
 
 extension DateFormatter {
+    
     static let shared = DateFormatter()
     
     func dateFromTimestamp(_ timestamp: String?) -> String {

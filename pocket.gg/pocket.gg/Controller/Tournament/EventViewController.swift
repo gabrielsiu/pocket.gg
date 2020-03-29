@@ -12,6 +12,7 @@ import SafariServices
 final class EventViewController: UITableViewController {
     
     var event: Tournament.Event
+    var doneRequest = false
     var numTopStandings: Int {
         guard let numStandings = event.topStandings?.count else { return 1 }
         guard numStandings != 0 else { return 1 }
@@ -36,8 +37,6 @@ final class EventViewController: UITableViewController {
         super.viewDidLoad()
         title = event.name
         tableView.register(StandingCell.self, forCellReuseIdentifier: k.Identifiers.standingCell)
-        
-        // TODO: Create cell with progress spinner
         loadEventDetails()
     }
     
@@ -49,11 +48,11 @@ final class EventViewController: UITableViewController {
             return
         }
         NetworkService.getEventById(id: id) { [weak self] (details) in
+            self?.doneRequest = true
             guard let details = details else {
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
-                
                 return
             }
             self?.event.topStandings = details["topStandings"] as? [(String, Int)]
@@ -82,7 +81,7 @@ final class EventViewController: UITableViewController {
             return UITableViewCell().setupActive(textColor: view.tintColor, text: "View brackets on smash.gg")
         case 1:
             guard numTopStandings != 1 else {
-                return UITableViewCell().setupDisabled("No standings found")
+                return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
             }
             
             if indexPath.row == 8 {

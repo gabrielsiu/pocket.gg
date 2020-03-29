@@ -27,14 +27,13 @@ final class NetworkService {
                 complete(nil)
                 return
             case .success(let graphQLResult):
-                var tournaments = [Tournament]()
-                
                 guard let nodes = graphQLResult.data?.tournaments?.nodes else {
                     debugPrint(k.Error.tournamentNodes)
                     complete(nil)
                     return
                 }
                 
+                var tournaments = [Tournament]()
                 for event in nodes {
                     let name = event?.name ?? ""
                     let id = Int(event?.id ?? "6") ?? 6

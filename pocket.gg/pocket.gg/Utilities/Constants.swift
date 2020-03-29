@@ -37,10 +37,6 @@ struct Constants {
         static let standingCell = "standingCell"
     }
     
-    struct Colors {
-        static let smashGgRed = UIColor(red: 189/255, green: 30/255, blue: 45/255, alpha: 1)
-    }
-    
     struct Sizes {
         static let logoSize: CGFloat = 100
         static let margin: CGFloat = 16

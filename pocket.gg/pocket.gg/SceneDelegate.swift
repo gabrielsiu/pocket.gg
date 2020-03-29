@@ -33,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabBarController.selectedIndex = 0
         
         window?.rootViewController = tabBarController
-        window?.tintColor = k.Colors.smashGgRed
+        window?.tintColor = .systemRed
         window?.makeKeyAndVisible()
     }
 
