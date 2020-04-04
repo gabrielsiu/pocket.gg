@@ -6,8 +6,6 @@
 //  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
-import Foundation
-
 struct VideoGame {
     let id: Int
     let name: String

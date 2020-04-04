@@ -37,9 +37,9 @@ final class NetworkService {
                 for event in nodes {
                     let name = event?.name ?? ""
                     let id = Int(event?.id ?? "6") ?? 6
-                    // TODO: Don't show end date if it's the same as the start date
                     let start = DateFormatter.shared.dateFromTimestamp(event?.startAt)
                     let end = DateFormatter.shared.dateFromTimestamp(event?.endAt)
+                    let date = start == end ? start : "\(start) - \(end)"
                     
                     let logo = event?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
                         guard let url = image?.url else { return smallestImage }
@@ -57,7 +57,7 @@ final class NetworkService {
                     
                     tournaments.append(Tournament(name: name,
                                                   logoUrl: logo?.0 ?? "",
-                                                  date: "\(start) - \(end)",
+                                                  date: date,
                                                   id: id, headerImage: header ?? ("", 0)))
                 }
                 complete(tournaments)
