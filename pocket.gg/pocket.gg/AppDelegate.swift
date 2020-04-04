@@ -8,22 +8,60 @@
 
 import UIKit
 import Apollo
+import GRDB
 
 let apollo: ApolloClient = {
     let configuration = URLSessionConfiguration.default
     configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(authToken1 + authToken2 + authToken3)"]
     guard let url = URL(string: k.API.endpoint) else {
+        // TODO: Handle this better
         fatalError()
     }
     return ApolloClient(networkTransport: HTTPNetworkTransport(url: url, session: URLSession(configuration: configuration)))
 }()
 
+var dbQueue: DatabaseQueue?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        do {
+            try setupDatabase(application)
+        } catch VideoGameDatabaseError.appSupportDirURL {
+            debugPrint("ERROR: Unable to get app suppport directory URL")
+        } catch VideoGameDatabaseError.dbNotInAppBundle {
+            debugPrint("ERROR: videoGames.sqlite not in app bundle")
+        } catch {
+            debugPrint("ERROR: Unable to setup database: \(error.localizedDescription)")
+        }
         return true
+    }
+    
+    private func setupDatabase(_ application: UIApplication) throws {
+        guard let appSupportDirURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            throw VideoGameDatabaseError.appSupportDirURL
+        }
+        let finalDatabasePath = appSupportDirURL.appendingPathComponent("videoGames.sqlite").path
+        
+        // Check if the database file already exists in the app support directory
+        if !FileManager.default.fileExists(atPath: finalDatabasePath) {
+            print("DB does not exist in app support directory yet; copying now")
+            // Create app support directory if it doesn't exist already
+            if !FileManager.default.fileExists(atPath: appSupportDirURL.path) {
+                print("App support directory does not exist yet; creating now")
+                try FileManager.default.createDirectory(at: appSupportDirURL, withIntermediateDirectories: true)
+            }
+            // Copy the database file from the app bundle to the app support directory
+            if let bundleDatabasePath = Bundle.main.path(forResource: "videoGames", ofType: "sqlite") {
+                try FileManager.default.copyItem(atPath: bundleDatabasePath, toPath: finalDatabasePath)
+            } else {
+                throw VideoGameDatabaseError.dbNotInAppBundle
+            }
+        } else {
+            print("DB already exists at path: \(finalDatabasePath)")
+        }
+        dbQueue = try VideoGameDatabase.openDatabase(atPath: finalDatabasePath)
     }
 
     // MARK: UISceneSession Lifecycle
