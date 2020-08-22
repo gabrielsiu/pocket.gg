@@ -31,9 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch VideoGameDatabaseError.appSupportDirURL {
             debugPrint("ERROR: Unable to get app suppport directory URL")
         } catch VideoGameDatabaseError.dbNotInAppBundle {
-            debugPrint("ERROR: videoGames.sqlite not in app bundle")
+            debugPrint("ERROR: videoGame.sqlite not in app bundle")
         } catch {
             debugPrint("ERROR: Unable to setup database: \(error.localizedDescription)")
+        }
+        
+        // Load the array of all video games
+        do {
+            videoGames = try VideoGameDatabase.getVideoGames()
+        } catch {
+            print(error)
         }
         return true
     }
@@ -42,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let appSupportDirURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             throw VideoGameDatabaseError.appSupportDirURL
         }
-        let finalDatabasePath = appSupportDirURL.appendingPathComponent("videoGames.sqlite").path
+        let finalDatabasePath = appSupportDirURL.appendingPathComponent("videoGame.sqlite").path
         
         // Check if the database file already exists in the app support directory
         if !FileManager.default.fileExists(atPath: finalDatabasePath) {
@@ -53,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try FileManager.default.createDirectory(at: appSupportDirURL, withIntermediateDirectories: true)
             }
             // Copy the database file from the app bundle to the app support directory
-            if let bundleDatabasePath = Bundle.main.path(forResource: "videoGames", ofType: "sqlite") {
+            if let bundleDatabasePath = Bundle.main.path(forResource: "videoGame", ofType: "sqlite") {
                 try FileManager.default.copyItem(atPath: bundleDatabasePath, toPath: finalDatabasePath)
             } else {
                 throw VideoGameDatabaseError.dbNotInAppBundle

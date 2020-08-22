@@ -28,7 +28,6 @@
 		DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6424300B0A006DB38F /* LoadingCell.swift */; };
 		DA6CBE68243039EA006DB38F /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA6CBE67243039EA006DB38F /* GRDB */; };
 		DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */; };
-		DA6CBE6E24311A3F006DB38F /* videoGames.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA6CBE6D24311A3F006DB38F /* videoGames.sqlite */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
@@ -77,7 +76,6 @@
 		DA64A2FC241DF1AA00481280 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		DA6CBE6424300B0A006DB38F /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameDatabase.swift; sourceTree = "<group>"; };
-		DA6CBE6D24311A3F006DB38F /* videoGames.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGames.sqlite; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -238,7 +236,6 @@
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA2939EA23E80E7900E5DB3A /* schema.json */,
-				DA6CBE6D24311A3F006DB38F /* videoGames.sqlite */,
 				DA7E51A623E46EAC0037E757 /* Assets.xcassets */,
 				DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */,
 				DA7E51AB23E46EAC0037E757 /* Info.plist */,
@@ -364,7 +361,6 @@
 			files = (
 				DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */,
 				DA2939EB23E80E7900E5DB3A /* schema.json in Resources */,
-				DA6CBE6E24311A3F006DB38F /* videoGames.sqlite in Resources */,
 				DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */,
 				DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */,
 			);

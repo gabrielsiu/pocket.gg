@@ -86,18 +86,15 @@ final class SettingsViewController: UITableViewController {
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0: return "Tournament Filters"
-        case 1, 2: return ""
-        default: fatalError("Invalid section")
-        }
+        if section == 0 { return "Tournament Filters" }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case 0: return "Enable/Disable these to change the types of tournaments that show up on the main screen."
         case 1: return "Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen."
-        default: return ""
+        default: return nil
         }
     }
     

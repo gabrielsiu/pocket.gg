@@ -119,7 +119,7 @@ final class EventViewController: UITableViewController {
         switch section {
         case 0: return "Brackets"
         case 1: return "Standings"
-        default: return ""
+        default: return nil
         }
     }
     

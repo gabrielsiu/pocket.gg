@@ -78,11 +78,8 @@ final class AboutViewController: UITableViewController {
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0: return ""
-        case 1: return "Libraries & Thanks"
-        default: fatalError("Invalid section")
-        }
+        if section == 1 { return "Libraries & Thanks" }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -98,9 +95,7 @@ final class AboutViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 100
-        }
+        if indexPath.section == 0 { return 100 }
         return UITableView.automaticDimension
     }
 }

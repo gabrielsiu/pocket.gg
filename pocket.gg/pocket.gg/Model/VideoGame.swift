@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import GRDB
 
-struct VideoGame {
+struct VideoGame: Codable, FetchableRecord, MutablePersistableRecord {
     let id: Int
     let name: String
 }
