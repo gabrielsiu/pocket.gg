@@ -6,7 +6,10 @@
 //  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
-struct VideoGame {
+import Foundation
+import GRDB
+
+struct VideoGame: Codable, FetchableRecord, MutablePersistableRecord {
     let id: Int
     let name: String
 }

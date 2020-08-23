@@ -182,7 +182,7 @@ final class TournamentViewController: UITableViewController {
         case 2: return "Streams"
         case 3: return "Location"
         case 4: return "Registration"
-        default: return ""
+        default: return nil
         }
     }
     
@@ -230,9 +230,7 @@ final class TournamentViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        switch section {
-        case 4: return tournament.registration?.isOpen ?? false ? "Registering for a tournament will take you to smash.gg." : ""
-        default: return ""
-        }
+        if section == 4 { return tournament.registration?.isOpen ?? false ? "Registering for a tournament will take you to smash.gg." : "" }
+        return nil
     }
 }
