@@ -6,8 +6,6 @@
 //  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
-import Foundation
-
 struct Tournament {
     let name: String
     let logoUrl: String

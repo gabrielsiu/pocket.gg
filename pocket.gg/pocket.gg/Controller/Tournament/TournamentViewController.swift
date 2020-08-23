@@ -58,7 +58,6 @@ final class TournamentViewController: UITableViewController {
                 guard let ratio = self?.tournament.headerImage.ratio else { return }
                 guard let width = self?.tableView.frame.width else { return }
                 
-                // TODO: Using constraints, fix so that the header expands to fit the screen upon rotating the device
                 self?.headerImageView = UIImageView.init(image: header)
                 self?.headerImageView?.contentMode = .scaleAspectFit
                 // TODO: Animate this frame change
