@@ -8,23 +8,37 @@
 
 import UIKit
 
+enum VideoGamesListState {
+    case allGamesNotFiltered
+    case allGamesFiltered
+    case enabledGamesNotFiltered
+    case enabledGamesFiltered
+}
+
 final class VideoGamesViewController: UITableViewController {
     
-    var preferredGames: Set<Int>
-    var preferredGamesArr: [Int]?
+    var enabledGames: Set<Int>
+    var enabledGamesArr: [Int]?
     var filteredGames: [VideoGame]?
     var filteredEnabledGames: [VideoGame]?
+    var enabledVideoGamesControl: UISegmentedControl
     let searchController = UISearchController(searchResultsController: nil)
     var searchBarText: String? {
         return searchController.searchBar.text
     }
-    var enabledVideoGamesControl: UISegmentedControl
+    var videoGamesListState: VideoGamesListState {
+        if enabledVideoGamesControl.selectedSegmentIndex == 0 {
+            return filteredGames == nil ? .allGamesNotFiltered : .allGamesFiltered
+        } else {
+            return filteredEnabledGames == nil ? .enabledGamesNotFiltered : .enabledGamesFiltered
+        }
+    }
     
     // MARK: - Initialization
     
     init() {
-        // Load the array of enabled video games
-        preferredGames = Set(UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1])
+        // Load the list of enabled video games
+        enabledGames = Set(UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1])
         
         enabledVideoGamesControl = UISegmentedControl(items: ["All Video Games", "Enabled Video Games"])
         enabledVideoGamesControl.selectedSegmentIndex = 0
@@ -54,47 +68,54 @@ final class VideoGamesViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UserDefaults.standard.set(Array(preferredGames), forKey: k.UserDefaults.preferredVideoGames)
+        // Save the list of enabled video games
+        UserDefaults.standard.set(Array(enabledGames), forKey: k.UserDefaults.preferredVideoGames)
     }
     
     // MARK: - Actions
     
     @objc private func videoGameEnableSwitchTapped(_ sender: UISwitch) {
-        let gameId = sender.tag
-        if preferredGames.contains(gameId) {
-            guard let index = preferredGames.firstIndex(of: gameId) else { return }
-            preferredGames.remove(at: index)
+        let gameID = sender.tag
+        if enabledGames.contains(gameID) {
+            enabledGames.remove(gameID)
         } else {
-            preferredGames.insert(gameId)
+            enabledGames.insert(gameID)
         }
     }
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        // ternary
-        if sender.selectedSegmentIndex == 1 {
-            preferredGamesArr = Array(preferredGames).sorted()
-            if let filteredGames = filteredGames {
-                filteredEnabledGames = filteredGames.filter { preferredGames.contains($0.id) }
-            }
+        if sender.selectedSegmentIndex == 0 {
+            // We want to see all video games
+            // Since we don't need a sorted list of enabled video games, invalidate it
+            enabledGamesArr = nil
         } else {
-            preferredGamesArr = nil
+            // We only want to see the enabled video games
+            // Restore the sorted array of enabled games
+            enabledGamesArr = Array(enabledGames).sorted()
+            // If we are also filtering for a search term, update the array of filtered & enabled games
+            if let filteredGames = filteredGames {
+                filteredEnabledGames = filteredGames.filter { enabledGames.contains($0.id) }
+            }
         }
+        
         tableView.reloadData()
     }
     
     // MARK: - Table View Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // If we are currently filtering
-        if let filteredGames = filteredGames {
-            if enabledVideoGamesControl.selectedSegmentIndex == 1 {
-                return filteredGames.filter { preferredGames.contains($0.id) }.count
-            } else {
-                return filteredGames.count
-            }
+        switch videoGamesListState {
+        case .allGamesNotFiltered:
+            return videoGames.count
+        case .allGamesFiltered:
+            guard let filteredGames = filteredGames else { return videoGames.count }
+            return filteredGames.count
+        case .enabledGamesNotFiltered:
+            return enabledGames.count
+        case .enabledGamesFiltered:
+            guard let filteredEnabledGames = filteredEnabledGames else { return videoGames.count }
+            return filteredEnabledGames.count
         }
-        // We are not filtering
-        return enabledVideoGamesControl.selectedSegmentIndex == 1 ? preferredGames.count : videoGames.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,29 +123,31 @@ final class VideoGamesViewController: UITableViewController {
         
         let id: Int
         let name: String
-        // switch order of ifs (if possible)
-        if let filteredGames = filteredGames {
-            if let filteredEnabledGames = filteredEnabledGames, enabledVideoGamesControl.selectedSegmentIndex == 1 {
-                id = filteredEnabledGames[indexPath.row].id
-                name = filteredEnabledGames[indexPath.row].name
-            } else {
-                id = filteredGames[indexPath.row].id
-                name = filteredGames[indexPath.row].name
-            }
-        } else {
-            if let preferredGames = preferredGamesArr, enabledVideoGamesControl.selectedSegmentIndex == 1 {
-                id = preferredGames[indexPath.row]
-                name = videoGames.first(where: { $0.id == id })?.name ?? "hi hand"
-            } else {
-                id = videoGames[indexPath.row].id
-                name = videoGames[indexPath.row].name
-            }
+        
+        // Determine the ID and name of the cell's game
+        switch videoGamesListState {
+        case .allGamesNotFiltered:
+            id = videoGames[indexPath.row].id
+            name = videoGames[indexPath.row].name
+        case .allGamesFiltered:
+            guard let filteredGames = filteredGames else { return cell }
+            id = filteredGames[indexPath.row].id
+            name = filteredGames[indexPath.row].name
+        case .enabledGamesNotFiltered:
+            guard let enabledGames = enabledGamesArr else { return cell }
+            id = enabledGames[indexPath.row]
+            name = videoGames.first(where: { $0.id == id })?.name ?? ""
+        case .enabledGamesFiltered:
+            guard let filteredEnabledGames = filteredEnabledGames else { return cell }
+            id = filteredEnabledGames[indexPath.row].id
+            name = filteredEnabledGames[indexPath.row].name
         }
         
+        // Set up the cell
         cell.selectionStyle = .none
         cell.textLabel?.text = name
         let enabledSwitch = UISwitch()
-        enabledSwitch.setOn(preferredGames.contains(id), animated: false)
+        enabledSwitch.setOn(enabledGames.contains(id), animated: false)
         enabledSwitch.addTarget(self, action: #selector(videoGameEnableSwitchTapped(_:)), for: .valueChanged)
         enabledSwitch.tag = id
         cell.accessoryView = enabledSwitch
@@ -145,20 +168,28 @@ extension VideoGamesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchBarText, !(searchBarText?.isEmpty ?? true) else {
             // If the search bar has just become empty
+            
+            // We're not filtering anymore, so invalidate the filtered arrays
             filteredGames = nil
             filteredEnabledGames = nil
+            // Restore the sorted array of enabled games if we only want to see the enabled games
             if enabledVideoGamesControl.selectedSegmentIndex == 1 {
-                preferredGamesArr = Array(preferredGames).sorted()
+                enabledGamesArr = Array(enabledGames).sorted()
             }
+            
             tableView.reloadData()
             return
         }
-        filteredGames = videoGames.filter({ (videoGame) -> Bool in
-            return videoGame.name.lowercased().contains(searchText.lowercased())
-        })
+        
+        // Another character has been added/entered to the search bar
+        
+        // Update the array of filtered games by checking if each video game's name contains the search text
+        filteredGames = videoGames.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        // Update the array of filtered & enabled games
         if let filteredGames = filteredGames {
-            filteredEnabledGames = filteredGames.filter { preferredGames.contains($0.id) }
+            filteredEnabledGames = filteredGames.filter { enabledGames.contains($0.id) }
         }
+        
         tableView.reloadData()
     }
 }

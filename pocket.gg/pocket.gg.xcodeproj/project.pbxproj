@@ -34,6 +34,7 @@
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
+		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
@@ -85,6 +86,7 @@
 		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
+		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA2939EA23E80E7900E5DB3A /* schema.json */,
+				DA9429A924F1CF19002595AF /* videoGame.sqlite */,
 				DA7E51A623E46EAC0037E757 /* Assets.xcassets */,
 				DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */,
 				DA7E51AB23E46EAC0037E757 /* Info.plist */,
@@ -359,6 +362,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */,
 				DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */,
 				DA2939EB23E80E7900E5DB3A /* schema.json in Resources */,
 				DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */,
