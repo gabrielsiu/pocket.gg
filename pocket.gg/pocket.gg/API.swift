@@ -305,6 +305,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         venueAddress
         lng
         lat
+        isOnline
         primaryContact
         events {
           __typename
@@ -382,6 +383,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         GraphQLField("venueAddress", type: .scalar(String.self)),
         GraphQLField("lng", type: .scalar(Double.self)),
         GraphQLField("lat", type: .scalar(Double.self)),
+        GraphQLField("isOnline", type: .scalar(Bool.self)),
         GraphQLField("primaryContact", type: .scalar(String.self)),
         GraphQLField("events", type: .list(.object(Event.selections))),
         GraphQLField("streams", type: .list(.object(Stream.selections))),
@@ -396,8 +398,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(venueName: String? = nil, venueAddress: String? = nil, lng: Double? = nil, lat: Double? = nil, primaryContact: String? = nil, events: [Event?]? = nil, streams: [Stream?]? = nil, isRegistrationOpen: Bool? = nil, registrationClosesAt: String? = nil, slug: String? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Tournament", "venueName": venueName, "venueAddress": venueAddress, "lng": lng, "lat": lat, "primaryContact": primaryContact, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }, "streams": streams.flatMap { (value: [Stream?]) -> [ResultMap?] in value.map { (value: Stream?) -> ResultMap? in value.flatMap { (value: Stream) -> ResultMap in value.resultMap } } }, "isRegistrationOpen": isRegistrationOpen, "registrationClosesAt": registrationClosesAt, "slug": slug])
+      public init(venueName: String? = nil, venueAddress: String? = nil, lng: Double? = nil, lat: Double? = nil, isOnline: Bool? = nil, primaryContact: String? = nil, events: [Event?]? = nil, streams: [Stream?]? = nil, isRegistrationOpen: Bool? = nil, registrationClosesAt: String? = nil, slug: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Tournament", "venueName": venueName, "venueAddress": venueAddress, "lng": lng, "lat": lat, "isOnline": isOnline, "primaryContact": primaryContact, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }, "streams": streams.flatMap { (value: [Stream?]) -> [ResultMap?] in value.map { (value: Stream?) -> ResultMap? in value.flatMap { (value: Stream) -> ResultMap in value.resultMap } } }, "isRegistrationOpen": isRegistrationOpen, "registrationClosesAt": registrationClosesAt, "slug": slug])
       }
 
       public var __typename: String {
@@ -442,6 +444,16 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "lat")
+        }
+      }
+
+      /// True if tournament has at least one online event
+      public var isOnline: Bool? {
+        get {
+          return resultMap["isOnline"] as? Bool
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "isOnline")
         }
       }
 

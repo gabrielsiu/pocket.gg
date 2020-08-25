@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA04E3A62427228700AB2EF0 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04E3A52427228700AB2EF0 /* API.swift */; };
 		DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */; };
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
 		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
@@ -29,6 +28,7 @@
 		DA6CBE68243039EA006DB38F /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA6CBE67243039EA006DB38F /* GRDB */; };
 		DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */; };
+		DA7AF00C24F56CDE009A00E2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF00B24F56CDE009A00E2 /* API.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
@@ -56,7 +56,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DA04E3A52427228700AB2EF0 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCells+Create.swift"; sourceTree = "<group>"; };
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
 		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
@@ -78,6 +77,7 @@
 		DA6CBE6424300B0A006DB38F /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameDatabase.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
+		DA7AF00B24F56CDE009A00E2 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DA04E3A52427228700AB2EF0 /* API.swift */,
+				DA7AF00B24F56CDE009A00E2 /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA2939EA23E80E7900E5DB3A /* schema.json */,
@@ -430,8 +430,8 @@
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
+				DA7AF00C24F56CDE009A00E2 /* API.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
-				DA04E3A62427228700AB2EF0 /* API.swift in Sources */,
 				DAF618EB241F248800AB4D93 /* StandingCell.swift in Sources */,
 				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,
 				DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */,

@@ -10,7 +10,6 @@ import UIKit
 
 final class TournamentGeneralInfoCell: UITableViewCell {
     
-    // TODO: Move property initialization to proper function (for all classes)
     let spinner = UIActivityIndicatorView(style: .large)
     
     let logoImageView = UIImageView(image: UIImage(named: "placeholder"))
@@ -91,9 +90,17 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func updateView(location: String?, _ complete: @escaping () -> Void) {
+    func updateView(isOnline: Bool?, location: String?, _ complete: @escaping () -> Void) {
         DispatchQueue.main.async { [weak self] in
+            guard !(isOnline ?? true) else {
+                self?.spinner.stopAnimating()
+                self?.locationLabel.text = "Online"
+                complete()
+                return
+            }
             guard let location = location else {
+                self?.spinner.stopAnimating()
+                self?.locationLabel.text = "Location not available"
                 complete()
                 return
             }

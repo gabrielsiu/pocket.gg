@@ -96,7 +96,8 @@ final class NetworkService {
                                              sourceUrl: stream.streamSource?.rawValue)
                 })
                 
-                complete(["location": Tournament.Location(venueName: tournament.venueName,
+                complete(["isOnline": tournament.venueAddress == nil,
+                          "location": Tournament.Location(venueName: tournament.venueName,
                                                           address: tournament.venueAddress,
                                                           longitude: tournament.lng,
                                                           latitude: tournament.lat),

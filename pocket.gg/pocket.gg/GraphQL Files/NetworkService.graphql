@@ -28,6 +28,7 @@ query TournamentDetailsById($id: ID) {
         venueAddress
         lng
         lat
+        isOnline
         primaryContact
         events {
             name

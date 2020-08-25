@@ -148,7 +148,7 @@ final class VideoGamesViewController: UITableViewController {
         cell.textLabel?.text = name
         let enabledSwitch = UISwitch()
         enabledSwitch.setOn(enabledGames.contains(id), animated: false)
-        enabledSwitch.addTarget(self, action: #selector(videoGameEnableSwitchTapped(_:)), for: .valueChanged)
+        enabledSwitch.addTarget(self, action: #selector(videoGameEnableSwitchTapped), for: .valueChanged)
         enabledSwitch.tag = id
         cell.accessoryView = enabledSwitch
         

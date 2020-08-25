@@ -77,14 +77,17 @@ final class TournamentViewController: UITableViewController {
                 return
             }
             
-            self?.tournament.location = details["location"] as? Tournament.Location
+            if !(details["isOnline"] as? Bool ?? true) {
+                self?.tournament.isOnline = false
+                self?.tournament.location = details["location"] as? Tournament.Location
+            }
             self?.tournament.contactInfo = details["contact"] as? String
             self?.tournament.events = details["events"] as? [Tournament.Event]
             self?.tournament.streams = details["streams"] as? [Tournament.Stream]
             self?.tournament.registration = details["registration"] as? (Bool, String)
             self?.tournament.slug = details["slug"] as? String
             
-            self?.generalInfoCell.updateView(location: self?.tournament.location?.address, {
+            self?.generalInfoCell.updateView(isOnline: self?.tournament.isOnline, location: self?.tournament.location?.address, {
                 self?.tableView.beginUpdates()
                 self?.tableView.endUpdates()
             })

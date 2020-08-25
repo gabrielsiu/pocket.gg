@@ -20,6 +20,7 @@ struct Tournament {
     var registration: (isOpen: Bool?, closeDate: String?)?
     var slug: String?
     
+    var isOnline = true
     struct Location {
         let venueName: String?
         let address: String?
