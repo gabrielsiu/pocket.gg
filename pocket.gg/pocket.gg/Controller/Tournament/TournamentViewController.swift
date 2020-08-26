@@ -134,6 +134,7 @@ final class TournamentViewController: UITableViewController {
                     return UITableViewCell()
                 }
                 let dateText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                cell.accessoryType = .disclosureIndicator
                 cell.setPlaceholder("game-controller")
                 cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: dateText, newRatio: k.Sizes.eventImageRatio)
                 return cell

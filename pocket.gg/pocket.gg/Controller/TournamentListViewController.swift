@@ -54,6 +54,7 @@ final class TournamentListViewController: UITableViewController {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }
+            cell.accessoryType = .disclosureIndicator
             cell.setPlaceholder("placeholder")
             cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: tournament.date)
             return cell

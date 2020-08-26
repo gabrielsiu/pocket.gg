@@ -68,19 +68,20 @@ final class EventViewController: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
+        case 0: return 1
+        case 1:
             if !doneRequest {
                 return 1
             } else {
                 guard let numPhases = event.phases?.count, numPhases > 0 else { return 1 }
                 return numPhases
             }
-        case 1: return numTopStandings
+        case 2: return numTopStandings
         default: return 0
         }
     }
@@ -88,6 +89,32 @@ final class EventViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
+            let cell = SubtitleCell()
+            
+            var detailText = ""
+            if let eventType = event.eventType {
+                switch eventType {
+                case 1: detailText = "Singles • "
+                case 2: detailText = "Doubles • "
+                case 5: detailText = "Teams • "
+                default: break
+                }
+            }
+            if let videogameName = event.videogameName {
+                detailText += videogameName
+            }
+            detailText += "\n"
+            detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
+            cell.selectionStyle = .none
+            cell.setPlaceholder("game-controller")
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+            cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+            cell.detailTextLabel?.numberOfLines = 0
+            cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: detailText, newRatio: k.Sizes.eventImageRatio)
+            
+            return cell
+            
+        case 1:
             guard let phases = event.phases, phases.count != 0 else {
                 return doneRequest ? UITableViewCell().setupDisabled("No phases found") : LoadingCell()
             }
@@ -98,7 +125,7 @@ final class EventViewController: UITableViewController {
                 return cell
             }
             
-        case 1:
+        case 2:
             guard numTopStandings != 1 else {
                 return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
             }
@@ -136,15 +163,16 @@ final class EventViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Brackets"
-        case 1: return "Standings"
+        case 0: return "Summary"
+        case 1: return "Brackets"
+        case 2: return "Standings"
         default: return nil
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
-        case 0:
+        case 1:
             guard let phase = event.phases?[safe: indexPath.row] else {
                 tableView.deselectRow(at: indexPath, animated: true)
                 return
@@ -153,7 +181,7 @@ final class EventViewController: UITableViewController {
             if numPhaseGroups > 1 {
                 navigationController?.pushViewController(PhaseGroupListViewController(phase), animated: true)
             }
-        case 1:
+        case 2:
             guard indexPath.row == 8 else { return }
             guard let slug = event.slug else { return }
             guard let url = URL(string: "https://smash.gg/\(slug)/standings") else {

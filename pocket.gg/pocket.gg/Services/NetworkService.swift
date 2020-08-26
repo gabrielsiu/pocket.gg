@@ -86,6 +86,8 @@ final class NetworkService {
                     return Tournament.Event(name: event.name,
                                             startDate: event.startAt,
                                             id: id,
+                                            eventType: event.type,
+                                            videogameName: event.videogame?.name,
                                             videogameImage: event.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
                 })
                 let streams = tournament.streams?.compactMap({ (stream) -> Tournament.Stream? in

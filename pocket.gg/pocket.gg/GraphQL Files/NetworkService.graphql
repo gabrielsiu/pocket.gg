@@ -32,9 +32,11 @@ query TournamentDetailsById($id: ID) {
         primaryContact
         events {
             name
+            type
             id
             startAt
             videogame {
+                name
                 images {
                     url
                     ratio

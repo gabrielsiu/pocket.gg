@@ -459,10 +459,12 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         events {
           __typename
           name
+          type
           id
           startAt
           videogame {
             __typename
+            name
             images {
               __typename
               url
@@ -669,6 +671,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("name", type: .scalar(String.self)),
+          GraphQLField("type", type: .scalar(Int.self)),
           GraphQLField("id", type: .scalar(GraphQLID.self)),
           GraphQLField("startAt", type: .scalar(String.self)),
           GraphQLField("videogame", type: .object(Videogame.selections)),
@@ -680,8 +683,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(name: String? = nil, id: GraphQLID? = nil, startAt: String? = nil, videogame: Videogame? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Event", "name": name, "id": id, "startAt": startAt, "videogame": videogame.flatMap { (value: Videogame) -> ResultMap in value.resultMap }])
+        public init(name: String? = nil, type: Int? = nil, id: GraphQLID? = nil, startAt: String? = nil, videogame: Videogame? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Event", "name": name, "type": type, "id": id, "startAt": startAt, "videogame": videogame.flatMap { (value: Videogame) -> ResultMap in value.resultMap }])
         }
 
         public var __typename: String {
@@ -700,6 +703,16 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "name")
+          }
+        }
+
+        /// The type of the event, whether an entrant will have one participant or multiple
+        public var type: Int? {
+          get {
+            return resultMap["type"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "type")
           }
         }
 
@@ -736,6 +749,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
 
           public static let selections: [GraphQLSelection] = [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("name", type: .scalar(String.self)),
             GraphQLField("images", type: .list(.object(Image.selections))),
           ]
 
@@ -745,8 +759,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
             self.resultMap = unsafeResultMap
           }
 
-          public init(images: [Image?]? = nil) {
-            self.init(unsafeResultMap: ["__typename": "Videogame", "images": images.flatMap { (value: [Image?]) -> [ResultMap?] in value.map { (value: Image?) -> ResultMap? in value.flatMap { (value: Image) -> ResultMap in value.resultMap } } }])
+          public init(name: String? = nil, images: [Image?]? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Videogame", "name": name, "images": images.flatMap { (value: [Image?]) -> [ResultMap?] in value.map { (value: Image?) -> ResultMap? in value.flatMap { (value: Image) -> ResultMap in value.resultMap } } }])
           }
 
           public var __typename: String {
@@ -755,6 +769,15 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var name: String? {
+            get {
+              return resultMap["name"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "name")
             }
           }
 
