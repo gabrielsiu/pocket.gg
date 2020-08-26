@@ -91,26 +91,44 @@ final class EventViewController: UITableViewController {
         case 0:
             let cell = SubtitleCell()
             
-            var detailText = ""
+            // Text Label
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: k.Sizes.largeFont)
+            
+            // Detail Text Label
+            cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+            cell.detailTextLabel?.numberOfLines = 0
+            
+            var gameInfo = ""
             if let eventType = event.eventType {
                 switch eventType {
-                case 1: detailText = "Singles • "
-                case 2: detailText = "Doubles • "
-                case 5: detailText = "Teams • "
+                case 1: gameInfo = "Singles • "
+                case 2: gameInfo = "Doubles • "
+                case 5: gameInfo = "Teams • "
                 default: break
                 }
             }
             if let videogameName = event.videogameName {
-                detailText += videogameName
+                gameInfo += videogameName
             }
-            detailText += "\n"
-            detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
+            gameInfo += "\n"
+            
+            let dotColor: UIColor
+            switch event.state ?? "" {
+            case "COMPLETED": dotColor = .systemGray
+            case "ACTIVE": dotColor = .systemGreen
+            default: dotColor = .systemBlue
+            }
+            
+            let attributedGameInfo = NSMutableAttributedString(string: gameInfo)
+            let dateText = NSMutableAttributedString.addColoredDotToText(DateFormatter.shared.dateFromTimestamp(event.startDate), dotColor: dotColor)
+            let detailText = NSMutableAttributedString()
+            detailText.append(attributedGameInfo)
+            detailText.append(dateText)
+            
             cell.selectionStyle = .none
             cell.setPlaceholder("game-controller")
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-            cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
-            cell.detailTextLabel?.numberOfLines = 0
-            cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: detailText, newRatio: k.Sizes.eventImageRatio)
+            cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: nil, newRatio: k.Sizes.eventImageRatio)
+            cell.detailTextLabel?.attributedText = detailText
             
             return cell
             

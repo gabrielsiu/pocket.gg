@@ -133,10 +133,31 @@ final class TournamentViewController: UITableViewController {
                 guard let event = tournament.events?[safe: indexPath.row] else {
                     return UITableViewCell()
                 }
-                let dateText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                
                 cell.accessoryType = .disclosureIndicator
                 cell.setPlaceholder("game-controller")
-                cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: dateText, newRatio: k.Sizes.eventImageRatio)
+                
+                var detailText: String
+                let dotColor: UIColor
+                switch event.state ?? "" {
+                case "COMPLETED":
+                    guard let winner = event.winner else {
+                        detailText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                        dotColor = .systemBlue
+                        break
+                    }
+                    detailText = "1st place: " + winner
+                    dotColor = .systemGray
+                case "ACTIVE":
+                    detailText = "In Progress"
+                    dotColor = .systemGreen
+                default:
+                    detailText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                    dotColor = .systemBlue
+                }
+                
+                cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: nil, newRatio: k.Sizes.eventImageRatio)
+                cell.detailTextLabel?.attributedText = NSMutableAttributedString.addColoredDotToText(detailText, dotColor: dotColor)
                 return cell
             }
             return UITableViewCell()

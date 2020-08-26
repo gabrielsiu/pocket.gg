@@ -78,7 +78,9 @@ final class PhaseGroupListViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+            
             cell.textLabel?.text = phase.name
+            cell.textLabel?.font = UIFont.systemFont(ofSize: k.Sizes.largeFont)
             
             var detailTextStrings = [String]()
             if let numEntrants = phase.numEntrants {
@@ -95,6 +97,7 @@ final class PhaseGroupListViewController: UITableViewController {
                 return accumulate + current.1 + (current.0 != detailTextStrings.endIndex - 1 ? " • " : "")
             }
             cell.detailTextLabel?.text = detailText
+            cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
             
             return cell
             

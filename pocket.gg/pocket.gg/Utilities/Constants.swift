@@ -45,6 +45,8 @@ struct Constants {
         static let eventImageRatio: CGFloat = 0.75
         
         static let cornerRadius: CGFloat = 5
+        
+        static let largeFont: CGFloat = UIFont.systemFontSize + 4.0
     }
     
     // MARK: - User Defaults

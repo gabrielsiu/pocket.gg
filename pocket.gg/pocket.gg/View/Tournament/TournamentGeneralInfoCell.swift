@@ -56,7 +56,7 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         
         nameLabel.text = name
         nameLabel.numberOfLines = 0
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        nameLabel.font = UIFont.boldSystemFont(ofSize: k.Sizes.largeFont)
         
         dateLabel.text = date
         dateLabel.numberOfLines = 0

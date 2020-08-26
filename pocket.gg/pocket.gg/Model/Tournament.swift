@@ -35,6 +35,8 @@ struct Tournament {
         let eventType: Int?
         let videogameName: String?
         let videogameImage: (url: String?, ratio: Double?)?
+        let state: String?
+        let winner: String?
         
         var phases: [Phase]?
         var topStandings: [(name: String?, placement: Int?)]?

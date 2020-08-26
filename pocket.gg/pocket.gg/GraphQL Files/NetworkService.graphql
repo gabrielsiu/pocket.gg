@@ -1,14 +1,14 @@
 query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {
     tournaments(query: {
-                perPage: $perPage
-                page: $pageNum
-                sortBy: "startAt asc"
-                filter: {
-                upcoming: $upcoming
-                videogameIds: $videogameIds
-                isFeatured: $featured
-                }
-                }) {
+        perPage: $perPage
+        page: $pageNum
+        sortBy: "startAt asc"
+        filter: {
+            upcoming: $upcoming
+            videogameIds: $videogameIds
+            isFeatured: $featured
+        }
+    }) {
         nodes {
             name
             id
@@ -42,6 +42,16 @@ query TournamentDetailsById($id: ID) {
                     ratio
                 }
             }
+            state
+            standings(query: {
+                perPage: 1
+            }) {
+                nodes {
+                    entrant {
+                        name
+                    }
+                }
+            }
         }
         streams {
             streamName
@@ -64,8 +74,8 @@ query EventById($id: ID) {
             groupCount
         }
         standings(query: {
-                  perPage: 8,
-                  }) {
+            perPage: 8
+        }) {
             nodes {
                 placement
                 entrant {
@@ -85,11 +95,11 @@ query PhaseDetailsById($id: ID, $perPage: Int) {
         phaseGroups(query: {
             perPage: $perPage
         }) {
-        nodes {
-            id
-            displayIdentifier
-            state
-        }
+            nodes {
+                id
+                displayIdentifier
+                state
+            }
         }
     }
 }

@@ -30,7 +30,8 @@
 		DA7AF00E24F59BAB009A00E2 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DA7AF00D24F59BAB009A00E2 /* schema.json */; };
 		DA7AF01224F5B2DC009A00E2 /* Value1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF01124F5B2DC009A00E2 /* Value1Cell.swift */; };
 		DA7AF01824F5E53C009A00E2 /* PhaseGroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF01724F5E53C009A00E2 /* PhaseGroupListViewController.swift */; };
-		DA7AF02224F6DA7D009A00E2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF02124F6DA7D009A00E2 /* API.swift */; };
+		DA7AF02524F6F726009A00E2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF02424F6F726009A00E2 /* API.swift */; };
+		DA7AF02924F70EB3009A00E2 /* NSMutableAttributedString+ColoredDots.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF02824F70EB3009A00E2 /* NSMutableAttributedString+ColoredDots.swift */; };
 		DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519D23E46EAB0037E757 /* AppDelegate.swift */; };
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
@@ -80,7 +81,8 @@
 		DA7AF00D24F59BAB009A00E2 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		DA7AF01124F5B2DC009A00E2 /* Value1Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value1Cell.swift; sourceTree = "<group>"; };
 		DA7AF01724F5E53C009A00E2 /* PhaseGroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroupListViewController.swift; sourceTree = "<group>"; };
-		DA7AF02124F6DA7D009A00E2 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DA7AF02424F6F726009A00E2 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DA7AF02824F70EB3009A00E2 /* NSMutableAttributedString+ColoredDots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ColoredDots.swift"; sourceTree = "<group>"; };
 		DA7E519A23E46EAB0037E757 /* pocket.gg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pocket.gg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA7E519D23E46EAB0037E757 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */,
 				DA64A2EF241B3FCA00481280 /* DateFormatter+FromTimestamp.swift */,
 				DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */,
+				DA7AF02824F70EB3009A00E2 /* NSMutableAttributedString+ColoredDots.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -245,7 +248,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DA7AF02124F6DA7D009A00E2 /* API.swift */,
+				DA7AF02424F6F726009A00E2 /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA7AF00D24F59BAB009A00E2 /* schema.json */,
@@ -439,7 +442,6 @@
 				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
-				DA7AF02224F6DA7D009A00E2 /* API.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
 				DA7AF01824F5E53C009A00E2 /* PhaseGroupListViewController.swift in Sources */,
@@ -447,9 +449,11 @@
 				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,
 				DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */,
 				DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */,
+				DA7AF02924F70EB3009A00E2 /* NSMutableAttributedString+ColoredDots.swift in Sources */,
 				DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
+				DA7AF02524F6F726009A00E2 /* API.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,

@@ -3,61 +3,6 @@
 import Apollo
 import Foundation
 
-/// Represents the source of a stream
-public enum StreamSource: RawRepresentable, Equatable, Hashable, CaseIterable, Apollo.JSONDecodable, Apollo.JSONEncodable {
-  public typealias RawValue = String
-  /// Stream is on twitch.tv channel
-  case twitch
-  /// Stream is on smashcast.tv channel
-  case hitbox
-  /// Stream is on a stream.me channel
-  case streamme
-  /// Stream is on a mixer.com channel
-  case mixer
-  /// Auto generated constant for unknown enum values
-  case __unknown(RawValue)
-
-  public init?(rawValue: RawValue) {
-    switch rawValue {
-      case "TWITCH": self = .twitch
-      case "HITBOX": self = .hitbox
-      case "STREAMME": self = .streamme
-      case "MIXER": self = .mixer
-      default: self = .__unknown(rawValue)
-    }
-  }
-
-  public var rawValue: RawValue {
-    switch self {
-      case .twitch: return "TWITCH"
-      case .hitbox: return "HITBOX"
-      case .streamme: return "STREAMME"
-      case .mixer: return "MIXER"
-      case .__unknown(let value): return value
-    }
-  }
-
-  public static func == (lhs: StreamSource, rhs: StreamSource) -> Bool {
-    switch (lhs, rhs) {
-      case (.twitch, .twitch): return true
-      case (.hitbox, .hitbox): return true
-      case (.streamme, .streamme): return true
-      case (.mixer, .mixer): return true
-      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
-      default: return false
-    }
-  }
-
-  public static var allCases: [StreamSource] {
-    return [
-      .twitch,
-      .hitbox,
-      .streamme,
-      .mixer,
-    ]
-  }
-}
-
 /// Represents the state of an activity
 public enum ActivityState: RawRepresentable, Equatable, Hashable, CaseIterable, Apollo.JSONDecodable, Apollo.JSONEncodable {
   public typealias RawValue = String
@@ -127,6 +72,61 @@ public enum ActivityState: RawRepresentable, Equatable, Hashable, CaseIterable, 
       .invalid,
       .called,
       .queued,
+    ]
+  }
+}
+
+/// Represents the source of a stream
+public enum StreamSource: RawRepresentable, Equatable, Hashable, CaseIterable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
+  /// Stream is on twitch.tv channel
+  case twitch
+  /// Stream is on smashcast.tv channel
+  case hitbox
+  /// Stream is on a stream.me channel
+  case streamme
+  /// Stream is on a mixer.com channel
+  case mixer
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "TWITCH": self = .twitch
+      case "HITBOX": self = .hitbox
+      case "STREAMME": self = .streamme
+      case "MIXER": self = .mixer
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .twitch: return "TWITCH"
+      case .hitbox: return "HITBOX"
+      case .streamme: return "STREAMME"
+      case .mixer: return "MIXER"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: StreamSource, rhs: StreamSource) -> Bool {
+    switch (lhs, rhs) {
+      case (.twitch, .twitch): return true
+      case (.hitbox, .hitbox): return true
+      case (.streamme, .streamme): return true
+      case (.mixer, .mixer): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+
+  public static var allCases: [StreamSource] {
+    return [
+      .twitch,
+      .hitbox,
+      .streamme,
+      .mixer,
     ]
   }
 }
@@ -471,6 +471,17 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
               ratio
             }
           }
+          state
+          standings(query: {perPage: 1}) {
+            __typename
+            nodes {
+              __typename
+              entrant {
+                __typename
+                name
+              }
+            }
+          }
         }
         streams {
           __typename
@@ -675,6 +686,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           GraphQLField("id", type: .scalar(GraphQLID.self)),
           GraphQLField("startAt", type: .scalar(String.self)),
           GraphQLField("videogame", type: .object(Videogame.selections)),
+          GraphQLField("state", type: .scalar(ActivityState.self)),
+          GraphQLField("standings", arguments: ["query": ["perPage": 1]], type: .object(Standing.selections)),
         ]
 
         public private(set) var resultMap: ResultMap
@@ -683,8 +696,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(name: String? = nil, type: Int? = nil, id: GraphQLID? = nil, startAt: String? = nil, videogame: Videogame? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Event", "name": name, "type": type, "id": id, "startAt": startAt, "videogame": videogame.flatMap { (value: Videogame) -> ResultMap in value.resultMap }])
+        public init(name: String? = nil, type: Int? = nil, id: GraphQLID? = nil, startAt: String? = nil, videogame: Videogame? = nil, state: ActivityState? = nil, standings: Standing? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Event", "name": name, "type": type, "id": id, "startAt": startAt, "videogame": videogame.flatMap { (value: Videogame) -> ResultMap in value.resultMap }, "state": state, "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }])
         }
 
         public var __typename: String {
@@ -741,6 +754,26 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue?.resultMap, forKey: "videogame")
+          }
+        }
+
+        /// The state of the Event.
+        public var state: ActivityState? {
+          get {
+            return resultMap["state"] as? ActivityState
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "state")
+          }
+        }
+
+        /// Paginated list of standings
+        public var standings: Standing? {
+          get {
+            return (resultMap["standings"] as? ResultMap).flatMap { Standing(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "standings")
           }
         }
 
@@ -833,6 +866,119 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
               }
               set {
                 resultMap.updateValue(newValue, forKey: "ratio")
+              }
+            }
+          }
+        }
+
+        public struct Standing: GraphQLSelectionSet {
+          public static let possibleTypes = ["StandingConnection"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("nodes", type: .list(.object(Node.selections))),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(nodes: [Node?]? = nil) {
+            self.init(unsafeResultMap: ["__typename": "StandingConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var nodes: [Node?]? {
+            get {
+              return (resultMap["nodes"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Node?] in value.map { (value: ResultMap?) -> Node? in value.flatMap { (value: ResultMap) -> Node in Node(unsafeResultMap: value) } } }
+            }
+            set {
+              resultMap.updateValue(newValue.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, forKey: "nodes")
+            }
+          }
+
+          public struct Node: GraphQLSelectionSet {
+            public static let possibleTypes = ["Standing"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("entrant", type: .object(Entrant.selections)),
+            ]
+
+            public private(set) var resultMap: ResultMap
+
+            public init(unsafeResultMap: ResultMap) {
+              self.resultMap = unsafeResultMap
+            }
+
+            public init(entrant: Entrant? = nil) {
+              self.init(unsafeResultMap: ["__typename": "Standing", "entrant": entrant.flatMap { (value: Entrant) -> ResultMap in value.resultMap }])
+            }
+
+            public var __typename: String {
+              get {
+                return resultMap["__typename"]! as! String
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            /// If the entity this standing is assigned to can be resolved into an entrant, this will provide the entrant.
+            public var entrant: Entrant? {
+              get {
+                return (resultMap["entrant"] as? ResultMap).flatMap { Entrant(unsafeResultMap: $0) }
+              }
+              set {
+                resultMap.updateValue(newValue?.resultMap, forKey: "entrant")
+              }
+            }
+
+            public struct Entrant: GraphQLSelectionSet {
+              public static let possibleTypes = ["Entrant"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("name", type: .scalar(String.self)),
+              ]
+
+              public private(set) var resultMap: ResultMap
+
+              public init(unsafeResultMap: ResultMap) {
+                self.resultMap = unsafeResultMap
+              }
+
+              public init(name: String? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Entrant", "name": name])
+              }
+
+              public var __typename: String {
+                get {
+                  return resultMap["__typename"]! as! String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// The entrant name as it appears in bracket: gamerTag of the participant or team name
+              public var name: String? {
+                get {
+                  return resultMap["name"] as? String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "name")
+                }
               }
             }
           }
