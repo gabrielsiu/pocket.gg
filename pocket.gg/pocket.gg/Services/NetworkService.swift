@@ -120,6 +120,23 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
+                // TODO: Carry on even if phases or standings nodes fail
+                
+                // Brackets
+                guard let eventPhases = graphQLResult.data?.event?.phases else {
+                    debugPrint(k.Error.phases)
+                    complete(nil)
+                    return
+                }
+                var phases = [Tournament.Phase?]()
+                for phase in eventPhases {
+                    phases.append(Tournament.Phase(name: phase?.name,
+                                                       id: Int(phase?.id ?? "-1"),
+                                                       state: phase?.state?.rawValue,
+                                                       numPhaseGroups: phase?.groupCount))
+                }
+                
+                // Standings
                 guard let nodes = graphQLResult.data?.event?.standings?.nodes else {
                     debugPrint(k.Error.standingsNodes)
                     complete(nil)
@@ -131,8 +148,38 @@ final class NetworkService {
                 }
                 // At the moment, the smash.gg API returns a slug with 'event' instead of 'events', leading to an incorrect URL
                 let slug = graphQLResult.data?.event?.slug?.replacingOccurrences(of: "event", with: "events")
-                complete(["topStandings": topStandings,
+                
+                complete(["phases": phases,
+                          "topStandings": topStandings,
                           "slug": slug])
+            }
+        }
+    }
+    
+    static func getPhaseDetailsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [String: Any?]?) -> Void) {
+        apollo.fetch(query: PhaseDetailsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                complete(nil)
+                return
+            case .success(let graphQLResult):
+                guard let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes else {
+                    debugPrint(k.Error.phaseGroupsNodes)
+                    complete(nil)
+                    return
+                }
+                
+                var phaseGroups = [Tournament.PhaseGroup]()
+                for phaseGroup in nodes {
+                    phaseGroups.append(Tournament.PhaseGroup(name: phaseGroup?.displayIdentifier,
+                                                             id: Int(phaseGroup?.id ?? "-1"),
+                                                             state: ActivityState.allCases[(phaseGroup?.state ?? 5) - 1].rawValue))
+                }
+                
+                complete(["numEntrants": graphQLResult.data?.phase?.numSeeds,
+                          "bracketType": graphQLResult.data?.phase?.bracketType?.rawValue,
+                          "phaseGroups": phaseGroups])
             }
         }
     }

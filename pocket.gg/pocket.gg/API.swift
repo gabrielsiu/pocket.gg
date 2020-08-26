@@ -58,6 +58,155 @@ public enum StreamSource: RawRepresentable, Equatable, Hashable, CaseIterable, A
   }
 }
 
+/// Represents the state of an activity
+public enum ActivityState: RawRepresentable, Equatable, Hashable, CaseIterable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
+  /// Activity is created
+  case created
+  /// Activity is active or in progress
+  case active
+  /// Activity is done
+  case completed
+  /// Activity is ready to be started
+  case ready
+  /// Activity is invalid
+  case invalid
+  /// Activity, like a set, has been called to start
+  case called
+  /// Activity is queued to run
+  case queued
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "CREATED": self = .created
+      case "ACTIVE": self = .active
+      case "COMPLETED": self = .completed
+      case "READY": self = .ready
+      case "INVALID": self = .invalid
+      case "CALLED": self = .called
+      case "QUEUED": self = .queued
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .created: return "CREATED"
+      case .active: return "ACTIVE"
+      case .completed: return "COMPLETED"
+      case .ready: return "READY"
+      case .invalid: return "INVALID"
+      case .called: return "CALLED"
+      case .queued: return "QUEUED"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: ActivityState, rhs: ActivityState) -> Bool {
+    switch (lhs, rhs) {
+      case (.created, .created): return true
+      case (.active, .active): return true
+      case (.completed, .completed): return true
+      case (.ready, .ready): return true
+      case (.invalid, .invalid): return true
+      case (.called, .called): return true
+      case (.queued, .queued): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+
+  public static var allCases: [ActivityState] {
+    return [
+      .created,
+      .active,
+      .completed,
+      .ready,
+      .invalid,
+      .called,
+      .queued,
+    ]
+  }
+}
+
+/// The type of Bracket format that a Phase is configured with.
+public enum BracketType: RawRepresentable, Equatable, Hashable, CaseIterable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
+  case singleElimination
+  case doubleElimination
+  case roundRobin
+  case swiss
+  case exhibition
+  case customSchedule
+  case matchmaking
+  case eliminationRounds
+  case race
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "SINGLE_ELIMINATION": self = .singleElimination
+      case "DOUBLE_ELIMINATION": self = .doubleElimination
+      case "ROUND_ROBIN": self = .roundRobin
+      case "SWISS": self = .swiss
+      case "EXHIBITION": self = .exhibition
+      case "CUSTOM_SCHEDULE": self = .customSchedule
+      case "MATCHMAKING": self = .matchmaking
+      case "ELIMINATION_ROUNDS": self = .eliminationRounds
+      case "RACE": self = .race
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .singleElimination: return "SINGLE_ELIMINATION"
+      case .doubleElimination: return "DOUBLE_ELIMINATION"
+      case .roundRobin: return "ROUND_ROBIN"
+      case .swiss: return "SWISS"
+      case .exhibition: return "EXHIBITION"
+      case .customSchedule: return "CUSTOM_SCHEDULE"
+      case .matchmaking: return "MATCHMAKING"
+      case .eliminationRounds: return "ELIMINATION_ROUNDS"
+      case .race: return "RACE"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: BracketType, rhs: BracketType) -> Bool {
+    switch (lhs, rhs) {
+      case (.singleElimination, .singleElimination): return true
+      case (.doubleElimination, .doubleElimination): return true
+      case (.roundRobin, .roundRobin): return true
+      case (.swiss, .swiss): return true
+      case (.exhibition, .exhibition): return true
+      case (.customSchedule, .customSchedule): return true
+      case (.matchmaking, .matchmaking): return true
+      case (.eliminationRounds, .eliminationRounds): return true
+      case (.race, .race): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+
+  public static var allCases: [BracketType] {
+    return [
+      .singleElimination,
+      .doubleElimination,
+      .roundRobin,
+      .swiss,
+      .exhibition,
+      .customSchedule,
+      .matchmaking,
+      .eliminationRounds,
+      .race,
+    ]
+  }
+}
+
 public final class TournamentsByVideogamesQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition =
@@ -744,6 +893,13 @@ public final class EventByIdQuery: GraphQLQuery {
     query EventById($id: ID) {
       event(id: $id) {
         __typename
+        phases {
+          __typename
+          id
+          name
+          state
+          groupCount
+        }
         standings(query: {perPage: 8}) {
           __typename
           nodes {
@@ -805,6 +961,7 @@ public final class EventByIdQuery: GraphQLQuery {
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("phases", type: .list(.object(Phase.selections))),
         GraphQLField("standings", arguments: ["query": ["perPage": 8]], type: .object(Standing.selections)),
         GraphQLField("slug", type: .scalar(String.self)),
       ]
@@ -815,8 +972,8 @@ public final class EventByIdQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(standings: Standing? = nil, slug: String? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Event", "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }, "slug": slug])
+      public init(phases: [Phase?]? = nil, standings: Standing? = nil, slug: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Event", "phases": phases.flatMap { (value: [Phase?]) -> [ResultMap?] in value.map { (value: Phase?) -> ResultMap? in value.flatMap { (value: Phase) -> ResultMap in value.resultMap } } }, "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }, "slug": slug])
       }
 
       public var __typename: String {
@@ -825,6 +982,16 @@ public final class EventByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The phases that belong to an event.
+      public var phases: [Phase?]? {
+        get {
+          return (resultMap["phases"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Phase?] in value.map { (value: ResultMap?) -> Phase? in value.flatMap { (value: ResultMap) -> Phase in Phase(unsafeResultMap: value) } } }
+        }
+        set {
+          resultMap.updateValue(newValue.flatMap { (value: [Phase?]) -> [ResultMap?] in value.map { (value: Phase?) -> ResultMap? in value.flatMap { (value: Phase) -> ResultMap in value.resultMap } } }, forKey: "phases")
         }
       }
 
@@ -844,6 +1011,76 @@ public final class EventByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "slug")
+        }
+      }
+
+      public struct Phase: GraphQLSelectionSet {
+        public static let possibleTypes = ["Phase"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .scalar(GraphQLID.self)),
+          GraphQLField("name", type: .scalar(String.self)),
+          GraphQLField("state", type: .scalar(ActivityState.self)),
+          GraphQLField("groupCount", type: .scalar(Int.self)),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(id: GraphQLID? = nil, name: String? = nil, state: ActivityState? = nil, groupCount: Int? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Phase", "id": id, "name": name, "state": state, "groupCount": groupCount])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: GraphQLID? {
+          get {
+            return resultMap["id"] as? GraphQLID
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        /// Name of phase e.g. Round 1 Pools
+        public var name: String? {
+          get {
+            return resultMap["name"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "name")
+          }
+        }
+
+        /// State of the phase
+        public var state: ActivityState? {
+          get {
+            return resultMap["state"] as? ActivityState
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "state")
+          }
+        }
+
+        /// Number of phase groups in this phase
+        public var groupCount: Int? {
+          get {
+            return resultMap["groupCount"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "groupCount")
+          }
         }
       }
 
@@ -975,6 +1212,226 @@ public final class EventByIdQuery: GraphQLQuery {
               set {
                 resultMap.updateValue(newValue, forKey: "name")
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+public final class PhaseDetailsByIdQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition =
+    """
+    query PhaseDetailsById($id: ID, $perPage: Int) {
+      phase(id: $id) {
+        __typename
+        numSeeds
+        bracketType
+        phaseGroups(query: {perPage: $perPage}) {
+          __typename
+          nodes {
+            __typename
+            id
+            displayIdentifier
+            state
+          }
+        }
+      }
+    }
+    """
+
+  public let operationName = "PhaseDetailsById"
+
+  public var id: GraphQLID?
+  public var perPage: Int?
+
+  public init(id: GraphQLID? = nil, perPage: Int? = nil) {
+    self.id = id
+    self.perPage = perPage
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id, "perPage": perPage]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("phase", arguments: ["id": GraphQLVariable("id")], type: .object(Phase.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(phase: Phase? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "phase": phase.flatMap { (value: Phase) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns a phase given its id
+    public var phase: Phase? {
+      get {
+        return (resultMap["phase"] as? ResultMap).flatMap { Phase(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "phase")
+      }
+    }
+
+    public struct Phase: GraphQLSelectionSet {
+      public static let possibleTypes = ["Phase"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("numSeeds", type: .scalar(Int.self)),
+        GraphQLField("bracketType", type: .scalar(BracketType.self)),
+        GraphQLField("phaseGroups", arguments: ["query": ["perPage": GraphQLVariable("perPage")]], type: .object(PhaseGroup.selections)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(numSeeds: Int? = nil, bracketType: BracketType? = nil, phaseGroups: PhaseGroup? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Phase", "numSeeds": numSeeds, "bracketType": bracketType, "phaseGroups": phaseGroups.flatMap { (value: PhaseGroup) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The number of seeds this phase contains.
+      public var numSeeds: Int? {
+        get {
+          return resultMap["numSeeds"] as? Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "numSeeds")
+        }
+      }
+
+      /// The bracket type of this phase.
+      public var bracketType: BracketType? {
+        get {
+          return resultMap["bracketType"] as? BracketType
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "bracketType")
+        }
+      }
+
+      /// Phase groups under this phase, paginated
+      public var phaseGroups: PhaseGroup? {
+        get {
+          return (resultMap["phaseGroups"] as? ResultMap).flatMap { PhaseGroup(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "phaseGroups")
+        }
+      }
+
+      public struct PhaseGroup: GraphQLSelectionSet {
+        public static let possibleTypes = ["PhaseGroupConnection"]
+
+        public static let selections: [GraphQLSelection] = [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("nodes", type: .list(.object(Node.selections))),
+        ]
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(nodes: [Node?]? = nil) {
+          self.init(unsafeResultMap: ["__typename": "PhaseGroupConnection", "nodes": nodes.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var nodes: [Node?]? {
+          get {
+            return (resultMap["nodes"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Node?] in value.map { (value: ResultMap?) -> Node? in value.flatMap { (value: ResultMap) -> Node in Node(unsafeResultMap: value) } } }
+          }
+          set {
+            resultMap.updateValue(newValue.flatMap { (value: [Node?]) -> [ResultMap?] in value.map { (value: Node?) -> ResultMap? in value.flatMap { (value: Node) -> ResultMap in value.resultMap } } }, forKey: "nodes")
+          }
+        }
+
+        public struct Node: GraphQLSelectionSet {
+          public static let possibleTypes = ["PhaseGroup"]
+
+          public static let selections: [GraphQLSelection] = [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .scalar(GraphQLID.self)),
+            GraphQLField("displayIdentifier", type: .scalar(String.self)),
+            GraphQLField("state", type: .scalar(Int.self)),
+          ]
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(id: GraphQLID? = nil, displayIdentifier: String? = nil, state: Int? = nil) {
+            self.init(unsafeResultMap: ["__typename": "PhaseGroup", "id": id, "displayIdentifier": displayIdentifier, "state": state])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: GraphQLID? {
+            get {
+              return resultMap["id"] as? GraphQLID
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          /// Unique identifier for this group within the context of its phase
+          public var displayIdentifier: String? {
+            get {
+              return resultMap["displayIdentifier"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "displayIdentifier")
+            }
+          }
+
+          public var state: Int? {
+            get {
+              return resultMap["state"] as? Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "state")
             }
           }
         }

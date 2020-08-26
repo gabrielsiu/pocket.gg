@@ -34,7 +34,7 @@ struct Constants {
         static let videoGameCell = "videoGameCell"
         static let eventCell = "eventCell"
         static let streamCell = "streamCell"
-        static let standingCell = "standingCell"
+        static let value1Cell = "value1Cell"
     }
     
     struct Sizes {
@@ -69,13 +69,17 @@ struct Constants {
         static let apolloFetch = "Error fetching GraphQL query: "
         static let tournamentNodes = "ERROR: Could not fetch tournament nodes."
         static let tournamentFromId = "ERROR: Could not create tournament from its ID."
+        static let phases = "ERROR: Could not fetch event phases."
         static let standingsNodes = "ERROR: Could not fetch event standings nodes."
+        static let phaseGroupsNodes = "ERROR: Could not fetch phase groups nodes."
         
         static let requestTitle = "Request error"
         static let getTournamentsMessage = "Unable to fetch tournaments from smash.gg"
         static let generateTournamentMessage = "Unable to load tournament details"
         static let generateEventMessage = "Unable to load event"
         static let getEventDetailsMessage = "Unable to fetch event details"
+        static let generateBracketMessage = "Unable to load bracket"
+        static let getBracketDetailsMessage = "Unable to fetch bracket details"
     }
 }
 

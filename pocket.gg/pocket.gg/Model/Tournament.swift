@@ -34,6 +34,7 @@ struct Tournament {
         let id: Int?
         let videogameImage: (url: String?, ratio: Double?)?
         
+        var phases: [Phase]?
         var topStandings: [(name: String?, placement: Int?)]?
         var slug: String?
     }
@@ -43,5 +44,26 @@ struct Tournament {
         let game: String?
         let logoUrl: String?
         let sourceUrl: String?
+    }
+    
+    // Phase: A round of the tournament
+    // Eg: R1 Pools, R2 Pools, Top 64, Top 8, etc.
+    struct Phase {
+        let name: String?
+        let id: Int?
+        let state: String?
+        let numPhaseGroups: Int?
+        
+        var numEntrants: Int?
+        var bracketType: String?
+        var phaseGroups: [PhaseGroup]?
+    }
+    
+    // Phase Group: A pool within a certain phase
+    // Eg: R1 Pools can have many phase groups, whereas Top 8 only has 1
+    struct PhaseGroup {
+        let name: String?
+        let id: Int?
+        let state: String?
     }
 }

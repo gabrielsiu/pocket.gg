@@ -55,6 +55,12 @@ query TournamentDetailsById($id: ID) {
 
 query EventById($id: ID) {
     event(id: $id) {
+        phases {
+            id
+            name
+            state
+            groupCount
+        }
         standings(query: {
                   perPage: 8,
                   }) {
@@ -67,5 +73,21 @@ query EventById($id: ID) {
             }
         }
         slug
+    }
+}
+
+query PhaseDetailsById($id: ID, $perPage: Int) {
+    phase(id: $id) {
+        numSeeds
+        bracketType
+        phaseGroups(query: {
+            perPage: $perPage
+        }) {
+        nodes {
+            id
+            displayIdentifier
+            state
+        }
+        }
     }
 }
