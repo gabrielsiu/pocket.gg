@@ -98,19 +98,23 @@ final class EventViewController: UITableViewController {
             cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
             cell.detailTextLabel?.numberOfLines = 0
             
-            var gameInfo = ""
+            var detailText = ""
             if let eventType = event.eventType {
                 switch eventType {
-                case 1: gameInfo = "Singles • "
-                case 2: gameInfo = "Doubles • "
-                case 5: gameInfo = "Teams • "
+                case 1: detailText = "Singles • "
+                case 2: detailText = "Doubles • "
+                case 5: detailText = "Teams • "
                 default: break
                 }
             }
             if let videogameName = event.videogameName {
-                gameInfo += videogameName
+                detailText += videogameName
             }
-            gameInfo += "\n"
+            detailText += "\n"
+            let dotPosition = detailText.count
+            
+            detailText += "● "
+            detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
             
             let dotColor: UIColor
             switch event.state ?? "" {
@@ -119,16 +123,13 @@ final class EventViewController: UITableViewController {
             default: dotColor = .systemBlue
             }
             
-            let attributedGameInfo = NSMutableAttributedString(string: gameInfo)
-            let dateText = NSMutableAttributedString.addColoredDotToText(DateFormatter.shared.dateFromTimestamp(event.startDate), dotColor: dotColor)
-            let detailText = NSMutableAttributedString()
-            detailText.append(attributedGameInfo)
-            detailText.append(dateText)
+            let attributedDetailText = NSMutableAttributedString(string: detailText)
+            attributedDetailText.addAttribute(.foregroundColor, value: dotColor, range: NSRange(location: dotPosition, length: 1))
             
             cell.selectionStyle = .none
             cell.setPlaceholder("game-controller")
             cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: nil, newRatio: k.Sizes.eventImageRatio)
-            cell.detailTextLabel?.attributedText = detailText
+            cell.detailTextLabel?.attributedText = attributedDetailText
             
             return cell
             
@@ -198,6 +199,16 @@ final class EventViewController: UITableViewController {
             let numPhaseGroups = phase.numPhaseGroups ?? 1
             if numPhaseGroups > 1 {
                 navigationController?.pushViewController(PhaseGroupListViewController(phase), animated: true)
+            } else if numPhaseGroups == 1 {
+                // TODO: Find some way to allow EventViewController to go directly to PhaseGroupViewController if the phase only has 1 phase group
+                // At this point, we don't have the phase group yet because we don't want to load the phase groups of all of the other phases as well
+                guard let phaseGroup = phase.phaseGroups?[safe: indexPath.row] else {
+                    tableView.deselectRow(at: indexPath, animated: true)
+                    return
+                }
+                navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: phase.name), animated: true)
+            } else {
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         case 2:
             guard indexPath.row == 8 else { return }

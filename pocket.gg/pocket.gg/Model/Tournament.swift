@@ -69,5 +69,8 @@ struct Tournament {
         let name: String?
         let id: Int?
         let state: String?
+        
+        var progressionsOut: [Int]?
+        var standings: [(name: String?, placement: Int?)]?
     }
 }

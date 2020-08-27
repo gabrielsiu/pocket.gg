@@ -79,7 +79,6 @@ query EventById($id: ID) {
             nodes {
                 placement
                 entrant {
-                    id
                     name
                 }
             }
@@ -99,6 +98,22 @@ query PhaseDetailsById($id: ID, $perPage: Int) {
                 id
                 displayIdentifier
                 state
+            }
+        }
+    }
+}
+
+query PhaseGroupStandingsById($id:ID) {
+    phaseGroup(id: $id) {
+        progressionsOut{
+            originPlacement
+        }
+        standings {
+            nodes {
+                placement
+                entrant {
+                    name
+                }
             }
         }
     }

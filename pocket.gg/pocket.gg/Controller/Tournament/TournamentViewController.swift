@@ -137,27 +137,31 @@ final class TournamentViewController: UITableViewController {
                 cell.accessoryType = .disclosureIndicator
                 cell.setPlaceholder("game-controller")
                 
-                var detailText: String
+                var detailText = "● "
                 let dotColor: UIColor
                 switch event.state ?? "" {
                 case "COMPLETED":
                     guard let winner = event.winner else {
-                        detailText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                        detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
                         dotColor = .systemBlue
                         break
                     }
-                    detailText = "1st place: " + winner
+                    detailText += "1st place: " + winner
                     dotColor = .systemGray
                 case "ACTIVE":
-                    detailText = "In Progress"
+                    detailText += "In Progress"
                     dotColor = .systemGreen
                 default:
-                    detailText = DateFormatter.shared.dateFromTimestamp(event.startDate)
+                    detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
                     dotColor = .systemBlue
                 }
                 
+                let attributedDetailText = NSMutableAttributedString(string: detailText)
+                attributedDetailText.addAttribute(.foregroundColor, value: dotColor, range: NSRange(location: 0, length: 1))
+                
                 cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: nil, newRatio: k.Sizes.eventImageRatio)
-                cell.detailTextLabel?.attributedText = NSMutableAttributedString.addColoredDotToText(detailText, dotColor: dotColor)
+                cell.detailTextLabel?.attributedText = attributedDetailText
+                
                 return cell
             }
             return UITableViewCell()

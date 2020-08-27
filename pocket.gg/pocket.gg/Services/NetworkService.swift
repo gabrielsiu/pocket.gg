@@ -135,9 +135,9 @@ final class NetworkService {
                 var phases = [Tournament.Phase?]()
                 for phase in eventPhases {
                     phases.append(Tournament.Phase(name: phase?.name,
-                                                       id: Int(phase?.id ?? "-1"),
-                                                       state: phase?.state?.rawValue,
-                                                       numPhaseGroups: phase?.groupCount))
+                                                   id: Int(phase?.id ?? "-1"),
+                                                   state: phase?.state?.rawValue,
+                                                   numPhaseGroups: phase?.groupCount))
                 }
                 
                 // Standings
@@ -167,6 +167,7 @@ final class NetworkService {
                 debugPrint(k.Error.apolloFetch, error as Any)
                 complete(nil)
                 return
+            
             case .success(let graphQLResult):
                 guard let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes else {
                     debugPrint(k.Error.phaseGroupsNodes)
@@ -184,6 +185,31 @@ final class NetworkService {
                 complete(["numEntrants": graphQLResult.data?.phase?.numSeeds,
                           "bracketType": graphQLResult.data?.phase?.bracketType?.rawValue,
                           "phaseGroups": phaseGroups])
+            }
+        }
+    }
+    
+    static func getPhaseGroupStandingsById(id: Int, complete: @escaping (_ standings: [String: Any?]?) -> Void) {
+        apollo.fetch(query: PhaseGroupStandingsByIdQuery(id: "\(id)")) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                complete(nil)
+                return
+            
+            case .success(let graphQLResult):
+                var progressionsOut: [Int]?
+                if let nodes = graphQLResult.data?.phaseGroup?.progressionsOut {
+                    progressionsOut = nodes.compactMap { $0?.originPlacement }
+                }
+                
+                var standings: [(name: String?, placement: Int?)]?
+                if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
+                    standings = nodes.map { (name: $0?.entrant?.name, placement: $0?.placement) }
+                }
+                
+                complete(["progressionsOut": progressionsOut,
+                          "standings": standings])
             }
         }
     }

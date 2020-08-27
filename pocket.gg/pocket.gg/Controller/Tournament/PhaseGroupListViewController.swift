@@ -79,6 +79,7 @@ final class PhaseGroupListViewController: UITableViewController {
         case 0:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
             
+            cell.selectionStyle = .none
             cell.textLabel?.text = phase.name
             cell.textLabel?.font = UIFont.systemFont(ofSize: k.Sizes.largeFont)
             
@@ -119,5 +120,16 @@ final class PhaseGroupListViewController: UITableViewController {
         }
         
         return UITableViewCell()
+    }
+    
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.section == 1 else { return }
+        guard let phaseGroup = phase.phaseGroups?[safe: indexPath.row] else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: "Pool " + (phaseGroup.name ?? "")), animated: true)
     }
 }
