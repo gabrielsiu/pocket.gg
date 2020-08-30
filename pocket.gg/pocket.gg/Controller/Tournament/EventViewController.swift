@@ -48,17 +48,17 @@ final class EventViewController: UITableViewController {
             self.present(alert, animated: true)
             return
         }
-        NetworkService.getEventById(id: id) { [weak self] (details) in
-            guard let details = details else {
+        NetworkService.getEventById(id: id) { [weak self] (result) in
+            guard let result = result else {
                 self?.doneRequest = true
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
                 return
             }
-            self?.event.phases = details["phases"] as? [Tournament.Phase]
-            self?.event.topStandings = details["topStandings"] as? [(String, Int)]
-            self?.event.slug = details["slug"] as? String
+            self?.event.phases = result["phases"] as? [Tournament.Event.Phase]
+            self?.event.topStandings = result["topStandings"] as? [(String, Int)]
+            self?.event.slug = result["slug"] as? String
             
             self?.doneRequest = true
             self?.tableView.reloadData()
@@ -135,7 +135,7 @@ final class EventViewController: UITableViewController {
             
         case 1:
             guard let phases = event.phases, phases.count != 0 else {
-                return doneRequest ? UITableViewCell().setupDisabled("No phases found") : LoadingCell()
+                return doneRequest ? UITableViewCell().setupDisabled("No brackets found") : LoadingCell()
             }
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {

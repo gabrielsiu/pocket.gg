@@ -10,10 +10,12 @@ query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID],
         }
     }) {
         nodes {
-            name
             id
+            name
             startAt
             endAt
+            venueAddress
+            isOnline
             images {
                 url
                 ratio
@@ -25,23 +27,11 @@ query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID],
 query TournamentDetailsById($id: ID) {
     tournament(id: $id) {
         venueName
-        venueAddress
         lng
         lat
-        isOnline
-        primaryContact
         events {
-            name
-            type
             id
-            startAt
-            videogame {
-                name
-                images {
-                    url
-                    ratio
-                }
-            }
+            name
             state
             standings(query: {
                 perPage: 1
@@ -50,6 +40,15 @@ query TournamentDetailsById($id: ID) {
                     entrant {
                         name
                     }
+                }
+            }
+            startAt
+            type
+            videogame {
+                name
+                images {
+                    url
+                    ratio
                 }
             }
         }
@@ -61,6 +60,7 @@ query TournamentDetailsById($id: ID) {
         }
         isRegistrationOpen
         registrationClosesAt
+        primaryContact
         slug
     }
 }
@@ -72,6 +72,8 @@ query EventById($id: ID) {
             name
             state
             groupCount
+            numSeeds
+            bracketType
         }
         standings(query: {
             perPage: 8
@@ -87,10 +89,8 @@ query EventById($id: ID) {
     }
 }
 
-query PhaseDetailsById($id: ID, $perPage: Int) {
+query PhaseGroupsById($id: ID, $perPage: Int) {
     phase(id: $id) {
-        numSeeds
-        bracketType
         phaseGroups(query: {
             perPage: $perPage
         }) {

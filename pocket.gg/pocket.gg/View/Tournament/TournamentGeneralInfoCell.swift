@@ -10,7 +10,7 @@ import UIKit
 
 final class TournamentGeneralInfoCell: UITableViewCell {
     
-    let spinner = UIActivityIndicatorView(style: .large)
+    let tournament: Tournament
     
     let logoImageView = UIImageView(image: UIImage(named: "placeholder"))
     let dateIconView = UIImageView(image: UIImage(named: "calendar"))
@@ -27,10 +27,11 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     // MARK: - Initialization
     
     init(_ tournament: Tournament) {
+        self.tournament = tournament
         super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
         
-        setupViews(logoUrl: tournament.logoUrl, name: tournament.name, date: tournament.date)
+        selectionStyle = .none
+        setupViews()
         setupStackViews()
         setConstraints()
     }
@@ -41,26 +42,32 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     
     // MARK: - UI Setup
     
-    private func setupViews(logoUrl: String, name: String, date: String) {
-        spinner.startAnimating()
-        contentView.addSubview(spinner)
-        
+    private func setupViews() {
         logoImageView.layer.cornerRadius = k.Sizes.cornerRadius
         logoImageView.layer.masksToBounds = true
-        NetworkService.getImage(imageUrl: logoUrl) { [weak self] (logo) in
+        NetworkService.getImage(imageUrl: tournament.logoUrl) { [weak self] (logo) in
             guard let logo = logo else { return }
             DispatchQueue.main.async {
                 self?.logoImageView.image = logo
             }
         }
         
-        nameLabel.text = name
+        nameLabel.text = tournament.name
         nameLabel.numberOfLines = 0
         nameLabel.font = UIFont.boldSystemFont(ofSize: k.Sizes.largeFont)
         
-        dateLabel.text = date
+        dateLabel.text = tournament.date
         dateLabel.numberOfLines = 0
         
+        guard !(tournament.isOnline ?? true) else {
+            locationLabel.text = "Online"
+            return
+        }
+        guard let address = tournament.location?.address else {
+            locationLabel.text = "Location not available"
+            return
+        }
+        locationLabel.text = address
         locationLabel.numberOfLines = 0
     }
     
@@ -76,7 +83,6 @@ final class TournamentGeneralInfoCell: UITableViewCell {
         dateIconView.setSquareAspectRatio(sideLength: dateLabel.font.pointSize)
         locationIconView.setSquareAspectRatio(sideLength: locationLabel.font.pointSize)
         
-        spinner.setAxisConstraints(xAnchor: contentView.centerXAnchor, yAnchor: contentView.centerYAnchor)
         logoImageView.setSquareAspectRatio(sideLength: k.Sizes.logoSize)
         totalStackView.setEdgeConstraints(top: contentView.topAnchor,
                                           bottom: contentView.bottomAnchor,
@@ -86,27 +92,5 @@ final class TournamentGeneralInfoCell: UITableViewCell {
                                                                      left: k.Sizes.margin,
                                                                      bottom: k.Sizes.margin,
                                                                      right: k.Sizes.margin))
-    }
-    
-    // MARK: - Public Methods
-    
-    func updateView(isOnline: Bool?, location: String?, _ complete: @escaping () -> Void) {
-        DispatchQueue.main.async { [weak self] in
-            guard !(isOnline ?? true) else {
-                self?.spinner.stopAnimating()
-                self?.locationLabel.text = "Online"
-                complete()
-                return
-            }
-            guard let location = location else {
-                self?.spinner.stopAnimating()
-                self?.locationLabel.text = "Location not available"
-                complete()
-                return
-            }
-            self?.spinner.stopAnimating()
-            self?.locationLabel.text = location
-            complete()
-        }
     }
 }

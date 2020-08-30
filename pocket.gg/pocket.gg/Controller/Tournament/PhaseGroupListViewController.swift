@@ -10,12 +10,12 @@ import UIKit
 
 final class PhaseGroupListViewController: UITableViewController {
     
-    var phase: Tournament.Phase
+    var phase: Tournament.Event.Phase
     var doneRequest = false
 
     // MARK: - Initialization
     
-    init(_ phase: Tournament.Phase) {
+    init(_ phase: Tournament.Event.Phase) {
         self.phase = phase
         super.init(style: .insetGrouped)
     }
@@ -30,10 +30,10 @@ final class PhaseGroupListViewController: UITableViewController {
         super.viewDidLoad()
         title = phase.name
         tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
-        loadPhaseDetails()
+        loadPhaseGroups()
     }
     
-    private func loadPhaseDetails() {
+    private func loadPhaseGroups() {
         guard let id = phase.id else {
             self.doneRequest = true
             let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateBracketMessage, preferredStyle: .alert)
@@ -42,8 +42,8 @@ final class PhaseGroupListViewController: UITableViewController {
             return
         }
         
-        NetworkService.getPhaseDetailsById(id: id, numPhaseGroups: phase.numPhaseGroups ?? 100) { [weak self] (details) in
-            guard let details = details else {
+        NetworkService.getPhaseGroupsById(id: id, numPhaseGroups: phase.numPhaseGroups ?? 100) { [weak self] (result) in
+            guard let result = result else {
                 self?.doneRequest = true
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getBracketDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -51,9 +51,7 @@ final class PhaseGroupListViewController: UITableViewController {
                 return
             }
             
-            self?.phase.numEntrants = details["numEntrants"] as? Int
-            self?.phase.bracketType = details["bracketType"] as? String
-            self?.phase.phaseGroups = details["phaseGroups"] as? [Tournament.PhaseGroup]
+            self?.phase.phaseGroups = result
             
             self?.doneRequest = true
             self?.tableView.reloadData()

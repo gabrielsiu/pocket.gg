@@ -26,40 +26,39 @@ final class NetworkService {
                 debugPrint(k.Error.apolloFetch, error as Any)
                 complete(nil)
                 return
+                
             case .success(let graphQLResult):
-                guard let nodes = graphQLResult.data?.tournaments?.nodes else {
-                    debugPrint(k.Error.tournamentNodes)
-                    complete(nil)
-                    return
+                var tournaments: [Tournament]?
+                if let nodes = graphQLResult.data?.tournaments?.nodes {
+                    tournaments = nodes.map({ (tournament) -> Tournament in
+                        let start = DateFormatter.shared.dateFromTimestamp(tournament?.startAt)
+                        let end = DateFormatter.shared.dateFromTimestamp(tournament?.endAt)
+                        let date = start == end ? start : "\(start) - \(end)"
+                        
+                        let logo = tournament?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
+                            guard let url = image?.url else { return smallestImage }
+                            guard let ratio = image?.ratio else { return smallestImage }
+                            if ratio < smallestImage.1 { return (url, ratio) }
+                            return smallestImage
+                        })
+                        
+                        let header = tournament?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
+                            guard let url = image?.url else { return widestImage }
+                            guard let ratio = image?.ratio else { return widestImage }
+                            if ratio > widestImage.1 { return (url, ratio) }
+                            return widestImage
+                        })
+                        
+                        return Tournament(id: Int(tournament?.id ?? "-1"),
+                                          name: tournament?.name,
+                                          date: date,
+                                          logoUrl: logo?.0,
+                                          location: Tournament.Location(address: tournament?.venueAddress),
+                                          isOnline: tournament?.isOnline,
+                                          headerImage: header)
+                    })
                 }
                 
-                var tournaments = [Tournament]()
-                for event in nodes {
-                    let name = event?.name ?? ""
-                    let id = Int(event?.id ?? "6") ?? 6
-                    let start = DateFormatter.shared.dateFromTimestamp(event?.startAt)
-                    let end = DateFormatter.shared.dateFromTimestamp(event?.endAt)
-                    let date = start == end ? start : "\(start) - \(end)"
-                    
-                    let logo = event?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
-                        guard let url = image?.url else { return smallestImage }
-                        guard let ratio = image?.ratio else { return smallestImage }
-                        if ratio < smallestImage.1 { return (url, ratio) }
-                        return smallestImage
-                    })
-                    
-                    let header = event?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
-                        guard let url = image?.url else { return widestImage }
-                        guard let ratio = image?.ratio else { return widestImage }
-                        if ratio > widestImage.1 { return (url, ratio) }
-                        return widestImage
-                    })
-                    
-                    tournaments.append(Tournament(name: name,
-                                                  logoUrl: logo?.0 ?? "",
-                                                  date: date,
-                                                  id: id, headerImage: header ?? ("", 0)))
-                }
                 complete(tournaments)
             }
         }
@@ -72,6 +71,7 @@ final class NetworkService {
                 debugPrint(k.Error.apolloFetch, error as Any)
                 complete(nil)
                 return
+                
             case .success(let graphQLResult):
                 guard let tournament = graphQLResult.data?.tournament else {
                     debugPrint(k.Error.tournamentFromId)
@@ -79,37 +79,33 @@ final class NetworkService {
                     return
                 }
                 
-                let events = tournament.events?.compactMap({ (event) -> Tournament.Event? in
-                    guard let event = event else { return nil }
-                    var id: Int?
-                    if let unwrappedId = event.id { id = Int(unwrappedId) }
-                    return Tournament.Event(name: event.name,
-                                            startDate: event.startAt,
-                                            id: id,
-                                            eventType: event.type,
-                                            videogameName: event.videogame?.name,
-                                            videogameImage: event.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first,
-                                            state: event.state?.rawValue,
-                                            winner: event.standings?.nodes?[safe: 0]??.entrant?.name)
-                })
-                let streams = tournament.streams?.compactMap({ (stream) -> Tournament.Stream? in
-                    guard let stream = stream else { return nil }
-                    return Tournament.Stream(name: stream.streamName,
-                                             game: stream.streamGame,
-                                             logoUrl: stream.streamLogo,
-                                             sourceUrl: stream.streamSource?.rawValue)
+                let events = tournament.events?.map({ (event) -> Tournament.Event in
+                    return Tournament.Event(id: Int(event?.id ?? "-1"),
+                                            name: event?.name,
+                                            state: event?.state?.rawValue,
+                                            winner: event?.standings?.nodes?[safe: 0]??.entrant?.name,
+                                            startDate: event?.startAt,
+                                            eventType: event?.type,
+                                            videogameName: event?.videogame?.name,
+                                            videogameImage: event?.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
                 })
                 
-                complete(["isOnline": tournament.venueAddress == nil,
-                          "location": Tournament.Location(venueName: tournament.venueName,
-                                                          address: tournament.venueAddress,
-                                                          longitude: tournament.lng,
-                                                          latitude: tournament.lat),
-                          "contact": tournament.primaryContact,
+                let streams = tournament.streams?.map({ (stream) -> Tournament.Stream in
+                    return Tournament.Stream(name: stream?.streamName,
+                                             game: stream?.streamGame,
+                                             logoUrl: stream?.streamLogo,
+                                             sourceUrl: stream?.streamSource?.rawValue)
+                })
+                
+                complete(["venueName": tournament.venueName,
+                          "longitude": tournament.lng,
+                          "latitude": tournament.lat,
                           "events": events,
                           "streams": streams,
                           "registration": (tournament.isRegistrationOpen, tournament.registrationClosesAt),
+                          "contactInfo": tournament.primaryContact,
                           "slug": tournament.slug
+                
                 ])
             }
         }
@@ -124,32 +120,23 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                // TODO: Carry on even if phases or standings nodes fail
-                
-                // Brackets
-                guard let eventPhases = graphQLResult.data?.event?.phases else {
-                    debugPrint(k.Error.phases)
-                    complete(nil)
-                    return
-                }
-                var phases = [Tournament.Phase?]()
-                for phase in eventPhases {
-                    phases.append(Tournament.Phase(name: phase?.name,
-                                                   id: Int(phase?.id ?? "-1"),
-                                                   state: phase?.state?.rawValue,
-                                                   numPhaseGroups: phase?.groupCount))
+                var phases: [Tournament.Event.Phase]?
+                if let eventPhases = graphQLResult.data?.event?.phases {
+                    phases = eventPhases.map({ (phase) -> Tournament.Event.Phase in
+                        return Tournament.Event.Phase(id: Int(phase?.id ?? "-1"),
+                                                      name: phase?.name,
+                                                      state: phase?.state?.rawValue,
+                                                      numPhaseGroups: phase?.groupCount,
+                                                      numEntrants: phase?.numSeeds,
+                                                      bracketType: phase?.bracketType?.rawValue)
+                    })
                 }
                 
-                // Standings
-                guard let nodes = graphQLResult.data?.event?.standings?.nodes else {
-                    debugPrint(k.Error.standingsNodes)
-                    complete(nil)
-                    return
+                var topStandings: [(name: String?, placement: Int?)]?
+                if let nodes = graphQLResult.data?.event?.standings?.nodes {
+                    topStandings = nodes.map { ($0?.entrant?.name, $0?.placement) }
                 }
-                var topStandings = [(name: String?, placement: Int?)]()
-                for standing in nodes {
-                    topStandings.append((standing?.entrant?.name, standing?.placement))
-                }
+                
                 // At the moment, the smash.gg API returns a slug with 'event' instead of 'events', leading to an incorrect URL
                 let slug = graphQLResult.data?.event?.slug?.replacingOccurrences(of: "event", with: "events")
                 
@@ -160,8 +147,8 @@ final class NetworkService {
         }
     }
     
-    static func getPhaseDetailsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [String: Any?]?) -> Void) {
-        apollo.fetch(query: PhaseDetailsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
+    static func getPhaseGroupsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [Tournament.Event.Phase.PhaseGroup]?) -> Void) {
+        apollo.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -169,22 +156,16 @@ final class NetworkService {
                 return
             
             case .success(let graphQLResult):
-                guard let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes else {
-                    debugPrint(k.Error.phaseGroupsNodes)
-                    complete(nil)
-                    return
+                var phaseGroups: [Tournament.Event.Phase.PhaseGroup]?
+                if let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes {
+                    phaseGroups = nodes.map({ (phaseGroup) -> Tournament.Event.Phase.PhaseGroup in
+                        return Tournament.Event.Phase.PhaseGroup(id: Int(phaseGroup?.id ?? "-1"),
+                                                                 name: phaseGroup?.displayIdentifier,
+                                                                 state: ActivityState.allCases[(phaseGroup?.state ?? 5) - 1].rawValue)
+                    })
                 }
                 
-                var phaseGroups = [Tournament.PhaseGroup]()
-                for phaseGroup in nodes {
-                    phaseGroups.append(Tournament.PhaseGroup(name: phaseGroup?.displayIdentifier,
-                                                             id: Int(phaseGroup?.id ?? "-1"),
-                                                             state: ActivityState.allCases[(phaseGroup?.state ?? 5) - 1].rawValue))
-                }
-                
-                complete(["numEntrants": graphQLResult.data?.phase?.numSeeds,
-                          "bracketType": graphQLResult.data?.phase?.bracketType?.rawValue,
-                          "phaseGroups": phaseGroups])
+                complete(phaseGroups)
             }
         }
     }

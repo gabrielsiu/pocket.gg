@@ -29,15 +29,15 @@ final class TournamentListViewController: UITableViewController {
     // MARK: - Actions
     
     @objc private func refreshTournamentList() {
-        NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (tournaments) in
-            guard let tournaments = tournaments else {
+        NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (result) in
+            guard let result = result else {
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getTournamentsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
                 self?.refreshControl?.endRefreshing()
                 return
             }
-            self?.tournaments = tournaments
+            self?.tournaments = result
             self?.tableView.reloadData()
             self?.refreshControl?.endRefreshing()
         }

@@ -10,13 +10,13 @@ import UIKit
 
 final class PhaseGroupViewController: UITableViewController {
     
-    var phaseGroup: Tournament.PhaseGroup
+    var phaseGroup: Tournament.Event.Phase.PhaseGroup
     var doneRequest = false
     var phaseGroupViewControl: UISegmentedControl
     
     // MARK: - Initialization
     
-    init(_ phaseGroup: Tournament.PhaseGroup, title: String?) {
+    init(_ phaseGroup: Tournament.Event.Phase.PhaseGroup, title: String?) {
         self.phaseGroup = phaseGroup
         
         phaseGroupViewControl = UISegmentedControl(items: ["Standings", "Matches", "Bracket"])
@@ -48,8 +48,8 @@ final class PhaseGroupViewController: UITableViewController {
             return
         }
         
-        NetworkService.getPhaseGroupStandingsById(id: id) { [weak self] (details) in
-            guard let details = details else {
+        NetworkService.getPhaseGroupStandingsById(id: id) { [weak self] (result) in
+            guard let result = result else {
                 self?.doneRequest = true
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -57,8 +57,8 @@ final class PhaseGroupViewController: UITableViewController {
                 return
             }
             
-            self?.phaseGroup.progressionsOut = details["progressionsOut"] as? [Int]
-            self?.phaseGroup.standings = details["standings"] as? [(name: String?, placement: Int?)]
+            self?.phaseGroup.progressionsOut = result["progressionsOut"] as? [Int]
+            self?.phaseGroup.standings = result["standings"] as? [(name: String?, placement: Int?)]
             
             self?.doneRequest = true
             self?.tableView.reloadData()

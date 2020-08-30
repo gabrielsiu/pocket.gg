@@ -51,14 +51,15 @@ final class TournamentViewController: UITableViewController {
     // MARK: - UI Setup
     
     private func setupHeaderImageView() {
-        NetworkService.getImage(imageUrl: tournament.headerImage.url) { [weak self] (header) in
-            guard let header = header else { return }
+        NetworkService.getImage(imageUrl: tournament.headerImage?.url) { [weak self] (result) in
+            guard let result = result else { return }
             
             DispatchQueue.main.async {
-                guard let ratio = self?.tournament.headerImage.ratio else { return }
+                guard let ratio = self?.tournament.headerImage?.ratio else { return }
                 guard let width = self?.tableView.frame.width else { return }
                 
-                self?.headerImageView = UIImageView.init(image: header)
+                // TODO: Make the header image appear consistent independent of the device orientation when this screen is loaded
+                self?.headerImageView = UIImageView.init(image: result)
                 self?.headerImageView?.contentMode = .scaleAspectFit
                 // TODO: Animate this frame change
                 self?.headerImageView?.frame = CGRect(x: 0, y: 0, width: width, height: width / CGFloat(ratio))
@@ -68,30 +69,29 @@ final class TournamentViewController: UITableViewController {
     }
     
     private func loadTournamentDetails() {
-        NetworkService.getTournamentDetailsById(id: tournament.id) { [weak self] (details) in
-            self?.doneRequest = true
-            guard let details = details else {
+        NetworkService.getTournamentDetailsById(id: tournament.id ?? -1) { [weak self] (result) in
+            guard let result = result else {
+                self?.doneRequest = true
                 let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateTournamentMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
                 return
             }
             
-            if !(details["isOnline"] as? Bool ?? true) {
-                self?.tournament.isOnline = false
-                self?.tournament.location = details["location"] as? Tournament.Location
-            }
-            self?.tournament.contactInfo = details["contact"] as? String
-            self?.tournament.events = details["events"] as? [Tournament.Event]
-            self?.tournament.streams = details["streams"] as? [Tournament.Stream]
-            self?.tournament.registration = details["registration"] as? (Bool, String)
-            self?.tournament.slug = details["slug"] as? String
+            self?.tournament.location?.venueName = result["venueName"] as? String
+            self?.tournament.location?.longitude = result["longitude"] as? Double
+            self?.tournament.location?.latitude = result["latitude"] as? Double
             
-            self?.generalInfoCell.updateView(isOnline: self?.tournament.isOnline, location: self?.tournament.location?.address, {
-                self?.tableView.beginUpdates()
-                self?.tableView.endUpdates()
-            })
+            self?.tournament.events = result["events"] as? [Tournament.Event]
+            self?.tournament.streams = result["streams"] as? [Tournament.Stream]
+            self?.tournament.registration = result["registration"] as? (Bool, String)
+            self?.tournament.slug = result["slug"] as? String
+            self?.tournament.contactInfo = result["contactInfo"] as? String
+            self?.tournament.contactInfo = result["contact"] as? String
+            
             self?.locationCell.updateView(location: self?.tournament.location)
+            
+            self?.doneRequest = true
             self?.tableView.reloadSections([1, 2, 3], with: .automatic)
         }
     }
@@ -121,6 +121,7 @@ final class TournamentViewController: UITableViewController {
         }
     }
     
+    // TODO: Add contact cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0: return generalInfoCell
