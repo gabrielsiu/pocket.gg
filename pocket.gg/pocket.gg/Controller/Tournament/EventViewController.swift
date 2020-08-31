@@ -101,11 +101,14 @@ final class EventViewController: UITableViewController {
             var detailText = ""
             if let eventType = event.eventType {
                 switch eventType {
-                case 1: detailText = "Singles • "
-                case 2: detailText = "Doubles • "
-                case 5: detailText = "Teams • "
+                case 1: detailText = "Singles"
+                case 2: detailText = "Doubles"
+                case 5: detailText = "Teams"
                 default: break
                 }
+            }
+            if event.eventType != nil && event.videogameName != nil {
+                detailText += " • "
             }
             if let videogameName = event.videogameName {
                 detailText += videogameName
@@ -149,7 +152,7 @@ final class EventViewController: UITableViewController {
                 return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
             }
             if indexPath.row == 8 {
-                return UITableViewCell().setupActive(textColor: view.tintColor, text: "View all standings")
+                return UITableViewCell().setupActive(textColor: .systemRed, text: "View all standings")
             }
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {

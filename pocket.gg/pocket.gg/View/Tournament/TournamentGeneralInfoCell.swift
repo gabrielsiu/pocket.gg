@@ -52,13 +52,14 @@ final class TournamentGeneralInfoCell: UITableViewCell {
             }
         }
         
-        nameLabel.text = tournament.name
         nameLabel.numberOfLines = 0
         nameLabel.font = UIFont.boldSystemFont(ofSize: k.Sizes.largeFont)
+        nameLabel.text = tournament.name
         
-        dateLabel.text = tournament.date
         dateLabel.numberOfLines = 0
+        dateLabel.text = tournament.date
         
+        locationLabel.numberOfLines = 0
         guard !(tournament.isOnline ?? true) else {
             locationLabel.text = "Online"
             return
@@ -68,7 +69,6 @@ final class TournamentGeneralInfoCell: UITableViewCell {
             return
         }
         locationLabel.text = address
-        locationLabel.numberOfLines = 0
     }
     
     private func setupStackViews() {

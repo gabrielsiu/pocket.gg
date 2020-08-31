@@ -10,7 +10,7 @@ import UIKit
 
 final class LoadingCell: UITableViewCell {
     
-    let spinner = UIActivityIndicatorView(style: .large)
+    let spinner = UIActivityIndicatorView(style: .medium)
     
     // MARK: - Initialization
     

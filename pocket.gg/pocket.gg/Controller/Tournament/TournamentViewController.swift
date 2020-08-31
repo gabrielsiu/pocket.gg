@@ -14,7 +14,7 @@ final class TournamentViewController: UITableViewController {
     
     var headerImageView: UIImageView?
     let generalInfoCell: TournamentGeneralInfoCell
-    let locationCell: TournamentLocationCell
+    let locationCell = TournamentLocationCell()
     
     var tournament: Tournament
     var doneRequest = false // TODO: Add pull-to-refresh control, setting this back to false when data is refreshed (for all applicable screens)
@@ -24,7 +24,6 @@ final class TournamentViewController: UITableViewController {
     init(_ tournament: Tournament) {
         self.tournament = tournament
         generalInfoCell = TournamentGeneralInfoCell(tournament)
-        locationCell = TournamentLocationCell()
         super.init(style: .grouped)
     }
     
@@ -41,8 +40,6 @@ final class TournamentViewController: UITableViewController {
         
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.streamCell)
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = UITableView.automaticDimension
         
         setupHeaderImageView()
         loadTournamentDetails()
@@ -87,12 +84,11 @@ final class TournamentViewController: UITableViewController {
             self?.tournament.registration = result["registration"] as? (Bool, String)
             self?.tournament.slug = result["slug"] as? String
             self?.tournament.contactInfo = result["contactInfo"] as? String
-            self?.tournament.contactInfo = result["contact"] as? String
             
             self?.locationCell.updateView(location: self?.tournament.location)
             
             self?.doneRequest = true
-            self?.tableView.reloadSections([1, 2, 3], with: .automatic)
+            self?.tableView.reloadData()
         }
     }
     
@@ -104,8 +100,9 @@ final class TournamentViewController: UITableViewController {
         // 1 - Events
         // 2 - Streams
         // 3 - Location
-        // 4 - Registration
-        return 5
+        // 4 - Contact Info
+        // 5 - Registration
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,11 +114,11 @@ final class TournamentViewController: UITableViewController {
             guard tournament.location?.latitude != nil, tournament.location?.longitude != nil else { return 1 }
             return 2
         case 4: return 1
+        case 5: return 1
         default: return 0
         }
     }
     
-    // TODO: Add contact cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0: return generalInfoCell
@@ -184,17 +181,27 @@ final class TournamentViewController: UITableViewController {
         case 3:
             switch indexPath.row {
             case 0: return locationCell
-            case 1: return UITableViewCell().setupActive(textColor: view.tintColor, text: "Get Directions")
+            case 1: return UITableViewCell().setupActive(textColor: .systemRed, text: "Get Directions")
             default: return UITableViewCell()
             }
             
         case 4:
             guard doneRequest else { return LoadingCell() }
+            guard let contactInfo = tournament.contactInfo else {
+                return UITableViewCell().setupDisabled("No contact info available")
+            }
+            let cell = UITableViewCell()
+            cell.textLabel?.textColor = .systemRed
+            cell.textLabel?.text = contactInfo
+            return cell
+            
+        case 5:
+            guard doneRequest else { return LoadingCell() }
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
             let registrationOpen = tournament.registration?.isOpen ?? false
             let closeDate = DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate)
             cell.isUserInteractionEnabled = registrationOpen
-            cell.textLabel?.textColor = view.tintColor
+            cell.textLabel?.textColor = .systemRed
             cell.textLabel?.text = registrationOpen ? "Register" : "Registration not available"
             cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(closeDate)"
             cell.accessoryType = registrationOpen ? .disclosureIndicator : .none
@@ -211,21 +218,14 @@ final class TournamentViewController: UITableViewController {
         case 1: return "Events"
         case 2: return "Streams"
         case 3: return "Location"
-        case 4: return "Registration"
+        case 4: return "Contact Info"
+        case 5: return "Registration"
         default: return nil
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case 3:
-            switch indexPath.row {
-            case 0: return k.Sizes.mapHeight
-            default: return UITableView.automaticDimension
-            }
-        default:
-            return UITableView.automaticDimension
-        }
+        return indexPath.section == 3 && indexPath.row == 0 ? k.Sizes.mapHeight : UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -237,20 +237,25 @@ final class TournamentViewController: UITableViewController {
             }
             navigationController?.pushViewController(EventViewController(event), animated: true)
         case 3:
-            switch indexPath.row {
-            case 1:
-                tableView.deselectRow(at: indexPath, animated: true)
+            if indexPath.row == 1 {
                 if let lat = tournament.location?.latitude, let lng = tournament.location?.longitude {
                     let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
                     let mapItem = MKMapItem(placemark: placemark)
                     mapItem.name = tournament.location?.venueName ?? tournament.location?.address
                     mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
                 }
-            default: return
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         case 4:
+            tableView.deselectRow(at: indexPath, animated: true)
+            if let contactInfo = tournament.contactInfo, let url = URL(string: "mailto:\(contactInfo)") {
+                UIApplication.shared.open(url)
+                return
+            }
+        case 5:
             guard let slug = tournament.slug else { return }
             guard let url = URL(string: "https://smash.gg/\(slug)/register") else {
+                tableView.deselectRow(at: indexPath, animated: true)
                 debugPrint(k.Error.urlGeneration, "https://smash.gg/\(slug)/register")
                 return
             }

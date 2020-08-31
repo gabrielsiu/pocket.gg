@@ -54,7 +54,7 @@ final class AboutViewController: UITableViewController {
         switch section {
         case 0: return 1
         case 1: return 2
-        default: fatalError("Invalid number of sections")
+        default: return 0
         }
     }
     
@@ -78,24 +78,20 @@ final class AboutViewController: UITableViewController {
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 { return "Libraries & Thanks" }
-        return nil
+        return section == 1 ? "Libraries & Thanks" : nil
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 1:
+        if indexPath.section == 1 {
             switch indexPath.row {
             case 0: showWebpage(with: k.URL.smashGgAPI)
             case 1: showWebpage(with: k.URL.apolloiOS)
-            default: fatalError("Invalid row tapped")
+            default: tableView.deselectRow(at: indexPath, animated: true)
             }
-        default: return
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 { return 100 }
-        return UITableView.automaticDimension
+        return indexPath.section == 0 ? 100 : UITableView.automaticDimension
     }
 }
