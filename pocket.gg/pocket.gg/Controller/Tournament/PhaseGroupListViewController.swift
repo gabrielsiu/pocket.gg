@@ -10,12 +10,12 @@ import UIKit
 
 final class PhaseGroupListViewController: UITableViewController {
     
-    var phase: Tournament.Event.Phase
+    var phase: Phase
     var doneRequest = false
 
     // MARK: - Initialization
     
-    init(_ phase: Tournament.Event.Phase) {
+    init(_ phase: Phase) {
         self.phase = phase
         super.init(style: .insetGrouped)
     }

@@ -53,7 +53,7 @@ final class NetworkService {
                                           name: tournament?.name,
                                           date: date,
                                           logoUrl: logo?.0,
-                                          location: Tournament.Location(address: tournament?.venueAddress),
+                                          location: Location(address: tournament?.venueAddress),
                                           isOnline: tournament?.isOnline,
                                           headerImage: header)
                     })
@@ -79,22 +79,22 @@ final class NetworkService {
                     return
                 }
                 
-                let events = tournament.events?.map({ (event) -> Tournament.Event in
-                    return Tournament.Event(id: Int(event?.id ?? "-1"),
-                                            name: event?.name,
-                                            state: event?.state?.rawValue,
-                                            winner: event?.standings?.nodes?[safe: 0]??.entrant?.name,
-                                            startDate: event?.startAt,
-                                            eventType: event?.type,
-                                            videogameName: event?.videogame?.name,
-                                            videogameImage: event?.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
+                let events = tournament.events?.map({ (event) -> Event in
+                    return Event(id: Int(event?.id ?? "-1"),
+                                 name: event?.name,
+                                 state: event?.state?.rawValue,
+                                 winner: event?.standings?.nodes?[safe: 0]??.entrant?.name,
+                                 startDate: event?.startAt,
+                                 eventType: event?.type,
+                                 videogameName: event?.videogame?.name,
+                                 videogameImage: event?.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
                 })
                 
-                let streams = tournament.streams?.map({ (stream) -> Tournament.Stream in
-                    return Tournament.Stream(name: stream?.streamName,
-                                             game: stream?.streamGame,
-                                             logoUrl: stream?.streamLogo,
-                                             sourceUrl: stream?.streamSource?.rawValue)
+                let streams = tournament.streams?.map({ (stream) -> Stream in
+                    return Stream(name: stream?.streamName,
+                                  game: stream?.streamGame,
+                                  logoUrl: stream?.streamLogo,
+                                  sourceUrl: stream?.streamSource?.rawValue)
                 })
                 
                 complete(["venueName": tournament.venueName,
@@ -120,15 +120,15 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                var phases: [Tournament.Event.Phase]?
+                var phases: [Phase]?
                 if let eventPhases = graphQLResult.data?.event?.phases {
-                    phases = eventPhases.map({ (phase) -> Tournament.Event.Phase in
-                        return Tournament.Event.Phase(id: Int(phase?.id ?? "-1"),
-                                                      name: phase?.name,
-                                                      state: phase?.state?.rawValue,
-                                                      numPhaseGroups: phase?.groupCount,
-                                                      numEntrants: phase?.numSeeds,
-                                                      bracketType: phase?.bracketType?.rawValue)
+                    phases = eventPhases.map({ (phase) -> Phase in
+                        return Phase(id: Int(phase?.id ?? "-1"),
+                                     name: phase?.name,
+                                     state: phase?.state?.rawValue,
+                                     numPhaseGroups: phase?.groupCount,
+                                     numEntrants: phase?.numSeeds,
+                                     bracketType: phase?.bracketType?.rawValue)
                     })
                 }
                 
@@ -147,7 +147,7 @@ final class NetworkService {
         }
     }
     
-    static func getPhaseGroupsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [Tournament.Event.Phase.PhaseGroup]?) -> Void) {
+    static func getPhaseGroupsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [PhaseGroup]?) -> Void) {
         apollo.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
             switch result {
             case .failure(let error):
@@ -156,12 +156,12 @@ final class NetworkService {
                 return
             
             case .success(let graphQLResult):
-                var phaseGroups: [Tournament.Event.Phase.PhaseGroup]?
+                var phaseGroups: [PhaseGroup]?
                 if let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes {
-                    phaseGroups = nodes.map({ (phaseGroup) -> Tournament.Event.Phase.PhaseGroup in
-                        return Tournament.Event.Phase.PhaseGroup(id: Int(phaseGroup?.id ?? "-1"),
-                                                                 name: phaseGroup?.displayIdentifier,
-                                                                 state: ActivityState.allCases[(phaseGroup?.state ?? 5) - 1].rawValue)
+                    phaseGroups = nodes.map({ (phaseGroup) -> PhaseGroup in
+                        return PhaseGroup(id: Int(phaseGroup?.id ?? "-1"),
+                                          name: phaseGroup?.displayIdentifier,
+                                          state: ActivityState.allCases[(phaseGroup?.state ?? 5) - 1].rawValue)
                     })
                 }
                 

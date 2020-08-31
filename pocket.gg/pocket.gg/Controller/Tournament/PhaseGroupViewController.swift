@@ -10,13 +10,13 @@ import UIKit
 
 final class PhaseGroupViewController: UITableViewController {
     
-    var phaseGroup: Tournament.Event.Phase.PhaseGroup
+    var phaseGroup: PhaseGroup
     var doneRequest = false
     var phaseGroupViewControl: UISegmentedControl
     
     // MARK: - Initialization
     
-    init(_ phaseGroup: Tournament.Event.Phase.PhaseGroup, title: String?) {
+    init(_ phaseGroup: PhaseGroup, title: String?) {
         self.phaseGroup = phaseGroup
         
         phaseGroupViewControl = UISegmentedControl(items: ["Standings", "Matches", "Bracket"])

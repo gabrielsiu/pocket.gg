@@ -6,7 +6,6 @@
 //  Copyright © 2020 Gabriel Siu. All rights reserved.
 //
 
-import Foundation
 import GRDB
 
 struct VideoGame: Codable, FetchableRecord, MutablePersistableRecord {

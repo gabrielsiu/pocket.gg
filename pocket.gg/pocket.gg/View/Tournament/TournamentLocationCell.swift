@@ -64,7 +64,7 @@ final class TournamentLocationCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func updateView(location: Tournament.Location?) {
+    func updateView(location: Location?) {
         if let lat = location?.latitude, let lng = location?.longitude {
             let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: lng),
                                             latitudinalMeters: 1000,

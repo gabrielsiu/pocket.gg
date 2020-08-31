@@ -11,7 +11,7 @@ import SafariServices
 
 final class EventViewController: UITableViewController {
     
-    var event: Tournament.Event
+    var event: Event
     var doneRequest = false
     var numTopStandings: Int {
         guard let numStandings = event.topStandings?.count else { return 1 }
@@ -22,7 +22,7 @@ final class EventViewController: UITableViewController {
     
     // MARK: - Initialization
     
-    init(_ event: Tournament.Event) {
+    init(_ event: Event) {
         self.event = event
         super.init(style: .insetGrouped)
     }
@@ -56,7 +56,7 @@ final class EventViewController: UITableViewController {
                 self?.present(alert, animated: true)
                 return
             }
-            self?.event.phases = result["phases"] as? [Tournament.Event.Phase]
+            self?.event.phases = result["phases"] as? [Phase]
             self?.event.topStandings = result["topStandings"] as? [(String, Int)]
             self?.event.slug = result["slug"] as? String
             

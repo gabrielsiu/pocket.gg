@@ -15,6 +15,11 @@
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
 		DA2939E923E80BBE00E5DB3A /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DA2939E823E80BBE00E5DB3A /* Apollo */; };
 		DA4B495E24FC21D900BE7E0E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495D24FC21D900BE7E0E /* API.swift */; };
+		DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495F24FCC6ED00BE7E0E /* Event.swift */; };
+		DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496124FCC6FC00BE7E0E /* Location.swift */; };
+		DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496324FCC72000BE7E0E /* Stream.swift */; };
+		DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496524FCC72D00BE7E0E /* Phase.swift */; };
+		DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
 		DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8A23F5010D00268A85 /* SettingsViewController.swift */; };
@@ -67,6 +72,11 @@
 		DA2939DF23E7E35B00E5DB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		DA4B495D24FC21D900BE7E0E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DA4B495F24FCC6ED00BE7E0E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		DA4B496124FCC6FC00BE7E0E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DA4B496324FCC72000BE7E0E /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
+		DA4B496524FCC72D00BE7E0E /* Phase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phase.swift; sourceTree = "<group>"; };
+		DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroup.swift; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA637A8A23F5010D00268A85 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +143,11 @@
 			isa = PBXGroup;
 			children = (
 				DA2939C923E7CAF400E5DB3A /* Tournament.swift */,
+				DA4B495F24FCC6ED00BE7E0E /* Event.swift */,
+				DA4B496524FCC72D00BE7E0E /* Phase.swift */,
+				DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */,
+				DA4B496124FCC6FC00BE7E0E /* Location.swift */,
+				DA4B496324FCC72000BE7E0E /* Stream.swift */,
 				DADBE41824074BB7005B707F /* VideoGame.swift */,
 			);
 			path = Model;
@@ -439,7 +454,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */,
+				DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */,
 				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
+				DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA4B495E24FC21D900BE7E0E /* API.swift in Sources */,
@@ -451,6 +468,7 @@
 				DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */,
 				DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */,
 				DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */,
+				DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
@@ -458,6 +476,8 @@
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
+				DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */,
+				DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */,
 				DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */,
 				DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */,
 				DA7AF01224F5B2DC009A00E2 /* Value1Cell.swift in Sources */,
