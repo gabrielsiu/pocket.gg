@@ -13,24 +13,32 @@ final class TournamentLocationCell: UITableViewCell {
     
     var locationNotAvailableView: UIView?
     var locationNotAvailableLabel: UILabel?
-    let mapView = MKMapView()
+    var mapView: MKMapView?
 
     // MARK: - Initialization
     
     init() {
         super.init(style: .default, reuseIdentifier: nil)
         selectionStyle = .none
-        
-        setupViews()
+        setupMapView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        mapView?.annotations.forEach { mapView?.removeAnnotation($0) }
+        mapView?.delegate = nil
+        mapView?.removeFromSuperview()
+        mapView = nil
+    }
+    
     // MARK: - UI Setup
     
-    private func setupViews() {
+    private func setupMapView() {
+        mapView = MKMapView()
+        guard let mapView = mapView else { return }
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
         contentView.addSubview(mapView)
@@ -73,8 +81,8 @@ final class TournamentLocationCell: UITableViewCell {
             annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
             annotation.title = location?.venueName
             annotation.subtitle = location?.address
-            mapView.setRegion(region, animated: false)
-            mapView.addAnnotation(annotation)
+            mapView?.setRegion(region, animated: false)
+            mapView?.addAnnotation(annotation)
         } else {
             setupLocationNotAvailableView()
         }
