@@ -14,10 +14,13 @@ final class TournamentViewController: UITableViewController {
     
     var headerImageView: UIImageView?
     let generalInfoCell: TournamentGeneralInfoCell
-    let locationCell = TournamentLocationCell()
+    var locationCell: TournamentLocationCell?
     
     var tournament: Tournament
     var doneRequest = false // TODO: Add pull-to-refresh control, setting this back to false when data is refreshed (for all applicable screens)
+    var tournamentIsOnline: Bool {
+        return tournament.isOnline ?? true
+    }
     
     // MARK: - Initialization
     
@@ -85,7 +88,10 @@ final class TournamentViewController: UITableViewController {
             self?.tournament.slug = result["slug"] as? String
             self?.tournament.contactInfo = result["contactInfo"] as? String
             
-            self?.locationCell.updateView(location: self?.tournament.location)
+            if !(self?.tournamentIsOnline ?? true) {
+                self?.locationCell = TournamentLocationCell()
+                self?.locationCell?.updateView(location: self?.tournament.location)
+            }
             
             self?.doneRequest = true
             self?.tableView.reloadData()
@@ -94,15 +100,17 @@ final class TournamentViewController: UITableViewController {
     
     // MARK: - Table View Data Source
 
+    // Sections:
+    // Not Online:              Online:
+    // 0 - General Info         0 - General Info
+    // 1 - Events               1 - Events
+    // 2 - Streams              2 - Streams
+    // 3 - Location             3 - Contact Info
+    // 4 - Contact Info         4 - Registration
+    // 5 - Registration
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // Sections:
-        // 0 - General Info
-        // 1 - Events
-        // 2 - Streams
-        // 3 - Location
-        // 4 - Contact Info
-        // 5 - Registration
-        return 6
+        return tournamentIsOnline ? 5 : 6
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,12 +118,27 @@ final class TournamentViewController: UITableViewController {
         case 0: return 1
         case 1: return tournament.events?.count ?? 1
         case 2: return tournament.streams?.count ?? 1
+        default: break
+        }
+        
+        switch section {
         case 3:
+            // If tournament is online, section 3 is the Contact Info section (only 1 cell)
+            guard !tournamentIsOnline else { return 1 }
+            // Until location has been retrieved, return a LoadingCell
+            guard doneRequest else { return 1 }
+            // If the latitude or longitude is missing, show a "Location not available" cell
             guard tournament.location?.latitude != nil, tournament.location?.longitude != nil else { return 1 }
+            // Show the location cell & a "Get directions" cell
             return 2
-        case 4: return 1
-        case 5: return 1
-        default: return 0
+        case 4:
+            // Section 4 will always have only 1 cell (Contact Info or Registration section)
+            return 1
+        case 5:
+            // If tournament is online, section 5 does not exist
+            return tournamentIsOnline ? 0 : 1
+        default:
+            return 0
         }
     }
     
@@ -128,9 +151,7 @@ final class TournamentViewController: UITableViewController {
                 return doneRequest ? UITableViewCell().setupDisabled("No events currently available") : LoadingCell()
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? SubtitleCell {
-                guard let event = tournament.events?[safe: indexPath.row] else {
-                    return UITableViewCell()
-                }
+                guard let event = tournament.events?[safe: indexPath.row] else { break }
                 
                 cell.accessoryType = .disclosureIndicator
                 cell.setPlaceholder("game-controller")
@@ -138,17 +159,13 @@ final class TournamentViewController: UITableViewController {
                 var detailText = "● "
                 let dotColor: UIColor
                 switch event.state ?? "" {
-                case "COMPLETED":
-                    guard let winner = event.winner else {
-                        detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
-                        dotColor = .systemBlue
-                        break
-                    }
-                    detailText += "1st place: " + winner
-                    dotColor = .systemGray
                 case "ACTIVE":
                     detailText += "In Progress"
                     dotColor = .systemGreen
+                case "COMPLETED":
+                    guard let winner = event.winner else { fallthrough }
+                    detailText += "1st place: " + winner
+                    dotColor = .systemGray
                 default:
                     detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
                     dotColor = .systemBlue
@@ -162,53 +179,60 @@ final class TournamentViewController: UITableViewController {
                 
                 return cell
             }
-            return UITableViewCell()
             
         case 2:
             guard !(tournament.streams?.isEmpty ?? true) else {
                 return doneRequest ? UITableViewCell().setupDisabled("No streams currently available") : LoadingCell()
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
-                guard let stream = tournament.streams?[safe: indexPath.row] else {
-                    return UITableViewCell()
-                }
+                guard let stream = tournament.streams?[safe: indexPath.row] else { break }
                 cell.setPlaceholder("placeholder")
                 cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game)
                 return cell
             }
-            return UITableViewCell()
             
-        case 3:
-            switch indexPath.row {
-            case 0: return locationCell
-            case 1: return UITableViewCell().setupActive(textColor: .systemRed, text: "Get Directions")
-            default: return UITableViewCell()
-            }
-            
-        case 4:
-            guard doneRequest else { return LoadingCell() }
-            guard let contactInfo = tournament.contactInfo else {
-                return UITableViewCell().setupDisabled("No contact info available")
-            }
-            let cell = UITableViewCell()
-            cell.textLabel?.textColor = .systemRed
-            cell.textLabel?.text = contactInfo
-            return cell
-            
-        case 5:
-            guard doneRequest else { return LoadingCell() }
-            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-            let registrationOpen = tournament.registration?.isOpen ?? false
-            let closeDate = DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate)
-            cell.isUserInteractionEnabled = registrationOpen
-            cell.textLabel?.textColor = .systemRed
-            cell.textLabel?.text = registrationOpen ? "Register" : "Registration not available"
-            cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(closeDate)"
-            cell.accessoryType = registrationOpen ? .disclosureIndicator : .none
-            return cell
-            
+        case 3: return tournamentIsOnline ? contactInfoSectionCell() : locationSectionCell(indexPath)
+        case 4: return tournamentIsOnline ? registrationSectionCell() : contactInfoSectionCell()
+        case 5: return registrationSectionCell()
+        default: break
+        }
+        return UITableViewCell()
+    }
+    
+    // MARK: - Section-Dependent Table View Cells
+    
+    private func locationSectionCell(_ indexPath: IndexPath) -> UITableViewCell {
+        guard doneRequest else { return LoadingCell() }
+        switch indexPath.row {
+        case 0: return locationCell ?? TournamentLocationCell()
+        case 1: return UITableViewCell().setupActive(textColor: .systemRed, text: "Get Directions")
         default: return UITableViewCell()
         }
+    }
+    
+    private func contactInfoSectionCell() -> UITableViewCell {
+        guard doneRequest else { return LoadingCell() }
+        guard let contactInfo = tournament.contactInfo else {
+            return UITableViewCell().setupDisabled("No contact info available")
+        }
+        let cell = UITableViewCell()
+        cell.textLabel?.textColor = .systemRed
+        cell.textLabel?.text = contactInfo
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+    
+    private func registrationSectionCell() -> UITableViewCell {
+        guard doneRequest else { return LoadingCell() }
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        let registrationOpen = tournament.registration?.isOpen ?? false
+        let closeDate = DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate)
+        cell.isUserInteractionEnabled = registrationOpen
+        cell.textLabel?.textColor = .systemRed
+        cell.textLabel?.text = registrationOpen ? "Register" : "Registration not available"
+        cell.detailTextLabel?.text = "Close\(registrationOpen ? "s" : "d") on \(closeDate)"
+        cell.accessoryType = registrationOpen ? .disclosureIndicator : .none
+        return cell
     }
     
     // MARK: - Table View Delegate
@@ -217,14 +241,15 @@ final class TournamentViewController: UITableViewController {
         switch section {
         case 1: return "Events"
         case 2: return "Streams"
-        case 3: return "Location"
-        case 4: return "Contact Info"
+        case 3: return tournamentIsOnline ? "Contact Info" : "Location"
+        case 4: return tournamentIsOnline ? "Registration" : "Contact Info"
         case 5: return "Registration"
         default: return nil
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard !tournamentIsOnline else { return UITableView.automaticDimension }
         return indexPath.section == 3 && indexPath.row == 0 ? k.Sizes.mapHeight : UITableView.automaticDimension
     }
     
@@ -236,7 +261,9 @@ final class TournamentViewController: UITableViewController {
                 return
             }
             navigationController?.pushViewController(EventViewController(event), animated: true)
+            
         case 3:
+            if tournamentIsOnline { fallthrough }
             if indexPath.row == 1 {
                 if let lat = tournament.location?.latitude, let lng = tournament.location?.longitude {
                     let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
@@ -246,13 +273,17 @@ final class TournamentViewController: UITableViewController {
                 }
                 tableView.deselectRow(at: indexPath, animated: true)
             }
+            
         case 4:
+            if tournamentIsOnline && indexPath.section == 4 { fallthrough }
             tableView.deselectRow(at: indexPath, animated: true)
             if let contactInfo = tournament.contactInfo, let url = URL(string: "mailto:\(contactInfo)") {
                 UIApplication.shared.open(url)
                 return
             }
+            
         case 5:
+            if tournamentIsOnline && indexPath.section == 5 { return }
             guard let slug = tournament.slug else { return }
             guard let url = URL(string: "https://smash.gg/\(slug)/register") else {
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -260,12 +291,16 @@ final class TournamentViewController: UITableViewController {
                 return
             }
             present(SFSafariViewController(url: url), animated: true)
+            
         default: return
         }
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section == 4 { return tournament.registration?.isOpen ?? false ? "Registering for a tournament will take you to smash.gg." : "" }
+        let registrationSection = tournamentIsOnline ? 4 : 5
+        if section == registrationSection {
+            return tournament.registration?.isOpen ?? false ? "Registering for a tournament will take you to smash.gg." : nil
+        }
         return nil
     }
 }

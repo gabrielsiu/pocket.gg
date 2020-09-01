@@ -121,8 +121,8 @@ final class EventViewController: UITableViewController {
             
             let dotColor: UIColor
             switch event.state ?? "" {
-            case "COMPLETED": dotColor = .systemGray
             case "ACTIVE": dotColor = .systemGreen
+            case "COMPLETED": dotColor = .systemGray
             default: dotColor = .systemBlue
             }
             
