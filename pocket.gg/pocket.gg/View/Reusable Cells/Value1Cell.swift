@@ -13,7 +13,7 @@ final class Value1Cell: UITableViewCell {
     // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .value1, reuseIdentifier: k.Identifiers.value1Cell)
+        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {

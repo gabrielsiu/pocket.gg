@@ -48,6 +48,11 @@ final class TournamentViewController: UITableViewController {
         loadTournamentDetails()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        locationCell?.updateImageForOrientation()
+    }
+    
     // MARK: - UI Setup
     
     private func setupHeaderImageView() {
@@ -88,11 +93,6 @@ final class TournamentViewController: UITableViewController {
             self?.tournament.slug = result["slug"] as? String
             self?.tournament.contactInfo = result["contactInfo"] as? String
             
-            if !(self?.tournamentIsOnline ?? true) {
-                self?.locationCell = TournamentLocationCell()
-                self?.locationCell?.updateView(location: self?.tournament.location)
-            }
-            
             self?.doneRequest = true
             self?.tableView.reloadData()
         }
@@ -129,8 +129,8 @@ final class TournamentViewController: UITableViewController {
             guard doneRequest else { return 1 }
             // If the latitude or longitude is missing, show a "Location not available" cell
             guard tournament.location?.latitude != nil, tournament.location?.longitude != nil else { return 1 }
-            // Show the location cell & a "Get directions" cell
-            return 2
+            // Show the location cells & a "Get directions" cell
+            return 3
         case 4:
             // Section 4 will always have only 1 cell (Contact Info or Registration section)
             return 1
@@ -204,10 +204,30 @@ final class TournamentViewController: UITableViewController {
     private func locationSectionCell(_ indexPath: IndexPath) -> UITableViewCell {
         guard doneRequest else { return LoadingCell() }
         switch indexPath.row {
-        case 0: return locationCell ?? TournamentLocationCell()
-        case 1: return UITableViewCell().setupActive(textColor: .systemRed, text: "Get Directions")
-        default: return UITableViewCell()
+        case 0:
+            if let locationCell = locationCell { return locationCell }
+            if !tournamentIsOnline {
+                if let id = tournament.id, let latitude = tournament.location?.latitude, let longitude = tournament.location?.longitude {
+                    locationCell = TournamentLocationCell(id: id, latitude: latitude, longitude: longitude)
+                    return locationCell ?? TournamentLocationCell(id: id, latitude: latitude, longitude: longitude)
+                } else {
+                    return UITableViewCell().setupDisabled("No location available")
+                }
+            }
+        case 1:
+            let cell = SubtitleCell()
+            cell.selectionStyle = .none
+            if tournament.location?.venueName != nil {
+                cell.textLabel?.text = tournament.location?.venueName
+                cell.detailTextLabel?.text = tournament.location?.address
+            } else {
+                cell.textLabel?.text = tournament.location?.address
+            }
+            return cell
+        case 2: return UITableViewCell().setupActive(textColor: .systemRed, text: "Get Directions")
+        default: break
         }
+        return UITableViewCell()
     }
     
     private func contactInfoSectionCell() -> UITableViewCell {
@@ -264,7 +284,7 @@ final class TournamentViewController: UITableViewController {
             
         case 3:
             if tournamentIsOnline { fallthrough }
-            if indexPath.row == 1 {
+            if indexPath.row == 2 {
                 if let lat = tournament.location?.latitude, let lng = tournament.location?.longitude {
                     let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
                     let mapItem = MKMapItem(placemark: placemark)
