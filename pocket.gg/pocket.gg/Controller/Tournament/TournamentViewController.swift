@@ -87,6 +87,10 @@ final class TournamentViewController: UITableViewController {
             self?.tournament.location?.longitude = result["longitude"] as? Double
             self?.tournament.location?.latitude = result["latitude"] as? Double
             
+            if let id = self?.tournament.id, let lat = self?.tournament.location?.latitude, let long = self?.tournament.location?.longitude {
+                self?.locationCell = TournamentLocationCell(id: id, latitude: lat, longitude: long)
+            }
+            
             self?.tournament.events = result["events"] as? [Event]
             self?.tournament.streams = result["streams"] as? [Stream]
             self?.tournament.registration = result["registration"] as? (Bool, String)
