@@ -190,6 +190,7 @@ final class TournamentViewController: UITableViewController {
             }
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
                 guard let stream = tournament.streams?[safe: indexPath.row] else { break }
+                cell.accessoryType = .disclosureIndicator
                 cell.setPlaceholder("placeholder")
                 cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game)
                 return cell
@@ -286,6 +287,10 @@ final class TournamentViewController: UITableViewController {
             }
             navigationController?.pushViewController(EventViewController(event), animated: true)
             
+        case 2:
+            presentStreamAlert(indexPath)
+            tableView.deselectRow(at: indexPath, animated: true)
+            
         case 3:
             if tournamentIsOnline { fallthrough }
             if indexPath.row == 2 {
@@ -326,5 +331,45 @@ final class TournamentViewController: UITableViewController {
             return tournament.registration?.isOpen ?? false ? "Registering for a tournament will take you to smash.gg." : nil
         }
         return nil
+    }
+    
+    // MARK: - Stream Alert Presentation
+    
+    private func presentStreamAlert(_ indexPath: IndexPath) {
+        guard let twitchURL = URL(string: "twitch://open") else { return }
+        let twitchAppInstalled = UIApplication.shared.canOpenURL(twitchURL)
+        
+        guard let stream = tournament.streams?[safe: indexPath.row], let streamName = stream.name?.lowercased() else { return }
+        
+        let message: String
+        if twitchAppInstalled {
+            message = "Choose one of the options to view the stream."
+        } else {
+            message = "The Twitch app is not installed. Please install the Twitch app, or choose one of the options to view the stream."
+        }
+        let alert = UIAlertController(title: "View Stream", message: message, preferredStyle: .alert)
+        
+        if twitchAppInstalled {
+            alert.addAction(UIAlertAction(title: "Twitch", style: .default, handler: { _ in
+                guard let url = URL(string: "twitch://stream/" + streamName) else { return }
+                UIApplication.shared.open(url)
+            }))
+        } else {
+            alert.addAction(UIAlertAction(title: "Install Twitch", style: .default, handler: { _ in
+                guard let url = URL(string: "itms-apps://apple.com/app/id460177396") else { return }
+                UIApplication.shared.open(url)
+            }))
+            alert.addAction(UIAlertAction(title: "Safari", style: .default, handler: { _ in
+                guard let url = URL(string: k.URL.twitch + streamName) else { return }
+                UIApplication.shared.open(url)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "In-App Safari", style: .default, handler: { [weak self] _ in
+            guard let url = URL(string: k.URL.twitch + streamName) else { return }
+            self?.present(SFSafariViewController(url: url), animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
 }
