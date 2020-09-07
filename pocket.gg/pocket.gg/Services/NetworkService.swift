@@ -137,8 +137,7 @@ final class NetworkService {
                     topStandings = nodes.map { ($0?.entrant?.name, $0?.placement) }
                 }
                 
-                // At the moment, the smash.gg API returns a slug with 'event' instead of 'events', leading to an incorrect URL
-                let slug = graphQLResult.data?.event?.slug?.replacingOccurrences(of: "event", with: "events")
+                let slug = graphQLResult.data?.event?.slug
                 
                 complete(["phases": phases,
                           "topStandings": topStandings,

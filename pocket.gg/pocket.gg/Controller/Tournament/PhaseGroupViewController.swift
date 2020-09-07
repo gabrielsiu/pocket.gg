@@ -7,22 +7,35 @@
 //
 
 import UIKit
+import WebKit
 
-final class PhaseGroupViewController: UITableViewController {
+final class PhaseGroupViewController: UIViewController {
     
     var phaseGroup: PhaseGroup
+    var phaseGroupURL: String?
     var doneRequest = false
-    var phaseGroupViewControl: UISegmentedControl
+    let phaseGroupViewControl: UISegmentedControl
+    let tableView: UITableView
+    let webView: WKWebView
     
     // MARK: - Initialization
     
-    init(_ phaseGroup: PhaseGroup, title: String?) {
+    init(_ phaseGroup: PhaseGroup, title: String?, url: String?) {
         self.phaseGroup = phaseGroup
+        self.phaseGroupURL = url
+        if let url = self.phaseGroupURL, let id = phaseGroup.id {
+            let phaseGroupURL = url + "/\(id)"
+            self.phaseGroupURL = phaseGroupURL
+        }
         
         phaseGroupViewControl = UISegmentedControl(items: ["Standings", "Matches", "Bracket"])
         phaseGroupViewControl.selectedSegmentIndex = 0
         
-        super.init(style: .insetGrouped)
+        tableView = UITableView(frame: .zero, style: .plain)
+        
+        webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
+        
+        super.init(nibName: nil, bundle: nil)
         self.title = title
     }
     
@@ -34,14 +47,47 @@ final class PhaseGroupViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
-        phaseGroupViewControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        view.backgroundColor = .systemBackground
+        setupViews()
         loadPhaseGroupDetails()
+    }
+    
+    // MARK: - Setup
+    
+    private func setupViews() {
+        view.addSubview(phaseGroupViewControl)
+        view.addSubview(tableView)
+        view.addSubview(webView)
+        phaseGroupViewControl.setEdgeConstraints(top: view.layoutMarginsGuide.topAnchor,
+                                                 bottom: tableView.topAnchor,
+                                                 leading: view.leadingAnchor,
+                                                 trailing: view.trailingAnchor)
+        tableView.setEdgeConstraints(top: phaseGroupViewControl.bottomAnchor,
+                                     bottom: view.bottomAnchor,
+                                     leading: view.leadingAnchor,
+                                     trailing: view.trailingAnchor)
+        webView.setEdgeConstraints(top: phaseGroupViewControl.bottomAnchor,
+                                   bottom: view.bottomAnchor,
+                                   leading: view.leadingAnchor,
+                                   trailing: view.trailingAnchor)
+        
+        tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        webView.uiDelegate = self
+        webView.isHidden = true
+        if let phaseGroupURL = phaseGroupURL, let url = URL(string: phaseGroupURL) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+        
+        phaseGroupViewControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
     private func loadPhaseGroupDetails() {
         guard let id = phaseGroup.id else {
-            self.doneRequest = true
+            doneRequest = true
             let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
             self.present(alert, animated: true)
@@ -68,22 +114,24 @@ final class PhaseGroupViewController: UITableViewController {
     // MARK: - Actions
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        tableView.reloadData()
+        tableView.isHidden = sender.selectedSegmentIndex == 2
+        webView.isHidden = sender.selectedSegmentIndex != 2
     }
+}
 
-    // MARK: - Table View Data Source
+// MARK: - Table View Data Source & Delegate
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard phaseGroupViewControl.selectedSegmentIndex != 2 else { return 0 }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return phaseGroup.standings?.count ?? 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let standings = phaseGroup.standings, standings.count != 0 else {
             return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
         }
@@ -109,10 +157,10 @@ final class PhaseGroupViewController: UITableViewController {
         }
         return UITableViewCell()
     }
+}
+
+// MARK: - WebKit UI Delegate
+
+extension PhaseGroupViewController: WKUIDelegate {
     
-    // MARK: - Table View Delegate
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return phaseGroupViewControl
-    }
 }
