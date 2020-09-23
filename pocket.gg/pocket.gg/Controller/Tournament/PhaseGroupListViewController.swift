@@ -11,18 +11,12 @@ import UIKit
 final class PhaseGroupListViewController: UITableViewController {
     
     var phase: Phase
-    var phaseURL: String?
     var doneRequest = false
 
     // MARK: - Initialization
     
-    init(phase: Phase, url: String?) {
+    init(phase: Phase) {
         self.phase = phase
-        self.phaseURL = url
-        if let url = self.phaseURL, let id = phase.id {
-            let phaseURL = url + "/\(id)"
-            self.phaseURL = phaseURL
-        }
         super.init(style: .insetGrouped)
     }
     
@@ -134,6 +128,6 @@ final class PhaseGroupListViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: "Pool " + (phaseGroup.name ?? ""), url: phaseURL), animated: true)
+        navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: "Pool " + (phaseGroup.name ?? "")), animated: true)
     }
 }

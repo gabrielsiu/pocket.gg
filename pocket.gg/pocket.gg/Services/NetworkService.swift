@@ -188,8 +188,21 @@ final class NetworkService {
                     standings = nodes.map { (name: $0?.entrant?.name, placement: $0?.placement) }
                 }
                 
+                var sets: [PhaseGroupSet]?
+                if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
+                    sets = nodes.map { PhaseGroupSet(state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
+                                                     roundNum: $0?.round,
+                                                     identifier: $0?.identifier,
+                                                     fullRoundText: $0?.fullRoundText,
+                                                     displayScore: $0?.displayScore,
+                                                     entrant1: (name: $0?.slots?[safe: 0]??.entrant?.name, score: nil),
+                                                     entrant2: (name: $0?.slots?[safe: 1]??.entrant?.name, score: nil))
+                    }
+                }
+                
                 complete(["progressionsOut": progressionsOut,
-                          "standings": standings])
+                          "standings": standings,
+                          "sets": sets])
             }
         }
     }

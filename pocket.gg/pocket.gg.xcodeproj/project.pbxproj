@@ -14,7 +14,6 @@
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
 		DA2939E923E80BBE00E5DB3A /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DA2939E823E80BBE00E5DB3A /* Apollo */; };
-		DA4B495E24FC21D900BE7E0E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495D24FC21D900BE7E0E /* API.swift */; };
 		DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495F24FCC6ED00BE7E0E /* Event.swift */; };
 		DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496124FCC6FC00BE7E0E /* Location.swift */; };
 		DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496324FCC72000BE7E0E /* Stream.swift */; };
@@ -44,11 +43,15 @@
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
+		DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290E3251AD12B003D05B9 /* SetsView.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
 		DADBE41524074A38005B707F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41424074A38005B707F /* AboutViewController.swift */; };
 		DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41624074AC5005B707F /* AboutInfoCell.swift */; };
 		DADBE41924074BB7005B707F /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41824074BB7005B707F /* VideoGame.swift */; };
+		DAEACF8F250AF53E002F0674 /* BracketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF8E250AF53E002F0674 /* BracketView.swift */; };
+		DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */; };
+		DAEACF99250C2855002F0674 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF98250C2855002F0674 /* API.swift */; };
 		DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +74,6 @@
 		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2939DF23E7E35B00E5DB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
-		DA4B495D24FC21D900BE7E0E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA4B495F24FCC6ED00BE7E0E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA4B496124FCC6FC00BE7E0E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA4B496324FCC72000BE7E0E /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
@@ -103,10 +105,14 @@
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
+		DAC290E3251AD12B003D05B9 /* SetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsView.swift; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		DADBE41624074AC5005B707F /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
 		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
+		DAEACF8E250AF53E002F0674 /* BracketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BracketView.swift; sourceTree = "<group>"; };
+		DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroupSet.swift; sourceTree = "<group>"; };
+		DAEACF98250C2855002F0674 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Setup.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +152,7 @@
 				DA4B495F24FCC6ED00BE7E0E /* Event.swift */,
 				DA4B496524FCC72D00BE7E0E /* Phase.swift */,
 				DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */,
+				DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */,
 				DA4B496124FCC6FC00BE7E0E /* Location.swift */,
 				DA4B496324FCC72000BE7E0E /* Stream.swift */,
 				DADBE41824074BB7005B707F /* VideoGame.swift */,
@@ -218,6 +225,8 @@
 		DA759E5E23E4FECD00D4B3E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DAC290E3251AD12B003D05B9 /* SetsView.swift */,
+				DAEACF8E250AF53E002F0674 /* BracketView.swift */,
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
 				DA1C92862413780200E5BA96 /* Tournament */,
 				DA7AF02324F6EC74009A00E2 /* Reusable Cells */,
@@ -263,7 +272,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DA4B495D24FC21D900BE7E0E /* API.swift */,
+				DAEACF98250C2855002F0674 /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA7AF00D24F59BAB009A00E2 /* schema.json */,
@@ -459,10 +468,10 @@
 				DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
-				DA4B495E24FC21D900BE7E0E /* API.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
 				DA7AF01824F5E53C009A00E2 /* PhaseGroupListViewController.swift in Sources */,
+				DAEACF8F250AF53E002F0674 /* BracketView.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */,
 				DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */,
@@ -470,8 +479,11 @@
 				DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */,
 				DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
+				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
+				DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
+				DAEACF99250C2855002F0674 /* API.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,

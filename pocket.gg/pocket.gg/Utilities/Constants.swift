@@ -48,6 +48,9 @@ struct Constants {
         static let cornerRadius: CGFloat = 5
         
         static let largeFont: CGFloat = UIFont.systemFontSize + 4.0
+        
+        static let setWidth: CGFloat = 300
+        static let setHeight: CGFloat = 50
     }
     
     // MARK: - User Defaults

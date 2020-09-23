@@ -116,5 +116,19 @@ query PhaseGroupStandingsById($id:ID) {
                 }
             }
         }
+        sets(page: 1, perPage: 100) {
+            nodes {
+                state
+                round
+                identifier
+                fullRoundText
+                displayScore
+                slots {
+                    entrant {
+                        name
+                    }
+                }
+            }
+        }
     }
 }

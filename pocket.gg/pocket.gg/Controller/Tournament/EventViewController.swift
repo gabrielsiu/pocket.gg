@@ -201,11 +201,7 @@ final class EventViewController: UITableViewController {
             }
             let numPhaseGroups = phase.numPhaseGroups ?? 1
             if numPhaseGroups > 1 {
-                var eventURL: String?
-                if let slug = event.slug {
-                    eventURL = "https://smash.gg/" + slug + "/brackets"
-                }
-                navigationController?.pushViewController(PhaseGroupListViewController(phase: phase, url: eventURL), animated: true)
+                navigationController?.pushViewController(PhaseGroupListViewController(phase: phase), animated: true)
             } else if numPhaseGroups == 1 {
                 // TODO: Find some way to allow EventViewController to go directly to PhaseGroupViewController if the phase only has 1 phase group
                 // At this point, we don't have the phase group yet because we don't want to load the phase groups of all of the other phases as well
@@ -213,7 +209,7 @@ final class EventViewController: UITableViewController {
                     tableView.deselectRow(at: indexPath, animated: true)
                     return
                 }
-                navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: phase.name, url: event.slug), animated: true)
+                navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: phase.name), animated: true)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }

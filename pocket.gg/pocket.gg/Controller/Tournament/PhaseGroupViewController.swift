@@ -7,33 +7,26 @@
 //
 
 import UIKit
-import WebKit
 
 final class PhaseGroupViewController: UIViewController {
     
     var phaseGroup: PhaseGroup
-    var phaseGroupURL: String?
     var doneRequest = false
     let phaseGroupViewControl: UISegmentedControl
     let tableView: UITableView
-    let webView: WKWebView
+    let bracketScrollView: UIScrollView
     
     // MARK: - Initialization
     
-    init(_ phaseGroup: PhaseGroup, title: String?, url: String?) {
+    init(_ phaseGroup: PhaseGroup, title: String?) {
         self.phaseGroup = phaseGroup
-        self.phaseGroupURL = url
-        if let url = self.phaseGroupURL, let id = phaseGroup.id {
-            let phaseGroupURL = url + "/\(id)"
-            self.phaseGroupURL = phaseGroupURL
-        }
         
         phaseGroupViewControl = UISegmentedControl(items: ["Standings", "Matches", "Bracket"])
         phaseGroupViewControl.selectedSegmentIndex = 0
         
         tableView = UITableView(frame: .zero, style: .plain)
         
-        webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
+        bracketScrollView = UIScrollView(frame: .zero)
         
         super.init(nibName: nil, bundle: nil)
         self.title = title
@@ -57,7 +50,7 @@ final class PhaseGroupViewController: UIViewController {
     private func setupViews() {
         view.addSubview(phaseGroupViewControl)
         view.addSubview(tableView)
-        view.addSubview(webView)
+        view.addSubview(bracketScrollView)
         phaseGroupViewControl.setEdgeConstraints(top: view.layoutMarginsGuide.topAnchor,
                                                  bottom: tableView.topAnchor,
                                                  leading: view.leadingAnchor,
@@ -66,21 +59,16 @@ final class PhaseGroupViewController: UIViewController {
                                      bottom: view.bottomAnchor,
                                      leading: view.leadingAnchor,
                                      trailing: view.trailingAnchor)
-        webView.setEdgeConstraints(top: phaseGroupViewControl.bottomAnchor,
-                                   bottom: view.bottomAnchor,
-                                   leading: view.leadingAnchor,
-                                   trailing: view.trailingAnchor)
+        bracketScrollView.setEdgeConstraints(top: phaseGroupViewControl.bottomAnchor,
+                                       bottom: view.bottomAnchor,
+                                       leading: view.leadingAnchor,
+                                       trailing: view.trailingAnchor)
         
         tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
         tableView.dataSource = self
         tableView.delegate = self
         
-        webView.uiDelegate = self
-        webView.isHidden = true
-        if let phaseGroupURL = phaseGroupURL, let url = URL(string: phaseGroupURL) {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
+        bracketScrollView.isHidden = true
         
         phaseGroupViewControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
@@ -106,6 +94,11 @@ final class PhaseGroupViewController: UIViewController {
             self?.phaseGroup.progressionsOut = result["progressionsOut"] as? [Int]
             self?.phaseGroup.standings = result["standings"] as? [(name: String?, placement: Int?)]
             
+            // TODO: Possibly slow, maybe replace with closure that returns frame size after it's done
+            let bracketView = BracketView(sets: result["sets"] as? [PhaseGroupSet])
+            self?.bracketScrollView.contentSize = bracketView.bounds.size
+            self?.bracketScrollView.addSubview(bracketView)
+            
             self?.doneRequest = true
             self?.tableView.reloadData()
         }
@@ -115,7 +108,7 @@ final class PhaseGroupViewController: UIViewController {
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         tableView.isHidden = sender.selectedSegmentIndex == 2
-        webView.isHidden = sender.selectedSegmentIndex != 2
+        bracketScrollView.isHidden = sender.selectedSegmentIndex != 2
     }
 }
 
@@ -157,10 +150,4 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return UITableViewCell()
     }
-}
-
-// MARK: - WebKit UI Delegate
-
-extension PhaseGroupViewController: WKUIDelegate {
-    
 }
