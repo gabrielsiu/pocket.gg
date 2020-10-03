@@ -207,6 +207,89 @@ public enum BracketType: RawRepresentable, Equatable, Hashable, CaseIterable, Ap
   }
 }
 
+public final class AuthTokenTestQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition =
+    """
+    query AuthTokenTest {
+      tournament(id: 2018) {
+        __typename
+        id
+      }
+    }
+    """
+
+  public let operationName = "AuthTokenTest"
+
+  public init() {
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes = ["Query"]
+
+    public static let selections: [GraphQLSelection] = [
+      GraphQLField("tournament", arguments: ["id": 2018], type: .object(Tournament.selections)),
+    ]
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(tournament: Tournament? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "tournament": tournament.flatMap { (value: Tournament) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns a tournament given its id or slug
+    public var tournament: Tournament? {
+      get {
+        return (resultMap["tournament"] as? ResultMap).flatMap { Tournament(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "tournament")
+      }
+    }
+
+    public struct Tournament: GraphQLSelectionSet {
+      public static let possibleTypes = ["Tournament"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("id", type: .scalar(GraphQLID.self)),
+      ]
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(id: GraphQLID? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Tournament", "id": id])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: GraphQLID? {
+        get {
+          return resultMap["id"] as? GraphQLID
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "id")
+        }
+      }
+    }
+  }
+}
+
 public final class TournamentsByVideogamesQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition =

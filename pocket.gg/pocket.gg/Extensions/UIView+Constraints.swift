@@ -10,7 +10,7 @@ import UIKit
 
 extension UIView {
     
-    func setEdgeConstraints(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero) {
+    func setEdgeConstraints(top: NSLayoutYAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, leading: NSLayoutXAxisAnchor? = nil, trailing: NSLayoutXAxisAnchor? = nil, padding: UIEdgeInsets = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         if let top = top {
             topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
@@ -26,7 +26,7 @@ extension UIView {
         }
     }
     
-    func setAxisConstraints(xAnchor: NSLayoutXAxisAnchor?, yAnchor: NSLayoutYAxisAnchor?) {
+    func setAxisConstraints(xAnchor: NSLayoutXAxisAnchor? = nil, yAnchor: NSLayoutYAxisAnchor? = nil) {
         translatesAutoresizingMaskIntoConstraints = false
         if let xAnchor = xAnchor {
             centerXAnchor.constraint(equalTo: xAnchor).isActive = true

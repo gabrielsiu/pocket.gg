@@ -21,6 +21,8 @@
 		DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
+		DA5B98AA25214BB900525550 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B98A925214BB900525550 /* API.swift */; };
+		DA5B98B0252195F800525550 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B98AF252195F800525550 /* LoadingViewController.swift */; };
 		DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8A23F5010D00268A85 /* SettingsViewController.swift */; };
 		DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */; };
 		DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */; };
@@ -44,6 +46,7 @@
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
 		DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290E3251AD12B003D05B9 /* SetsView.swift */; };
+		DAC290F2251B854F003D05B9 /* AuthTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
 		DADBE41524074A38005B707F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41424074A38005B707F /* AboutViewController.swift */; };
@@ -51,7 +54,6 @@
 		DADBE41924074BB7005B707F /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41824074BB7005B707F /* VideoGame.swift */; };
 		DAEACF8F250AF53E002F0674 /* BracketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF8E250AF53E002F0674 /* BracketView.swift */; };
 		DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */; };
-		DAEACF99250C2855002F0674 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF98250C2855002F0674 /* API.swift */; };
 		DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,8 @@
 		DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroup.swift; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA5B98A925214BB900525550 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		DA5B98AF252195F800525550 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		DA637A8A23F5010D00268A85 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGamesViewController.swift; sourceTree = "<group>"; };
 		DA637A9023F7A6FE00268A85 /* TournamentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentViewController.swift; sourceTree = "<group>"; };
@@ -106,13 +110,13 @@
 		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
 		DAC290E3251AD12B003D05B9 /* SetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsView.swift; sourceTree = "<group>"; };
+		DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenViewController.swift; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		DADBE41624074AC5005B707F /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
 		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		DAEACF8E250AF53E002F0674 /* BracketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BracketView.swift; sourceTree = "<group>"; };
 		DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroupSet.swift; sourceTree = "<group>"; };
-		DAEACF98250C2855002F0674 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Setup.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -272,7 +276,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DAEACF98250C2855002F0674 /* API.swift */,
+				DA5B98A925214BB900525550 /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA7AF00D24F59BAB009A00E2 /* schema.json */,
@@ -287,6 +291,8 @@
 		DA7E51B123E475500037E757 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DA5B98AF252195F800525550 /* LoadingViewController.swift */,
+				DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */,
 				DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */,
 				DA64A2F9241DF04E00481280 /* Tournament */,
 				DA637A8923F500EF00268A85 /* Settings */,
@@ -353,7 +359,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Gabriel Siu";
 				TargetAttributes = {
 					DA2939DA23E7E35B00E5DB3A = {
@@ -470,6 +476,7 @@
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
+				DAC290F2251B854F003D05B9 /* AuthTokenViewController.swift in Sources */,
 				DA7AF01824F5E53C009A00E2 /* PhaseGroupListViewController.swift in Sources */,
 				DAEACF8F250AF53E002F0674 /* BracketView.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
@@ -483,12 +490,12 @@
 				DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
-				DAEACF99250C2855002F0674 /* API.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */,
+				DA5B98B0252195F800525550 /* LoadingViewController.swift in Sources */,
 				DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */,
 				DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */,
 				DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */,
@@ -496,6 +503,7 @@
 				DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */,
 				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
+				DA5B98AA25214BB900525550 /* API.swift in Sources */,
 				DA7AF02B24F71A83009A00E2 /* PhaseGroupViewController.swift in Sources */,
 				DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */,
 				DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */,
@@ -591,6 +599,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -651,6 +660,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

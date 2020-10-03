@@ -19,22 +19,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
-        let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
-                           UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 1)]
-        let tabBarVCs = [UINavigationController(rootViewController: TournamentListViewController()),
-                         UINavigationController(rootViewController: SettingsViewController(style: .insetGrouped))]
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
-            navController.navigationBar.prefersLargeTitles = true
-            navController.tabBarItem = tabBarItems[index]
-            return navController
-        })
-        tabBarController.selectedIndex = 0
-        
-        window?.rootViewController = tabBarController
         window?.tintColor = .systemRed
+        window?.rootViewController = LoadingViewController()
         window?.makeKeyAndVisible()
+        
+        NetworkService.isAuthTokenValid { [weak self] valid in
+            if valid {
+                self?.window?.rootViewController = AuthTokenViewController()
+                self?.window?.makeKeyAndVisible()
+//                let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
+//                                   UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 1)]
+//                let tabBarVCs = [UINavigationController(rootViewController: TournamentListViewController()),
+//                                 UINavigationController(rootViewController: SettingsViewController(style: .insetGrouped))]
+//                let tabBarController = UITabBarController()
+//                tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
+//                    navController.navigationBar.prefersLargeTitles = true
+//                    navController.tabBarItem = tabBarItems[index]
+//                    return navController
+//                })
+//                tabBarController.selectedIndex = 0
+//
+//                self?.window?.rootViewController = tabBarController
+//                self?.window?.makeKeyAndVisible()
+                
+            } else {
+                self?.window?.rootViewController = AuthTokenViewController()
+                self?.window?.makeKeyAndVisible()
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -10,15 +10,27 @@ import UIKit
 import Apollo
 import GRDB
 
-let apollo: ApolloClient = {
+var apollo: ApolloClient = {
+    let authToken = UserDefaults.standard.string(forKey: k.UserDefaults.authToken) ?? ""
     let configuration = URLSessionConfiguration.default
-    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(authToken1 + authToken2 + authToken3)"]
+    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(authToken)"]
     guard let url = URL(string: k.API.endpoint) else {
         // TODO: Handle this better
         fatalError()
     }
     return ApolloClient(networkTransport: HTTPNetworkTransport(url: url, session: URLSession(configuration: configuration)))
 }()
+
+func updateApolloClient() {
+    let authToken = UserDefaults.standard.string(forKey: k.UserDefaults.authToken) ?? ""
+    let configuration = URLSessionConfiguration.default
+    configuration.httpAdditionalHeaders = ["Authorization": "Bearer \(authToken)"]
+    guard let url = URL(string: k.API.endpoint) else {
+        // TODO: Handle this better
+        fatalError()
+    }
+    apollo = ApolloClient(networkTransport: HTTPNetworkTransport(url: url, session: URLSession(configuration: configuration)))
+}
 
 var dbQueue: DatabaseQueue?
 

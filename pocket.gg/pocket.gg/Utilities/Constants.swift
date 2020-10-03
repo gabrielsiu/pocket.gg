@@ -56,6 +56,8 @@ struct Constants {
     // MARK: - User Defaults
     
     struct UserDefaults {
+        static let authToken = "authToken"
+        
         static let featuredTournaments = "featuredTournaments"
         static let upcomingTournaments = "upcomingTournaments"
         static let preferredVideoGames = "preferredVideoGames"
@@ -65,6 +67,9 @@ struct Constants {
     
     struct Error {
         static let genericTitle = "Error"
+        
+        static let invalidAuthToken = "Invalid auth token"
+        
         static let emptyUrl = "ERROR: No URL provided."
         static let urlGeneration = "Error generating URL from provided string: "
         static let networkRequest = "Network request failed with error: "

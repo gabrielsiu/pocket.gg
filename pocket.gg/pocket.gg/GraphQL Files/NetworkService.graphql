@@ -1,3 +1,9 @@
+query AuthTokenTest {
+    tournament(id: 2018) {
+        id
+    }
+}
+
 query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID], $featured: Boolean, $upcoming: Boolean) {
     tournaments(query: {
         perPage: $perPage

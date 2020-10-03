@@ -11,6 +11,15 @@ import Apollo
 
 final class NetworkService {
     
+    static func isAuthTokenValid(complete: @escaping (_ valid: Bool) -> Void) {
+        apollo.fetch(query: AuthTokenTestQuery()) { result in
+            switch result {
+            case .failure: complete(false)
+            case .success: complete(true)
+            }
+        }
+    }
+    
     static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
         let videogameIDs = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
         let featured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
