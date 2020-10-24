@@ -14,6 +14,7 @@ final class Value1Cell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+        textLabel?.numberOfLines = 0
     }
     
     required init?(coder: NSCoder) {
