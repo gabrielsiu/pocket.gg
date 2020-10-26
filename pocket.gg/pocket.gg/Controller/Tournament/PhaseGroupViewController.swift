@@ -10,7 +10,8 @@ import UIKit
 
 final class PhaseGroupViewController: UIViewController {
     
-    var phaseGroup: PhaseGroup
+    var phaseGroup: PhaseGroup?
+    var phaseID: Int?
     var doneRequest = false
     let phaseGroupViewControl: UISegmentedControl
     let tableView: UITableView
@@ -18,8 +19,9 @@ final class PhaseGroupViewController: UIViewController {
     
     // MARK: - Initialization
     
-    init(_ phaseGroup: PhaseGroup, title: String?) {
+    init(_ phaseGroup: PhaseGroup?, _ phaseID: Int? = nil, title: String?) {
         self.phaseGroup = phaseGroup
+        self.phaseID = phaseID
         
         phaseGroupViewControl = UISegmentedControl(items: ["Standings", "Matches", "Bracket"])
         phaseGroupViewControl.selectedSegmentIndex = 0
@@ -42,7 +44,16 @@ final class PhaseGroupViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupViews()
-        loadPhaseGroupDetails()
+        
+        // phaseGroup should be nil only when the phase only has 1 phase group
+        // In this case, the phase ID that was passed in will be used to fetch the phase group
+        if phaseGroup == nil {
+            getPhaseGroup { [weak self] in
+                self?.loadPhaseGroupDetails()
+            }
+        } else {
+            loadPhaseGroupDetails()
+        }
     }
     
     // MARK: - Setup
@@ -73,8 +84,20 @@ final class PhaseGroupViewController: UIViewController {
         phaseGroupViewControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
     
+    private func getPhaseGroup(_ complete: @escaping () -> Void) {
+        guard let id = phaseID else { return }
+        NetworkService.getPhaseGroupsById(id: id, numPhaseGroups: 1) { [weak self] (result) in
+            guard let result = result, !result.isEmpty else {
+                complete()
+                return
+            }
+            self?.phaseGroup = result[0]
+            complete()
+        }
+    }
+    
     private func loadPhaseGroupDetails() {
-        guard let id = phaseGroup.id else {
+        guard let id = phaseGroup?.id else {
             doneRequest = true
             let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -91,12 +114,12 @@ final class PhaseGroupViewController: UIViewController {
                 return
             }
             
-            self?.phaseGroup.progressionsOut = result["progressionsOut"] as? [Int]
-            self?.phaseGroup.standings = result["standings"] as? [(name: String?, placement: Int?)]
-            self?.phaseGroup.matches = result["sets"] as? [PhaseGroupSet]
+            self?.phaseGroup?.progressionsOut = result["progressionsOut"] as? [Int]
+            self?.phaseGroup?.standings = result["standings"] as? [(name: String?, placement: Int?)]
+            self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
             // TODO: Possibly slow, maybe replace with closure that returns frame size after it's done
-            let bracketView = BracketView(sets: self?.phaseGroup.matches)
+            let bracketView = BracketView(sets: self?.phaseGroup?.matches)
             self?.bracketScrollView.contentSize = bracketView.bounds.size
             self?.bracketScrollView.addSubview(bracketView)
             
@@ -127,14 +150,14 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if phaseGroupViewControl.selectedSegmentIndex == 0 {
-            return phaseGroup.standings?.count ?? 1
+            return phaseGroup?.standings?.count ?? 1
         } else {
-            return phaseGroup.matches?.count ?? 1
+            return phaseGroup?.matches?.count ?? 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let standings = phaseGroup.standings, standings.count != 0 else {
+        guard let standings = phaseGroup?.standings, standings.count != 0 else {
             return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
         }
         
@@ -153,7 +176,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
             var progressedText: String?
             if let placement = standings[indexPath.row].placement {
                 placementText = "\(placement): "
-                if let progressionsOut = phaseGroup.progressionsOut, progressionsOut.contains(placement) {
+                if let progressionsOut = phaseGroup?.progressionsOut, progressionsOut.contains(placement) {
                     // TODO: If possible with the API, also display where the player has progressed to
                     progressedText = "Progressed"
                 }
@@ -172,7 +195,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
             cell.selectionStyle = .none
             
-            guard let set = phaseGroup.matches?[safe: indexPath.row] else {
+            guard let set = phaseGroup?.matches?[safe: indexPath.row] else {
                 return UITableViewCell()
             }
             

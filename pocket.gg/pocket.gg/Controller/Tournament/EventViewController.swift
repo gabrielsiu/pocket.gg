@@ -201,15 +201,11 @@ final class EventViewController: UITableViewController {
             }
             let numPhaseGroups = phase.numPhaseGroups ?? 1
             if numPhaseGroups > 1 {
+                // If there are multiple phase groups, then proceed to PhaseGroupListViewController as normal
                 navigationController?.pushViewController(PhaseGroupListViewController(phase: phase), animated: true)
             } else if numPhaseGroups == 1 {
-                // TODO: Find some way to allow EventViewController to go directly to PhaseGroupViewController if the phase only has 1 phase group
-                // At this point, we don't have the phase group yet because we don't want to load the phase groups of all of the other phases as well
-                guard let phaseGroup = phase.phaseGroups?[safe: indexPath.row] else {
-                    tableView.deselectRow(at: indexPath, animated: true)
-                    return
-                }
-                navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: phase.name), animated: true)
+                // If there is only 1 phase group, jump straight to PhaseGroupViewController. The singular phase group's ID will be obtained using the phase's ID
+                navigationController?.pushViewController(PhaseGroupViewController(nil, phase.id ?? nil, title: phase.name), animated: true)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
