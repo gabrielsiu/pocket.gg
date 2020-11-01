@@ -30,23 +30,23 @@ final class SetsView: UIView {
         for (index, set) in sets.enumerated() {
             let setView = UIView(frame: CGRect(x: 0, y: 0, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
 
+            let name0Label = UILabel()
             let name1Label = UILabel()
-            let name2Label = UILabel()
 
+            name0Label.textAlignment = .center
             name1Label.textAlignment = .center
-            name2Label.textAlignment = .center
 
-            name1Label.text = set.entrant1?.name
-            name2Label.text = set.entrant2?.name
+//            name0Label.text = set.entrant0?.name
+//            name1Label.text = set.entrant1?.name
 
+            setView.addSubview(name0Label)
             setView.addSubview(name1Label)
-            setView.addSubview(name2Label)
 
-            name1Label.setEdgeConstraints(top: setView.topAnchor,
-                                          bottom: name2Label.topAnchor,
+            name0Label.setEdgeConstraints(top: setView.topAnchor,
+                                          bottom: name1Label.topAnchor,
                                           leading: setView.leadingAnchor,
                                           trailing: setView.trailingAnchor)
-            name2Label.setEdgeConstraints(top: name1Label.bottomAnchor,
+            name1Label.setEdgeConstraints(top: name0Label.bottomAnchor,
                                           bottom: setView.bottomAnchor,
                                           leading: setView.leadingAnchor,
                                           trailing: setView.trailingAnchor)

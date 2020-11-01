@@ -11,7 +11,5 @@ struct PhaseGroupSet {
     let roundNum: Int?
     let identifier: String?
     let fullRoundText: String?
-    let displayScore: String?
-    let entrant1: (name: String?, score: Int?)?
-    let entrant2: (name: String?, score: Int?)?
+    var entrants: [(name: String?, score: String?)]?
 }

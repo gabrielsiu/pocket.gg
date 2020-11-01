@@ -199,14 +199,32 @@ final class NetworkService {
                 
                 var sets: [PhaseGroupSet]?
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
-                    sets = nodes.map { PhaseGroupSet(state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
-                                                     roundNum: $0?.round,
-                                                     identifier: $0?.identifier,
-                                                     fullRoundText: $0?.fullRoundText,
-                                                     displayScore: $0?.displayScore,
-                                                     entrant1: (name: $0?.slots?[safe: 0]??.entrant?.name, score: nil),
-                                                     entrant2: (name: $0?.slots?[safe: 1]??.entrant?.name, score: nil))
-                    }
+                    sets = nodes.map({ (set) -> PhaseGroupSet in
+                        let names = set?.slots?.compactMap { $0?.entrant?.name }
+                        var phaseGroupSet = PhaseGroupSet(state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
+                                                          roundNum: set?.round,
+                                                          identifier: set?.identifier,
+                                                          fullRoundText: set?.fullRoundText,
+                                                          entrants: nil)
+                        
+                        if let displayScore = set?.displayScore, let names = names {
+                            let entrantStrings = displayScore.components(separatedBy: " - ")
+                            let entrants = entrantStrings.map { (entrantString) -> (name: String, score: String) in
+                                for name in names where entrantString.contains(name) {
+                                    guard let index = entrantString.lastIndex(of: " ") else {
+                                        return (name: entrantString, score: "")
+                                    }
+                                    return (name: name, score: String(entrantString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
+                                }
+                                return (name: entrantString, score: "")
+                            }
+                            phaseGroupSet.entrants = entrants
+                        } else if let names = names {
+                            phaseGroupSet.entrants = names.map { (name: $0, score: nil) }
+                        }
+                        
+                        return phaseGroupSet
+                    })
                 }
                 
                 complete(["progressionsOut": progressionsOut,

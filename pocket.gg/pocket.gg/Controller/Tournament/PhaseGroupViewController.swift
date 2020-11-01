@@ -86,6 +86,7 @@ final class PhaseGroupViewController: UIViewController {
     
     private func getPhaseGroup(_ complete: @escaping () -> Void) {
         guard let id = phaseID else { return }
+        
         NetworkService.getPhaseGroupsById(id: id, numPhaseGroups: 1) { [weak self] (result) in
             guard let result = result, !result.isEmpty else {
                 complete()
@@ -207,71 +208,51 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func phaseGroupMatchText(_ set: PhaseGroupSet, _ size: CGFloat) -> NSAttributedString {
-        // TODO: Refactor sometime
-        
-        var text = (set.fullRoundText ?? "") + " Match " + (set.identifier ?? "") + "\n"
-        
-        guard let displayScore = set.displayScore else {
-            return NSMutableAttributedString(string: text)
-        }
-        
-        let names = [set.entrant1?.name, set.entrant2?.name].compactMap { $0 }
-        
-        let playerStrings = displayScore.components(separatedBy: " - ")
-        guard playerStrings.count == 2 else {
-            text += displayScore
-            return NSMutableAttributedString(string: text)
-        }
-        
-        let players = playerStrings.map { (playerString) -> (name: String, score: String) in
-            for name in names where playerString.contains(name) {
-                guard let index = playerString.lastIndex(of: " ") else {
-                    return (name: playerString, score: "")
-                }
-                return (name: name, score: String(playerString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
-            }
-            return (name: playerString, score: "")
-        }
+        var text = (set.fullRoundText ?? "") + " Match " + (set.identifier ?? "")
         
         var winningScoreLocation: Int?
         var boldTextLength: Int?
         var winnerPresent = false
-        var player0Won = false
+        var entrant0Won = false
         
-        if players.count == 2 {
-            if let score0 = Int(players[0].score), let score1 = Int(players[1].score) {
-                winnerPresent = true
-                player0Won = score0 > score1
-            } else if players[0].score == "W" {
-                winnerPresent = true
-                player0Won = true
-            } else if players[1].score == "W" {
-                winnerPresent = true
-            }
+        if let entrants = set.entrants, !entrants.isEmpty {
+            text += "\n"
             
-            if winnerPresent, player0Won {
-                winningScoreLocation = text.count
-                boldTextLength = players[0].name.count + 1 + players[0].score.count
+            if entrants.count == 2, let name0 = entrants[0].name, let score0 = entrants[0].score, let name1 = entrants[1].name, let score1 = entrants[1].score {
+                if let score0Num = Int(score0), let score1Num = Int(score1) {
+                    winnerPresent = true
+                    entrant0Won = score0Num > score1Num
+                } else if let score0 = entrants[0].score, score0 == "W" {
+                    winnerPresent = true
+                    entrant0Won = true
+                } else if let score1 = entrants[1].score, score1 == "W" {
+                    winnerPresent = true
+                }
+                
+                if winnerPresent, entrant0Won {
+                    winningScoreLocation = text.count
+                    boldTextLength = name0.count + 1 + score0.count
+                }
+                text += name0 + " "
+                text += score0
+                
+                text += " - "
+                if winnerPresent, !entrant0Won {
+                    winningScoreLocation = text.count
+                    boldTextLength = name1.count + 1 + score1.count
+                }
+                text += score1
+                text += " "
+                text += name1
+            } else if entrants.count == 1, let name0 = entrants[0].name {
+                text += name0
             }
-            text += players[0].name + " "
-            text += players[0].score
-            
-            text += " - "
-            if winnerPresent, !player0Won {
-                winningScoreLocation = text.count
-                boldTextLength = players[1].name.count + 1 + players[1].score.count
-            }
-            text += players[1].score
-            text += " "
-            text += players[1].name
-        } else if players.count == 1 {
-            text += players[0].name
         }
         
         let attributedText = NSMutableAttributedString(string: text)
         if let location = winningScoreLocation, let length = boldTextLength {
             attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: size), range: NSRange(location: location, length: length))
-            let scoreLocation = player0Won ? location + length - 1 : location
+            let scoreLocation = entrant0Won ? location + length - 1 : location
             attributedText.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: NSRange(location: scoreLocation, length: 1))
         }
         return attributedText
