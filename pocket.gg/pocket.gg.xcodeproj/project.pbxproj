@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */; };
+		DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E5D54255773B600FF6E42 /* SetView.swift */; };
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
 		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
-		DA2939E923E80BBE00E5DB3A /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DA2939E823E80BBE00E5DB3A /* Apollo */; };
+		DA2D5F2B256B389000C44EEC /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DA2D5F2A256B389000C44EEC /* Apollo */; };
+		DA2D5F31256B678300C44EEC /* ApolloService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5F30256B678300C44EEC /* ApolloService.swift */; };
 		DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495F24FCC6ED00BE7E0E /* Event.swift */; };
 		DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496124FCC6FC00BE7E0E /* Location.swift */; };
 		DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496324FCC72000BE7E0E /* Stream.swift */; };
@@ -21,7 +23,6 @@
 		DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
-		DA5B98AA25214BB900525550 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B98A925214BB900525550 /* API.swift */; };
 		DA5B98B0252195F800525550 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B98AF252195F800525550 /* LoadingViewController.swift */; };
 		DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8A23F5010D00268A85 /* SettingsViewController.swift */; };
 		DA637A8D23F5012B00268A85 /* VideoGamesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */; };
@@ -54,6 +55,7 @@
 		DADBE41924074BB7005B707F /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41824074BB7005B707F /* VideoGame.swift */; };
 		DAEACF8F250AF53E002F0674 /* BracketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF8E250AF53E002F0674 /* BracketView.swift */; };
 		DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */; };
+		DAF2A20D256B345B00580AAB /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2A20C256B345B00580AAB /* API.swift */; };
 		DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCells+Create.swift"; sourceTree = "<group>"; };
+		DA0E5D54255773B600FF6E42 /* SetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetView.swift; sourceTree = "<group>"; };
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
 		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2939DF23E7E35B00E5DB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		DA2D5F30256B678300C44EEC /* ApolloService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloService.swift; sourceTree = "<group>"; };
 		DA4B495F24FCC6ED00BE7E0E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA4B496124FCC6FC00BE7E0E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA4B496324FCC72000BE7E0E /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
@@ -83,7 +87,6 @@
 		DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroup.swift; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		DA5B98A925214BB900525550 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DA5B98AF252195F800525550 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		DA637A8A23F5010D00268A85 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		DA637A8C23F5012B00268A85 /* VideoGamesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGamesViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +120,7 @@
 		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		DAEACF8E250AF53E002F0674 /* BracketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BracketView.swift; sourceTree = "<group>"; };
 		DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroupSet.swift; sourceTree = "<group>"; };
+		DAF2A20C256B345B00580AAB /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Setup.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,8 +136,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA2939E923E80BBE00E5DB3A /* Apollo in Frameworks */,
 				DA6CBE68243039EA006DB38F /* GRDB in Frameworks */,
+				DA2D5F2B256B389000C44EEC /* Apollo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +184,7 @@
 		DA2939D023E7D1C800E5DB3A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DA2D5F30256B678300C44EEC /* ApolloService.swift */,
 				DA2939D123E7D1D800E5DB3A /* NetworkService.swift */,
 				DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */,
 			);
@@ -229,6 +234,7 @@
 		DA759E5E23E4FECD00D4B3E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DA0E5D54255773B600FF6E42 /* SetView.swift */,
 				DAC290E3251AD12B003D05B9 /* SetsView.swift */,
 				DAEACF8E250AF53E002F0674 /* BracketView.swift */,
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
@@ -276,7 +282,7 @@
 				DA56559223E50C3E003FEF20 /* Utilities */,
 				DA2939CB23E7CD0000E5DB3A /* Extensions */,
 				DA92DF1523E8121E0084FEB1 /* GraphQL Files */,
-				DA5B98A925214BB900525550 /* API.swift */,
+				DAF2A20C256B345B00580AAB /* API.swift */,
 				DA7E519D23E46EAB0037E757 /* AppDelegate.swift */,
 				DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */,
 				DA7AF00D24F59BAB009A00E2 /* schema.json */,
@@ -345,8 +351,8 @@
 			);
 			name = pocket.gg;
 			packageProductDependencies = (
-				DA2939E823E80BBE00E5DB3A /* Apollo */,
 				DA6CBE67243039EA006DB38F /* GRDB */,
+				DA2D5F2A256B389000C44EEC /* Apollo */,
 			);
 			productName = pocket.gg;
 			productReference = DA7E519A23E46EAB0037E757 /* pocket.gg.app */;
@@ -381,8 +387,8 @@
 			);
 			mainGroup = DA7E519123E46EAB0037E757;
 			packageReferences = (
-				DA2939E723E80BBE00E5DB3A /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				DA6CBE66243039E9006DB38F /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				DA2D5F29256B389000C44EEC /* XCRemoteSwiftPackageReference "apollo-ios" */,
 			);
 			productRefGroup = DA7E519B23E46EAB0037E757 /* Products */;
 			projectDirPath = "";
@@ -437,7 +443,7 @@
 		};
 		DA2B3B6323E80FC40013362D /* Generate Apollo GraphQL API */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -449,7 +455,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API.swift\n";
 		};
@@ -470,9 +476,11 @@
 			files = (
 				DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */,
 				DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */,
+				DA2D5F31256B678300C44EEC /* ApolloService.swift in Sources */,
 				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
 				DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
+				DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,
@@ -489,6 +497,7 @@
 				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
 				DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
+				DAF2A20D256B345B00580AAB /* API.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
@@ -503,7 +512,6 @@
 				DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */,
 				DA637A8B23F5010D00268A85 /* SettingsViewController.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
-				DA5B98AA25214BB900525550 /* API.swift in Sources */,
 				DA7AF02B24F71A83009A00E2 /* PhaseGroupViewController.swift in Sources */,
 				DA637A9123F7A6FE00268A85 /* TournamentViewController.swift in Sources */,
 				DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */,
@@ -758,12 +766,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DA2939E723E80BBE00E5DB3A /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
+		DA2D5F29256B389000C44EEC /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.21.0;
+				minimumVersion = 0.37.0;
 			};
 		};
 		DA6CBE66243039E9006DB38F /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
@@ -777,9 +785,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DA2939E823E80BBE00E5DB3A /* Apollo */ = {
+		DA2D5F2A256B389000C44EEC /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DA2939E723E80BBE00E5DB3A /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			package = DA2D5F29256B389000C44EEC /* XCRemoteSwiftPackageReference "apollo-ios" */;
 			productName = Apollo;
 		};
 		DA6CBE67243039EA006DB38F /* GRDB */ = {

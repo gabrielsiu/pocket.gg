@@ -12,7 +12,7 @@ import Apollo
 final class NetworkService {
     
     static func isAuthTokenValid(complete: @escaping (_ valid: Bool) -> Void) {
-        apollo.fetch(query: AuthTokenTestQuery()) { result in
+        ApolloService.shared.client.fetch(query: AuthTokenTestQuery()) { result in
             switch result {
             case .failure: complete(false)
             case .success: complete(true)
@@ -25,11 +25,11 @@ final class NetworkService {
         let featured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         let upcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
         
-        apollo.fetch(query: TournamentsByVideogamesQuery(perPage: 10,
-                                                         pageNum: 1,
-                                                         videogameIds: videogameIDs.map { String($0) },
-                                                         featured: featured,
-                                                         upcoming: upcoming)) { result in
+        ApolloService.shared.client.fetch(query: TournamentsByVideogamesQuery(perPage: 10,
+                                                                              pageNum: 1,
+                                                                              videogameIds: videogameIDs.map { String($0) },
+                                                                              featured: featured,
+                                                                              upcoming: upcoming)) { result in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -74,7 +74,7 @@ final class NetworkService {
     }
     
     static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
-        apollo.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
+        ApolloService.shared.client.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -121,7 +121,7 @@ final class NetworkService {
     }
     
     static func getEventById(id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
-        apollo.fetch(query: EventByIdQuery(id: "\(id)")) { (result) in
+        ApolloService.shared.client.fetch(query: EventByIdQuery(id: "\(id)")) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -156,7 +156,7 @@ final class NetworkService {
     }
     
     static func getPhaseGroupsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [PhaseGroup]?) -> Void) {
-        apollo.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -179,7 +179,7 @@ final class NetworkService {
     }
     
     static func getPhaseGroupStandingsById(id: Int, complete: @escaping (_ standings: [String: Any?]?) -> Void) {
-        apollo.fetch(query: PhaseGroupStandingsByIdQuery(id: "\(id)")) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupStandingsByIdQuery(id: "\(id)")) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -201,10 +201,15 @@ final class NetworkService {
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
                     sets = nodes.map({ (set) -> PhaseGroupSet in
                         let names = set?.slots?.compactMap { $0?.entrant?.name }
-                        var phaseGroupSet = PhaseGroupSet(state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
-                                                          roundNum: set?.round,
-                                                          identifier: set?.identifier,
+                        var phaseGroupSet = PhaseGroupSet(id: Int(set?.id ?? "-1"),
+                                                          state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
+                                                          roundNum: set?.round ?? 0,
+                                                          identifier: set?.identifier ?? "",
                                                           fullRoundText: set?.fullRoundText,
+                                                          prevRoundIDs: set?.slots?.compactMap({ (slot) -> Int? in
+                                                            guard let prevRoundID = slot?.prereqId else { return nil }
+                                                            return Int(prevRoundID)
+                                                          }),
                                                           entrants: nil)
                         
                         if let displayScore = set?.displayScore, let names = names {

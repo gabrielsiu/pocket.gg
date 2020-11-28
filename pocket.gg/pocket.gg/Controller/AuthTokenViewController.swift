@@ -82,7 +82,7 @@ final class AuthTokenViewController: UIViewController {
     @objc private func verifyAuthToken() {
         dismissKeyboard()
         UserDefaults.standard.set(authTokenField.text, forKey: k.UserDefaults.authToken)
-        updateApolloClient()
+        ApolloService.shared.updateApolloClient()
         NetworkService.isAuthTokenValid { [weak self] valid in
             if valid {
                 guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }

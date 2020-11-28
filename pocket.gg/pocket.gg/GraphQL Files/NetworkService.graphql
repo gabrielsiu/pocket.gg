@@ -124,12 +124,14 @@ query PhaseGroupStandingsById($id:ID) {
         }
         sets(page: 1, perPage: 100) {
             nodes {
+                id
                 state
                 round
                 identifier
                 fullRoundText
                 displayScore
                 slots {
+                    prereqId
                     entrant {
                         name
                     }

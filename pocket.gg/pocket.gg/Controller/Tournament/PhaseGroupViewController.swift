@@ -92,7 +92,7 @@ final class PhaseGroupViewController: UIViewController {
                 complete()
                 return
             }
-            self?.phaseGroup = result[0]
+            self?.phaseGroup = result[safe: 0]
             complete()
         }
     }
@@ -121,7 +121,7 @@ final class PhaseGroupViewController: UIViewController {
             
             // TODO: Possibly slow, maybe replace with closure that returns frame size after it's done
             let bracketView = BracketView(sets: self?.phaseGroup?.matches)
-            self?.bracketScrollView.contentSize = bracketView.bounds.size
+            self?.bracketScrollView.contentSize = CGSize(width: 2000, height: 1000) //bracketView.bounds.size
             self?.bracketScrollView.addSubview(bracketView)
             
             self?.doneRequest = true
@@ -208,7 +208,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func phaseGroupMatchText(_ set: PhaseGroupSet, _ size: CGFloat) -> NSAttributedString {
-        var text = (set.fullRoundText ?? "") + " Match " + (set.identifier ?? "")
+        var text = (set.fullRoundText ?? "") + " Match " + set.identifier
         
         var winningScoreLocation: Int?
         var boldTextLength: Int?
@@ -218,7 +218,10 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
         if let entrants = set.entrants, !entrants.isEmpty {
             text += "\n"
             
-            if entrants.count == 2, let name0 = entrants[0].name, let score0 = entrants[0].score, let name1 = entrants[1].name, let score1 = entrants[1].score {
+            if entrants.count == 2, let name0 = entrants[0].name,
+                                    let score0 = entrants[0].score,
+                                    let name1 = entrants[1].name,
+                                    let score1 = entrants[1].score {
                 if let score0Num = Int(score0), let score1Num = Int(score1) {
                     winnerPresent = true
                     entrant0Won = score0Num > score1Num

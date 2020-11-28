@@ -35,9 +35,9 @@ final class SetsView: UIView {
 
             name0Label.textAlignment = .center
             name1Label.textAlignment = .center
-
-//            name0Label.text = set.entrant0?.name
-//            name1Label.text = set.entrant1?.name
+            
+            name0Label.text = set.entrants?[safe: 0]?.name
+            name1Label.text = set.entrants?[safe: 1]?.name
 
             setView.addSubview(name0Label)
             setView.addSubview(name1Label)

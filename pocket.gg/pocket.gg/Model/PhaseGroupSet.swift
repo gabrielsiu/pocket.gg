@@ -7,9 +7,11 @@
 //
 
 struct PhaseGroupSet {
+    let id: Int?
     let state: String?
-    let roundNum: Int?
-    let identifier: String?
+    let roundNum: Int
+    let identifier: String
     let fullRoundText: String?
+    let prevRoundIDs: [Int]?
     var entrants: [(name: String?, score: String?)]?
 }
