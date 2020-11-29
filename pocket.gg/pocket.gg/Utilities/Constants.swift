@@ -49,8 +49,9 @@ struct Constants {
         
         static let largeFont: CGFloat = UIFont.systemFontSize + 4.0
         
-        static let setWidth: CGFloat = 300
+        static let setWidth: CGFloat = 200
         static let setHeight: CGFloat = 50
+        static let bracketMargin: CGFloat = 50
     }
     
     // MARK: - User Defaults

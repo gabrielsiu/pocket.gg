@@ -12,6 +12,9 @@ final class BracketView: UIView {
     
     let sets: [PhaseGroupSet]?
     
+    var totalWidth: CGFloat = 0
+    var totalHeight: CGFloat = 0
+    
     // MARK: - Initialization
     
     init(sets: [PhaseGroupSet]?) {
@@ -25,27 +28,40 @@ final class BracketView: UIView {
             }
         }
         super.init(frame: .zero)
-        layoutSets()
+        setupBracketView()
+        frame = CGRect(x: 0, y: 0, width: totalWidth, height: totalHeight)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func layoutSets() {
+    // MARK: - Setup
+    
+    private func setupBracketView() {
         guard let sets = sets else { return }
         
-        for set in sets where set.roundNum > 0 {
-            print("\(set.identifier) - \(set.roundNum)")
-        }
-        
         // Winners Bracket
-        var xPosition: CGFloat = 50
-        var yPosition: CGFloat = 0
+        layoutSets(yOrigin: k.Sizes.bracketMargin, sets: sets.filter { $0.roundNum > 0 })
+        // Losers Bracket
+        layoutSets(yOrigin: totalHeight, sets: sets.filter { $0.roundNum < 0 })
+        // Other
+        layoutSets(yOrigin: totalHeight, sets: sets.filter { $0.roundNum == 0 })
+    }
+    
+    private func layoutSets(yOrigin: CGFloat, sets: [PhaseGroupSet]) {
+        guard !sets.isEmpty else { return }
+        
+        /// The x position of where the the SetView is going to be added in the BracketView
+        var xPosition = k.Sizes.bracketMargin
+        /// The y position of where the the SetView is going to be added in the BracketView
+        var yPosition = yOrigin
+        /// The round number of the previous set that was computed. Used for detecting if the current set belongs to a new round
         var prevRoundNum: Int?
         
+        /// An array describing how many sets belong to each round
         var setDistribution = [Int]()
-        for set in sets where set.roundNum > 0 {
+        for set in sets {
             if prevRoundNum == nil {
                 prevRoundNum = set.roundNum
                 setDistribution = [1]
@@ -59,15 +75,18 @@ final class BracketView: UIView {
         }
         prevRoundNum = nil
         
-        var roundIndex = 0 // Which column of sets we're on
+        /// Represents which round a particular set belongs to (Eg. If roundIndex == 0, the set belongs to the leftmost round)
+        var roundIndex = 0
+        /// The y positions and IDs of all of the sets from the previous round
         var prevRoundInfo = [(yPosition: CGFloat, id: Int?)]()
-        var tempStorage = [(yPosition: CGFloat, id: Int?)]()
+        /// The y positions and IDs of the sets in the current round. Only used when the current round has a different number of sets than the previous round
+        var currRoundInfo = [(yPosition: CGFloat, id: Int?)]()
         
-        for set in sets where set.roundNum > 0 {
-            
+        for set in sets {
             // First Set
             if prevRoundNum == nil {
-                yPosition = 50
+                addRoundLabel(at: CGPoint(x: k.Sizes.bracketMargin, y: yOrigin), text: set.fullRoundText)
+                yPosition += k.Sizes.setHeight
                 prevRoundInfo.append((yPosition: yPosition, id: set.id))
             
             // Next Round of Sets
@@ -75,67 +94,70 @@ final class BracketView: UIView {
                 xPosition += (k.Sizes.setWidth + 50)
                 roundIndex += 1
                 
-                if !tempStorage.isEmpty {
-                    prevRoundInfo = tempStorage
-                    tempStorage.removeAll()
+                if !currRoundInfo.isEmpty {
+                    prevRoundInfo = currRoundInfo
+                    currRoundInfo.removeAll()
                 }
                 
-            // Another Set in the first Round
+                addRoundLabel(at: CGPoint(x: xPosition, y: yOrigin), text: set.fullRoundText)
+                
+            // Consecutive sets in the first round
             } else if roundIndex == 0 {
                 yPosition += (k.Sizes.setHeight + 50)
                 prevRoundInfo.append((yPosition: yPosition, id: set.id))
-                
-            } else {
-                
             }
             
-            // Past 1st column, diff num of rounds
-            if roundIndex > 0, setDistribution[roundIndex] != setDistribution[roundIndex - 1] {
-                
-                // Different num of sets in this round, and this is the first set
-                if let prevRoundNum = prevRoundNum, prevRoundNum != set.roundNum {
-                    tempStorage.removeAll()
-                }
-                // Calculate y position of current set
-                
-                guard let prevRoundIDs = set.prevRoundIDs else {
-                    // TODO: Figure out what to do in this situation
-                    fatalError()
-                }
+            // Determine how to layout the sets for sets past the first round
+            if roundIndex > 0 {
+                // If the current round has a different number of sets than the previous round
+                if setDistribution[roundIndex] != setDistribution[roundIndex - 1] {
+                    guard let prevRoundIDs = set.prevRoundIDs else {
+                        // TODO: Figure out a better way of handling this situation
+                        continue
+                    }
+                        
+                    // Get the y positions of the prerequisite sets for the current set
+                    let prevYPositions = prevRoundInfo.filter { prevRoundIDs.contains($0.id ?? -1) }.map { $0.yPosition }
                     
-                // Get the y positions of the preceding sets for the current set
-                let prevYPositions = prevRoundInfo.filter { prevRoundIDs.contains($0.id ?? -1) }.map { $0.yPosition }
-                
-                switch prevYPositions.count {
-                case 1:
-                    yPosition = prevYPositions[0]
-                case 2:
-                    yPosition = floor((prevYPositions[0] + prevYPositions[1]) / 2)
-                default:
-                    fatalError()
+                    // Calculate the y position for the current set based on those of the prerequisite set(s)
+                    switch prevYPositions.count {
+                    case 1:
+                        yPosition = prevYPositions[0]
+                    case 2:
+                        yPosition = floor((prevYPositions[0] + prevYPositions[1]) / 2)
+                    default:
+                        continue
+                    }
+                    currRoundInfo.append((yPosition: yPosition, id: set.id))
+                    
+                // If the current round has the same number of sets as the previous round
+                } else {
+                    yPosition = prevRoundInfo.removeFirst().yPosition
+                    prevRoundInfo.append((yPosition: yPosition, id: set.id))
                 }
-                
-                // Store y position to the array
-                tempStorage.append((yPosition: yPosition, id: set.id))
-                
-                
-            // Same num of sets as prev round
-            } else if roundIndex > 0 {
-                yPosition = prevRoundInfo.removeFirst().yPosition
-                prevRoundInfo.append((yPosition: yPosition, id: set.id))
             }
             
-//            print("SET \(set.identifier): x: \(xPosition) y: \(yPosition)")
+            // Update the width and/or height of the entire BracketView if necessary
+            if (xPosition + k.Sizes.setWidth + 50) > totalWidth {
+                totalWidth = xPosition + k.Sizes.setWidth + 50
+            }
+            if (yPosition + k.Sizes.setHeight + 50) > totalHeight {
+                totalHeight = yPosition + k.Sizes.setHeight + 50
+            }
+            
+            // Add the set to the BracketView at the calculated position
             addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
             
             prevRoundNum = set.roundNum
         }
-        
-        // Losers Bracket
-        xPosition = 50
-        yPosition = 0
-        for set in sets where set.roundNum < 0 {
-            print("\(set.identifier) - \(set.roundNum)")
-        }
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func addRoundLabel(at point: CGPoint, text: String?) {
+        let roundLabel = UILabel(frame: CGRect(x: point.x, y: point.y, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
+        roundLabel.textAlignment = .center
+        roundLabel.text = text
+        addSubview(roundLabel)
     }
 }

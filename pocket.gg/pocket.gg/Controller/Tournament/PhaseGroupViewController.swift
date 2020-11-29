@@ -119,9 +119,9 @@ final class PhaseGroupViewController: UIViewController {
             self?.phaseGroup?.standings = result["standings"] as? [(name: String?, placement: Int?)]
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
-            // TODO: Possibly slow, maybe replace with closure that returns frame size after it's done
+            // TODO: Potentially improve performance by moving some of this work to a background thread
             let bracketView = BracketView(sets: self?.phaseGroup?.matches)
-            self?.bracketScrollView.contentSize = CGSize(width: 2000, height: 1000) //bracketView.bounds.size
+            self?.bracketScrollView.contentSize = bracketView.bounds.size
             self?.bracketScrollView.addSubview(bracketView)
             
             self?.doneRequest = true

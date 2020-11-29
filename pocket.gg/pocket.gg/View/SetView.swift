@@ -19,14 +19,15 @@ class SetView: UIView {
         super.init(frame: CGRect(x: xPos, y: yPos, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
         backgroundColor = .green
         
-        setup()
+        setupLabels()
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentSetCard)))
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setup() {
+    private func setupLabels() {
         let name0Label = UILabel()
         let name1Label = UILabel()
         
@@ -44,5 +45,9 @@ class SetView: UIView {
                                       bottom: bottomAnchor,
                                       leading: leadingAnchor,
                                       trailing: trailingAnchor)
+    }
+    
+    @objc private func presentSetCard() {
+        // TODO: Present set card
     }
 }
