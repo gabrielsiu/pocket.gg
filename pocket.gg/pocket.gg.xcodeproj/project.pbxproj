@@ -46,7 +46,6 @@
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
-		DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290E3251AD12B003D05B9 /* SetsView.swift */; };
 		DAC290F2251B854F003D05B9 /* AuthTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DACC4ADB23EA7868004A8CF3 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */; };
@@ -112,7 +111,6 @@
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
-		DAC290E3251AD12B003D05B9 /* SetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsView.swift; sourceTree = "<group>"; };
 		DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenViewController.swift; sourceTree = "<group>"; };
 		DACC4ADA23EA7868004A8CF3 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -235,7 +233,6 @@
 			isa = PBXGroup;
 			children = (
 				DA0E5D54255773B600FF6E42 /* SetView.swift */,
-				DAC290E3251AD12B003D05B9 /* SetsView.swift */,
 				DAEACF8E250AF53E002F0674 /* BracketView.swift */,
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
 				DA1C92862413780200E5BA96 /* Tournament */,
@@ -495,7 +492,6 @@
 				DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
-				DAC290E4251AD12B003D05B9 /* SetsView.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
 				DAF2A20D256B345B00580AAB /* API.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetView: UIView {
+final class SetView: UIView {
     
     let set: PhaseGroupSet
     
@@ -17,8 +17,8 @@ class SetView: UIView {
     init(set: PhaseGroupSet, xPos: CGFloat, yPos: CGFloat) {
         self.set = set
         super.init(frame: CGRect(x: xPos, y: yPos, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
-        backgroundColor = .green
         
+        setupAppearance()
         setupLabels()
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentSetCard)))
     }
@@ -27,24 +27,39 @@ class SetView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Setup
+    
+    private func setupAppearance() {
+        backgroundColor = .systemGray
+        layer.cornerRadius = k.Sizes.cornerRadius
+    }
+    
     private func setupLabels() {
+        
+        let totalStackView = UIStackView()
+        let entrantsStackView = UIStackView()
+        
         let name0Label = UILabel()
         let name1Label = UILabel()
         
         name0Label.text = set.entrants?[safe: 0]?.name
         name1Label.text = set.entrants?[safe: 1]?.name
-
-        addSubview(name0Label)
-        addSubview(name1Label)
-
-        name0Label.setEdgeConstraints(top: topAnchor,
-                                      bottom: name1Label.topAnchor,
-                                      leading: leadingAnchor,
-                                      trailing: trailingAnchor)
-        name1Label.setEdgeConstraints(top: name0Label.bottomAnchor,
-                                      bottom: bottomAnchor,
-                                      leading: leadingAnchor,
-                                      trailing: trailingAnchor)
+        
+        entrantsStackView.setup(subviews: [name0Label, name1Label], axis: .vertical, alignment: .leading)
+        entrantsStackView.distribution = .fillEqually
+        
+        let setIdentifierLabel = UILabel()
+        setIdentifierLabel.textAlignment = .center
+        setIdentifierLabel.text = set.identifier
+        
+        totalStackView.setup(subviews: [setIdentifierLabel, entrantsStackView], axis: .horizontal, spacing: 10)
+        
+        addSubview(totalStackView)
+        totalStackView.setEdgeConstraints(top: topAnchor,
+                                          bottom: bottomAnchor,
+                                          leading: leadingAnchor,
+                                          trailing: trailingAnchor,
+                                          padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
     }
     
     @objc private func presentSetCard() {
