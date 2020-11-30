@@ -95,7 +95,7 @@ final class TournamentViewController: UITableViewController {
             self?.tournament.streams = result["streams"] as? [Stream]
             self?.tournament.registration = result["registration"] as? (Bool, String)
             self?.tournament.slug = result["slug"] as? String
-            self?.tournament.contactInfo = result["contactInfo"] as? String
+            self?.tournament.contact = result["contact"] as? (String, String)
             
             self?.doneRequest = true
             self?.tableView.reloadData()
@@ -237,7 +237,7 @@ final class TournamentViewController: UITableViewController {
     
     private func contactInfoSectionCell() -> UITableViewCell {
         guard doneRequest else { return LoadingCell() }
-        guard let contactInfo = tournament.contactInfo else {
+        guard let contactInfo = tournament.contact?.info else {
             return UITableViewCell().setupDisabled("No contact info available")
         }
         let cell = UITableViewCell()
@@ -306,7 +306,10 @@ final class TournamentViewController: UITableViewController {
         case 4:
             if tournamentIsOnline && indexPath.section == 4 { fallthrough }
             tableView.deselectRow(at: indexPath, animated: true)
-            if let contactInfo = tournament.contactInfo, let url = URL(string: "mailto:\(contactInfo)") {
+            guard let contactInfoType = tournament.contact?.type else { return }
+            
+            let urlPrefix = contactInfoType == "email" ? "mailto:" : ""
+            if let contactInfo = tournament.contact?.info, let url = URL(string: "\(urlPrefix)\(contactInfo)") {
                 UIApplication.shared.open(url)
                 return
             }

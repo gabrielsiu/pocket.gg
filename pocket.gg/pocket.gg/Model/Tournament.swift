@@ -27,6 +27,6 @@ struct Tournament {
     var events: [Event]?
     var streams: [Stream]?
     var registration: (isOpen: Bool?, closeDate: String?)?
-    var contactInfo: String?
+    var contact: (info: String?, type: String?)?
     var slug: String?
 }

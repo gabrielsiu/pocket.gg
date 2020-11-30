@@ -112,7 +112,7 @@ final class NetworkService {
                           "events": events,
                           "streams": streams,
                           "registration": (tournament.isRegistrationOpen, tournament.registrationClosesAt),
-                          "contactInfo": tournament.primaryContact,
+                          "contact": (tournament.primaryContact, tournament.primaryContactType),
                           "slug": tournament.slug
                 
                 ])

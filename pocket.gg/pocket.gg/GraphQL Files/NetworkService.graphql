@@ -67,6 +67,7 @@ query TournamentDetailsById($id: ID) {
         isRegistrationOpen
         registrationClosesAt
         primaryContact
+        primaryContactType
         slug
     }
 }

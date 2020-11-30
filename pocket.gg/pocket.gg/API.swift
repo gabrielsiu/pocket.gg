@@ -609,6 +609,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         isRegistrationOpen
         registrationClosesAt
         primaryContact
+        primaryContactType
         slug
       }
     }
@@ -669,6 +670,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           GraphQLField("isRegistrationOpen", type: .scalar(Bool.self)),
           GraphQLField("registrationClosesAt", type: .scalar(String.self)),
           GraphQLField("primaryContact", type: .scalar(String.self)),
+          GraphQLField("primaryContactType", type: .scalar(String.self)),
           GraphQLField("slug", type: .scalar(String.self)),
         ]
       }
@@ -679,8 +681,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(venueName: String? = nil, lng: Double? = nil, lat: Double? = nil, events: [Event?]? = nil, streams: [Stream?]? = nil, isRegistrationOpen: Bool? = nil, registrationClosesAt: String? = nil, primaryContact: String? = nil, slug: String? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Tournament", "venueName": venueName, "lng": lng, "lat": lat, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }, "streams": streams.flatMap { (value: [Stream?]) -> [ResultMap?] in value.map { (value: Stream?) -> ResultMap? in value.flatMap { (value: Stream) -> ResultMap in value.resultMap } } }, "isRegistrationOpen": isRegistrationOpen, "registrationClosesAt": registrationClosesAt, "primaryContact": primaryContact, "slug": slug])
+      public init(venueName: String? = nil, lng: Double? = nil, lat: Double? = nil, events: [Event?]? = nil, streams: [Stream?]? = nil, isRegistrationOpen: Bool? = nil, registrationClosesAt: String? = nil, primaryContact: String? = nil, primaryContactType: String? = nil, slug: String? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Tournament", "venueName": venueName, "lng": lng, "lat": lat, "events": events.flatMap { (value: [Event?]) -> [ResultMap?] in value.map { (value: Event?) -> ResultMap? in value.flatMap { (value: Event) -> ResultMap in value.resultMap } } }, "streams": streams.flatMap { (value: [Stream?]) -> [ResultMap?] in value.map { (value: Stream?) -> ResultMap? in value.flatMap { (value: Stream) -> ResultMap in value.resultMap } } }, "isRegistrationOpen": isRegistrationOpen, "registrationClosesAt": registrationClosesAt, "primaryContact": primaryContact, "primaryContactType": primaryContactType, "slug": slug])
       }
 
       public var __typename: String {
@@ -763,6 +765,15 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "primaryContact")
+        }
+      }
+
+      public var primaryContactType: String? {
+        get {
+          return resultMap["primaryContactType"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "primaryContactType")
         }
       }
 
