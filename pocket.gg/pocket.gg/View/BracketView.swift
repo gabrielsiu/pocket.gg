@@ -60,20 +60,7 @@ final class BracketView: UIView {
         var prevRoundNum: Int?
         
         /// An array describing how many sets belong to each round
-        var setDistribution = [Int]()
-        for set in sets {
-            if prevRoundNum == nil {
-                prevRoundNum = set.roundNum
-                setDistribution = [1]
-            } else if let prevRoundNum = prevRoundNum, set.roundNum == prevRoundNum {
-                let endIndex = setDistribution.count - 1
-                setDistribution[endIndex] += 1
-            } else {
-                prevRoundNum = set.roundNum
-                setDistribution.append(1)
-            }
-        }
-        prevRoundNum = nil
+        let setDistribution = distribution(for: sets)
         
         /// Represents which round a particular set belongs to (Eg. If roundIndex == 0, the set belongs to the leftmost round)
         var roundIndex = 0
@@ -138,12 +125,7 @@ final class BracketView: UIView {
             }
             
             // Update the width and/or height of the entire BracketView if necessary
-            if (xPosition + k.Sizes.setWidth + 50) > totalWidth {
-                totalWidth = xPosition + k.Sizes.setWidth + 50
-            }
-            if (yPosition + k.Sizes.setHeight + 50) > totalHeight {
-                totalHeight = yPosition + k.Sizes.setHeight + 50
-            }
+            updateBracketViewSize(xPosition: xPosition, yPosition: yPosition)
             
             // Add the set to the BracketView at the calculated position
             addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
@@ -154,10 +136,38 @@ final class BracketView: UIView {
     
     // MARK: - Private Helpers
     
+    private func distribution(for sets: [PhaseGroupSet]) -> [Int] {
+        var setDistribution = [Int]()
+        var prevRoundNum: Int?
+        
+        for set in sets {
+            if prevRoundNum == nil {
+                prevRoundNum = set.roundNum
+                setDistribution = [1]
+            } else if let prevRoundNum = prevRoundNum, set.roundNum == prevRoundNum {
+                let endIndex = setDistribution.count - 1
+                setDistribution[endIndex] += 1
+            } else {
+                prevRoundNum = set.roundNum
+                setDistribution.append(1)
+            }
+        }
+        return setDistribution
+    }
+    
     private func addRoundLabel(at point: CGPoint, text: String?) {
         let roundLabel = UILabel(frame: CGRect(x: point.x, y: point.y, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
         roundLabel.textAlignment = .center
         roundLabel.text = text
         addSubview(roundLabel)
+    }
+    
+    private func updateBracketViewSize(xPosition: CGFloat, yPosition: CGFloat) {
+        if (xPosition + k.Sizes.setWidth + 50) > totalWidth {
+            totalWidth = xPosition + k.Sizes.setWidth + 50
+        }
+        if (yPosition + k.Sizes.setHeight + 50) > totalHeight {
+            totalHeight = yPosition + k.Sizes.setHeight + 50
+        }
     }
 }
