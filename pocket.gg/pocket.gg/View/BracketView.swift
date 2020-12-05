@@ -60,7 +60,16 @@ final class BracketView: UIView {
         var prevRoundNum: Int?
         
         /// An array describing how many sets belong to each round
-        let setDistribution = distribution(for: sets)
+        let setDistribution = getDistribution(for: sets)
+        
+        /// The most number of sets per round out of all the rounds
+        guard let max = setDistribution.max() else { return }
+        /// The roundIndex corresponding to the round with the most number of sets
+        guard let maxIndex = setDistribution.firstIndex(of: max) else { return }
+        /// A bool value describing whether or not the first round has the most number of sets compared to the other rounds
+        let firstRoundHasMostSets = max == setDistribution[0]
+        /// The y positions and IDs of the sets in the round with the most number of sets. Only used when firstRoundHasMostSets is false
+        var mostNumSetsRoundInfo = [(yPosition: CGFloat, id: Int?)]()
         
         /// Represents which round a particular set belongs to (Eg. If roundIndex == 0, the set belongs to the leftmost round)
         var roundIndex = 0
@@ -69,33 +78,46 @@ final class BracketView: UIView {
         /// The y positions and IDs of the sets in the current round. Only used when the current round has a different number of sets than the previous round
         var currRoundInfo = [(yPosition: CGFloat, id: Int?)]()
         
+        // Iterate through all of the sets
+        // If !firstRoundHasMostSets, ignore the sets before the round with the most number of sets
         for set in sets {
+            // Preparation for if we reach a new round of sets
+            if let prevRoundNum = prevRoundNum, prevRoundNum != set.roundNum {
+                xPosition += (k.Sizes.setWidth + 50)
+                roundIndex += 1
+            }
+            
+            // Upon reaching the round with the most number of sets and if !firstRoundHasMostSets, clear all info about the previous sets
+            if !firstRoundHasMostSets, roundIndex == maxIndex, set.roundNum != prevRoundNum {
+                prevRoundNum = nil
+                prevRoundInfo.removeAll()
+            }
+            
             // First Set
             if prevRoundNum == nil {
-                addRoundLabel(at: CGPoint(x: k.Sizes.bracketMargin, y: yOrigin), text: set.fullRoundText)
-                yPosition += k.Sizes.setHeight
+                addRoundLabel(at: CGPoint(x: xPosition, y: yOrigin), text: set.fullRoundText)
+                yPosition = yOrigin + k.Sizes.setHeight
                 prevRoundInfo.append((yPosition: yPosition, id: set.id))
             
             // Next Round of Sets
-            } else if let prevRoundNum = prevRoundNum, prevRoundNum != set.roundNum {
-                xPosition += (k.Sizes.setWidth + 50)
-                roundIndex += 1
-                
-                if !currRoundInfo.isEmpty {
+            } else if prevRoundNum != set.roundNum {
+                if !firstRoundHasMostSets, mostNumSetsRoundInfo.isEmpty {
+                    mostNumSetsRoundInfo = prevRoundInfo
+                } else if !currRoundInfo.isEmpty {
                     prevRoundInfo = currRoundInfo
                     currRoundInfo.removeAll()
                 }
                 
                 addRoundLabel(at: CGPoint(x: xPosition, y: yOrigin), text: set.fullRoundText)
                 
-            // Consecutive sets in the first round
-            } else if roundIndex == 0 {
+            // Consecutive sets in the round with the most number of sets
+            } else if (firstRoundHasMostSets && roundIndex == 0) || (!firstRoundHasMostSets && roundIndex == maxIndex) {
                 yPosition += (k.Sizes.setHeight + 50)
                 prevRoundInfo.append((yPosition: yPosition, id: set.id))
             }
             
             // Determine how to layout the sets for sets past the first round
-            if roundIndex > 0 {
+            if (firstRoundHasMostSets && roundIndex > 0) || (!firstRoundHasMostSets && roundIndex > maxIndex) {
                 // If the current round has a different number of sets than the previous round
                 if setDistribution[roundIndex] != setDistribution[roundIndex - 1] {
                     guard let prevRoundIDs = set.prevRoundIDs else {
@@ -128,15 +150,21 @@ final class BracketView: UIView {
             updateBracketViewSize(xPosition: xPosition, yPosition: yPosition)
             
             // Add the set to the BracketView at the calculated position
-            addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
+            if firstRoundHasMostSets || (!firstRoundHasMostSets && roundIndex >= maxIndex) {
+                addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
+            }
             
             prevRoundNum = set.roundNum
+        }
+        
+        if !mostNumSetsRoundInfo.isEmpty {
+            // TODO
         }
     }
     
     // MARK: - Private Helpers
     
-    private func distribution(for sets: [PhaseGroupSet]) -> [Int] {
+    private func getDistribution(for sets: [PhaseGroupSet]) -> [Int] {
         var setDistribution = [Int]()
         var prevRoundNum: Int?
         
