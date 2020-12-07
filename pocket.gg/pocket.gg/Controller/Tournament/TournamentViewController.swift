@@ -18,6 +18,7 @@ final class TournamentViewController: UITableViewController {
     
     var tournament: Tournament
     var doneRequest = false // TODO: Add pull-to-refresh control, setting this back to false when data is refreshed (for all applicable screens)
+    var requestSuccessful = true
     var tournamentIsOnline: Bool {
         return tournament.isOnline ?? true
     }
@@ -77,9 +78,11 @@ final class TournamentViewController: UITableViewController {
         NetworkService.getTournamentDetailsById(id: tournament.id ?? -1) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
+                self?.requestSuccessful = false
                 let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateTournamentMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
+                self?.tableView.reloadData()
                 return
             }
             
@@ -151,6 +154,9 @@ final class TournamentViewController: UITableViewController {
         case 0: return generalInfoCell
             
         case 1:
+            guard requestSuccessful else {
+                return UITableViewCell().setupDisabled("Unable to load events")
+            }
             guard !(tournament.events?.isEmpty ?? true) else {
                 return doneRequest ? UITableViewCell().setupDisabled("No events currently available") : LoadingCell()
             }
@@ -185,6 +191,9 @@ final class TournamentViewController: UITableViewController {
             }
             
         case 2:
+            guard requestSuccessful else {
+                return UITableViewCell().setupDisabled("Unable to load streams")
+            }
             guard !(tournament.streams?.isEmpty ?? true) else {
                 return doneRequest ? UITableViewCell().setupDisabled("No streams currently available") : LoadingCell()
             }
@@ -207,6 +216,9 @@ final class TournamentViewController: UITableViewController {
     // MARK: - Section-Dependent Table View Cells
     
     private func locationSectionCell(_ indexPath: IndexPath) -> UITableViewCell {
+        guard requestSuccessful else {
+            return UITableViewCell().setupDisabled("Unable to load location")
+        }
         guard doneRequest else { return LoadingCell() }
         switch indexPath.row {
         case 0:
@@ -236,6 +248,9 @@ final class TournamentViewController: UITableViewController {
     }
     
     private func contactInfoSectionCell() -> UITableViewCell {
+        guard requestSuccessful else {
+            return UITableViewCell().setupDisabled("Unable to load contact info")
+        }
         guard doneRequest else { return LoadingCell() }
         guard let contactInfo = tournament.contact?.info else {
             return UITableViewCell().setupDisabled("No contact info available")
@@ -248,6 +263,9 @@ final class TournamentViewController: UITableViewController {
     }
     
     private func registrationSectionCell() -> UITableViewCell {
+        guard requestSuccessful else {
+            return UITableViewCell().setupDisabled("Unable to load registration info")
+        }
         guard doneRequest else { return LoadingCell() }
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         let registrationOpen = tournament.registration?.isOpen ?? false
@@ -275,6 +293,7 @@ final class TournamentViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard !tournamentIsOnline else { return UITableView.automaticDimension }
+        guard doneRequest, requestSuccessful else { return UITableView.automaticDimension }
         return indexPath.section == 3 && indexPath.row == 0 ? k.Sizes.mapHeight : UITableView.automaticDimension
     }
     

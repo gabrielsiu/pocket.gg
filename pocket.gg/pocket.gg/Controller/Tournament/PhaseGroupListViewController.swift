@@ -12,6 +12,7 @@ final class PhaseGroupListViewController: UITableViewController {
     
     var phase: Phase
     var doneRequest = false
+    var requestSuccessful = true
 
     // MARK: - Initialization
     
@@ -35,19 +36,23 @@ final class PhaseGroupListViewController: UITableViewController {
     
     private func loadPhaseGroups() {
         guard let id = phase.id else {
-            self.doneRequest = true
+            doneRequest = true
+            requestSuccessful = false
             let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateBracketMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true)
+            present(alert, animated: true)
+            tableView.reloadData()
             return
         }
         
         NetworkService.getPhaseGroupsById(id: id, numPhaseGroups: phase.numPhaseGroups ?? 100) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
+                self?.requestSuccessful = false
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getBracketDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
+                self?.tableView.reloadData()
                 return
             }
             
@@ -101,6 +106,9 @@ final class PhaseGroupListViewController: UITableViewController {
             return cell
             
         case 1:
+            guard requestSuccessful else {
+                return UITableViewCell().setupDisabled("Unable to load pools")
+            }
             guard let phaseGroups = phase.phaseGroups else {
                 return doneRequest ? UITableViewCell().setupDisabled("No pools found") : LoadingCell()
             }

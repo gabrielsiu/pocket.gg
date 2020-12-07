@@ -7,7 +7,7 @@ excluded:
 cyclomatic_complexity:
   ignores_case_statements: true
 identifier_name:
-  min_length: 2
+  min_length: 1
 line_length:
   warning: 150
   ignores_comments: true

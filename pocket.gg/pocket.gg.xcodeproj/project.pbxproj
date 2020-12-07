@@ -32,6 +32,7 @@
 		DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2F5241DADB000481280 /* SubtitleCell.swift */; };
 		DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA64A2FC241DF1AA00481280 /* EventViewController.swift */; };
 		DA68B684257C9A6B00A010F3 /* SetPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68B683257C9A6B00A010F3 /* SetPathView.swift */; };
+		DA68B6AE257D322200A010F3 /* InvalidBracketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68B6AD257D322200A010F3 /* InvalidBracketView.swift */; };
 		DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6424300B0A006DB38F /* LoadingCell.swift */; };
 		DA6CBE68243039EA006DB38F /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA6CBE67243039EA006DB38F /* GRDB */; };
 		DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */; };
@@ -95,6 +96,7 @@
 		DA64A2F5241DADB000481280 /* SubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleCell.swift; sourceTree = "<group>"; };
 		DA64A2FC241DF1AA00481280 /* EventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		DA68B683257C9A6B00A010F3 /* SetPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPathView.swift; sourceTree = "<group>"; };
+		DA68B6AD257D322200A010F3 /* InvalidBracketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidBracketView.swift; sourceTree = "<group>"; };
 		DA6CBE6424300B0A006DB38F /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameDatabase.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				DA0E5D54255773B600FF6E42 /* SetView.swift */,
 				DA68B683257C9A6B00A010F3 /* SetPathView.swift */,
 				DAEACF8E250AF53E002F0674 /* BracketView.swift */,
+				DA68B6AD257D322200A010F3 /* InvalidBracketView.swift */,
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
 				DA1C92862413780200E5BA96 /* Tournament */,
 				DA7AF02324F6EC74009A00E2 /* Reusable Cells */,
@@ -478,6 +481,7 @@
 				DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */,
+				DA68B6AE257D322200A010F3 /* InvalidBracketView.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventViewController.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutViewController.swift in Sources */,

@@ -13,6 +13,7 @@ final class EventViewController: UITableViewController {
     
     var event: Event
     var doneRequest = false
+    var requestSuccessful = true
     var numTopStandings: Int {
         guard let numStandings = event.topStandings?.count else { return 1 }
         guard numStandings != 0 else { return 1 }
@@ -42,18 +43,22 @@ final class EventViewController: UITableViewController {
     
     private func loadEventDetails() {
         guard let id = event.id else {
-            self.doneRequest = true
+            doneRequest = true
+            requestSuccessful = false
             let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true)
+            present(alert, animated: true)
+            tableView.reloadData()
             return
         }
         NetworkService.getEventById(id: id) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
+                self?.requestSuccessful = false
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
+                self?.tableView.reloadData()
                 return
             }
             self?.event.phases = result["phases"] as? [Phase]
@@ -137,6 +142,9 @@ final class EventViewController: UITableViewController {
             return cell
             
         case 1:
+            guard requestSuccessful else {
+                return UITableViewCell().setupDisabled("Unable to load brackets")
+            }
             guard let phases = event.phases, phases.count != 0 else {
                 return doneRequest ? UITableViewCell().setupDisabled("No brackets found") : LoadingCell()
             }
@@ -148,6 +156,9 @@ final class EventViewController: UITableViewController {
             }
             
         case 2:
+            guard requestSuccessful else {
+                return UITableViewCell().setupDisabled("Unable to load standings")
+            }
             guard numTopStandings != 1 else {
                 return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
             }

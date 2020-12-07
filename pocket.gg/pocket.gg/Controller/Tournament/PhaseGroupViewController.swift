@@ -103,6 +103,7 @@ final class PhaseGroupViewController: UIViewController {
             let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
             self.present(alert, animated: true)
+            tableView.reloadData()
             return
         }
         
@@ -112,6 +113,7 @@ final class PhaseGroupViewController: UIViewController {
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
+                self?.tableView.reloadData()
                 return
             }
             
@@ -121,8 +123,12 @@ final class PhaseGroupViewController: UIViewController {
             
             // TODO: Potentially improve performance by moving some of this work to a background thread
             let bracketView = BracketView(sets: self?.phaseGroup?.matches)
-            self?.bracketScrollView.contentSize = bracketView.bounds.size
-            self?.bracketScrollView.addSubview(bracketView)
+            if bracketView.isValid {
+                self?.bracketScrollView.contentSize = bracketView.bounds.size
+                self?.bracketScrollView.addSubview(bracketView)
+            } else {
+                self?.showInvalidBracketView()
+            }
             
             self?.doneRequest = true
             self?.tableView.reloadData()
@@ -138,6 +144,15 @@ final class PhaseGroupViewController: UIViewController {
         if sender.selectedSegmentIndex != 2 {
             tableView.reloadData()
         }
+    }
+    
+    private func showInvalidBracketView() {
+        let invalidBracketView = InvalidBracketView()
+        bracketScrollView.addSubview(invalidBracketView)
+        invalidBracketView.setEdgeConstraints(top: bracketScrollView.safeAreaLayoutGuide.topAnchor,
+                                              bottom: bracketScrollView.safeAreaLayoutGuide.bottomAnchor,
+                                              leading: bracketScrollView.safeAreaLayoutGuide.leadingAnchor,
+                                              trailing: bracketScrollView.safeAreaLayoutGuide.trailingAnchor)
     }
 }
 

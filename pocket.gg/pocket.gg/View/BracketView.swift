@@ -20,6 +20,8 @@ final class BracketView: UIView {
     var totalWidth: CGFloat = 0
     var totalHeight: CGFloat = 0
     
+    var isValid = true
+    
     // MARK: - Initialization
     
     init(sets: [PhaseGroupSet]?) {
@@ -128,8 +130,8 @@ final class BracketView: UIView {
                 // If the current round has a different number of sets than the previous round
                 if setDistribution[roundIndex] != setDistribution[roundIndex - 1] {
                     guard let prevRoundIDs = set.prevRoundIDs else {
-                        // TODO: Figure out a better way of handling this situation
-                        continue
+                        invalidateBracketView()
+                        return
                     }
                         
                     // Get the y positions of the prerequisite sets for the current set
@@ -139,18 +141,16 @@ final class BracketView: UIView {
                     switch prevYPositions.count {
                     case 1:
                         yPosition = prevYPositions[0]
-                        addSetPathView(numPrecedingSets: 1,
-                                       xPosition: xPosition - k.Sizes.xSetSpacing,
-                                       yPosition: prevYPositions[0],
-                                       height: k.Sizes.setHeight)
+                        addSetPathView(numPrecedingSets: 1, x: xPosition - k.Sizes.xSetSpacing, y: prevYPositions[0], height: k.Sizes.setHeight)
                     case 2:
                         yPosition = floor((prevYPositions[0] + prevYPositions[1]) / 2)
                         addSetPathView(numPrecedingSets: 2,
-                                       xPosition: xPosition - k.Sizes.xSetSpacing,
-                                       yPosition: min(prevYPositions[0], prevYPositions[1]),
+                                       x: xPosition - k.Sizes.xSetSpacing,
+                                       y: min(prevYPositions[0], prevYPositions[1]),
                                        height: abs(prevYPositions[0] - prevYPositions[1]) + k.Sizes.setHeight)
                     default:
-                        continue
+                        invalidateBracketView()
+                        return
                     }
                     currRoundInfo.append(SetInfo(yPosition: yPosition, id: set.id, prevRoundIDs: set.prevRoundIDs))
                     
@@ -158,7 +158,7 @@ final class BracketView: UIView {
                 } else {
                     yPosition = prevRoundInfo.removeFirst().yPosition
                     prevRoundInfo.append(SetInfo(yPosition: yPosition, id: set.id, prevRoundIDs: set.prevRoundIDs))
-                    addSetPathView(numPrecedingSets: 1, xPosition: xPosition - k.Sizes.xSetSpacing, yPosition: yPosition, height: k.Sizes.setHeight)
+                    addSetPathView(numPrecedingSets: 1, x: xPosition - k.Sizes.xSetSpacing, y: yPosition, height: k.Sizes.setHeight)
                 }
             }
             
@@ -196,7 +196,7 @@ final class BracketView: UIView {
                 guard nextYPosition.count == 1 else { continue }
                 yPosition = nextYPosition[0]
                 
-                addSetPathView(numPrecedingSets: 1, xPosition: xPosition + k.Sizes.setWidth, yPosition: yPosition, height: k.Sizes.setHeight)
+                addSetPathView(numPrecedingSets: 1, x: xPosition + k.Sizes.setWidth, y: yPosition, height: k.Sizes.setHeight)
                 addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
                 prevRoundNum = set.roundNum
             }
@@ -231,12 +231,9 @@ final class BracketView: UIView {
         addSubview(roundLabel)
     }
     
-    private func addSetPathView(numPrecedingSets: Int, xPosition: CGFloat, yPosition: CGFloat, height: CGFloat) {
+    private func addSetPathView(numPrecedingSets: Int, x: CGFloat, y: CGFloat, height: CGFloat) {
         let setPathView = SetPathView(numPrecedingSets: numPrecedingSets)
-        setPathView.draw(CGRect(x: xPosition,
-                                y: yPosition,
-                                width: k.Sizes.xSetSpacing,
-                                height: height))
+        setPathView.draw(CGRect(x: x, y: y, width: k.Sizes.xSetSpacing, height: height))
         addSubview(setPathView)
     }
     
@@ -247,5 +244,11 @@ final class BracketView: UIView {
         if (yPosition + k.Sizes.setHeight + k.Sizes.xSetSpacing) > totalHeight {
             totalHeight = yPosition + k.Sizes.setHeight + k.Sizes.xSetSpacing
         }
+    }
+    
+    private func invalidateBracketView() {
+        isValid = false
+        subviews.forEach { $0.removeFromSuperview() }
+        frame = .zero
     }
 }
