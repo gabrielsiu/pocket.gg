@@ -10,6 +10,7 @@ import UIKit
 
 class SetPathView: UIView {
     let numPrecedingSets: Int
+    let line = CAShapeLayer()
     
     // MARK: - Initialization
     
@@ -25,7 +26,6 @@ class SetPathView: UIView {
     // MARK: - Drawing
     
     override func draw(_ rect: CGRect) {
-        let line = CAShapeLayer()
         let linePath = UIBezierPath()
         
         if numPrecedingSets == 1 {
@@ -50,9 +50,13 @@ class SetPathView: UIView {
         }
         
         line.path = linePath.cgPath
-        line.strokeColor = UIColor.black.cgColor
+        line.strokeColor = UIColor.systemGray4.cgColor
         line.lineWidth = 3
         line.lineCap = .round
         layer.addSublayer(line)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        line.strokeColor = UIColor.systemGray4.cgColor
     }
 }

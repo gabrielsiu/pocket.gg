@@ -30,7 +30,7 @@ final class SetView: UIView {
     // MARK: - Setup
     
     private func setupAppearance() {
-        backgroundColor = .systemGray
+        backgroundColor = .secondarySystemBackground
         layer.cornerRadius = k.Sizes.cornerRadius
     }
     

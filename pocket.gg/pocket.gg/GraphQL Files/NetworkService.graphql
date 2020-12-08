@@ -112,6 +112,7 @@ query PhaseGroupsById($id: ID, $perPage: Int) {
 
 query PhaseGroupStandingsById($id:ID) {
     phaseGroup(id: $id) {
+        bracketType
         progressionsOut{
             originPlacement
         }

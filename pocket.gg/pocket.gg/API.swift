@@ -1750,6 +1750,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
     query PhaseGroupStandingsById($id: ID) {
       phaseGroup(id: $id) {
         __typename
+        bracketType
         progressionsOut {
           __typename
           originPlacement
@@ -1836,6 +1837,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
       public static var selections: [GraphQLSelection] {
         return [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("bracketType", type: .scalar(BracketType.self)),
           GraphQLField("progressionsOut", type: .list(.object(ProgressionsOut.selections))),
           GraphQLField("standings", type: .object(Standing.selections)),
           GraphQLField("sets", arguments: ["page": 1, "perPage": 100], type: .object(Set.selections)),
@@ -1848,8 +1850,8 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(progressionsOut: [ProgressionsOut?]? = nil, standings: Standing? = nil, sets: Set? = nil) {
-        self.init(unsafeResultMap: ["__typename": "PhaseGroup", "progressionsOut": progressionsOut.flatMap { (value: [ProgressionsOut?]) -> [ResultMap?] in value.map { (value: ProgressionsOut?) -> ResultMap? in value.flatMap { (value: ProgressionsOut) -> ResultMap in value.resultMap } } }, "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }, "sets": sets.flatMap { (value: Set) -> ResultMap in value.resultMap }])
+      public init(bracketType: BracketType? = nil, progressionsOut: [ProgressionsOut?]? = nil, standings: Standing? = nil, sets: Set? = nil) {
+        self.init(unsafeResultMap: ["__typename": "PhaseGroup", "bracketType": bracketType, "progressionsOut": progressionsOut.flatMap { (value: [ProgressionsOut?]) -> [ResultMap?] in value.map { (value: ProgressionsOut?) -> ResultMap? in value.flatMap { (value: ProgressionsOut) -> ResultMap in value.resultMap } } }, "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }, "sets": sets.flatMap { (value: Set) -> ResultMap in value.resultMap }])
       }
 
       public var __typename: String {
@@ -1858,6 +1860,16 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      /// The bracket type of this group's phase.
+      public var bracketType: BracketType? {
+        get {
+          return resultMap["bracketType"] as? BracketType
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "bracketType")
         }
       }
 

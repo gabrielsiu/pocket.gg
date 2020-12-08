@@ -1,5 +1,5 @@
 //
-//  BracketView.swift
+//  EliminationBracketView.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-09-10.
@@ -14,12 +14,9 @@ struct SetInfo {
     let prevRoundIDs: [Int]?
 }
 
-final class BracketView: UIView {
+final class EliminationBracketView: UIView, BracketView {
     let sets: [PhaseGroupSet]?
-    
-    var totalWidth: CGFloat = 0
-    var totalHeight: CGFloat = 0
-    
+    var totalSize: CGSize = .zero
     var isValid = true
     
     // MARK: - Initialization
@@ -36,7 +33,7 @@ final class BracketView: UIView {
         }
         super.init(frame: .zero)
         setupBracketView()
-        frame = CGRect(x: 0, y: 0, width: totalWidth, height: totalHeight)
+        frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
     }
     
     required init?(coder: NSCoder) {
@@ -51,9 +48,9 @@ final class BracketView: UIView {
         // Winners Bracket
         layoutSets(yOrigin: k.Sizes.bracketMargin, sets: sets.filter { $0.roundNum > 0 })
         // Losers Bracket
-        layoutSets(yOrigin: totalHeight, sets: sets.filter { $0.roundNum < 0 })
+        layoutSets(yOrigin: totalSize.height, sets: sets.filter { $0.roundNum < 0 })
         // Other
-        layoutSets(yOrigin: totalHeight, sets: sets.filter { $0.roundNum == 0 })
+        layoutSets(yOrigin: totalSize.height, sets: sets.filter { $0.roundNum == 0 })
     }
     
     private func layoutSets(yOrigin: CGFloat, sets: [PhaseGroupSet]) {
@@ -226,8 +223,9 @@ final class BracketView: UIView {
     
     private func addRoundLabel(at point: CGPoint, text: String?) {
         let roundLabel = UILabel(frame: CGRect(x: point.x, y: point.y, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
-        roundLabel.textAlignment = .center
         roundLabel.text = text
+        roundLabel.textAlignment = .center
+        roundLabel.font = UIFont.boldSystemFont(ofSize: roundLabel.font.pointSize)
         addSubview(roundLabel)
     }
     
@@ -238,11 +236,11 @@ final class BracketView: UIView {
     }
     
     private func updateBracketViewSize(xPosition: CGFloat, yPosition: CGFloat) {
-        if (xPosition + k.Sizes.setWidth + k.Sizes.xSetSpacing) > totalWidth {
-            totalWidth = xPosition + k.Sizes.setWidth + k.Sizes.xSetSpacing
+        if (xPosition + k.Sizes.setWidth + k.Sizes.xSetSpacing) > totalSize.width {
+            totalSize.width = xPosition + k.Sizes.setWidth + k.Sizes.xSetSpacing
         }
-        if (yPosition + k.Sizes.setHeight + k.Sizes.xSetSpacing) > totalHeight {
-            totalHeight = yPosition + k.Sizes.setHeight + k.Sizes.xSetSpacing
+        if (yPosition + k.Sizes.setHeight + k.Sizes.xSetSpacing) > totalSize.height {
+            totalSize.height = yPosition + k.Sizes.setHeight + k.Sizes.xSetSpacing
         }
     }
     

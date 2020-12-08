@@ -232,7 +232,8 @@ final class NetworkService {
                     })
                 }
                 
-                complete(["progressionsOut": progressionsOut,
+                complete(["bracketType": graphQLResult.data?.phaseGroup?.bracketType?.rawValue,
+                          "progressionsOut": progressionsOut,
                           "standings": standings,
                           "sets": sets])
             }

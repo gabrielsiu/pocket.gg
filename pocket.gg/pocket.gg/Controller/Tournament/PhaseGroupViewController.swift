@@ -117,13 +117,23 @@ final class PhaseGroupViewController: UIViewController {
                 return
             }
             
+            self?.phaseGroup?.bracketType = result["bracketType"] as? String
             self?.phaseGroup?.progressionsOut = result["progressionsOut"] as? [Int]
             self?.phaseGroup?.standings = result["standings"] as? [(name: String?, placement: Int?)]
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
             // TODO: Potentially improve performance by moving some of this work to a background thread
-            let bracketView = BracketView(sets: self?.phaseGroup?.matches)
-            if bracketView.isValid {
+            var bracketView: BracketView?
+            switch self?.phaseGroup?.bracketType ?? "" {
+            case "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION":
+                bracketView = EliminationBracketView(sets: self?.phaseGroup?.matches)
+            case "ROUND_ROBIN":
+                bracketView = RoundRobinBracketView(sets: self?.phaseGroup?.matches)
+            default:
+                break
+            }
+            
+            if let bracketView = bracketView, bracketView.isValid {
                 self?.bracketScrollView.contentSize = bracketView.bounds.size
                 self?.bracketScrollView.addSubview(bracketView)
             } else {

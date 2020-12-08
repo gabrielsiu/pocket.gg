@@ -19,6 +19,7 @@ struct PhaseGroup {
     
     // On-demand data for PhaseGroupViewController
     // Query 4 - PhaseGroupStandingsById
+    var bracketType: String?
     var progressionsOut: [Int]?
     var standings: [(name: String?, placement: Int?)]?
     var matches: [PhaseGroupSet]?
