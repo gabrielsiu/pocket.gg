@@ -10,6 +10,5 @@ import UIKit
 
 protocol BracketView: UIView {
     var sets: [PhaseGroupSet]? { get }
-    var totalSize: CGSize { get }
     var isValid: Bool { get }
 }

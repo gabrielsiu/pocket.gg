@@ -120,6 +120,7 @@ query PhaseGroupStandingsById($id:ID) {
             nodes {
                 placement
                 entrant {
+                    id
                     name
                 }
             }
@@ -135,6 +136,7 @@ query PhaseGroupStandingsById($id:ID) {
                 slots {
                     prereqId
                     entrant {
+                        id
                         name
                     }
                 }

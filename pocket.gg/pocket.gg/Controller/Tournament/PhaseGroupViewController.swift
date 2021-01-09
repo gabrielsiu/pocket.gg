@@ -119,7 +119,7 @@ final class PhaseGroupViewController: UIViewController {
             
             self?.phaseGroup?.bracketType = result["bracketType"] as? String
             self?.phaseGroup?.progressionsOut = result["progressionsOut"] as? [Int]
-            self?.phaseGroup?.standings = result["standings"] as? [(name: String?, placement: Int?)]
+            self?.phaseGroup?.standings = result["standings"] as? [(entrant: Entrant?, placement: Int?)]
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
             // TODO: Potentially improve performance by moving some of this work to a background thread
@@ -128,7 +128,8 @@ final class PhaseGroupViewController: UIViewController {
             case "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION":
                 bracketView = EliminationBracketView(sets: self?.phaseGroup?.matches)
             case "ROUND_ROBIN":
-                bracketView = RoundRobinBracketView(sets: self?.phaseGroup?.matches)
+                let entrants = self?.phaseGroup?.standings?.compactMap { $0.entrant }
+                bracketView = RoundRobinBracketView(sets: self?.phaseGroup?.matches, entrants: entrants)
             default:
                 break
             }
@@ -194,7 +195,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    private func phaseGroupStandingCell(standings: [(name: String?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
+    private func phaseGroupStandingCell(standings: [(entrant: Entrant?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
             cell.selectionStyle = .none
             
@@ -207,7 +208,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
                     progressedText = "Progressed"
                 }
             }
-            if let name = standings[indexPath.row].name {
+            if let name = standings[indexPath.row].entrant?.name {
                 placementText += name
             }
             
@@ -217,7 +218,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
-    private func phaseGroupMatchCell(standings: [(name: String?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
+    private func phaseGroupMatchCell(standings: [(entrant: Entrant?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
             cell.selectionStyle = .none
             
@@ -243,9 +244,9 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
         if let entrants = set.entrants, !entrants.isEmpty {
             text += "\n"
             
-            if entrants.count == 2, let name0 = entrants[0].name,
+            if entrants.count == 2, let name0 = entrants[0].entrant?.name,
                                     let score0 = entrants[0].score,
-                                    let name1 = entrants[1].name,
+                                    let name1 = entrants[1].entrant?.name,
                                     let score1 = entrants[1].score {
                 if let score0Num = Int(score0), let score1Num = Int(score1) {
                     winnerPresent = true
@@ -272,7 +273,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
                 text += score1
                 text += " "
                 text += name1
-            } else if entrants.count == 1, let name0 = entrants[0].name {
+            } else if entrants.count == 1, let name0 = entrants[0].entrant?.name {
                 text += name0
             }
         }

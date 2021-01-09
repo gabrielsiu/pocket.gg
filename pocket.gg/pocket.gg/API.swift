@@ -1762,6 +1762,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
             placement
             entrant {
               __typename
+              id
               name
             }
           }
@@ -1781,6 +1782,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               prereqId
               entrant {
                 __typename
+                id
                 name
               }
             }
@@ -2035,6 +2037,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
             public static var selections: [GraphQLSelection] {
               return [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("id", type: .scalar(GraphQLID.self)),
                 GraphQLField("name", type: .scalar(String.self)),
               ]
             }
@@ -2045,8 +2048,8 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               self.resultMap = unsafeResultMap
             }
 
-            public init(name: String? = nil) {
-              self.init(unsafeResultMap: ["__typename": "Entrant", "name": name])
+            public init(id: GraphQLID? = nil, name: String? = nil) {
+              self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name])
             }
 
             public var __typename: String {
@@ -2055,6 +2058,15 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               }
               set {
                 resultMap.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var id: GraphQLID? {
+              get {
+                return resultMap["id"] as? GraphQLID
+              }
+              set {
+                resultMap.updateValue(newValue, forKey: "id")
               }
             }
 
@@ -2266,6 +2278,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               public static var selections: [GraphQLSelection] {
                 return [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("id", type: .scalar(GraphQLID.self)),
                   GraphQLField("name", type: .scalar(String.self)),
                 ]
               }
@@ -2276,8 +2289,8 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                 self.resultMap = unsafeResultMap
               }
 
-              public init(name: String? = nil) {
-                self.init(unsafeResultMap: ["__typename": "Entrant", "name": name])
+              public init(id: GraphQLID? = nil, name: String? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name])
               }
 
               public var __typename: String {
@@ -2286,6 +2299,15 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                 }
                 set {
                   resultMap.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              public var id: GraphQLID? {
+                get {
+                  return resultMap["id"] as? GraphQLID
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "id")
                 }
               }
 

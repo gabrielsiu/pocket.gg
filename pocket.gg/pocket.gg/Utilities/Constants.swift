@@ -36,6 +36,7 @@ struct Constants {
         static let eventCell = "eventCell"
         static let streamCell = "streamCell"
         static let value1Cell = "value1Cell"
+        static let roundRobinSetCell = "roundRobinSetCell"
     }
     
     struct Sizes {
@@ -54,6 +55,10 @@ struct Constants {
         static let setHeight: CGFloat = 50
         static let xSetSpacing: CGFloat = 50
         static let ySetSpacing: CGFloat = 50
+        
+        static let roundRobinSetWidth: CGFloat = 100
+        static let roundRobinSetHeight: CGFloat = 50
+        static let roundRobinSetMargin: CGFloat = 5
     }
     
     // MARK: - User Defaults

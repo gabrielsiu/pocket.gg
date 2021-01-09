@@ -42,8 +42,8 @@ final class SetView: UIView {
         let name0Label = UILabel()
         let name1Label = UILabel()
         
-        name0Label.text = set.entrants?[safe: 0]?.name
-        name1Label.text = set.entrants?[safe: 1]?.name
+        name0Label.text = set.entrants?[safe: 0]?.entrant?.name
+        name1Label.text = set.entrants?[safe: 1]?.entrant?.name
         
         entrantsStackView.setup(subviews: [name0Label, name1Label], axis: .vertical, alignment: .leading)
         entrantsStackView.distribution = .fillEqually

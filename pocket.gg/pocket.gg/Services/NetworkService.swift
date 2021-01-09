@@ -192,15 +192,14 @@ final class NetworkService {
                     progressionsOut = nodes.compactMap { $0?.originPlacement }
                 }
                 
-                var standings: [(name: String?, placement: Int?)]?
+                var standings: [(entrant: Entrant?, placement: Int?)]?
                 if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
-                    standings = nodes.map { (name: $0?.entrant?.name, placement: $0?.placement) }
+                    standings = nodes.map { (entrant: Entrant(id: Int($0?.entrant?.id ?? "-1"), name: $0?.entrant?.name), placement: $0?.placement) }
                 }
                 
                 var sets: [PhaseGroupSet]?
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
                     sets = nodes.map({ (set) -> PhaseGroupSet in
-                        let names = set?.slots?.compactMap { $0?.entrant?.name }
                         var phaseGroupSet = PhaseGroupSet(id: Int(set?.id ?? "-1"),
                                                           state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
                                                           roundNum: set?.round ?? 0,
@@ -212,20 +211,29 @@ final class NetworkService {
                                                           }),
                                                           entrants: nil)
                         
-                        if let displayScore = set?.displayScore, let names = names {
+                        if let displayScore = set?.displayScore, let slots = set?.slots {
                             let entrantStrings = displayScore.components(separatedBy: " - ")
-                            let entrants = entrantStrings.map { (entrantString) -> (name: String, score: String) in
-                                for name in names where entrantString.contains(name) {
-                                    guard let index = entrantString.lastIndex(of: " ") else {
-                                        return (name: entrantString, score: "")
-                                    }
-                                    return (name: name, score: String(entrantString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
-                                }
-                                return (name: entrantString, score: "")
+                            let entrants = slots.compactMap { slot -> (name: String, id: String)? in
+                                guard let name = slot?.entrant?.name else { return nil }
+                                guard let id = slot?.entrant?.id else { return nil }
+                                return (name: name, id: id)
                             }
-                            phaseGroupSet.entrants = entrants
-                        } else if let names = names {
-                            phaseGroupSet.entrants = names.map { (name: $0, score: nil) }
+                            
+                            phaseGroupSet.entrants = entrants.map {
+                                for entrantString in entrantStrings where entrantString.contains($0.name) {
+                                    guard let index = entrantString.lastIndex(of: " ") else {
+                                        return (entrant: Entrant(id: Int($0.id), name: $0.name), score: nil)
+                                    }
+                                    return (entrant: Entrant(id: Int($0.id), name: $0.name),
+                                            score: String(entrantString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
+                                }
+                                return (entrant: Entrant(id: Int($0.id), name: $0.name), score: nil)
+                            }
+                            
+                        } else {
+                            phaseGroupSet.entrants = set?.slots?.compactMap {
+                                return (entrant: Entrant(id: Int($0?.entrant?.id ?? "-1"), name: $0?.entrant?.name), score: nil)
+                            }
                         }
                         
                         return phaseGroupSet
