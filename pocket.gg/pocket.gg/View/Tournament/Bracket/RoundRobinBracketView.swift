@@ -65,27 +65,43 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: k.Identifiers.roundRobinSetCell, for: indexPath) as? RoundRobinSetCell {
             
-            if indexPath.row == 0 {
+            // Top Corners
+            if indexPath.row == 0 || indexPath.row == numEntrants + 1 {
                 cell.setupCell(type: .topCorner)
+                
+            // Top Row of Entrant Names
             } else if (1...numEntrants).contains(indexPath.row) {
                 cell.setupCell(type: .entrantName)
-                cell.showLabel(entrants[indexPath.row - 1].name ?? "")
-            } else if indexPath.row == numEntrants + 1 {
-                cell.setupCell(type: .topCorner)
+                cell.showText(entrants[indexPath.row - 1].name ?? "")
+                
+            // Left Column of Entrant Names
             } else if indexPath.row % (numEntrants + 2) == 0 {
                 cell.setupCell(type: .entrantName)
                 let entrantIndex = indexPath.row / (numEntrants + 2) - 1
-                cell.showLabel(entrants[entrantIndex].name ?? "")
+                cell.showText(entrants[entrantIndex].name ?? "")
+                
+            // Right Column of Overall Entrant Scores
             } else if (indexPath.row + 1) % (numEntrants + 2) == 0 {
                 cell.setupCell(type: .overallEntrantScore)
+                cell.showText(getOverallEntrantScoreText(index: indexPath.row))
+                
+            // Diagonal of Blanks
             } else if indexPath.row % (numEntrants + 3) == 0 {
                 cell.setupCell(type: .blank)
+                
+            // Sets
             } else {
                 let offset = indexPath.row % (entrants.count + 2)
                 let entrantIndex = (indexPath.row - offset) / (numEntrants + 2) - 1
                 // TODO: Handle case of no entrant better
-                guard let entrant0 = entrants[safe: entrantIndex] else { return cell }
-                guard let entrant1 = entrants[safe: (indexPath.row % (entrants.count + 2)) - 1] else { return cell }
+                guard let entrant0 = entrants[safe: entrantIndex],
+                      let entrant1 = entrants[safe: (indexPath.row % (entrants.count + 2)) - 1] else {
+                    cell.setupCell(type: .setScore, set: nil)
+                    cell.getColor(entrant: nil)
+                    cell.showBorderAndScore()
+                    return cell
+                }
+                
                 // TODO: Make cleaner
                 let set = sets?.first(where: { set -> Bool in
                     return set.entrants?.compactMap({ info -> Bool? in
@@ -100,7 +116,8 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
                 })
                 
                 cell.setupCell(type: .setScore, set: set)
-                cell.setupBorder(entrant: entrant0)
+                cell.getColor(entrant: entrant0)
+                cell.showBorderAndScore()
             }
             
             return cell
@@ -123,5 +140,51 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return k.Sizes.roundRobinSetMargin
+    }
+    
+    private func getOverallEntrantScoreText(index: Int) -> String {
+        let offset = index % (entrants.count + 2)
+        let entrantIndex = (index - offset) / (entrants.count + 2) - 1
+        guard let name = entrants[safe: entrantIndex]?.name else { return "" }
+        guard let sets = sets else { return "" }
+        
+        var setsWon = 0
+        var setsLost = 0
+        var gamesWon = 0
+        var gamesLost = 0
+        
+        for set in sets {
+            guard let name0 = set.entrants?[safe: 0]?.entrant?.name else { return "" }
+            guard let name1 = set.entrants?[safe: 1]?.entrant?.name else { return "" }
+            
+            guard let score0 = set.entrants?[safe: 0]?.score else { return "" }
+            guard let score1 = set.entrants?[safe: 1]?.score else { return "" }
+                 
+            if name == name0 || name == name1 {
+                if let score0Num = Int(score0), let score1Num = Int(score1) {
+                    if name == name0 {
+                        setsWon += score0Num > score1Num ? 1 : 0
+                        setsLost += score0Num < score1Num ? 1 : 0
+                        gamesWon += score0Num
+                        gamesLost += score1Num
+                    } else if name == name1 {
+                        setsWon += score0Num < score1Num ? 1 : 0
+                        setsLost += score0Num > score1Num ? 1 : 0
+                        gamesWon += score1Num
+                        gamesLost += score0Num
+                    }
+                } else if score0 == "W" || score1 == "W" {
+                    if name == name0 {
+                        setsWon += score0 == "W" ? 1 : 0
+                        setsLost += score1 == "W" ? 1 : 0
+                    } else if name == name1 {
+                        setsWon += score1 == "W" ? 1 : 0
+                        setsLost += score0 == "W" ? 1 : 0
+                    }
+                }
+            }
+        }
+        
+        return "\(setsWon) - \(setsLost)\n\(gamesWon) - \(gamesLost)"
     }
 }
