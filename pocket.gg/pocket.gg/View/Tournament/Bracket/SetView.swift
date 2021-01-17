@@ -35,34 +35,78 @@ final class SetView: UIView {
     }
     
     private func setupLabels() {
-        
-        let totalStackView = UIStackView()
+        // Entrants Stack View
         let entrantsStackView = UIStackView()
-        
         let name0Label = UILabel()
         let name1Label = UILabel()
+        let size = name0Label.font.pointSize
         
-        name0Label.text = set.entrants?[safe: 0]?.entrant?.name
-        name1Label.text = set.entrants?[safe: 1]?.entrant?.name
+        name0Label.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.entrant?.name, size: size, entrantNum: 0)
+        name1Label.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.entrant?.name, size: size, entrantNum: 1)
         
         entrantsStackView.setup(subviews: [name0Label, name1Label], axis: .vertical, alignment: .leading)
         entrantsStackView.distribution = .fillEqually
         
+        // Score Stack View
+        let scoreStackView = UIStackView()
+        let score0Label = UILabel()
+        let score1Label = UILabel()
+        
+        score0Label.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.score, size: size, entrantNum: 0, addColor: true)
+        score1Label.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.score, size: size, entrantNum: 1, addColor: true)
+        
+        scoreStackView.setup(subviews: [score0Label, score1Label], axis: .vertical, alignment: .trailing)
+        scoreStackView.distribution = .fillEqually
+        
+        // Total Stack View
+        let totalStackView = UIStackView()
         let setIdentifierLabel = UILabel()
+        
         setIdentifierLabel.textAlignment = .center
         setIdentifierLabel.text = set.identifier
         
-        totalStackView.setup(subviews: [setIdentifierLabel, entrantsStackView], axis: .horizontal, spacing: 10)
+        totalStackView.setup(subviews: [setIdentifierLabel, entrantsStackView, scoreStackView], axis: .horizontal, spacing: 10)
         
         addSubview(totalStackView)
         totalStackView.setEdgeConstraints(top: topAnchor,
                                           bottom: bottomAnchor,
                                           leading: leadingAnchor,
                                           trailing: trailingAnchor,
-                                          padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+                                          padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
     }
+    
+    // MARK: - Actions
     
     @objc private func presentSetCard() {
         // TODO: Present set card
+    }
+    
+    // MARK: - Private Helpers
+    
+    private func getAttributedText(text: String?, size: CGFloat, entrantNum: Int, addColor: Bool = false) -> NSMutableAttributedString {
+        guard let text = text else { return NSMutableAttributedString(string: "") }
+        guard let score0 = set.entrants?[safe: 0]?.score else { return NSMutableAttributedString(string: text) }
+        guard let score1 = set.entrants?[safe: 1]?.score else { return NSMutableAttributedString(string: text) }
+        
+        var attributedText = NSMutableAttributedString(string: text)
+        
+        if let score0Num = Int(score0), let score1Num = Int(score1) {
+            if (entrantNum == 0 && score0Num > score1Num) || (entrantNum == 1 && score1Num > score0Num) {
+                addAttributes(to: &attributedText, size: size, length: text.count, addColor: addColor)
+            }
+        } else if score0 == "W" || score1 == "W" {
+            if (entrantNum == 0 && score0 == "W") || (entrantNum == 1 && score1 == "W") {
+                addAttributes(to: &attributedText, size: size, length: text.count, addColor: addColor)
+            }
+        }
+        
+        return attributedText
+    }
+    
+    private func addAttributes(to text: inout NSMutableAttributedString, size: CGFloat, length: Int, addColor: Bool = false) {
+        text.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: size), range: NSRange(location: 0, length: length))
+        if addColor {
+            text.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: NSRange(location: 0, length: length))
+        }
     }
 }
