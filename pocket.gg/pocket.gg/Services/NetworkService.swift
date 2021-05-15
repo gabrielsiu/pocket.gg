@@ -19,8 +19,8 @@ final class NetworkService {
         }
     }
     
-    static func getTournamentsByVideogames(pageNum: Int, featured: Bool = true, upcoming: Bool = true, gameIDs: [Int], complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
-        ApolloService.shared.client.fetch(query: TournamentsByVideogamesQuery(perPage: 10,
+    static func getTournamentsByVideogames(perPage: Int, pageNum: Int, featured: Bool = true, upcoming: Bool = true, gameIDs: [Int], complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
+        ApolloService.shared.client.fetch(query: TournamentsByVideogamesQuery(perPage: perPage,
                                                                               pageNum: pageNum,
                                                                               videogameIds: gameIDs.map { String($0) },
                                                                               featured: featured,

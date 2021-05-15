@@ -9,7 +9,7 @@
 /// A tournament that is registered on smash.gg
 struct Tournament {
     
-    // Info needed by TournamentListViewController
+    // Info needed by MainViewController
     // Query 0 - TournamentsByVideogames
     let id: Int?
     let name: String?

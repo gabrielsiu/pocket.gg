@@ -8,8 +8,12 @@
 
 import UIKit
 
+enum ScrollableRowItemCellType {
+    case tournament
+    case viewAll
+}
+
 final class ScrollableRowItemCell: UICollectionViewCell {
-    
     var imageView: UIImageView
     var primaryLabel: UILabel
     var secondaryLabel: UILabel
@@ -22,7 +26,6 @@ final class ScrollableRowItemCell: UICollectionViewCell {
         secondaryLabel = UILabel(frame: .zero)
         super.init(frame: frame)
         setupViews()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -33,12 +36,7 @@ final class ScrollableRowItemCell: UICollectionViewCell {
     
     private func setupViews() {
         imageView.setSquareAspectRatio(sideLength: k.Sizes.tournamentCellWidth)
-        
-        primaryLabel.font = UIFont.boldSystemFont(ofSize: primaryLabel.font.pointSize)
-        primaryLabel.numberOfLines = 2
-        
         secondaryLabel.font = secondaryLabel.font.withSize(secondaryLabel.font.pointSize - 5)
-        secondaryLabel.numberOfLines = 3
         
         let spacerView = UIView(frame: .zero)
         spacerView.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical)
@@ -55,8 +53,27 @@ final class ScrollableRowItemCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func setPlaceholder(_ named: String) {
-        imageView.image = UIImage(named: named)
+    func setImage(_ name: String, for type: ScrollableRowItemCellType) {
+        switch type {
+        case .tournament:
+            imageView.image = UIImage(named: name)
+        case .viewAll:
+            let config = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
+            imageView.image = UIImage(systemName: name, withConfiguration: config)
+            imageView.tintColor = .label
+        }
+    }
+    
+    func setCellStyle(for type: ScrollableRowItemCellType) {
+        switch type {
+        case .tournament:
+            primaryLabel.font = UIFont.boldSystemFont(ofSize: primaryLabel.font.pointSize)
+            primaryLabel.numberOfLines = 2
+            secondaryLabel.numberOfLines = 3
+        case .viewAll:
+            primaryLabel.textAlignment = .center
+            primaryLabel.font = UIFont.systemFont(ofSize: primaryLabel.font.pointSize)
+        }
     }
     
     func updateView(text: String?, imageInfo: (url: String?, ratio: Double?)?, detailText: String?, newRatio: CGFloat? = nil) {

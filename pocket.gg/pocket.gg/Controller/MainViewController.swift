@@ -1,5 +1,5 @@
 //
-//  TournamentListViewController.swift
+//  MainViewController.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-01-31.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class TournamentListViewController: UITableViewController {
+final class MainViewController: UITableViewController {
     
     var tournaments = [[Tournament]]()
     var preferredGames = [VideoGame]()
@@ -55,7 +55,11 @@ final class TournamentListViewController: UITableViewController {
             let featured = i == 0
             let gameIDs = i < 2 ? gameIDs : [gameIDs[i - 2]]
             
-            NetworkService.getTournamentsByVideogames(pageNum: 1, featured: featured, upcoming: true, gameIDs: gameIDs) { [weak self] (result) in
+            NetworkService.getTournamentsByVideogames(perPage: 10,
+                                                      pageNum: 1,
+                                                      featured: featured,
+                                                      upcoming: true,
+                                                      gameIDs: gameIDs) { [weak self] (result) in
                 guard let result = result else {
                     self?.doneRequest[i] = true
                     dispatchGroup.leave()
@@ -109,21 +113,29 @@ final class TournamentListViewController: UITableViewController {
 
 // MARK: - Collection View Data Source & Delegate
 
-extension TournamentListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return doneRequest[collectionView.tag] ? tournaments[collectionView.tag].count : 0
+        guard doneRequest[collectionView.tag] else { return 0 }
+        // If at least 10 tournaments were returned, also create a cell to allow the rest of the tournaments to be viewed
+        return tournaments[collectionView.tag].count == 10 ? 11 : tournaments[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? ScrollableRowItemCell {
-            guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else {
+            guard indexPath.row < 10 else {
+                cell.setImage("square.stack", for: .viewAll)
+                cell.setCellStyle(for: .viewAll)
+                cell.updateView(text: "View All", imageInfo: nil, detailText: nil)
                 return cell
             }
-            cell.setPlaceholder("placeholder")
+            guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return cell }
             
+            cell.setImage("placeholder", for: .tournament)
+            cell.setCellStyle(for: .tournament)
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
             cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: detailText)
+            
             return cell
         }
         return UICollectionViewCell()
@@ -138,6 +150,9 @@ extension TournamentListViewController: UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.row < 10 else {
+            
+        }
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else {
             return
         }
