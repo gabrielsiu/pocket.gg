@@ -24,13 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             debugPrint("ERROR: Unable to setup database: \(error.localizedDescription)")
         }
-        
-        // Load the array of all video games
-        do {
-            videoGames = try VideoGameDatabase.getVideoGames()
-        } catch {
-            print(error)
-        }
         return true
     }
     

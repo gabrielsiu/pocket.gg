@@ -11,11 +11,13 @@
 		DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E5D54255773B600FF6E42 /* SetView.swift */; };
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
 		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
+		DA1DD9C8263C479800A1B4A9 /* ScrollableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */; };
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
 		DA2D5F2B256B389000C44EEC /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DA2D5F2A256B389000C44EEC /* Apollo */; };
 		DA2D5F31256B678300C44EEC /* ApolloService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5F30256B678300C44EEC /* ApolloService.swift */; };
+		DA3FE2C2263DFBC000593504 /* ScrollableRowItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */; };
 		DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495F24FCC6ED00BE7E0E /* Event.swift */; };
 		DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496124FCC6FC00BE7E0E /* Location.swift */; };
 		DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496324FCC72000BE7E0E /* Stream.swift */; };
@@ -59,6 +61,7 @@
 		DADBE41924074BB7005B707F /* VideoGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41824074BB7005B707F /* VideoGame.swift */; };
 		DAEACF8F250AF53E002F0674 /* EliminationBracketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF8E250AF53E002F0674 /* EliminationBracketView.swift */; };
 		DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */; };
+		DAECFB652647436000661EDA /* PreferredGamesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECFB642647436000661EDA /* PreferredGamesService.swift */; };
 		DAF2A20D256B345B00580AAB /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2A20C256B345B00580AAB /* API.swift */; };
 		DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */; };
 /* End PBXBuildFile section */
@@ -78,12 +81,14 @@
 		DA0E5D54255773B600FF6E42 /* SetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetView.swift; sourceTree = "<group>"; };
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
 		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableRowCell.swift; sourceTree = "<group>"; };
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2939DF23E7E35B00E5DB3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		DA2D5F30256B678300C44EEC /* ApolloService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloService.swift; sourceTree = "<group>"; };
+		DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableRowItemCell.swift; sourceTree = "<group>"; };
 		DA4B495F24FCC6ED00BE7E0E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA4B496124FCC6FC00BE7E0E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA4B496324FCC72000BE7E0E /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
@@ -128,6 +133,7 @@
 		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
 		DAEACF8E250AF53E002F0674 /* EliminationBracketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EliminationBracketView.swift; sourceTree = "<group>"; };
 		DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroupSet.swift; sourceTree = "<group>"; };
+		DAECFB642647436000661EDA /* PreferredGamesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredGamesService.swift; sourceTree = "<group>"; };
 		DAF2A20C256B345B00580AAB /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Setup.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,6 +203,7 @@
 				DA2D5F30256B678300C44EEC /* ApolloService.swift */,
 				DA2939D123E7D1D800E5DB3A /* NetworkService.swift */,
 				DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */,
+				DAECFB642647436000661EDA /* PreferredGamesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -258,6 +265,8 @@
 			isa = PBXGroup;
 			children = (
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
+				DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */,
+				DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */,
 				DA1C92862413780200E5BA96 /* Tournament */,
 				DA7AF02324F6EC74009A00E2 /* Reusable Cells */,
 			);
@@ -497,6 +506,7 @@
 				DA79A6312589AA7800651BB4 /* RoundRobinSetCell.swift in Sources */,
 				DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */,
 				DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */,
+				DAECFB652647436000661EDA /* PreferredGamesService.swift in Sources */,
 				DA2D5F31256B678300C44EEC /* ApolloService.swift in Sources */,
 				DADBE41924074BB7005B707F /* VideoGame.swift in Sources */,
 				DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */,
@@ -522,12 +532,14 @@
 				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* TournamentListViewController.swift in Sources */,
 				DAF2A20D256B345B00580AAB /* API.swift in Sources */,
+				DA1DD9C8263C479800A1B4A9 /* ScrollableRowCell.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */,
+				DA3FE2C2263DFBC000593504 /* ScrollableRowItemCell.swift in Sources */,
 				DA5C7D36257F3C6400CB787E /* Entrant.swift in Sources */,
 				DA5B98B0252195F800525550 /* LoadingViewController.swift in Sources */,
 				DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */,

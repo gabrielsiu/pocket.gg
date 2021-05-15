@@ -31,6 +31,7 @@ struct Constants {
     // MARK: - UI/Structure Constants
     
     struct Identifiers {
+        static let tournamentsRowCell = "tournamentsRowCell"
         static let tournamentCell = "tournamentCell"
         static let videoGameCell = "videoGameCell"
         static let eventCell = "eventCell"
@@ -40,6 +41,9 @@ struct Constants {
     }
     
     struct Sizes {
+        static let tournamentCellWidth: CGFloat = 125
+        static let tournamentCellHeight: CGFloat = 225
+        
         static let logoSize: CGFloat = 100
         static let margin: CGFloat = 16
         static let mapHeight: CGFloat = 300

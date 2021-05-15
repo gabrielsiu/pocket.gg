@@ -10,67 +10,135 @@ import UIKit
 
 final class TournamentListViewController: UITableViewController {
     
-    var tournaments = [Tournament]()
-    var doneRequest = false
+    var tournaments = [[Tournament]]()
+    var preferredGames = [VideoGame]()
+    var doneRequest = [Bool]()
+    var numSections: Int {
+        return 2 + preferredGames.count
+    }
 
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Tournaments"
-        tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.tournamentCell)
-        tableView.rowHeight = 75
+        tableView.register(ScrollableRowCell.self, forCellReuseIdentifier: k.Identifiers.tournamentsRowCell)
+        
+        tableView.rowHeight = k.Sizes.tournamentCellHeight
+        tableView.separatorColor = .clear
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refreshTournamentList), for: .valueChanged)
         
-        refreshTournamentList()
+        preferredGames = PreferredGamesService.getEnabledGames()
+        doneRequest = [Bool](repeating: false, count: numSections)
+        tournaments = [[Tournament]](repeating: [], count: numSections)
+        
+        getTournaments()
     }
     
     // MARK: - Actions
     
     @objc private func refreshTournamentList() {
-        NetworkService.getTournamentsByVideogames(pageNum: 1) { [weak self] (result) in
-            guard let result = result else {
-                self?.doneRequest = true
-                let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getTournamentsMessage, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                self?.present(alert, animated: true)
+        preferredGames = PreferredGamesService.getEnabledGames()
+        doneRequest = [Bool](repeating: false, count: numSections)
+        tournaments = [[Tournament]](repeating: [], count: numSections)
+        tableView.reloadData()
+        getTournaments()
+    }
+    
+    private func getTournaments() {
+        let dispatchGroup = DispatchGroup()
+        let gameIDs = preferredGames.map { $0.id }
+        for i in 0..<numSections {
+            dispatchGroup.enter()
+            let featured = i == 0
+            let gameIDs = i < 2 ? gameIDs : [gameIDs[i - 2]]
+            
+            NetworkService.getTournamentsByVideogames(pageNum: 1, featured: featured, upcoming: true, gameIDs: gameIDs) { [weak self] (result) in
+                guard let result = result else {
+                    self?.doneRequest[i] = true
+                    dispatchGroup.leave()
+                    return
+                }
+                self?.tournaments[i] = result
+                self?.doneRequest[i] = true
+                
+                self?.tableView.reloadSections([i], with: .automatic)
                 self?.refreshControl?.endRefreshing()
-                return
+                dispatchGroup.leave()
             }
-            self?.tournaments = result
-            self?.doneRequest = true
-            self?.tableView.reloadData()
-            self?.refreshControl?.endRefreshing()
         }
     }
     
     // MARK: - Table View Data Source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return numSections
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0: return "Featured Tournaments"
+        case 1: return "Upcoming Tournaments"
+        default:
+            guard section - 2 < preferredGames.count else { return nil }
+            return preferredGames[section - 2].name
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return doneRequest ? tournaments.count : 1
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? ScrollableRowCell else { return }
+        cell.setCollectionViewProperties(self, forSection: indexPath.section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard doneRequest else { return LoadingCell() }
-        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? SubtitleCell {
-            guard let tournament = tournaments[safe: indexPath.row] else {
-                return UITableViewCell()
-            }
-            cell.accessoryType = .disclosureIndicator
-            cell.setPlaceholder("placeholder")
-            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: tournament.date)
+        guard doneRequest[indexPath.section] else { return LoadingCell() }
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentsRowCell, for: indexPath) as? ScrollableRowCell {
             return cell
         }
+        
         return UITableViewCell()
     }
+}
 
-    // MARK: - Table View Delegate
+// MARK: - Collection View Data Source & Delegate
+
+extension TournamentListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return doneRequest[collectionView.tag] ? tournaments[collectionView.tag].count : 0
+    }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let tournament = tournaments[safe: indexPath.row] else {
-            tableView.deselectRow(at: indexPath, animated: true)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? ScrollableRowItemCell {
+            guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else {
+                return cell
+            }
+            cell.setPlaceholder("placeholder")
+            
+            var detailText = tournament.date ?? ""
+            detailText += tournament.isOnline ?? true ? "\nOnline" : ""
+            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: detailText)
+            return cell
+        }
+        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: k.Sizes.tournamentCellWidth, height: k.Sizes.tournamentCellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else {
             return
         }
         navigationController?.pushViewController(TournamentViewController(tournament), animated: true)

@@ -10,7 +10,6 @@ import UIKit
 import Apollo
 
 final class NetworkService {
-    
     static func isAuthTokenValid(complete: @escaping (_ valid: Bool) -> Void) {
         ApolloService.shared.client.fetch(query: AuthTokenTestQuery()) { result in
             switch result {
@@ -20,14 +19,10 @@ final class NetworkService {
         }
     }
     
-    static func getTournamentsByVideogames(pageNum: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
-        let videogameIDs = UserDefaults.standard.array(forKey: k.UserDefaults.preferredVideoGames) as? [Int] ?? [1]
-        let featured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
-        let upcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
-        
+    static func getTournamentsByVideogames(pageNum: Int, featured: Bool = true, upcoming: Bool = true, gameIDs: [Int], complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
         ApolloService.shared.client.fetch(query: TournamentsByVideogamesQuery(perPage: 10,
-                                                                              pageNum: 1,
-                                                                              videogameIds: videogameIDs.map { String($0) },
+                                                                              pageNum: pageNum,
+                                                                              videogameIds: gameIDs.map { String($0) },
                                                                               featured: featured,
                                                                               upcoming: upcoming)) { result in
             switch result {
@@ -62,8 +57,8 @@ final class NetworkService {
                                           name: tournament?.name,
                                           date: date,
                                           logoUrl: logo?.0,
-                                          location: Location(address: tournament?.venueAddress),
                                           isOnline: tournament?.isOnline,
+                                          location: Location(address: tournament?.venueAddress),
                                           headerImage: header)
                     })
                 }

@@ -26,6 +26,12 @@ struct VideoGameDatabase {
         }
         return videoGames
     }
+    
+    static func getVideoGamesForSearch(_ search: String) throws -> [VideoGame] {
+        guard let dbQueue = dbQueue else { throw VideoGameDatabaseError.dbNotInitialized }
+        let videoGames: [VideoGame] = try dbQueue.read { db in
+            try VideoGame.fetchAll(db, sql: "SELECT * FROM videoGame WHERE name LIKE '%\(search)%'")
+        }
+        return videoGames
+    }
 }
-
-var videoGames = [VideoGame]()

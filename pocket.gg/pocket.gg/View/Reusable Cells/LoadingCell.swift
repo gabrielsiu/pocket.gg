@@ -16,6 +16,7 @@ final class LoadingCell: UITableViewCell {
     
     init() {
         super.init(style: .default, reuseIdentifier: nil)
+        backgroundColor = .secondarySystemBackground
         selectionStyle = .none
         setupSpinner()
     }

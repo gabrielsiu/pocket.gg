@@ -15,11 +15,11 @@ struct Tournament {
     let name: String?
     let date: String?
     let logoUrl: String?
+    let isOnline: Bool?
     
     // Preloaded data for TournamentViewController
     // Query 0 - TournamentsByVideogames
     var location: Location?
-    let isOnline: Bool?
     let headerImage: (url: String?, ratio: Double?)?
     
     // On-demand data for TournamentViewController

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InvalidBracketView: UIView {
+final class InvalidBracketView: UIView {
     
     // MARK: - Initialization
     
