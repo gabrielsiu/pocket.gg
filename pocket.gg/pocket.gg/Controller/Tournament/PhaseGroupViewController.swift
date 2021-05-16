@@ -32,6 +32,7 @@ final class PhaseGroupViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         self.title = title
+//        NotificationCenter.default.addObserver(self, selector: #selector(presentSetVC(_:)), name: Notification.Name("didTapSet"), object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -122,31 +123,65 @@ final class PhaseGroupViewController: UIViewController {
             self?.phaseGroup?.standings = result["standings"] as? [(entrant: Entrant?, placement: Int?)]
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
-            // TODO: Potentially improve performance by moving some of this work to a background thread
-            var bracketView: BracketView?
-            switch self?.phaseGroup?.bracketType ?? "" {
-            case "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION":
-                bracketView = EliminationBracketView(sets: self?.phaseGroup?.matches)
-            case "ROUND_ROBIN":
-                let entrants = self?.phaseGroup?.standings?.compactMap { $0.entrant }
-                bracketView = RoundRobinBracketView(sets: self?.phaseGroup?.matches, entrants: entrants)
-            default:
-                break
-            }
-            
-            if let bracketView = bracketView, bracketView.isValid {
-                self?.bracketScrollView.contentSize = bracketView.bounds.size
-                self?.bracketScrollView.addSubview(bracketView)
+            // If 100 sets were returned, there may be more sets in total, so load the next page of sets
+            if let matches = self?.phaseGroup?.matches, matches.count == 100 {
+                self?.loadRemainingPhaseGroupSetsPages(id: id, page: 2)
             } else {
-                self?.showInvalidBracketView()
+                self?.setupBracketView()
+                self?.doneRequest = true
+                self?.tableView.reloadData()
             }
+        }
+    }
+    
+    private func loadRemainingPhaseGroupSetsPages(id: Int, page: Int) {
+        // Upper limit to prevent potential infinite recursive calls
+        guard page < 6 else { return }
+        
+        NetworkService.getPhaseGroupSets(id: id, page: page) { [weak self] (sets) in
+            guard let sets = sets, !sets.isEmpty else { return }
+            // Add the new sets to the exisiting array of sets
+            self?.phaseGroup?.matches?.append(contentsOf: sets)
             
-            self?.doneRequest = true
-            self?.tableView.reloadData()
+            // If 100 sets were returned, recursively call this function until all of the sets are loaded
+            if sets.count == 100 {
+                self?.loadRemainingPhaseGroupSetsPages(id: id, page: page + 1)
+            } else {
+                self?.setupBracketView()
+                self?.doneRequest = true
+                self?.tableView.reloadData()
+            }
+        }
+    }
+    
+    private func setupBracketView() {
+        // TODO: Potentially improve performance by moving some of this work to a background thread
+        var bracketView: BracketView?
+        switch phaseGroup?.bracketType ?? "" {
+        case "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION":
+            bracketView = EliminationBracketView(sets: phaseGroup?.matches)
+        case "ROUND_ROBIN":
+            let entrants = phaseGroup?.standings?.compactMap { $0.entrant }
+            bracketView = RoundRobinBracketView(sets: phaseGroup?.matches, entrants: entrants)
+        default:
+            break
+        }
+        
+        if let bracketView = bracketView, bracketView.isValid {
+            bracketScrollView.contentSize = bracketView.bounds.size
+            bracketScrollView.addSubview(bracketView)
+        } else {
+            showInvalidBracketView()
         }
     }
     
     // MARK: - Actions
+    
+    @objc private func presentSetVC(_ notification: Notification) {
+//        if let set = notification.object as? PhaseGroupSet {
+//            present(UINavigationController(rootViewController: SetViewController(set)), animated: true, completion: nil)
+//        }
+    }
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         tableView.isHidden = sender.selectedSegmentIndex == 2
