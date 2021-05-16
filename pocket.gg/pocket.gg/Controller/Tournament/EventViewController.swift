@@ -135,7 +135,7 @@ final class EventViewController: UITableViewController {
             attributedDetailText.addAttribute(.foregroundColor, value: dotColor, range: NSRange(location: dotPosition, length: 1))
             
             cell.selectionStyle = .none
-            cell.setPlaceholder("game-controller")
+            cell.setImage("game-controller")
             cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: nil, newRatio: k.Sizes.eventImageRatio)
             cell.detailTextLabel?.attributedText = attributedDetailText
             

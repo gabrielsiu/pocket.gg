@@ -243,6 +243,63 @@ final class NetworkService {
         }
     }
     
+    static func getPhaseGroupSets(id: Int, page: Int, complete: @escaping (_ sets: [PhaseGroupSet]?) -> Void) {
+        ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page)) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                complete(nil)
+                return
+            
+            case .success(let graphQLResult):
+                var sets: [PhaseGroupSet]?
+                if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
+                    sets = nodes.map({ (set) -> PhaseGroupSet in
+                        var phaseGroupSet = PhaseGroupSet(id: Int(set?.id ?? "-1"),
+                                                          state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
+                                                          roundNum: set?.round ?? 0,
+                                                          identifier: set?.identifier ?? "",
+                                                          fullRoundText: set?.fullRoundText,
+                                                          prevRoundIDs: set?.slots?.compactMap({ (slot) -> Int? in
+                                                            guard let prevRoundID = slot?.prereqId else { return nil }
+                                                            return Int(prevRoundID)
+                                                          }),
+                                                          entrants: nil)
+                        
+                        if let displayScore = set?.displayScore, let slots = set?.slots {
+                            let entrantStrings = displayScore.components(separatedBy: " - ")
+                            let entrants = slots.compactMap { slot -> (name: String, id: String)? in
+                                guard let name = slot?.entrant?.name else { return nil }
+                                guard let id = slot?.entrant?.id else { return nil }
+                                return (name: name, id: id)
+                            }
+                            
+                            phaseGroupSet.entrants = entrants.map {
+                                for entrantString in entrantStrings where entrantString.contains($0.name) {
+                                    guard let index = entrantString.lastIndex(of: " ") else {
+                                        return (entrant: Entrant(id: Int($0.id), name: $0.name), score: nil)
+                                    }
+                                    return (entrant: Entrant(id: Int($0.id), name: $0.name),
+                                            score: String(entrantString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
+                                }
+                                return (entrant: Entrant(id: Int($0.id), name: $0.name), score: nil)
+                            }
+                            
+                        } else {
+                            phaseGroupSet.entrants = set?.slots?.compactMap {
+                                return (entrant: Entrant(id: Int($0?.entrant?.id ?? "-1"), name: $0?.entrant?.name), score: nil)
+                            }
+                        }
+                        
+                        return phaseGroupSet
+                    })
+                }
+                
+                complete(sets)
+            }
+        }
+    }
+    
     static func getImage(imageUrl: String?, complete: @escaping (_ image: UIImage?) -> Void) {
         guard let imageUrl = imageUrl else {
             complete(nil)

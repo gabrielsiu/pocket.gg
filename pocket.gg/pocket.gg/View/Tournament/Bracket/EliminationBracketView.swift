@@ -15,7 +15,7 @@ struct SetInfo {
 }
 
 final class EliminationBracketView: UIView, BracketView {
-    let sets: [PhaseGroupSet]?
+    var sets: [PhaseGroupSet]?
     var totalSize: CGSize = .zero
     var isValid = true
     
@@ -32,6 +32,7 @@ final class EliminationBracketView: UIView, BracketView {
             }
         }
         super.init(frame: .zero)
+        resolveBracketIssues()
         setupBracketView()
         frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
     }
@@ -41,6 +42,25 @@ final class EliminationBracketView: UIView, BracketView {
     }
     
     // MARK: - Setup
+    
+    private func resolveBracketIssues() {
+        guard var sets = sets else { return }
+        var setsNeedUpdate = false
+        
+        // In the case of a grand finals reset, the 2nd grand finals may have the same roundNum as the 1st grand finals set
+        // Therefore, if a set is detected with identical previous round IDs (meaning that the set is a grand finals reset), increment the roundNum
+        for (i, set) in sets.enumerated() {
+            guard let prevRoundIDs = set.prevRoundIDs, prevRoundIDs.count == 2 else { continue }
+            if prevRoundIDs[0] == prevRoundIDs[1] {
+                sets[i].roundNum += 1
+                setsNeedUpdate = true
+            }
+        }
+        
+        if setsNeedUpdate {
+            self.sets = sets
+        }
+    }
     
     private func setupBracketView() {
         guard let sets = sets else { return }

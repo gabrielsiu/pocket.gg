@@ -75,13 +75,7 @@ final class MainViewController: UITableViewController {
         }
     }
     
-    // MARK: - Table View Data Source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return numSections
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    private func sectionHeaderTitle(for section: Int) -> String? {
         switch section {
         case 0: return "Featured Tournaments"
         case 1: return "Upcoming Tournaments"
@@ -89,6 +83,16 @@ final class MainViewController: UITableViewController {
             guard section - 2 < preferredGames.count else { return nil }
             return preferredGames[section - 2].name
         }
+    }
+    
+    // MARK: - Table View Data Source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return numSections
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionHeaderTitle(for: section)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -151,11 +155,10 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.row < 10 else {
-            
-        }
-        guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else {
+            navigationController?.pushViewController(TournamentListViewController(tournaments[collectionView.tag], title: sectionHeaderTitle(for: collectionView.tag)), animated: true)
             return
         }
+        guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }
         navigationController?.pushViewController(TournamentViewController(tournament), animated: true)
     }
 }

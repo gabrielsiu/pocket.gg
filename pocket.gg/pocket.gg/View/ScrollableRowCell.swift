@@ -49,5 +49,4 @@ final class ScrollableRowCell: UITableViewCell {
         collectionView.tag = section
         collectionView.reloadData()
     }
-
 }

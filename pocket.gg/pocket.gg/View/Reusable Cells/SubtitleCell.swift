@@ -20,6 +20,7 @@ final class SubtitleCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         contentView.clipsToBounds = true
         imageView?.contentMode = .scaleAspectFill
+        detailTextLabel?.numberOfLines = 2
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +49,7 @@ final class SubtitleCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func setPlaceholder(_ named: String) {
+    func setImage(_ named: String) {
         imageView?.image = UIImage(named: named)
     }
     

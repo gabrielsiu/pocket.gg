@@ -110,7 +110,7 @@ query PhaseGroupsById($id: ID, $perPage: Int) {
     }
 }
 
-query PhaseGroupStandingsById($id:ID) {
+query PhaseGroupStandingsById($id: ID) {
     phaseGroup(id: $id) {
         bracketType
         progressionsOut{
@@ -126,6 +126,28 @@ query PhaseGroupStandingsById($id:ID) {
             }
         }
         sets(page: 1, perPage: 100) {
+            nodes {
+                id
+                state
+                round
+                identifier
+                fullRoundText
+                displayScore
+                slots {
+                    prereqId
+                    entrant {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+}
+
+query PhaseGroupSetsPage($id: ID, $page: Int) {
+    phaseGroup(id: $id) {
+        sets(page: $page, perPage: 100) {
             nodes {
                 id
                 state

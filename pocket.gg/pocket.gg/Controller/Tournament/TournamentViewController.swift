@@ -164,7 +164,7 @@ final class TournamentViewController: UITableViewController {
                 guard let event = tournament.events?[safe: indexPath.row] else { break }
                 
                 cell.accessoryType = .disclosureIndicator
-                cell.setPlaceholder("game-controller")
+                cell.setImage("game-controller")
                 
                 var detailText = "● "
                 let dotColor: UIColor
@@ -200,7 +200,7 @@ final class TournamentViewController: UITableViewController {
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
                 guard let stream = tournament.streams?[safe: indexPath.row] else { break }
                 cell.accessoryType = .disclosureIndicator
-                cell.setPlaceholder("placeholder")
+                cell.setImage("placeholder")
                 cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game)
                 return cell
             }

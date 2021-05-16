@@ -33,6 +33,7 @@ struct Constants {
     struct Identifiers {
         static let tournamentsRowCell = "tournamentsRowCell"
         static let tournamentCell = "tournamentCell"
+        static let tournamentListCell = "tournamentListCell"
         static let videoGameCell = "videoGameCell"
         static let eventCell = "eventCell"
         static let streamCell = "streamCell"

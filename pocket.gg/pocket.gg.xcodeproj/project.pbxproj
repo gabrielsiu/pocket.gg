@@ -55,6 +55,7 @@
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
 		DAC290F2251B854F003D05B9 /* AuthTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */; };
+		DAC4257A26503C0600F523CC /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC4257926503C0600F523CC /* TournamentListViewController.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
 		DADBE41524074A38005B707F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41424074A38005B707F /* AboutViewController.swift */; };
 		DADBE41724074AC5005B707F /* AboutInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBE41624074AC5005B707F /* AboutInfoCell.swift */; };
@@ -128,6 +129,7 @@
 		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
 		DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenViewController.swift; sourceTree = "<group>"; };
+		DAC4257926503C0600F523CC /* TournamentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		DADBE41624074AC5005B707F /* AboutInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutInfoCell.swift; sourceTree = "<group>"; };
 		DADBE41824074BB7005B707F /* VideoGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGame.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				DA5B98AF252195F800525550 /* LoadingViewController.swift */,
 				DAC290F1251B854F003D05B9 /* AuthTokenViewController.swift */,
 				DA759E5A23E4FE5500D4B3E7 /* MainViewController.swift */,
+				DAC4257926503C0600F523CC /* TournamentListViewController.swift */,
 				DA64A2F9241DF04E00481280 /* Tournament */,
 				DA637A8923F500EF00268A85 /* Settings */,
 			);
@@ -512,6 +515,7 @@
 				DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */,
 				DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */,
 				DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */,
+				DAC4257A26503C0600F523CC /* TournamentListViewController.swift in Sources */,
 				DA68B6AE257D322200A010F3 /* InvalidBracketView.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA68B6C1257EB7CB00A010F3 /* BracketView.swift in Sources */,
