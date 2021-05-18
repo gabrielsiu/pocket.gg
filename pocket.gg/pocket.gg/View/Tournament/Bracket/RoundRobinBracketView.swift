@@ -11,6 +11,7 @@ import UIKit
 final class RoundRobinBracketView: UIView, BracketView {
     let sets: [PhaseGroupSet]?
     var isValid = true
+    var invalidationCause: InvalidBracketViewCause?
     
     let entrants: [Entrant]
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -24,6 +25,7 @@ final class RoundRobinBracketView: UIView, BracketView {
             self.entrants = []
             super.init(frame: .zero)
             isValid = false
+            invalidationCause = .noEntrants
             return
         }
         

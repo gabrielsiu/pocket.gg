@@ -8,7 +8,15 @@
 
 import UIKit
 
+enum InvalidBracketViewCause {
+    case noEntrants
+    case bracketNotStarted
+    case bracketLayoutError
+    case unsupportedBracketType
+}
+
 protocol BracketView: UIView {
     var sets: [PhaseGroupSet]? { get }
     var isValid: Bool { get }
+    var invalidationCause: InvalidBracketViewCause? { get }
 }

@@ -167,11 +167,15 @@ final class PhaseGroupViewController: UIViewController {
             break
         }
         
-        if let bracketView = bracketView, bracketView.isValid {
-            bracketScrollView.contentSize = bracketView.bounds.size
-            bracketScrollView.addSubview(bracketView)
+        if let bracketView = bracketView {
+            if bracketView.isValid {
+                bracketScrollView.contentSize = bracketView.bounds.size
+                bracketScrollView.addSubview(bracketView)
+            } else {
+                showInvalidBracketView(cause: bracketView.invalidationCause ?? .bracketLayoutError)
+            }
         } else {
-            showInvalidBracketView()
+            showInvalidBracketView(cause: .unsupportedBracketType, bracketType: phaseGroup?.bracketType)
         }
     }
     
@@ -192,8 +196,8 @@ final class PhaseGroupViewController: UIViewController {
         }
     }
     
-    private func showInvalidBracketView() {
-        let invalidBracketView = InvalidBracketView()
+    private func showInvalidBracketView(cause: InvalidBracketViewCause, bracketType: String? = nil) {
+        let invalidBracketView = InvalidBracketView(cause: cause, bracketType: bracketType)
         bracketScrollView.addSubview(invalidBracketView)
         invalidBracketView.setEdgeConstraints(top: bracketScrollView.safeAreaLayoutGuide.topAnchor,
                                               bottom: bracketScrollView.safeAreaLayoutGuide.bottomAnchor,

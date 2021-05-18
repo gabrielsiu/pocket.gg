@@ -18,6 +18,7 @@ final class EliminationBracketView: UIView, BracketView {
     var sets: [PhaseGroupSet]?
     var totalSize: CGSize = .zero
     var isValid = true
+    var invalidationCause: InvalidBracketViewCause?
     
     // MARK: - Initialization
     
@@ -50,6 +51,11 @@ final class EliminationBracketView: UIView, BracketView {
         // In the case of a grand finals reset, the 2nd grand finals may have the same roundNum as the 1st grand finals set
         // Therefore, if a set is detected with identical previous round IDs (meaning that the set is a grand finals reset), increment the roundNum
         for (i, set) in sets.enumerated() {
+            guard set.id != nil else {
+                invalidateBracketView(with: .bracketNotStarted)
+                self.sets = nil
+                return
+            }
             guard let prevRoundIDs = set.prevRoundIDs, prevRoundIDs.count == 2 else { continue }
             if prevRoundIDs[0] == prevRoundIDs[1] {
                 sets[i].roundNum += 1
@@ -147,7 +153,7 @@ final class EliminationBracketView: UIView, BracketView {
                 // If the current round has a different number of sets than the previous round
                 if setDistribution[roundIndex] != setDistribution[roundIndex - 1] {
                     guard let prevRoundIDs = set.prevRoundIDs else {
-                        invalidateBracketView()
+                        invalidateBracketView(with: .bracketLayoutError)
                         return
                     }
                         
@@ -166,7 +172,7 @@ final class EliminationBracketView: UIView, BracketView {
                                        y: min(prevYPositions[0], prevYPositions[1]),
                                        height: abs(prevYPositions[0] - prevYPositions[1]) + k.Sizes.setHeight)
                     default:
-                        invalidateBracketView()
+                        invalidateBracketView(with: .bracketLayoutError)
                         return
                     }
                     currRoundInfo.append(SetInfo(yPosition: yPosition, id: set.id, prevRoundIDs: set.prevRoundIDs))
@@ -264,8 +270,9 @@ final class EliminationBracketView: UIView, BracketView {
         }
     }
     
-    private func invalidateBracketView() {
+    private func invalidateBracketView(with cause: InvalidBracketViewCause) {
         isValid = false
+        invalidationCause = cause
         subviews.forEach { $0.removeFromSuperview() }
         frame = .zero
     }
