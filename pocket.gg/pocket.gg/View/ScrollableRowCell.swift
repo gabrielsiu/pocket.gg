@@ -31,7 +31,7 @@ final class ScrollableRowCell: UITableViewCell {
     // MARK: - Setup
     
     private func setupCollectionView() {
-        collectionView.backgroundColor = .secondarySystemBackground // TODO: Get the right color for dark mode (.systemBackground)
+        collectionView.backgroundColor = .systemGroupedBackground
         collectionView.register(ScrollableRowItemCell.self, forCellWithReuseIdentifier: k.Identifiers.tournamentCell)
         
         contentView.addSubview(collectionView)

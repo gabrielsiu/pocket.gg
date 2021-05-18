@@ -105,7 +105,7 @@ final class MainViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard doneRequest[indexPath.section] else { return LoadingCell() }
+        guard doneRequest[indexPath.section] else { return LoadingCell(color: .secondarySystemBackground) }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentsRowCell, for: indexPath) as? ScrollableRowCell {
             return cell
