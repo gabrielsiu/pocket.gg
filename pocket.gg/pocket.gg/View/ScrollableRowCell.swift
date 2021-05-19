@@ -15,12 +15,12 @@ final class ScrollableRowCell: UITableViewCell {
     // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .systemGroupedBackground
         setupCollectionView()
     }
     

@@ -11,10 +11,12 @@ import Apollo
 
 final class NetworkService {
     static func isAuthTokenValid(complete: @escaping (_ valid: Bool) -> Void) {
-        ApolloService.shared.client.fetch(query: AuthTokenTestQuery()) { result in
-            switch result {
-            case .failure: complete(false)
-            case .success: complete(true)
+        ApolloService.shared.client.fetch(query: AuthTokenTestQuery(), queue: .global(qos: .utility)) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure: complete(false)
+                case .success: complete(true)
+                }
             }
         }
     }
@@ -24,11 +26,12 @@ final class NetworkService {
                                                                               pageNum: pageNum,
                                                                               videogameIds: gameIDs.map { String($0) },
                                                                               featured: featured,
-                                                                              upcoming: upcoming)) { result in
+                                                                              upcoming: upcoming),
+                                          queue: .global(qos: .utility)) { result in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
-                complete(nil)
+                DispatchQueue.main.async { complete(nil) }
                 return
                 
             case .success(let graphQLResult):
@@ -63,23 +66,23 @@ final class NetworkService {
                     })
                 }
                 
-                complete(tournaments)
+                DispatchQueue.main.async { complete(tournaments) }
             }
         }
     }
     
     static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: TournamentDetailsByIdQuery(id: "\(id)")) { (result) in
+        ApolloService.shared.client.fetch(query: TournamentDetailsByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
-                complete(nil)
+                DispatchQueue.main.async { complete(nil) }
                 return
                 
             case .success(let graphQLResult):
                 guard let tournament = graphQLResult.data?.tournament else {
                     debugPrint(k.Error.tournamentFromId)
-                    complete(nil)
+                    DispatchQueue.main.async { complete(nil) }
                     return
                 }
                 
@@ -101,26 +104,28 @@ final class NetworkService {
                                   sourceUrl: stream?.streamSource?.rawValue)
                 })
                 
-                complete(["venueName": tournament.venueName,
-                          "longitude": tournament.lng,
-                          "latitude": tournament.lat,
-                          "events": events,
-                          "streams": streams,
-                          "registration": (tournament.isRegistrationOpen, tournament.registrationClosesAt),
-                          "contact": (tournament.primaryContact, tournament.primaryContactType),
-                          "slug": tournament.slug
-                
-                ])
+                DispatchQueue.main.async {
+                    complete(["venueName": tournament.venueName,
+                              "longitude": tournament.lng,
+                              "latitude": tournament.lat,
+                              "events": events,
+                              "streams": streams,
+                              "registration": (tournament.isRegistrationOpen, tournament.registrationClosesAt),
+                              "contact": (tournament.primaryContact, tournament.primaryContactType),
+                              "slug": tournament.slug
+                    
+                    ])
+                }
             }
         }
     }
     
     static func getEventById(id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: EventByIdQuery(id: "\(id)")) { (result) in
+        ApolloService.shared.client.fetch(query: EventByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
-                complete(nil)
+                DispatchQueue.main.async { complete(nil) }
                 return
                 
             case .success(let graphQLResult):
@@ -143,19 +148,22 @@ final class NetworkService {
                 
                 let slug = graphQLResult.data?.event?.slug
                 
-                complete(["phases": phases,
-                          "topStandings": topStandings,
-                          "slug": slug])
+                DispatchQueue.main.async {
+                    complete(["phases": phases,
+                              "topStandings": topStandings,
+                              "slug": slug])
+                }
             }
         }
     }
     
     static func getPhaseGroupsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [PhaseGroup]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups),
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
-                complete(nil)
+                DispatchQueue.main.async { complete(nil) }
                 return
             
             case .success(let graphQLResult):
@@ -168,17 +176,17 @@ final class NetworkService {
                     })
                 }
                 
-                complete(phaseGroups)
+                DispatchQueue.main.async { complete(phaseGroups) }
             }
         }
     }
     
     static func getPhaseGroupStandingsById(id: Int, complete: @escaping (_ standings: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupStandingsByIdQuery(id: "\(id)")) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupStandingsByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
-                complete(nil)
+                DispatchQueue.main.async { complete(nil) }
                 return
             
             case .success(let graphQLResult):
@@ -235,20 +243,22 @@ final class NetworkService {
                     })
                 }
                 
-                complete(["bracketType": graphQLResult.data?.phaseGroup?.bracketType?.rawValue,
-                          "progressionsOut": progressionsOut,
-                          "standings": standings,
-                          "sets": sets])
+                DispatchQueue.main.async {
+                    complete(["bracketType": graphQLResult.data?.phaseGroup?.bracketType?.rawValue,
+                              "progressionsOut": progressionsOut,
+                              "standings": standings,
+                              "sets": sets])
+                }
             }
         }
     }
     
     static func getPhaseGroupSets(id: Int, page: Int, complete: @escaping (_ sets: [PhaseGroupSet]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
-                complete(nil)
+                DispatchQueue.main.async { complete(nil) }
                 return
             
             case .success(let graphQLResult):
@@ -295,7 +305,7 @@ final class NetworkService {
                     })
                 }
                 
-                complete(sets)
+                DispatchQueue.main.async { complete(sets) }
             }
         }
     }

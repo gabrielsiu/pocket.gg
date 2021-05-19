@@ -16,6 +16,10 @@ final class MainViewController: UITableViewController {
     var numSections: Int {
         return 2 + preferredGames.count
     }
+    var numTournamentsToLoad: Int {
+        let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
+        return 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
+    }
 
     // MARK: - Life Cycle
     
@@ -55,17 +59,17 @@ final class MainViewController: UITableViewController {
             let featured = i == 0
             let gameIDs = i < 2 ? gameIDs : [gameIDs[i - 2]]
             
-            NetworkService.getTournamentsByVideogames(perPage: 10,
+            NetworkService.getTournamentsByVideogames(perPage: numTournamentsToLoad,
                                                       pageNum: 1,
                                                       featured: featured,
                                                       upcoming: true,
-                                                      gameIDs: gameIDs) { [weak self] (result) in
-                guard let result = result else {
+                                                      gameIDs: gameIDs) { [weak self] (tournaments) in
+                guard let tournaments = tournaments else {
                     self?.doneRequest[i] = true
                     dispatchGroup.leave()
                     return
                 }
-                self?.tournaments[i] = result
+                self?.tournaments[i] = tournaments
                 self?.doneRequest[i] = true
                 
                 self?.tableView.reloadSections([i], with: .automatic)
@@ -121,7 +125,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard doneRequest[collectionView.tag] else { return 0 }
         // If at least 10 tournaments were returned, also create a cell to allow the rest of the tournaments to be viewed
-        return tournaments[collectionView.tag].count == 10 ? 11 : tournaments[collectionView.tag].count
+        return tournaments[collectionView.tag].count > 10 ? 11 : tournaments[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -155,7 +159,13 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.row < 10 else {
-            navigationController?.pushViewController(TournamentListViewController(tournaments[collectionView.tag], title: sectionHeaderTitle(for: collectionView.tag)), animated: true)
+            let gameIDs = collectionView.tag < 2 ? preferredGames.map { $0.id } : [preferredGames.map({ $0.id })[collectionView.tag - 2]]
+            let info = GetTournamentsByVideogamesInfo(perPage: numTournamentsToLoad,
+                                                      featured: collectionView.tag == 0,
+                                                      gameIDs: gameIDs)
+            navigationController?.pushViewController(TournamentListViewController(tournaments[collectionView.tag],
+                                                                                  info: info,
+                                                                                  title: sectionHeaderTitle(for: collectionView.tag)), animated: true)
             return
         }
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }

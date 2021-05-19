@@ -8,14 +8,25 @@
 
 import UIKit
 
+struct GetTournamentsByVideogamesInfo {
+    let perPage: Int
+    let featured: Bool
+    let gameIDs: [Int]
+}
+
 final class TournamentListViewController: UITableViewController {
     
     var tournaments = [Tournament]()
+    let info: GetTournamentsByVideogamesInfo
+    var currentTournamentsPage = 1
+    var doneRequest = true
+    var noMoreTournaments = false
     
     // MARK: - Initialization
     
-    init(_ tournaments: [Tournament], title: String?) {
+    init(_ tournaments: [Tournament], info: GetTournamentsByVideogamesInfo, title: String?) {
         self.tournaments = tournaments
+        self.info = info
         super.init(style: .plain)
         self.title = title
     }
@@ -24,13 +35,57 @@ final class TournamentListViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("TournamentListViewController deinit")
+        tournaments.removeAll()
+    }
+    
+    // MARK: - Additional Tournament Loading
+    
+    private func loadMoreTournaments() {
+        guard doneRequest else { return }
+        guard !noMoreTournaments else { return }
+        
+        currentTournamentsPage += 1
+        doneRequest = false
+        
+        NetworkService.getTournamentsByVideogames(perPage: info.perPage,
+                                                  pageNum: currentTournamentsPage,
+                                                  featured: info.featured,
+                                                  upcoming: true,
+                                                  gameIDs: info.gameIDs) { [weak self] (tournaments) in
+            guard let tournaments = tournaments else {
+                self?.doneRequest = true
+                // TODO: Make error popup
+                return
+            }
+            
+            // If no tournaments than expected were returned, then there are no more tournaments to load
+            guard !tournaments.isEmpty else {
+                self?.doneRequest = true
+                self?.noMoreTournaments = true
+                return
+            }
+            
+            self?.tournaments.append(contentsOf: tournaments)
+            self?.doneRequest = true
+            self?.tableView.reloadData()
+            
+            // If less tournaments than expected were returned, then there are no more tournaments to load
+            guard let self = self else { return }
+            if tournaments.count < self.info.perPage {
+                self.noMoreTournaments = true
+            }
+        }
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.tournamentListCell)
-        tableView.rowHeight = 75
+        tableView.rowHeight = k.Sizes.tournamentListCellHeight
     }
     
     // MARK: - Table View Data Source
@@ -39,6 +94,11 @@ final class TournamentListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // If we are approaching the end of the list, load more tournaments
+        if indexPath.row == tournaments.count - 3 {
+            loadMoreTournaments()
+        }
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentListCell, for: indexPath) as? SubtitleCell {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()

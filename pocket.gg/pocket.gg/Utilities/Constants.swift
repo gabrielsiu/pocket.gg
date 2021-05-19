@@ -45,6 +45,8 @@ struct Constants {
         static let tournamentCellWidth: CGFloat = 125
         static let tournamentCellHeight: CGFloat = 225
         
+        static let tournamentListCellHeight: CGFloat = 75
+        
         static let logoSize: CGFloat = 100
         static let margin: CGFloat = 16
         static let mapHeight: CGFloat = 300
