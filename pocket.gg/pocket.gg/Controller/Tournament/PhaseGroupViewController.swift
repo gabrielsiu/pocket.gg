@@ -15,7 +15,9 @@ final class PhaseGroupViewController: UIViewController {
     var doneRequest = false
     let phaseGroupViewControl: UISegmentedControl
     let tableView: UITableView
+    
     let bracketScrollView: UIScrollView
+    var bracketView: BracketView?
     
     // MARK: - Initialization
     
@@ -32,6 +34,11 @@ final class PhaseGroupViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         self.title = title
+        
+        bracketScrollView.delegate = self
+        bracketScrollView.maximumZoomScale = 2
+        bracketScrollView.minimumZoomScale = 0.5
+        
 //        NotificationCenter.default.addObserver(self, selector: #selector(presentSetVC(_:)), name: Notification.Name("didTapSet"), object: nil)
     }
     
@@ -72,7 +79,7 @@ final class PhaseGroupViewController: UIViewController {
                                      leading: view.leadingAnchor,
                                      trailing: view.trailingAnchor)
         bracketScrollView.setEdgeConstraints(top: phaseGroupViewControl.bottomAnchor,
-                                             bottom: view.bottomAnchor,
+                                             bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                              leading: view.leadingAnchor,
                                              trailing: view.trailingAnchor)
         
@@ -156,7 +163,6 @@ final class PhaseGroupViewController: UIViewController {
     
     private func setupBracketView() {
         // TODO: Potentially improve performance by moving some of this work to a background thread
-        var bracketView: BracketView?
         switch phaseGroup?.bracketType ?? "" {
         case "SINGLE_ELIMINATION", "DOUBLE_ELIMINATION":
             bracketView = EliminationBracketView(sets: phaseGroup?.matches)
@@ -328,5 +334,13 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return phaseGroupViewControl.selectedSegmentIndex == 0 ? UITableView.automaticDimension : 60
+    }
+}
+
+// MARK: - Scroll View Delegate
+
+extension PhaseGroupViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return bracketView
     }
 }
