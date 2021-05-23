@@ -10,17 +10,30 @@ import UIKit
 
 final class MainViewController: UITableViewController {
     
-    var tournaments = [[Tournament]]()
-    var preferredGames = [VideoGame]()
-    var doneRequest = [Bool]()
+    var tournaments: [[Tournament]]
+    var preferredGames: [VideoGame]
+    var doneRequest: [Bool]
+    let numTournamentsToLoad: Int
     var numSections: Int {
         return 2 + preferredGames.count
     }
-    var numTournamentsToLoad: Int {
+    
+    // MARK: - Initialization
+    
+    override init(style: UITableView.Style) {
+        tournaments = []
+        preferredGames = []
+        doneRequest = []
         let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
-        return 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
+        numTournamentsToLoad = 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
+        
+        super.init(style: .grouped)
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -163,9 +176,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             let info = GetTournamentsByVideogamesInfo(perPage: numTournamentsToLoad,
                                                       featured: collectionView.tag == 0,
                                                       gameIDs: gameIDs)
-            navigationController?.pushViewController(TournamentListViewController(tournaments[collectionView.tag],
-                                                                                  info: info,
-                                                                                  title: sectionHeaderTitle(for: collectionView.tag)), animated: true)
+            navigationController?.pushViewController(ViewAllTournamentsVC(tournaments[collectionView.tag],
+                                                                          info: info,
+                                                                          title: sectionHeaderTitle(for: collectionView.tag)), animated: true)
             return
         }
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }

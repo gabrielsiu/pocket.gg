@@ -71,6 +71,55 @@ final class NetworkService {
         }
     }
     
+    static func searchForTournaments(_ search: String?, gameIDs: [Int], perPage: Int, page: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
+        ApolloService.shared.client.fetch(query: SearchForTournamentsQuery(search: search,
+                                                                           videogameIds: gameIDs.map { String($0) },
+                                                                           perPage: perPage,
+                                                                           page: page),
+                                          queue: .global(qos: .utility)) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                DispatchQueue.main.async { complete(nil) }
+                return
+                
+            case .success(let graphQLResult):
+                var tournaments: [Tournament]?
+                if let nodes = graphQLResult.data?.tournaments?.nodes {
+                    tournaments = nodes.map({ (tournament) -> Tournament in
+                        let start = DateFormatter.shared.dateFromTimestamp(tournament?.startAt)
+                        let end = DateFormatter.shared.dateFromTimestamp(tournament?.endAt)
+                        let date = start == end ? start : "\(start) - \(end)"
+                        
+                        let logo = tournament?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
+                            guard let url = image?.url else { return smallestImage }
+                            guard let ratio = image?.ratio else { return smallestImage }
+                            if ratio < smallestImage.1 { return (url, ratio) }
+                            return smallestImage
+                        })
+                        
+                        let header = tournament?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
+                            guard let url = image?.url else { return widestImage }
+                            guard let ratio = image?.ratio else { return widestImage }
+                            if ratio > widestImage.1 { return (url, ratio) }
+                            return widestImage
+                        })
+                        
+                        return Tournament(id: Int(tournament?.id ?? "-1"),
+                                          name: tournament?.name,
+                                          date: date,
+                                          logoUrl: logo?.0,
+                                          isOnline: tournament?.isOnline,
+                                          location: Location(address: tournament?.venueAddress),
+                                          headerImage: header)
+                    })
+                }
+                
+                DispatchQueue.main.async { complete(tournaments) }
+            }
+        }
+    }
+    
     static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
         ApolloService.shared.client.fetch(query: TournamentDetailsByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {

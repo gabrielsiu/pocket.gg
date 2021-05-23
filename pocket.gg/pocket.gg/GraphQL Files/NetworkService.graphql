@@ -30,6 +30,31 @@ query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID],
     }
 }
 
+query SearchForTournaments($search: String, $videogameIds: [ID], $perPage: Int, $page: Int) {
+    tournaments(query: {
+        perPage: $perPage
+        page: $page
+        sortBy: "startAt asc"
+        filter: {
+            name: $search
+            videogameIds: $videogameIds
+        }
+    }) {
+        nodes {
+            id
+            name
+            startAt
+            endAt
+            venueAddress
+            isOnline
+            images {
+                url
+                ratio
+            }
+        }
+    }
+}
+
 query TournamentDetailsById($id: ID) {
     tournament(id: $id) {
         venueName
