@@ -54,18 +54,6 @@ final class TournamentViewController: UITableViewController {
         locationCell?.updateImageForOrientation()
     }
     
-    private func updateRecentlyViewedTournaments(_ tournament: Tournament) {
-        var recentTournaments = [Tournament]()
-        if let data = UserDefaults.standard.data(forKey: k.UserDefaults.recentlyViewedTournaments) {
-            do {
-                recentTournaments = try PropertyListDecoder().decode([Tournament].self, from: data)
-            } catch {
-                print(error.localizedDescription)
-
-            }
-        }
-    }
-    
     // MARK: - UI Setup
     
     private func setupHeaderImageView() {

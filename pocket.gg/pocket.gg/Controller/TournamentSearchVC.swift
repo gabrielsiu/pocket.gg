@@ -42,7 +42,7 @@ final class TournamentSearchVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return recentSearches.count
+            return recentSearches.count == 0 ? 1 : recentSearches.count
         case 1: return 1
         default: return 0
         }
@@ -50,7 +50,11 @@ final class TournamentSearchVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case 0: return UITableViewCell().setupActive(textColor: .label, text: recentSearches[indexPath.row])
+        case 0:
+            guard !recentSearches.isEmpty else {
+                return UITableViewCell().setupDisabled("No recent searches")
+            }
+            return UITableViewCell().setupActive(textColor: .label, text: recentSearches[indexPath.row])
         case 1:
             let cell = UITableViewCell()
             cell.textLabel?.textColor = .systemRed
@@ -61,7 +65,7 @@ final class TournamentSearchVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return searchBar.isFirstResponder ? section == 0 ? "Recent Searches" : nil : "Recently Viewed Tournaments"
+        return section == 0 ? searchBar.isFirstResponder ? "Recent Searches" : "Recently Viewed Tournaments" : nil
     }
     
     // MARK: - Table View Delegate
@@ -105,10 +109,18 @@ extension TournamentSearchVC: UISearchBarDelegate {
         let preferredGameIDs = PreferredGamesService.getEnabledGames().map { $0.id }
         navigationController?.pushViewController(TournamentSearchResultsVC(searchTerm: text, preferredGameIDs: preferredGameIDs), animated: true)
         
-        if recentSearches.count >= 5 {
-            recentSearches.removeLast()
+        // If the search term is already present, just move it to the front of the array
+        if let index = recentSearches.firstIndex(of: text) {
+            recentSearches.remove(at: index)
+            recentSearches.insert(text, at: 0)
+        } else {
+            // Assert a maximum of 5 saved search terms
+            if recentSearches.count >= 5 {
+                recentSearches.removeLast()
+            }
+            recentSearches.insert(text, at: 0)
         }
-        recentSearches.insert(text, at: 0)
+        
         tableView.reloadData()
         UserDefaults.standard.setValue(recentSearches, forKey: k.UserDefaults.recentSearches)
     }
