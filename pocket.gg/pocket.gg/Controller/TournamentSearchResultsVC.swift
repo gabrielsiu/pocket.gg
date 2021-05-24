@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class TournamentSearchResultsVC: TournamentListViewController {
+final class TournamentSearchResultsVC: TournamentListVC {
     
     var searchTerm: String?
     var preferredGameIDs: [Int]

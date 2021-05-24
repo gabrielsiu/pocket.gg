@@ -1,5 +1,5 @@
 //
-//  VideoGamesViewController.swift
+//  VideoGamesVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-02-12.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class VideoGamesViewController: UITableViewController {
+final class VideoGamesVC: UITableViewController {
     var displayedGames: [VideoGame]
     var enabledGames: [VideoGame]
     var enabledGameIDs: Set<Int>
@@ -132,7 +132,7 @@ final class VideoGamesViewController: UITableViewController {
 
 // MARK: - Search Bar Delegate
 
-extension VideoGamesViewController: UISearchBarDelegate {
+extension VideoGamesVC: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if !displayedGames.isEmpty {
             displayedGames.removeAll()

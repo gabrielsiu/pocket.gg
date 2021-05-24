@@ -1,5 +1,5 @@
 //
-//  AuthTokenViewController.swift
+//  AuthTokenVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-09-23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class AuthTokenViewController: UIViewController {
+final class AuthTokenVC: UIViewController {
     
     var stackView = UIStackView(frame: .zero)
     let authTokenField = UITextField(frame: .zero)
@@ -28,7 +28,7 @@ final class AuthTokenViewController: UIViewController {
     }
     
     deinit {
-        print("AuthTokenViewController deinit")
+        print("AuthTokenVC deinit")
     }
     
     // MARK: - Setup
@@ -92,9 +92,9 @@ final class AuthTokenViewController: UIViewController {
                 let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
                                    UITabBarItem(tabBarSystemItem: .search, tag: 1),
                                    UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 2)]
-                let tabBarVCs = [UINavigationController(rootViewController: MainViewController(style: .grouped)),
+                let tabBarVCs = [UINavigationController(rootViewController: MainVC(style: .grouped)),
                                  UINavigationController(rootViewController: TournamentSearchVC()),
-                                 UINavigationController(rootViewController: SettingsViewController(style: .insetGrouped))]
+                                 UINavigationController(rootViewController: SettingsVC(style: .insetGrouped))]
                 let tabBarController = UITabBarController()
                 tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
                     navController.navigationBar.prefersLargeTitles = true

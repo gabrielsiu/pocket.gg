@@ -1,5 +1,5 @@
 //
-//  EventViewController.swift
+//  EventVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-03-15.
@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-final class EventViewController: UITableViewController {
+final class EventVC: UITableViewController {
     
     var event: Event
     var doneRequest = false
@@ -213,10 +213,10 @@ final class EventViewController: UITableViewController {
             let numPhaseGroups = phase.numPhaseGroups ?? 1
             if numPhaseGroups > 1 {
                 // If there are multiple phase groups, then proceed to PhaseGroupListViewController as normal
-                navigationController?.pushViewController(PhaseGroupListViewController(phase: phase), animated: true)
+                navigationController?.pushViewController(PhaseGroupListVC(phase: phase), animated: true)
             } else if numPhaseGroups == 1 {
-                // If there is only 1 phase group, jump straight to PhaseGroupViewController. The singular phase group's ID will be obtained using the phase's ID
-                navigationController?.pushViewController(PhaseGroupViewController(nil, phase.id ?? nil, title: phase.name), animated: true)
+                // If there is only 1 phase group, jump straight to PhaseGroupVC. The singular phase group's ID will be obtained using the phase's ID
+                navigationController?.pushViewController(PhaseGroupVC(nil, phase.id ?? nil, title: phase.name), animated: true)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)
             }

@@ -1,5 +1,5 @@
 //
-//  PhaseGroupViewController.swift
+//  PhaseGroupVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-08-26.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PhaseGroupViewController: UIViewController {
+final class PhaseGroupVC: UIViewController {
     
     var phaseGroup: PhaseGroup?
     var phaseID: Int?
@@ -214,8 +214,7 @@ final class PhaseGroupViewController: UIViewController {
 
 // MARK: - Table View Data Source & Delegate
 
-extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
-
+extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -339,7 +338,7 @@ extension PhaseGroupViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Scroll View Delegate
 
-extension PhaseGroupViewController: UIScrollViewDelegate {
+extension PhaseGroupVC: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return bracketView
     }

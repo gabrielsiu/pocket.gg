@@ -14,7 +14,7 @@ struct GetTournamentsByVideogamesInfo {
     let gameIDs: [Int]
 }
 
-final class ViewAllTournamentsVC: TournamentListViewController {
+final class ViewAllTournamentsVC: TournamentListVC {
     
     let info: GetTournamentsByVideogamesInfo
     var currentTournamentsPage: Int

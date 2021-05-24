@@ -20,7 +20,6 @@ final class SubtitleCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         contentView.clipsToBounds = true
         imageView?.contentMode = .scaleAspectFill
-        detailTextLabel?.numberOfLines = 2
     }
     
     required init?(coder: NSCoder) {

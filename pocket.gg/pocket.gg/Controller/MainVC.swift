@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  MainVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-01-31.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class MainViewController: UITableViewController {
+final class MainVC: UITableViewController {
     
     var tournaments: [[Tournament]]
     var preferredGames: [VideoGame]
@@ -134,7 +134,7 @@ final class MainViewController: UITableViewController {
 
 // MARK: - Collection View Data Source & Delegate
 
-extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard doneRequest[collectionView.tag] else { return 0 }
         // If at least 10 tournaments were returned, also create a cell to allow the rest of the tournaments to be viewed
@@ -182,6 +182,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
             return
         }
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }
-        navigationController?.pushViewController(TournamentViewController(tournament), animated: true)
+        navigationController?.pushViewController(TournamentVC(tournament), animated: true)
     }
 }

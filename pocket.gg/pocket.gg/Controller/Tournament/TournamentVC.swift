@@ -1,5 +1,5 @@
 //
-//  TournamentViewController.swift
+//  TournamentVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-02-08.
@@ -10,7 +10,7 @@ import UIKit
 import SafariServices
 import MapKit
 
-final class TournamentViewController: UITableViewController {
+final class TournamentVC: UITableViewController {
     
     var headerImageView: UIImageView?
     let generalInfoCell: TournamentGeneralInfoCell
@@ -304,7 +304,7 @@ final class TournamentViewController: UITableViewController {
                 tableView.deselectRow(at: indexPath, animated: true)
                 return
             }
-            navigationController?.pushViewController(EventViewController(event), animated: true)
+            navigationController?.pushViewController(EventVC(event), animated: true)
             
         case 2:
             presentStreamAlert(indexPath)

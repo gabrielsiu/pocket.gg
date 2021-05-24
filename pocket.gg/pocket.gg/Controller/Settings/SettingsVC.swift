@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.swift
+//  SettingsVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-02-12.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SettingsViewController: UITableViewController {
+final class SettingsVC: UITableViewController {
 
     var featuredCell = UITableViewCell()
     var upcomingCell = UITableViewCell()
@@ -101,9 +101,9 @@ final class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            navigationController?.pushViewController(VideoGamesViewController(), animated: true)
+            navigationController?.pushViewController(VideoGamesVC(), animated: true)
         case 2:
-            navigationController?.pushViewController(AboutViewController(style: .insetGrouped), animated: true)
+            navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
         default: return
         }
     }

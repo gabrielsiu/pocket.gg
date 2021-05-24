@@ -11,19 +11,19 @@
 /// Eg: R1 Pools, R2 Pools, Top 64, Top 8, etc.
 struct Phase {
     
-    // Info needed by EventViewController
+    // Info needed by EventVC
     // Query 2 - EventById
     let id: Int?
     let name: String?
     let state: String?
     
-    // Preloaded data for PhaseGroupListViewController
+    // Preloaded data for PhaseGroupListVC
     // Query 2 - EventById
     let numPhaseGroups: Int?
     let numEntrants: Int?
     let bracketType: String?
     
-    // On-demand data for PhaseGroupListViewController
+    // On-demand data for PhaseGroupListVC
     // Query 3 - PhaseGroupsById
     var phaseGroups: [PhaseGroup]?
 }

@@ -1,5 +1,5 @@
 //
-//  AboutViewController.swift
+//  AboutVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-02-26.
@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-final class AboutViewController: UITableViewController {
+final class AboutVC: UITableViewController {
 
     var aboutInfoCell = AboutInfoCell()
     var smashGgAPICell = UITableViewCell()

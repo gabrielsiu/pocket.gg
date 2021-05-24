@@ -1,5 +1,5 @@
 //
-//  LoadingViewController.swift
+//  LoadingVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-09-27.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class LoadingViewController: UIViewController {
+final class LoadingVC: UIViewController {
     
     let spinner = UIActivityIndicatorView(style: .large)
     

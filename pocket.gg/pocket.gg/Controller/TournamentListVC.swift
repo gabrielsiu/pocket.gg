@@ -1,5 +1,5 @@
 //
-//  TournamentListViewController.swift
+//  TournamentListVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2021-05-15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TournamentListViewController: UITableViewController {
+class TournamentListVC: UITableViewController {
     
     var tournaments = [Tournament]()
     var doneRequest: Bool
@@ -63,6 +63,7 @@ class TournamentListViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
             cell.setBackgroundColor(.systemGroupedBackground)
             cell.setImage("placeholder")
+            cell.detailTextLabel?.numberOfLines = 2
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
             cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: detailText)
@@ -78,6 +79,6 @@ class TournamentListViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        navigationController?.pushViewController(TournamentViewController(tournament), animated: true)
+        navigationController?.pushViewController(TournamentVC(tournament), animated: true)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  PhaseGroupListViewController.swift
+//  PhaseGroupListVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2020-08-25.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PhaseGroupListViewController: UITableViewController {
+final class PhaseGroupListVC: UITableViewController {
     
     var phase: Phase
     var doneRequest = false
@@ -136,6 +136,6 @@ final class PhaseGroupListViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        navigationController?.pushViewController(PhaseGroupViewController(phaseGroup, title: "Pool " + (phaseGroup.name ?? "")), animated: true)
+        navigationController?.pushViewController(PhaseGroupVC(phaseGroup, title: "Pool " + (phaseGroup.name ?? "")), animated: true)
     }
 }
