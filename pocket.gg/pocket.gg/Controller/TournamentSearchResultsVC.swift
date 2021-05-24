@@ -10,7 +10,7 @@ import UIKit
 
 final class TournamentSearchResultsVC: TournamentListViewController {
     
-    let searchBar: UISearchBar
+    var searchTerm: String?
     var preferredGameIDs: [Int]
     var currentSearchResultsPage: Int
     
@@ -18,29 +18,32 @@ final class TournamentSearchResultsVC: TournamentListViewController {
     
     // MARK: - Initialization
     
-    init() {
-        searchBar = UISearchBar(frame: .zero)
-        preferredGameIDs = []
+    init(searchTerm: String?, preferredGameIDs: [Int]) {
+        self.searchTerm = searchTerm
+        self.preferredGameIDs = preferredGameIDs
         currentSearchResultsPage = 0
+        
         let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
         //TODO: find actual num instead of 20
         numTournamentsToLoad = max(20, 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight))
         
-        super.init([], title: nil)
+        super.init([], title: searchTerm)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("TournamentSearchResultsVC deinit")
+    }
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
-        searchBar.placeholder = "Search for tournaments on smash.gg"
-        
-        navigationItem.titleView = searchBar
+
+        loadTournaments()
     }
     
     // MARK: - Tournament Loading
@@ -52,7 +55,7 @@ final class TournamentSearchResultsVC: TournamentListViewController {
         currentSearchResultsPage += 1
         doneRequest = false
         
-        NetworkService.searchForTournaments(searchBar.text,
+        NetworkService.searchForTournaments(searchTerm,
                                             gameIDs: preferredGameIDs,
                                             perPage: numTournamentsToLoad,
                                             page: currentSearchResultsPage) { [weak self] (tournaments) in
@@ -79,28 +82,5 @@ final class TournamentSearchResultsVC: TournamentListViewController {
                 self.noMoreTournaments = true
             }
         }
-    }
-}
-
-// MARK: - Search Bar Delegate
-
-extension TournamentSearchResultsVC: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        preferredGameIDs = PreferredGamesService.getEnabledGames().map { $0.id }
-        currentSearchResultsPage = 0
-        loadTournaments()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = nil
-        searchBar.endEditing(true)
     }
 }

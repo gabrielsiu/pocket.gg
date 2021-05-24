@@ -21,7 +21,7 @@ class TournamentListViewController: UITableViewController {
         doneRequest = true
         noMoreTournaments = false
         
-        super.init(style: .plain)
+        super.init(style: .grouped)
         self.title = title
     }
     
@@ -36,6 +36,7 @@ class TournamentListViewController: UITableViewController {
 
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.tournamentListCell)
         tableView.rowHeight = k.Sizes.tournamentListCellHeight
+        tableView.separatorColor = .clear
     }
     
     // MARK: - Tournament Loading
@@ -60,6 +61,7 @@ class TournamentListViewController: UITableViewController {
                 return UITableViewCell()
             }
             cell.accessoryType = .disclosureIndicator
+            cell.setBackgroundColor(.systemGroupedBackground)
             cell.setImage("placeholder")
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""

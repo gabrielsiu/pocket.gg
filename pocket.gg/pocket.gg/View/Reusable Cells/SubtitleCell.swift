@@ -49,6 +49,10 @@ final class SubtitleCell: UITableViewCell {
     
     // MARK: - Public Methods
     
+    func setBackgroundColor(_ color: UIColor) {
+        backgroundColor = color
+    }
+    
     func setImage(_ named: String) {
         imageView?.image = UIImage(named: named)
     }

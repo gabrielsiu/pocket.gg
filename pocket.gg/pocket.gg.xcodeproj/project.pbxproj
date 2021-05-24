@@ -19,6 +19,7 @@
 		DA2D5F31256B678300C44EEC /* ApolloService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2D5F30256B678300C44EEC /* ApolloService.swift */; };
 		DA2E80A52659A91500B876F1 /* ViewAllTournamentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E80A42659A91500B876F1 /* ViewAllTournamentsVC.swift */; };
 		DA2E80A92659A95900B876F1 /* TournamentSearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E80A82659A95900B876F1 /* TournamentSearchResultsVC.swift */; };
+		DA395A4B265ABE43008086EB /* TournamentSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA395A4A265ABE43008086EB /* TournamentSearchVC.swift */; };
 		DA3FE2C2263DFBC000593504 /* ScrollableRowItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */; };
 		DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495F24FCC6ED00BE7E0E /* Event.swift */; };
 		DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496124FCC6FC00BE7E0E /* Location.swift */; };
@@ -93,6 +94,7 @@
 		DA2D5F30256B678300C44EEC /* ApolloService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApolloService.swift; sourceTree = "<group>"; };
 		DA2E80A42659A91500B876F1 /* ViewAllTournamentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllTournamentsVC.swift; sourceTree = "<group>"; };
 		DA2E80A82659A95900B876F1 /* TournamentSearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentSearchResultsVC.swift; sourceTree = "<group>"; };
+		DA395A4A265ABE43008086EB /* TournamentSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentSearchVC.swift; sourceTree = "<group>"; };
 		DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableRowItemCell.swift; sourceTree = "<group>"; };
 		DA4B495F24FCC6ED00BE7E0E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA4B496124FCC6FC00BE7E0E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				DA759E5A23E4FE5500D4B3E7 /* MainViewController.swift */,
 				DAC4257926503C0600F523CC /* TournamentListViewController.swift */,
 				DA2E80A42659A91500B876F1 /* ViewAllTournamentsVC.swift */,
+				DA395A4A265ABE43008086EB /* TournamentSearchVC.swift */,
 				DA2E80A82659A95900B876F1 /* TournamentSearchResultsVC.swift */,
 				DA64A2F9241DF04E00481280 /* Tournament */,
 				DA637A8923F500EF00268A85 /* Settings */,
@@ -553,6 +556,7 @@
 				DA3FE2C2263DFBC000593504 /* ScrollableRowItemCell.swift in Sources */,
 				DA5C7D36257F3C6400CB787E /* Entrant.swift in Sources */,
 				DA5B98B0252195F800525550 /* LoadingViewController.swift in Sources */,
+				DA395A4B265ABE43008086EB /* TournamentSearchVC.swift in Sources */,
 				DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */,
 				DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */,
 				DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */,
