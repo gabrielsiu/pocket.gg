@@ -12,6 +12,7 @@
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
 		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
 		DA1DD9C8263C479800A1B4A9 /* ScrollableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */; };
+		DA266131265C89A100ACEA8D /* AuthTokenStepsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA266130265C89A100ACEA8D /* AuthTokenStepsVC.swift */; };
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
 		DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939D123E7D1D800E5DB3A /* NetworkService.swift */; };
 		DA2939E623E7E42800E5DB3A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939E523E7E42800E5DB3A /* NetworkServiceTests.swift */; };
@@ -86,6 +87,7 @@
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
 		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableRowCell.swift; sourceTree = "<group>"; };
+		DA266130265C89A100ACEA8D /* AuthTokenStepsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenStepsVC.swift; sourceTree = "<group>"; };
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
 		DA2939D123E7D1D800E5DB3A /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DA2939DB23E7E35B00E5DB3A /* pocket.ggTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pocket.ggTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -336,6 +338,7 @@
 			children = (
 				DA5B98AF252195F800525550 /* LoadingVC.swift */,
 				DAC290F1251B854F003D05B9 /* AuthTokenVC.swift */,
+				DA266130265C89A100ACEA8D /* AuthTokenStepsVC.swift */,
 				DA759E5A23E4FE5500D4B3E7 /* MainVC.swift */,
 				DAC4257926503C0600F523CC /* TournamentListVC.swift */,
 				DA2E80A42659A91500B876F1 /* ViewAllTournamentsVC.swift */,
@@ -527,6 +530,7 @@
 				DAC4257A26503C0600F523CC /* TournamentListVC.swift in Sources */,
 				DA68B6AE257D322200A010F3 /* InvalidBracketView.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
+				DA266131265C89A100ACEA8D /* AuthTokenStepsVC.swift in Sources */,
 				DA2E80A92659A95900B876F1 /* TournamentSearchResultsVC.swift in Sources */,
 				DA68B6C1257EB7CB00A010F3 /* BracketView.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventVC.swift in Sources */,

@@ -13,6 +13,7 @@ final class SettingsVC: UITableViewController {
     var featuredCell = UITableViewCell()
     var upcomingCell = UITableViewCell()
     var videoGameSelectionCell = UITableViewCell()
+    var authTokenCell = UITableViewCell()
     var aboutCell = UITableViewCell()
     
     // MARK: - Life Cycle
@@ -43,6 +44,9 @@ final class SettingsVC: UITableViewController {
         videoGameSelectionCell.accessoryType = .disclosureIndicator
         videoGameSelectionCell.textLabel?.text = "Video Game Selection"
         
+        authTokenCell.accessoryType = .disclosureIndicator
+        authTokenCell.textLabel?.text = "Auth Token"
+        
         aboutCell.accessoryType = .disclosureIndicator
         aboutCell.textLabel?.text = "About"
     }
@@ -58,14 +62,14 @@ final class SettingsVC: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 2
-        case 1, 2: return 1
-        default: fatalError("Invalid number of sections")
+        case 1, 2, 3: return 1
+        default: return 0
         }
     }
     
@@ -75,11 +79,12 @@ final class SettingsVC: UITableViewController {
             switch indexPath.row {
             case 0: return featuredCell
             case 1: return upcomingCell
-            default: fatalError("Invalid row in section 0")
+            default: return UITableViewCell()
             }
         case 1: return videoGameSelectionCell
-        case 2: return aboutCell
-        default: fatalError("Invalid section")
+        case 2: return authTokenCell
+        case 3: return aboutCell
+        default: return UITableViewCell()
         }
     }
     
@@ -102,7 +107,7 @@ final class SettingsVC: UITableViewController {
         switch indexPath.section {
         case 1:
             navigationController?.pushViewController(VideoGamesVC(), animated: true)
-        case 2:
+        case 3:
             navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
         default: return
         }

@@ -65,7 +65,7 @@ final class TournamentSearchVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? searchBar.isFirstResponder ? "Recent Searches" : "Recently Viewed Tournaments" : nil
+        return section == 0 ? "Recent Searches" : nil
     }
     
     // MARK: - Table View Delegate

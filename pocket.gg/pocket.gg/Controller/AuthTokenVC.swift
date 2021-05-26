@@ -10,8 +10,12 @@ import UIKit
 
 final class AuthTokenVC: UIViewController {
     
-    var stackView = UIStackView(frame: .zero)
+    var titleStackView = UIStackView(frame: .zero)
+    var bottomStackView = UIStackView(frame: .zero)
     let authTokenField = UITextField(frame: .zero)
+    
+    var titleCenterConstraint = NSLayoutConstraint()
+    var titleTopConstraint = NSLayoutConstraint()
     
     // MARK: - Life Cycle
 
@@ -22,9 +26,27 @@ final class AuthTokenVC: UIViewController {
         setupKeyboardToolbar()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        stackView.widthAnchor.constraint(equalToConstant: stackView.bounds.width).isActive = true
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Wait for launch screen fade animation to finish, then animate the logo up
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.animateLogoUp()
+        }
+    }
+    
+    private func animateLogoUp() {
+        view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.titleCenterConstraint.isActive = false
+            self?.titleTopConstraint.isActive = true
+            self?.view.layoutIfNeeded()
+        }, completion: { [weak self] _ in
+            self?.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.3) {
+                self?.bottomStackView.alpha = 1.0
+                self?.view.layoutIfNeeded()
+            }
+        })
     }
     
     deinit {
@@ -37,24 +59,53 @@ final class AuthTokenVC: UIViewController {
         let logoImageView = UIImageView(image: UIImage(named: "placeholder"))
         let appNameLabel = UILabel(frame: .zero)
         appNameLabel.text = "pocket.gg"
-        appNameLabel.font = UIFont(name: "Baskerville-Bold", size: 50)
+        appNameLabel.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
         
-        stackView = UIStackView(arrangedSubviews: [logoImageView, appNameLabel])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        view.addSubview(stackView)
-        stackView.setAxisConstraints(xAnchor: view.centerXAnchor)
-        stackView.setEdgeConstraints(top: view.topAnchor, padding: UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0))
+        titleStackView = UIStackView(arrangedSubviews: [logoImageView, appNameLabel])
+        titleStackView.axis = .horizontal
+        titleStackView.alignment = .center
+        view.addSubview(titleStackView)
+        titleStackView.setAxisConstraints(xAnchor: view.centerXAnchor)
+        let constraintOffset = (UIScreen.main.bounds.height / 2) - (logoImageView.intrinsicContentSize.height / 2)
+        titleCenterConstraint = titleStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: constraintOffset)
+        titleCenterConstraint.isActive = true
+        titleTopConstraint = titleStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50)
         
         authTokenField.placeholder = "Auth Token"
-        authTokenField.textAlignment = .center
+        authTokenField.backgroundColor = .secondarySystemBackground
+        authTokenField.textAlignment = .left
         authTokenField.borderStyle = .roundedRect
         authTokenField.clearButtonMode = .whileEditing
         authTokenField.addTarget(self, action: #selector(verifyAuthToken), for: .editingDidEndOnExit)
-        view.addSubview(authTokenField)
-        authTokenField.frame = CGRect(x: 0, y: 0, width: stackView.bounds.width, height: 300)
-        authTokenField.setAxisConstraints(yAnchor: view.centerYAnchor)
-        authTokenField.setEdgeConstraints(leading: stackView.leadingAnchor, trailing: stackView.trailingAnchor)
+        
+        let button1 = UIButton()
+        button1.setTitle("How do I get an Auth Token?", for: .normal)
+        button1.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button1.contentHorizontalAlignment = .leading
+        button1.setTitleColor(.systemRed, for: .normal)
+        button1.addTarget(self, action: #selector(presentWhyAuthTokenVC), for: .touchUpInside)
+        
+        let submitButton = UIButton(type: .roundedRect)
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.backgroundColor = .systemRed
+        submitButton.layer.cornerRadius = 5
+        submitButton.addTarget(self, action: #selector(verifyAuthToken), for: .touchUpInside)
+        
+        bottomStackView.setup(subviews: [authTokenField, button1, submitButton], axis: .vertical, alignment: .fill, spacing: 5)
+        view.addSubview(bottomStackView)
+        bottomStackView.setEdgeConstraints(top: titleStackView.bottomAnchor,
+                                           leading: view.leadingAnchor,
+                                           trailing: view.trailingAnchor,
+                                           padding: UIEdgeInsets(top: 50, left: 16, bottom: 0, right: 16))
+        
+        var bottomStackViewHeight: CGFloat = 0
+        bottomStackViewHeight += authTokenField.intrinsicContentSize.height
+        bottomStackViewHeight += button1.intrinsicContentSize.height
+        bottomStackViewHeight += submitButton.intrinsicContentSize.height
+        bottomStackViewHeight += 10
+        bottomStackView.heightAnchor.constraint(equalToConstant: bottomStackViewHeight).isActive = true
+        bottomStackView.alpha = 0
     }
     
     private func setupKeyboardToolbar() {
@@ -77,6 +128,10 @@ final class AuthTokenVC: UIViewController {
     
     @objc private func dismissKeyboard() {
         authTokenField.resignFirstResponder()
+    }
+    
+    @objc private func presentWhyAuthTokenVC() {
+        present(UINavigationController(rootViewController: AuthTokenStepsVC()), animated: true, completion: nil)
     }
     
     @objc private func verifyAuthToken() {
