@@ -16,6 +16,8 @@ final class SettingsVC: UITableViewController {
     var authTokenCell = UITableViewCell()
     var aboutCell = UITableViewCell()
     
+    let authTokenDate = UserDefaults.standard.string(forKey: k.UserDefaults.authTokenDate)
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -50,6 +52,8 @@ final class SettingsVC: UITableViewController {
         aboutCell.accessoryType = .disclosureIndicator
         aboutCell.textLabel?.text = "About"
     }
+    
+    // MARK: - Actions
     
     @objc private func featuredSwitchToggled(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.featuredTournaments)
@@ -99,16 +103,21 @@ final class SettingsVC: UITableViewController {
         switch section {
         case 0: return "Enable/Disable these to change the types of tournaments that show up on the main screen."
         case 1: return "Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen."
+        case 2:
+            if let date = authTokenDate {
+                return "Auth Token entered on " + date
+            } else {
+                return "No auth token present"
+            }
         default: return nil
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
-        case 1:
-            navigationController?.pushViewController(VideoGamesVC(), animated: true)
-        case 3:
-            navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
+        case 1: navigationController?.pushViewController(VideoGamesVC(), animated: true)
+        case 2: navigationController?.pushViewController(AuthTokenSettingsVC(authTokenDate), animated: true)
+        case 3: navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
         default: return
         }
     }

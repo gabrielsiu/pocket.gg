@@ -28,6 +28,7 @@
 		DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496524FCC72D00BE7E0E /* Phase.swift */; };
 		DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
+		DA51F6CE265E0551004D6EE5 /* AuthTokenSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA51F6CD265E0551004D6EE5 /* AuthTokenSettingsVC.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
 		DA5B98B0252195F800525550 /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5B98AF252195F800525550 /* LoadingVC.swift */; };
 		DA5C7D36257F3C6400CB787E /* Entrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C7D35257F3C6400CB787E /* Entrant.swift */; };
@@ -104,6 +105,7 @@
 		DA4B496524FCC72D00BE7E0E /* Phase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phase.swift; sourceTree = "<group>"; };
 		DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroup.swift; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
+		DA51F6CD265E0551004D6EE5 /* AuthTokenSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenSettingsVC.swift; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA5B98AF252195F800525550 /* LoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
 		DA5C7D35257F3C6400CB787E /* Entrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entrant.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			children = (
 				DA637A8A23F5010D00268A85 /* SettingsVC.swift */,
 				DA637A8C23F5012B00268A85 /* VideoGamesVC.swift */,
+				DA51F6CD265E0551004D6EE5 /* AuthTokenSettingsVC.swift */,
 				DADBE41424074A38005B707F /* AboutVC.swift */,
 			);
 			path = Settings;
@@ -538,6 +541,7 @@
 				DA68B6B5257EB3BE00A010F3 /* RoundRobinBracketView.swift in Sources */,
 				DAC290F2251B854F003D05B9 /* AuthTokenVC.swift in Sources */,
 				DA7AF01824F5E53C009A00E2 /* PhaseGroupListVC.swift in Sources */,
+				DA51F6CE265E0551004D6EE5 /* AuthTokenSettingsVC.swift in Sources */,
 				DAEACF8F250AF53E002F0674 /* EliminationBracketView.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DA68B684257C9A6B00A010F3 /* SetPathView.swift in Sources */,

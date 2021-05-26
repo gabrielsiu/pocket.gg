@@ -72,6 +72,7 @@ struct Constants {
     
     struct UserDefaults {
         static let authToken = "authToken"
+        static let authTokenDate = "authTokenDate"
         
         static let featuredTournaments = "featuredTournaments"
         static let upcomingTournaments = "upcomingTournaments"

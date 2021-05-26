@@ -78,12 +78,12 @@ final class AuthTokenVC: UIViewController {
         authTokenField.clearButtonMode = .whileEditing
         authTokenField.addTarget(self, action: #selector(verifyAuthToken), for: .editingDidEndOnExit)
         
-        let button1 = UIButton()
-        button1.setTitle("How do I get an Auth Token?", for: .normal)
-        button1.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button1.contentHorizontalAlignment = .leading
-        button1.setTitleColor(.systemRed, for: .normal)
-        button1.addTarget(self, action: #selector(presentWhyAuthTokenVC), for: .touchUpInside)
+        let authTokenStepsButton = UIButton()
+        authTokenStepsButton.setTitle("How do I get an Auth Token?", for: .normal)
+        authTokenStepsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        authTokenStepsButton.contentHorizontalAlignment = .leading
+        authTokenStepsButton.setTitleColor(.systemRed, for: .normal)
+        authTokenStepsButton.addTarget(self, action: #selector(presentAuthTokenStepsVC), for: .touchUpInside)
         
         let submitButton = UIButton(type: .roundedRect)
         submitButton.setTitle("Submit", for: .normal)
@@ -92,7 +92,7 @@ final class AuthTokenVC: UIViewController {
         submitButton.layer.cornerRadius = 5
         submitButton.addTarget(self, action: #selector(verifyAuthToken), for: .touchUpInside)
         
-        bottomStackView.setup(subviews: [authTokenField, button1, submitButton], axis: .vertical, alignment: .fill, spacing: 5)
+        bottomStackView.setup(subviews: [authTokenField, authTokenStepsButton, submitButton], axis: .vertical, alignment: .fill, spacing: 5)
         view.addSubview(bottomStackView)
         bottomStackView.setEdgeConstraints(top: titleStackView.bottomAnchor,
                                            leading: view.leadingAnchor,
@@ -101,7 +101,7 @@ final class AuthTokenVC: UIViewController {
         
         var bottomStackViewHeight: CGFloat = 0
         bottomStackViewHeight += authTokenField.intrinsicContentSize.height
-        bottomStackViewHeight += button1.intrinsicContentSize.height
+        bottomStackViewHeight += authTokenStepsButton.intrinsicContentSize.height
         bottomStackViewHeight += submitButton.intrinsicContentSize.height
         bottomStackViewHeight += 10
         bottomStackView.heightAnchor.constraint(equalToConstant: bottomStackViewHeight).isActive = true
@@ -130,7 +130,7 @@ final class AuthTokenVC: UIViewController {
         authTokenField.resignFirstResponder()
     }
     
-    @objc private func presentWhyAuthTokenVC() {
+    @objc private func presentAuthTokenStepsVC() {
         present(UINavigationController(rootViewController: AuthTokenStepsVC()), animated: true, completion: nil)
     }
     
@@ -140,6 +140,7 @@ final class AuthTokenVC: UIViewController {
         ApolloService.shared.updateApolloClient()
         NetworkService.isAuthTokenValid { [weak self] valid in
             if valid {
+                UserDefaults.standard.set(DateFormatter.shared.dateFromTimestamp("\(Int(Date().timeIntervalSince1970))"), forKey: k.UserDefaults.authTokenDate)
                 guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
                 guard let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
                 guard let window = sceneDelegate.window else { return }
@@ -158,10 +159,8 @@ final class AuthTokenVC: UIViewController {
                 })
                 tabBarController.selectedIndex = 0
                 
-                // TODO: Clean up animation
                 window.rootViewController = tabBarController
                 window.makeKeyAndVisible()
-                
             } else {
                 let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.invalidAuthToken, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
