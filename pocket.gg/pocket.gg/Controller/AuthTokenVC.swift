@@ -41,10 +41,8 @@ final class AuthTokenVC: UIViewController {
             self?.titleTopConstraint.isActive = true
             self?.view.layoutIfNeeded()
         }, completion: { [weak self] _ in
-            self?.view.layoutIfNeeded()
             UIView.animate(withDuration: 0.3) {
                 self?.bottomStackView.alpha = 1.0
-                self?.view.layoutIfNeeded()
             }
         })
     }
