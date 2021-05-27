@@ -145,7 +145,7 @@ final class EventVC: UITableViewController {
             guard requestSuccessful else {
                 return UITableViewCell().setupDisabled("Unable to load brackets")
             }
-            guard let phases = event.phases, phases.count != 0 else {
+            guard let phases = event.phases, !phases.isEmpty else {
                 return doneRequest ? UITableViewCell().setupDisabled("No brackets found") : LoadingCell()
             }
             

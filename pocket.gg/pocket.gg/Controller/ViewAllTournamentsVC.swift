@@ -54,6 +54,7 @@ final class ViewAllTournamentsVC: TournamentListVC {
             guard let tournaments = tournaments else {
                 self?.doneRequest = true
                 // TODO: Make error popup
+                self?.tableView.reloadData()
                 return
             }
             
@@ -61,6 +62,7 @@ final class ViewAllTournamentsVC: TournamentListVC {
             guard !tournaments.isEmpty else {
                 self?.doneRequest = true
                 self?.noMoreTournaments = true
+                self?.tableView.reloadData()
                 return
             }
             

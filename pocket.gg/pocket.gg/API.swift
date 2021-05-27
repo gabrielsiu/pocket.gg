@@ -566,8 +566,8 @@ public final class SearchForTournamentsQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query SearchForTournaments($search: String, $videogameIds: [ID], $perPage: Int, $page: Int) {
-      tournaments(query: {perPage: $perPage, page: $page, sortBy: "startAt asc", filter: {name: $search, videogameIds: $videogameIds}}) {
+    query SearchForTournaments($search: String, $videogameIds: [ID], $featured: Boolean, $sortBy: String, $perPage: Int, $page: Int) {
+      tournaments(query: {perPage: $perPage, page: $page, sortBy: $sortBy, filter: {name: $search, videogameIds: $videogameIds, isFeatured: $featured}}) {
         __typename
         nodes {
           __typename
@@ -591,18 +591,22 @@ public final class SearchForTournamentsQuery: GraphQLQuery {
 
   public var search: String?
   public var videogameIds: [GraphQLID?]?
+  public var featured: Bool?
+  public var sortBy: String?
   public var perPage: Int?
   public var page: Int?
 
-  public init(search: String? = nil, videogameIds: [GraphQLID?]? = nil, perPage: Int? = nil, page: Int? = nil) {
+  public init(search: String? = nil, videogameIds: [GraphQLID?]? = nil, featured: Bool? = nil, sortBy: String? = nil, perPage: Int? = nil, page: Int? = nil) {
     self.search = search
     self.videogameIds = videogameIds
+    self.featured = featured
+    self.sortBy = sortBy
     self.perPage = perPage
     self.page = page
   }
 
   public var variables: GraphQLMap? {
-    return ["search": search, "videogameIds": videogameIds, "perPage": perPage, "page": page]
+    return ["search": search, "videogameIds": videogameIds, "featured": featured, "sortBy": sortBy, "perPage": perPage, "page": page]
   }
 
   public struct Data: GraphQLSelectionSet {
@@ -610,7 +614,7 @@ public final class SearchForTournamentsQuery: GraphQLQuery {
 
     public static var selections: [GraphQLSelection] {
       return [
-        GraphQLField("tournaments", arguments: ["query": ["perPage": GraphQLVariable("perPage"), "page": GraphQLVariable("page"), "sortBy": "startAt asc", "filter": ["name": GraphQLVariable("search"), "videogameIds": GraphQLVariable("videogameIds")]]], type: .object(Tournament.selections)),
+        GraphQLField("tournaments", arguments: ["query": ["perPage": GraphQLVariable("perPage"), "page": GraphQLVariable("page"), "sortBy": GraphQLVariable("sortBy"), "filter": ["name": GraphQLVariable("search"), "videogameIds": GraphQLVariable("videogameIds"), "isFeatured": GraphQLVariable("featured")]]], type: .object(Tournament.selections)),
       ]
     }
 

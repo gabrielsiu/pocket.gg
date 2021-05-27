@@ -42,10 +42,12 @@ final class VideoGamesVC: UITableViewController {
     // MARK: - Table View Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return enabledGames.count
+        return enabledGames.isEmpty ? 1 : enabledGames.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !enabledGames.isEmpty else { return UITableViewCell().setupDisabled("No enabled games") }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.videoGameCell, for: indexPath)
         cell.textLabel?.text = enabledGames[indexPath.row].name
         cell.selectionStyle = .none
@@ -59,8 +61,10 @@ final class VideoGamesVC: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         // TODO: Complete wording
         return """
-        Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen\n
-        Use the search bar to search for games to add\n
+        Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen
+
+        Use the search bar to search for games to add
+
         Use the Edit button to rearrange the order in which the games show up on the main screen
         """
     }

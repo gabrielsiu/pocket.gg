@@ -71,9 +71,11 @@ final class NetworkService {
         }
     }
     
-    static func searchForTournaments(_ search: String?, gameIDs: [Int], perPage: Int, page: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
+    static func searchForTournaments(_ search: String?, gameIDs: [Int], featured: Bool, sortBy: String, perPage: Int, page: Int, complete: @escaping (_ tournaments: [Tournament]?) -> Void) {
         ApolloService.shared.client.fetch(query: SearchForTournamentsQuery(search: search,
                                                                            videogameIds: gameIDs.map { String($0) },
+                                                                           featured: featured,
+                                                                           sortBy: sortBy,
                                                                            perPage: perPage,
                                                                            page: page),
                                           queue: .global(qos: .utility)) { (result) in

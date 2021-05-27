@@ -41,6 +41,7 @@ final class AuthTokenStepsVC: UIViewController {
         let label1 = UILabel(frame: .zero)
         label1.text = "How do I get an Auth Token?"
         label1.textAlignment = .left
+        label1.numberOfLines = 0
         label1.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         
         let label2 = UILabel(frame: .zero)
@@ -64,14 +65,48 @@ final class AuthTokenStepsVC: UIViewController {
         """
         label2.text = text
         
+        
+        let label3 = UILabel(frame: .zero)
+        label3.text = "What is an Auth Token? Why do I need one?"
+        label3.textAlignment = .left
+        label3.numberOfLines = 0
+        label3.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
+        
+        let label4 = UILabel(frame: .zero)
+        label4.textAlignment = .left
+        label4.numberOfLines = 0
+        let text2 = """
+        An auth (authentication) token is a unique, randomly generated string of characters that an application can use to access an API. \
+        With token-based authentication, if a user wanted to access an API, rather than having to authenticate using their username & password every time, \
+        the user can just enter their credentials once, then obtain a token which can be used for subsequent authentication attempts.
+
+        smash.gg uses a GraphQL API (which this app is powered by), which uses token-based authentication. \
+        As mentioned in the steps above, once you log into smash.gg you can obtain an auth token, which can be used for 1 year before it expires. \
+        By providing pocket.gg (this app) with an auth token, you are allowing pocket.gg to fetch information from smash.gg's servers (such as tournament data), \
+        without having to provide pocket.gg with your username & password.
+        """
+        label4.text = text2
+        
         contentView.addSubview(label1)
         contentView.addSubview(label2)
+        contentView.addSubview(label3)
+        contentView.addSubview(label4)
         label1.setEdgeConstraints(top: contentView.topAnchor,
                                   bottom: label2.topAnchor,
                                   leading: contentView.leadingAnchor,
                                   trailing: contentView.trailingAnchor,
                                   padding: UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 11))
         label2.setEdgeConstraints(top: label1.bottomAnchor,
+                                  bottom: label3.topAnchor,
+                                  leading: contentView.leadingAnchor,
+                                  trailing: contentView.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 11))
+        label3.setEdgeConstraints(top: label2.bottomAnchor,
+                                  bottom: label4.topAnchor,
+                                  leading: contentView.leadingAnchor,
+                                  trailing: contentView.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 11, left: 11, bottom: 11, right: 11))
+        label4.setEdgeConstraints(top: label3.bottomAnchor,
                                   bottom: contentView.bottomAnchor,
                                   leading: contentView.leadingAnchor,
                                   trailing: contentView.trailingAnchor,

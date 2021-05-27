@@ -228,7 +228,7 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let standings = phaseGroup?.standings, standings.count != 0 else {
+        guard let standings = phaseGroup?.standings, !standings.isEmpty else {
             return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
         }
         

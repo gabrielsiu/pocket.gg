@@ -78,6 +78,8 @@ struct Constants {
         static let upcomingTournaments = "upcomingTournaments"
         static let preferredVideoGames = "preferredVideoGames"
         
+        static let onlySearchFeatured = "onlySearchFeatured"
+        static let showOlderTournamentsFirst = "showOlderTournamentsFirst"
         static let recentSearches = "recentSearches"
     }
     

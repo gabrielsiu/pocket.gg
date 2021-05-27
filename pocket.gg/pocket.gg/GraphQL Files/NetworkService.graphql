@@ -30,14 +30,15 @@ query TournamentsByVideogames($perPage: Int, $pageNum: Int, $videogameIds: [ID],
     }
 }
 
-query SearchForTournaments($search: String, $videogameIds: [ID], $perPage: Int, $page: Int) {
+query SearchForTournaments($search: String, $videogameIds: [ID], $featured: Boolean, $sortBy: String, $perPage: Int, $page: Int) {
     tournaments(query: {
         perPage: $perPage
         page: $page
-        sortBy: "startAt asc"
+        sortBy: $sortBy
         filter: {
             name: $search
             videogameIds: $videogameIds
+            isFeatured: $featured
         }
     }) {
         nodes {

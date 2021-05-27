@@ -69,12 +69,12 @@ final class VideoGamesSearchResultsVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard doneLoading else { return 1 }
-        return searchResults.count == 0 ? 1 : searchResults.count
+        return searchResults.isEmpty ? 1 : searchResults.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard doneLoading else { return LoadingCell() } // TODO: check background color of this cell
-        guard searchResults.count != 0 else { return UITableViewCell().setupDisabled("No search results") }
+        guard !searchResults.isEmpty else { return UITableViewCell().setupDisabled("No search results") }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.videoGameCell, for: indexPath)
         cell.textLabel?.text = searchResults[indexPath.row].name

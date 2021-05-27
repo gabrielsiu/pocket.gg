@@ -15,6 +15,8 @@ final class TournamentSearchResultsVC: TournamentListVC {
     var currentSearchResultsPage: Int
     
     let numTournamentsToLoad: Int
+    let featured: Bool
+    let sortBy: String
     
     // MARK: - Initialization
     
@@ -26,6 +28,8 @@ final class TournamentSearchResultsVC: TournamentListVC {
         let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
         //TODO: find actual num instead of 20
         numTournamentsToLoad = max(20, 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight))
+        featured = UserDefaults.standard.bool(forKey: k.UserDefaults.onlySearchFeatured)
+        sortBy = UserDefaults.standard.bool(forKey: k.UserDefaults.showOlderTournamentsFirst) ? "startAt asc" : "startAt desc"
         
         super.init([], title: searchTerm)
     }
@@ -57,11 +61,14 @@ final class TournamentSearchResultsVC: TournamentListVC {
         
         NetworkService.searchForTournaments(searchTerm,
                                             gameIDs: preferredGameIDs,
+                                            featured: featured,
+                                            sortBy: sortBy,
                                             perPage: numTournamentsToLoad,
                                             page: currentSearchResultsPage) { [weak self] (tournaments) in
             guard let tournaments = tournaments else {
                 self?.doneRequest = true
                 // TODO: Make error popup
+                self?.tableView.reloadData()
                 return
             }
             
@@ -69,6 +76,7 @@ final class TournamentSearchResultsVC: TournamentListVC {
             guard !tournaments.isEmpty else {
                 self?.doneRequest = true
                 self?.noMoreTournaments = true
+                self?.tableView.reloadData()
                 return
             }
             

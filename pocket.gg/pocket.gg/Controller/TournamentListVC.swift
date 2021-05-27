@@ -47,10 +47,18 @@ class TournamentListVC: UITableViewController {
     
     // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tournaments.count
+        return tournaments.isEmpty ? 1 : tournaments.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !tournaments.isEmpty else {
+            if !doneRequest { return LoadingCell(color: .secondarySystemBackground) }
+            
+            let cell = UITableViewCell().setupDisabled("No tournaments found")
+            cell.backgroundColor = .secondarySystemBackground
+            return cell
+        }
+        
         // If we are approaching the end of the list, load more tournaments
         if indexPath.row == tournaments.count - 3 {
             loadTournaments()

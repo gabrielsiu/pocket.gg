@@ -13,11 +13,16 @@ final class TournamentSearchVC: UITableViewController {
     let searchBar: UISearchBar
     var recentSearches: [String]
     
+    let featuredCell: UITableViewCell
+    let olderTournamentsFirstCell: UITableViewCell
+    
     // MARK: - Initialization
     
     init() {
         searchBar = UISearchBar(frame: .zero)
         recentSearches = UserDefaults.standard.array(forKey: k.UserDefaults.recentSearches) as? [String] ?? []
+        featuredCell = UITableViewCell()
+        olderTournamentsFirstCell = UITableViewCell()
         super.init(style: .insetGrouped)
     }
     
@@ -31,19 +36,46 @@ final class TournamentSearchVC: UITableViewController {
         searchBar.delegate = self
         searchBar.placeholder = "Search for tournaments on smash.gg"
         navigationItem.titleView = searchBar
+        setupSwitchCells()
+    }
+    
+    private func setupSwitchCells() {
+        let featuredSwitch = UISwitch()
+        featuredSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.onlySearchFeatured)
+        featuredSwitch.addTarget(self, action: #selector(featuredSwitchToggled(_:)), for: .valueChanged)
+        featuredCell.accessoryView = featuredSwitch
+        featuredCell.selectionStyle = .none
+        featuredCell.textLabel?.text = "Only show featured tournaments"
+        
+        let olderTournamentsFirstSwitch = UISwitch()
+        olderTournamentsFirstSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.showOlderTournamentsFirst)
+        olderTournamentsFirstSwitch.addTarget(self, action: #selector(olderTournamentsFirstSwitchToggled(_:)), for: .valueChanged)
+        olderTournamentsFirstCell.accessoryView = olderTournamentsFirstSwitch
+        olderTournamentsFirstCell.selectionStyle = .none
+        olderTournamentsFirstCell.textLabel?.text = "Show older tournaments first"
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func featuredSwitchToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.onlySearchFeatured)
+    }
+    
+    @objc private func olderTournamentsFirstSwitchToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.showOlderTournamentsFirst)
     }
     
     // MARK: - Table View Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return recentSearches.isEmpty ? 1 : 2
+        return recentSearches.isEmpty ? 2 : 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return recentSearches.count == 0 ? 1 : recentSearches.count
-        case 1: return 1
+        case 0: return 2
+        case 1: return recentSearches.isEmpty ? 1 : recentSearches.count
+        case 2: return 1
         default: return 0
         }
     }
@@ -51,11 +83,17 @@ final class TournamentSearchVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
+            switch indexPath.row {
+            case 0: return featuredCell
+            case 1: return olderTournamentsFirstCell
+            default: return UITableViewCell()
+            }
+        case 1:
             guard !recentSearches.isEmpty else {
                 return UITableViewCell().setupDisabled("No recent searches")
             }
             return UITableViewCell().setupActive(textColor: .label, text: recentSearches[indexPath.row])
-        case 1:
+        case 2:
             let cell = UITableViewCell()
             cell.textLabel?.textColor = .systemRed
             cell.textLabel?.text = "Clear recent searches"
@@ -65,21 +103,25 @@ final class TournamentSearchVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Recent Searches" : nil
+        switch section {
+        case 0: return "Search Settings"
+        case 1: return "Recent Searches"
+        default: return nil
+        }
     }
     
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
-        case 0:
+        case 1:
             guard let text = recentSearches[safe: indexPath.row] else {
                 tableView.deselectRow(at: indexPath, animated: true)
                 return
             }
             let preferredGameIDs = PreferredGamesService.getEnabledGames().map { $0.id }
             navigationController?.pushViewController(TournamentSearchResultsVC(searchTerm: text, preferredGameIDs: preferredGameIDs), animated: true)
-        case 1:
+        case 2:
             recentSearches.removeAll()
             tableView.reloadData()
             UserDefaults.standard.setValue([], forKey: k.UserDefaults.recentSearches)
