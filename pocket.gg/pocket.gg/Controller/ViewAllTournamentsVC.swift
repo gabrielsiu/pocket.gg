@@ -62,13 +62,21 @@ final class ViewAllTournamentsVC: TournamentListVC {
             guard !tournaments.isEmpty else {
                 self?.doneRequest = true
                 self?.noMoreTournaments = true
-                self?.tableView.reloadData()
                 return
             }
             
-            self?.tournaments.append(contentsOf: tournaments)
             self?.doneRequest = true
-            self?.tableView.reloadData()
+            if let startIndex = self?.tournaments.count {
+                let indexPaths = (startIndex..<(startIndex + tournaments.count)).map {
+                    return IndexPath.init(row: $0, section: 0)
+                }
+                self?.tableView.performBatchUpdates({
+                    self?.tournaments.append(contentsOf: tournaments)
+                    self?.tableView.insertRows(at: indexPaths, with: .none)
+                }, completion: nil)
+            } else {
+                self?.tableView.reloadData()
+            }
             
             // If less tournaments than expected were returned, then there are no more tournaments to load
             guard let self = self else { return }
