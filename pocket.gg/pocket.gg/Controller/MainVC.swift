@@ -113,8 +113,38 @@ final class MainVC: UITableViewController {
         return numSections
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionHeaderTitle(for: section)
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: .zero)
+        
+        let textLabel = UILabel(frame: .zero)
+        textLabel.text = sectionHeaderTitle(for: section)
+        textLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        headerView.addSubview(textLabel)
+        textLabel.setEdgeConstraints(top: headerView.topAnchor,
+                                     bottom: headerView.bottomAnchor,
+                                     leading: headerView.leadingAnchor,
+                                     padding: UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 0))
+        
+        let button = UIButton()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        headerView.addSubview(button)
+        button.setEdgeConstraints(top: headerView.topAnchor,
+                                  bottom: headerView.bottomAnchor,
+                                  trailing: headerView.trailingAnchor,
+                                  padding: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 16))
+        // If there are more than 10 tournaments in a section, show the "View All" button
+        // To make the vertical spacing consistent, the "View All" button is always added (just not visible when there are 10 or less tournaments)
+        if tournaments[section].count > 10 {
+            button.setTitle("View All", for: .normal)
+            button.setTitleColor(.systemRed, for: .normal)
+            button.addTarget(self, action: #selector(viewAllTournaments(sender:)), for: .touchUpInside)
+            button.tag = section
+            button.leadingAnchor.constraint(greaterThanOrEqualTo: textLabel.trailingAnchor, constant: 5).isActive = true
+        } else {
+            textLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -16).isActive = true
+        }
+        
+        return headerView
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -142,22 +172,16 @@ final class MainVC: UITableViewController {
 extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard doneRequest[collectionView.tag] else { return 0 }
-        // If at least 10 tournaments were returned, also create a cell to allow the rest of the tournaments to be viewed
-        return tournaments[collectionView.tag].count > 10 ? 11 : tournaments[collectionView.tag].count
+        // If more than 10 tournaments were returned, only show the first 10 and show a "View All" button in the header view
+        return tournaments[collectionView.tag].count > 10 ? 10 : tournaments[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? ScrollableRowItemCell {
-            guard indexPath.row < 10 else {
-                cell.setImage("square.stack", for: .viewAll)
-                cell.setCellStyle(for: .viewAll)
-                cell.updateView(text: "View All", imageURL: nil, detailText: nil)
-                return cell
-            }
             guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return cell }
             
-            cell.setImage(for: .tournament)
-            cell.setCellStyle(for: .tournament)
+            cell.imageView.image = nil
+            cell.setLabelsStyle()
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
             cell.updateView(text: tournament.name, imageURL: tournament.logoUrl, detailText: detailText)
@@ -176,17 +200,18 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard indexPath.row < 10 else {
-            let gameIDs = collectionView.tag < 2 ? preferredGames.map { $0.id } : [preferredGames.map({ $0.id })[collectionView.tag - 2]]
-            let info = GetTournamentsByVideogamesInfo(perPage: numTournamentsToLoad,
-                                                      featured: collectionView.tag == 0,
-                                                      gameIDs: gameIDs)
-            navigationController?.pushViewController(ViewAllTournamentsVC(tournaments[collectionView.tag],
-                                                                          info: info,
-                                                                          title: sectionHeaderTitle(for: collectionView.tag)), animated: true)
-            return
-        }
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }
         navigationController?.pushViewController(TournamentVC(tournament), animated: true)
+    }
+    
+    @objc private func viewAllTournaments(sender: UIButton) {
+        let section = sender.tag
+        let gameIDs = section < 2 ? preferredGames.map { $0.id } : [preferredGames.map({ $0.id })[section - 2]]
+        let info = GetTournamentsByVideogamesInfo(perPage: numTournamentsToLoad,
+                                                  featured: section == 0,
+                                                  gameIDs: gameIDs)
+        navigationController?.pushViewController(ViewAllTournamentsVC(tournaments[section],
+                                                                      info: info,
+                                                                      title: sectionHeaderTitle(for: section)), animated: true)
     }
 }

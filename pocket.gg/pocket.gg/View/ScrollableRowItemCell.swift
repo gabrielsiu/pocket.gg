@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum ScrollableRowItemCellType {
-    case tournament
-    case viewAll
-}
-
 final class ScrollableRowItemCell: UICollectionViewCell {
     var imageView: UIImageView
     var primaryLabel: UILabel
@@ -53,27 +48,11 @@ final class ScrollableRowItemCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func setImage(_ name: String = "", for type: ScrollableRowItemCellType) {
-        switch type {
-        case .tournament:
-            imageView.image = nil
-        case .viewAll:
-            let config = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
-            imageView.image = UIImage(systemName: name, withConfiguration: config)
-            imageView.tintColor = .label
-        }
-    }
-    
-    func setCellStyle(for type: ScrollableRowItemCellType) {
-        switch type {
-        case .tournament:
-            primaryLabel.font = UIFont.boldSystemFont(ofSize: primaryLabel.font.pointSize)
-            primaryLabel.numberOfLines = 2
-            secondaryLabel.numberOfLines = 3
-        case .viewAll:
-            primaryLabel.textAlignment = .center
-            primaryLabel.font = UIFont.systemFont(ofSize: primaryLabel.font.pointSize)
-        }
+    func setLabelsStyle() {
+        primaryLabel.textAlignment = .left
+        primaryLabel.font = UIFont.boldSystemFont(ofSize: primaryLabel.font.pointSize)
+        primaryLabel.numberOfLines = 2
+        secondaryLabel.numberOfLines = 3
     }
     
     func updateView(text: String?, imageURL: String?, detailText: String?) {

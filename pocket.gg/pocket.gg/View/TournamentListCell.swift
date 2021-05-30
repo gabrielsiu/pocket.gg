@@ -30,8 +30,12 @@ final class TournamentListCell: UITableViewCell {
                                             leading: textLabel?.leadingAnchor,
                                             trailing: textLabel?.trailingAnchor)
         
-        contentView.bottomAnchor.constraint(greaterThanOrEqualTo: imageView!.bottomAnchor, constant: 11).isActive = true
-        contentView.bottomAnchor.constraint(greaterThanOrEqualTo: detailTextLabel!.bottomAnchor, constant: 11).isActive = true
+        if let imageView = imageView {
+            contentView.bottomAnchor.constraint(greaterThanOrEqualTo: imageView.bottomAnchor, constant: 11).isActive = true
+        }
+        if let detailTextLabel = detailTextLabel {
+            contentView.bottomAnchor.constraint(greaterThanOrEqualTo: detailTextLabel.bottomAnchor, constant: 11).isActive = true
+        }
     }
     
     required init?(coder: NSCoder) {
