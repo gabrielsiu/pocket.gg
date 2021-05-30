@@ -48,14 +48,6 @@ final class SubtitleCell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func setBackgroundColor(_ color: UIColor) {
-        backgroundColor = color
-    }
-    
-    func setImage(_ named: String) {
-        imageView?.image = UIImage(named: named)
-    }
-    
     func updateView(text: String?, imageInfo: (url: String?, ratio: Double?)?, detailText: String?, newRatio: CGFloat? = nil) {
         textLabel?.text = text
         detailTextLabel?.text = detailText

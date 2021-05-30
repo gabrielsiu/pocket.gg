@@ -34,8 +34,9 @@ class TournamentListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.tournamentListCell)
-        tableView.rowHeight = k.Sizes.tournamentListCellHeight
+        tableView.register(TournamentListCell.self, forCellReuseIdentifier: k.Identifiers.tournamentListCell)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
         tableView.separatorColor = .clear
     }
     
@@ -64,13 +65,14 @@ class TournamentListVC: UITableViewController {
             loadTournaments()
         }
         
-        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentListCell, for: indexPath) as? SubtitleCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentListCell, for: indexPath) as? TournamentListCell {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }
             cell.accessoryType = .disclosureIndicator
-            cell.setBackgroundColor(.systemGroupedBackground)
-            cell.setImage("placeholder")
+            cell.backgroundColor = .systemGroupedBackground
+            cell.imageView?.image = UIImage(named: "placeholder")
+            cell.textLabel?.numberOfLines = 0
             cell.detailTextLabel?.numberOfLines = 2
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
