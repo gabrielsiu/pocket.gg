@@ -54,6 +54,11 @@ final class MainVC: UITableViewController {
         getTournaments()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ImageCacheService.clearCache(.viewAllTournaments)
+    }
+    
     // MARK: - Actions
     
     @objc private func refreshTournamentList() {
@@ -146,16 +151,16 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
             guard indexPath.row < 10 else {
                 cell.setImage("square.stack", for: .viewAll)
                 cell.setCellStyle(for: .viewAll)
-                cell.updateView(text: "View All", imageInfo: nil, detailText: nil)
+                cell.updateView(text: "View All", imageURL: nil, detailText: nil)
                 return cell
             }
             guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return cell }
             
-            cell.setImage("placeholder", for: .tournament)
+            cell.setImage(for: .tournament)
             cell.setCellStyle(for: .tournament)
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
-            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: detailText)
+            cell.updateView(text: tournament.name, imageURL: tournament.logoUrl, detailText: detailText)
             
             return cell
         }

@@ -13,6 +13,7 @@ class TournamentListVC: UITableViewController {
     var tournaments = [Tournament]()
     var doneRequest: Bool
     var noMoreTournaments: Bool
+    var imageCache: Cache
     
     // MARK: - Initialization
     
@@ -20,6 +21,7 @@ class TournamentListVC: UITableViewController {
         self.tournaments = tournaments
         doneRequest = true
         noMoreTournaments = false
+        imageCache = .regular // imageCache is initialized to .regular, but should be re-initialized in subclasses to use the correct cache
         
         super.init(style: .grouped)
         self.title = title
@@ -76,7 +78,7 @@ class TournamentListVC: UITableViewController {
             cell.detailTextLabel?.numberOfLines = 2
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
-            cell.updateView(text: tournament.name, imageInfo: (tournament.logoUrl, nil), detailText: detailText)
+            cell.updateView(text: tournament.name, imageURL: tournament.logoUrl, detailText: detailText, cache: imageCache)
             return cell
         }
         return UITableViewCell()

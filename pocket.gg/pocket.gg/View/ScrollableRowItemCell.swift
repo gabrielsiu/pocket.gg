@@ -53,10 +53,10 @@ final class ScrollableRowItemCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func setImage(_ name: String, for type: ScrollableRowItemCellType) {
+    func setImage(_ name: String = "", for type: ScrollableRowItemCellType) {
         switch type {
         case .tournament:
-            imageView.image = UIImage(named: name)
+            imageView.image = nil
         case .viewAll:
             let config = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 20))
             imageView.image = UIImage(systemName: name, withConfiguration: config)
@@ -76,22 +76,20 @@ final class ScrollableRowItemCell: UICollectionViewCell {
         }
     }
     
-    func updateView(text: String?, imageInfo: (url: String?, ratio: Double?)?, detailText: String?, newRatio: CGFloat? = nil) {
+    func updateView(text: String?, imageURL: String?, detailText: String?) {
         primaryLabel.text = text
         secondaryLabel.text = detailText
         
         imageView.layer.cornerRadius = k.Sizes.cornerRadius
         imageView.layer.masksToBounds = true
-        NetworkService.getImage(imageUrl: imageInfo?.url) { [weak self] (image) in
-            guard let image = image else { return }
-            var finalImage: UIImage?
-            if let newRatio = newRatio, let prevRatio = imageInfo?.ratio {
-                finalImage = image.cropToRatio(newRatio, from: CGFloat(prevRatio))
-            } else {
-                finalImage = image
-            }
+        guard let imageURL = imageURL else { return }
+        NetworkService.getImage(imageUrl: imageURL, cache: .viewAllTournaments) { [weak self] (image) in
+            let image = image ?? UIImage(named: "placeholder")
             DispatchQueue.main.async {
-                self?.imageView.image = finalImage
+                guard let imageView = self?.imageView else { return }
+                UIView.transition(with: imageView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                    self?.imageView.image = image
+                }, completion: nil)
             }
         }
     }

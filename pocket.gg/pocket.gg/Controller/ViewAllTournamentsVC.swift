@@ -26,6 +26,7 @@ final class ViewAllTournamentsVC: TournamentListVC {
         currentTournamentsPage = 1
         
         super.init(tournaments, title: title)
+        imageCache = .viewAllTournaments
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +35,6 @@ final class ViewAllTournamentsVC: TournamentListVC {
     
     deinit {
         print("ViewAllTournamentsVC deinit")
-        tournaments.removeAll()
     }
     
     // MARK: - Additional Tournament Loading

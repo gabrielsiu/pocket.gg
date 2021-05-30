@@ -361,12 +361,12 @@ final class NetworkService {
         }
     }
     
-    static func getImage(imageUrl: String?, complete: @escaping (_ image: UIImage?) -> Void) {
+    static func getImage(imageUrl: String?, cache: Cache = .regular, complete: @escaping (_ image: UIImage?) -> Void) {
         guard let imageUrl = imageUrl else {
             complete(nil)
             return
         }
-        if let cachedImage = ImageCacheService.getCachedImage(with: imageUrl) {
+        if let cachedImage = ImageCacheService.getCachedImage(with: imageUrl, cache: cache) {
             complete(cachedImage)
             return
         } else {
@@ -396,8 +396,15 @@ final class NetworkService {
                     complete(nil)
                     return
                 }
-                ImageCacheService.saveImageToCache(image: image, with: imageUrl)
-                complete(image)
+                // TODO: Maybe don't resize header images
+                let finalImage: UIImage
+                if cache == .regular {
+                    finalImage = image
+                } else {
+                    finalImage = image.resize(to: k.Sizes.tournamentListCellHeight)
+                }
+                ImageCacheService.saveImageToCache(image: finalImage, with: imageUrl, cache: cache)
+                complete(finalImage)
             }.resume()
         }
     }

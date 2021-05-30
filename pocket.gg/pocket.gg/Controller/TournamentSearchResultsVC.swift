@@ -32,6 +32,7 @@ final class TournamentSearchResultsVC: TournamentListVC {
         sortBy = UserDefaults.standard.bool(forKey: k.UserDefaults.showOlderTournamentsFirst) ? "startAt asc" : "startAt desc"
         
         super.init([], title: searchTerm)
+        imageCache = .tournamentSearchResults
     }
     
     required init?(coder: NSCoder) {

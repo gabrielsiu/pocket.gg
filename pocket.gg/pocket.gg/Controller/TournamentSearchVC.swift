@@ -55,6 +55,11 @@ final class TournamentSearchVC: UITableViewController {
         olderTournamentsFirstCell.textLabel?.text = "Show older tournaments first"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ImageCacheService.clearCache(.tournamentSearchResults)
+    }
+    
     // MARK: - Actions
     
     @objc private func featuredSwitchToggled(_ sender: UISwitch) {
