@@ -70,6 +70,13 @@ final class MainVC: UITableViewController {
     }
     
     private func getTournaments() {
+        guard !preferredGames.isEmpty else {
+            doneRequest = [Bool](repeating: true, count: numSections)
+            refreshControl?.endRefreshing()
+            tableView.reloadData()
+            return
+        }
+        
         let dispatchGroup = DispatchGroup()
         let gameIDs = preferredGames.map { $0.id }
         for i in 0..<numSections {
@@ -91,9 +98,13 @@ final class MainVC: UITableViewController {
                 self?.doneRequest[i] = true
                 
                 self?.tableView.reloadSections([i], with: .automatic)
-                self?.refreshControl?.endRefreshing()
                 dispatchGroup.leave()
             }
+        }
+        
+        // Hide the refresh control once all the requests have finished
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.refreshControl?.endRefreshing()
         }
     }
     
@@ -158,6 +169,8 @@ final class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard doneRequest[indexPath.section] else { return LoadingCell(color: .secondarySystemBackground) }
+        guard !preferredGames.isEmpty else { return NoEnabledGamesCell() }
+        guard !tournaments[indexPath.section].isEmpty else { return NoTournamentsCell() }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentsRowCell, for: indexPath) as? ScrollableRowCell {
             return cell

@@ -34,7 +34,7 @@ final class TournamentSearchVC: UITableViewController {
         super.viewDidLoad()
         
         searchBar.delegate = self
-        searchBar.placeholder = "Search for tournaments on smash.gg"
+        searchBar.placeholder = "Search Tournaments on smash.gg"
         navigationItem.titleView = searchBar
         setupSwitchCells()
     }

@@ -60,6 +60,8 @@
 		DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86242526630A8E00FD0A9C /* TournamentListCell.swift */; };
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
+		DAB69BFE26645A4E003D257E /* NoEnabledGamesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB69BFD26645A4E003D257E /* NoEnabledGamesCell.swift */; };
+		DAB69C0426648F04003D257E /* NoTournamentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB69C0326648F04003D257E /* NoTournamentsCell.swift */; };
 		DAC290F2251B854F003D05B9 /* AuthTokenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290F1251B854F003D05B9 /* AuthTokenVC.swift */; };
 		DAC4257A26503C0600F523CC /* TournamentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC4257926503C0600F523CC /* TournamentListVC.swift */; };
 		DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DA92DF1623E812350084FEB1 /* NetworkService.graphql */; };
@@ -141,6 +143,8 @@
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
+		DAB69BFD26645A4E003D257E /* NoEnabledGamesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEnabledGamesCell.swift; sourceTree = "<group>"; };
+		DAB69C0326648F04003D257E /* NoTournamentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTournamentsCell.swift; sourceTree = "<group>"; };
 		DAC290F1251B854F003D05B9 /* AuthTokenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenVC.swift; sourceTree = "<group>"; };
 		DAC4257926503C0600F523CC /* TournamentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListVC.swift; sourceTree = "<group>"; };
 		DADBE41424074A38005B707F /* AboutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 			isa = PBXGroup;
 			children = (
 				DADBE41624074AC5005B707F /* AboutInfoCell.swift */,
+				DAB69C0326648F04003D257E /* NoTournamentsCell.swift */,
+				DAB69BFD26645A4E003D257E /* NoEnabledGamesCell.swift */,
 				DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */,
 				DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */,
 				DA86242526630A8E00FD0A9C /* TournamentListCell.swift */,
@@ -560,9 +566,11 @@
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */,
 				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
+				DAB69C0426648F04003D257E /* NoTournamentsCell.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* MainVC.swift in Sources */,
 				DAF2A20D256B345B00580AAB /* API.swift in Sources */,
 				DA1DD9C8263C479800A1B4A9 /* ScrollableRowCell.swift in Sources */,
+				DAB69BFE26645A4E003D257E /* NoEnabledGamesCell.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,

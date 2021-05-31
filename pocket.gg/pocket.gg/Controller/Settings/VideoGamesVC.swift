@@ -10,6 +10,7 @@ import UIKit
 
 final class VideoGamesVC: UITableViewController {
     
+    var headerView: UIView
     let searchBar: UISearchBar
     var enabledGames: [VideoGame]
     
@@ -18,6 +19,7 @@ final class VideoGamesVC: UITableViewController {
     init() {
         // Load the list of enabled video games
         enabledGames = PreferredGamesService.getEnabledGames()
+        headerView = UIView(frame: .zero)
         searchBar = UISearchBar(frame: .zero)
         super.init(style: .insetGrouped)
     }
@@ -32,11 +34,31 @@ final class VideoGamesVC: UITableViewController {
         super.viewDidLoad()
         title = "Video Game Selection"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.videoGameCell)
-        
+        navigationItem.rightBarButtonItem = enabledGames.isEmpty ? nil : editButtonItem
+        setupHeaderView()
+    }
+    
+    private func setupHeaderView() {
         searchBar.delegate = self
-        searchBar.placeholder = "Search for tournaments on smash.gg"
+        searchBar.placeholder = "Search Video Games"
         searchBar.searchBarStyle = .minimal
-        navigationItem.rightBarButtonItem = editButtonItem
+        
+        let textLabel = UILabel(frame: .zero)
+        textLabel.text = "Enabled Games"
+        textLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        
+        headerView.addSubview(searchBar)
+        headerView.addSubview(textLabel)
+        
+        searchBar.setEdgeConstraints(top: headerView.topAnchor,
+                                     bottom: textLabel.topAnchor,
+                                     leading: headerView.leadingAnchor,
+                                     trailing: headerView.trailingAnchor)
+        textLabel.setEdgeConstraints(top: searchBar.bottomAnchor,
+                                     bottom: headerView.bottomAnchor,
+                                     leading: headerView.leadingAnchor,
+                                     trailing: headerView.trailingAnchor,
+                                     padding: UIEdgeInsets(top: 0, left: 16, bottom: 5, right: 0))
     }
     
     // MARK: - Table View Data Source
@@ -55,22 +77,23 @@ final class VideoGamesVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return searchBar
+        return headerView
     }
     
+    // TODO: Figure out why footer is slidable when only 1 game is added
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        // TODO: Complete wording
         return """
-        Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen
-
-        Use the search bar to search for games to add
-
-        Use the Edit button to rearrange the order in which the games show up on the main screen
+        Use the search bar to find video games you are interested in. Tournaments that feature at least 1 of the games added here \
+        will show up on the main screen.
         """
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return !enabledGames.isEmpty
+    }
+    
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
+        return !enabledGames.isEmpty
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -83,6 +106,9 @@ final class VideoGamesVC: UITableViewController {
         if editingStyle == .delete {
             enabledGames.remove(at: indexPath.row)
             tableView.reloadData()
+            if enabledGames.isEmpty {
+                navigationItem.rightBarButtonItem = nil
+            }
             PreferredGamesService.updateEnabledGames(enabledGames)
         }
     }
@@ -112,6 +138,11 @@ extension VideoGamesVC: UISearchBarDelegate {
             // If the list of enabled games was changed in VideoGamesSearchResultsVC, reload the table view
             self?.enabledGames = PreferredGamesService.getEnabledGames()
             self?.tableView.reloadData()
+            if let noEnabledGames = self?.enabledGames.isEmpty, noEnabledGames {
+                self?.navigationItem.rightBarButtonItem = nil
+            } else {
+                self?.navigationItem.rightBarButtonItem = self?.editButtonItem
+            }
         }
         navigationController?.pushViewController(videoGamesSearchResultsVC, animated: true)
     }
