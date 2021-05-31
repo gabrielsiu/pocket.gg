@@ -14,8 +14,14 @@ final class MainVC: UITableViewController {
     var preferredGames: [VideoGame]
     var doneRequest: [Bool]
     let numTournamentsToLoad: Int
+    
+    var showFeatured: Bool
+    var showUpcoming: Bool
+    var numTopSections: Int {
+        return (showFeatured ? 1 : 0) + (showUpcoming ? 1 : 0)
+    }
     var numSections: Int {
-        return 2 + preferredGames.count
+        return numTopSections + preferredGames.count
     }
     
     // MARK: - Initialization
@@ -26,6 +32,8 @@ final class MainVC: UITableViewController {
         doneRequest = []
         let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
         numTournamentsToLoad = 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
+        showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
+        showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
         
         super.init(style: .grouped)
     }
@@ -62,6 +70,9 @@ final class MainVC: UITableViewController {
     // MARK: - Actions
     
     @objc private func refreshTournamentList() {
+        showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
+        showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
+        
         preferredGames = PreferredGamesService.getEnabledGames()
         doneRequest = [Bool](repeating: false, count: numSections)
         tournaments = [[Tournament]](repeating: [], count: numSections)
@@ -81,8 +92,8 @@ final class MainVC: UITableViewController {
         let gameIDs = preferredGames.map { $0.id }
         for i in 0..<numSections {
             dispatchGroup.enter()
-            let featured = i == 0
-            let gameIDs = i < 2 ? gameIDs : [gameIDs[i - 2]]
+            let featured = showFeatured && i == 0
+            let gameIDs = i < numTopSections ? gameIDs : [gameIDs[i - numTopSections]]
             
             NetworkService.getTournamentsByVideogames(perPage: numTournamentsToLoad,
                                                       pageNum: 1,
@@ -110,11 +121,17 @@ final class MainVC: UITableViewController {
     
     private func sectionHeaderTitle(for section: Int) -> String? {
         switch section {
-        case 0: return "Featured Tournaments"
-        case 1: return "Upcoming Tournaments"
+        case 0:
+            if showFeatured { return "Featured Tournaments" }
+            if showUpcoming { return "Upcoming Tournaments" }
+            return preferredGames[section].name
+        case 1:
+            if showFeatured && showUpcoming { return "Upcoming Tournaments" }
+            guard section - numTopSections < preferredGames.count else { return nil }
+            return preferredGames[section - numTopSections].name
         default:
-            guard section - 2 < preferredGames.count else { return nil }
-            return preferredGames[section - 2].name
+            guard section - numTopSections < preferredGames.count else { return nil }
+            return preferredGames[section - numTopSections].name
         }
     }
     
@@ -219,7 +236,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     
     @objc private func viewAllTournaments(sender: UIButton) {
         let section = sender.tag
-        let gameIDs = section < 2 ? preferredGames.map { $0.id } : [preferredGames.map({ $0.id })[section - 2]]
+        let gameIDs = section < numTopSections ? preferredGames.map { $0.id } : [preferredGames.map({ $0.id })[section - numTopSections]]
         let info = GetTournamentsByVideogamesInfo(perPage: numTournamentsToLoad,
                                                   featured: section == 0,
                                                   gameIDs: gameIDs)
