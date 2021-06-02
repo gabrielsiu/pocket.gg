@@ -14,6 +14,7 @@ final class SettingsVC: UITableViewController {
     var upcomingCell = UITableViewCell()
     var videoGameSelectionCell = UITableViewCell()
     var authTokenCell = UITableViewCell()
+    var appIconCell = UITableViewCell()
     var aboutCell = UITableViewCell()
     
     let authTokenDate = UserDefaults.standard.string(forKey: k.UserDefaults.authTokenDate)
@@ -49,6 +50,9 @@ final class SettingsVC: UITableViewController {
         authTokenCell.accessoryType = .disclosureIndicator
         authTokenCell.textLabel?.text = "Auth Token"
         
+        appIconCell.accessoryType = .disclosureIndicator
+        appIconCell.textLabel?.text = "App Icon"
+        
         aboutCell.accessoryType = .disclosureIndicator
         aboutCell.textLabel?.text = "About"
     }
@@ -66,13 +70,13 @@ final class SettingsVC: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 2
-        case 1, 2, 3: return 1
+        case 1, 2, 3, 4: return 1
         default: return 0
         }
     }
@@ -86,8 +90,9 @@ final class SettingsVC: UITableViewController {
             default: return UITableViewCell()
             }
         case 1: return videoGameSelectionCell
-        case 2: return authTokenCell
-        case 3: return aboutCell
+        case 2: return appIconCell
+        case 3: return authTokenCell
+        case 4: return aboutCell
         default: return UITableViewCell()
         }
     }
@@ -103,7 +108,7 @@ final class SettingsVC: UITableViewController {
         // TODO: CHANGE THIS WORDING
         case 0: return "Enable/Disable these to show/hide the \"Featured Tournaments\" and/or \"Upcoming Tournaments\" sections on the main screen"
         case 1: return "Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen"
-        case 2:
+        case 3:
             if let date = authTokenDate {
                 return "Auth Token entered on " + date
             } else {
@@ -116,8 +121,9 @@ final class SettingsVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1: navigationController?.pushViewController(VideoGamesVC(), animated: true)
-        case 2: navigationController?.pushViewController(AuthTokenSettingsVC(authTokenDate), animated: true)
-        case 3: navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
+        case 2: navigationController?.pushViewController(AppIconVC(), animated: true)
+        case 3: navigationController?.pushViewController(AuthTokenSettingsVC(authTokenDate), animated: true)
+        case 4: navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
         default: return
         }
     }

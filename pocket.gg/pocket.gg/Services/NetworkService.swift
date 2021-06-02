@@ -361,7 +361,7 @@ final class NetworkService {
         }
     }
     
-    static func getImage(imageUrl: String?, cache: Cache = .regular, complete: @escaping (_ image: UIImage?) -> Void) {
+    static func getImage(imageUrl: String?, cache: Cache = .regular, newWidth: CGFloat?, complete: @escaping (_ image: UIImage?) -> Void) {
         guard let imageUrl = imageUrl else {
             complete(nil)
             return
@@ -396,12 +396,12 @@ final class NetworkService {
                     complete(nil)
                     return
                 }
-                // TODO: Maybe don't resize header images
+                // TODO: Resize header images according to device width
                 let finalImage: UIImage
-                if cache == .regular {
-                    finalImage = image
+                if let newWidth = newWidth {
+                    finalImage = image.resize(to: newWidth)
                 } else {
-                    finalImage = image.resize(to: k.Sizes.tournamentListCellHeight)
+                    finalImage = image
                 }
                 ImageCacheService.saveImageToCache(image: finalImage, with: imageUrl, cache: cache)
                 complete(finalImage)

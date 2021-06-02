@@ -9,10 +9,10 @@
 import UIKit
 
 extension UIImage {
-    func resize(to newHeight: CGFloat) -> UIImage {
-        guard newHeight < size.height else { return self }
+    func resize(to newWidth: CGFloat) -> UIImage {
+        guard newWidth < size.width else { return self }
         
-        let newWidth = newHeight * (size.width / size.height)
+        let newHeight = newWidth * size.height / size.width
         return UIGraphicsImageRenderer(size: CGSize(width: newWidth, height: newHeight)).image { _ in
             self.draw(in: CGRect(origin: .zero, size: CGSize(width: newWidth, height: newHeight)))
         }
