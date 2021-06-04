@@ -11,6 +11,7 @@ import UIKit
 final class TournamentGeneralInfoCell: UITableViewCell {
     
     let tournament: Tournament
+    let cacheForLogo: Cache
     
     let logoImageView = UIImageView(image: UIImage(named: "placeholder"))
     let dateIconView = UIImageView(image: UIImage(named: "calendar"))
@@ -26,8 +27,9 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     
     // MARK: - Initialization
     
-    init(_ tournament: Tournament) {
+    init(_ tournament: Tournament, cacheForLogo: Cache) {
         self.tournament = tournament
+        self.cacheForLogo = cacheForLogo
         super.init(style: .default, reuseIdentifier: nil)
         
         selectionStyle = .none
@@ -45,7 +47,7 @@ final class TournamentGeneralInfoCell: UITableViewCell {
     private func setupViews() {
         logoImageView.layer.cornerRadius = k.Sizes.cornerRadius
         logoImageView.layer.masksToBounds = true
-        NetworkService.getImage(imageUrl: tournament.logoUrl) { [weak self] (logo) in
+        NetworkService.getImage(imageUrl: tournament.logoUrl, cache: cacheForLogo) { [weak self] (logo) in
             guard let logo = logo else { return }
             DispatchQueue.main.async {
                 self?.logoImageView.image = logo

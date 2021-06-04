@@ -91,6 +91,6 @@ class TournamentListVC: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        navigationController?.pushViewController(TournamentVC(tournament), animated: true)
+        navigationController?.pushViewController(TournamentVC(tournament, cacheForLogo: imageCache), animated: true)
     }
 }

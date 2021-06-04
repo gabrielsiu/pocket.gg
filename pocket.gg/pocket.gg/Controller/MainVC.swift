@@ -30,7 +30,7 @@ final class MainVC: UITableViewController {
         tournaments = []
         preferredGames = []
         doneRequest = []
-        let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
+        let longEdgeLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         numTournamentsToLoad = 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
         showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
@@ -231,7 +231,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }
-        navigationController?.pushViewController(TournamentVC(tournament), animated: true)
+        navigationController?.pushViewController(TournamentVC(tournament, cacheForLogo: .viewAllTournaments), animated: true)
     }
     
     @objc private func viewAllTournaments(sender: UIButton) {

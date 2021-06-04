@@ -22,12 +22,14 @@ final class TournamentVC: UITableViewController {
     var tournamentIsOnline: Bool {
         return tournament.isOnline ?? true
     }
+    let cacheForLogo: Cache
     
     // MARK: - Initialization
     
-    init(_ tournament: Tournament) {
+    init(_ tournament: Tournament, cacheForLogo: Cache) {
         self.tournament = tournament
-        generalInfoCell = TournamentGeneralInfoCell(tournament)
+        self.cacheForLogo = cacheForLogo
+        generalInfoCell = TournamentGeneralInfoCell(tournament, cacheForLogo: cacheForLogo)
         super.init(style: .grouped)
     }
     
@@ -57,7 +59,8 @@ final class TournamentVC: UITableViewController {
     // MARK: - UI Setup
     
     private func setupHeaderImageView() {
-        NetworkService.getImage(imageUrl: tournament.headerImage?.url) { [weak self] (result) in
+        let longEdgeLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        NetworkService.getImage(imageUrl: tournament.headerImage?.url, newSize: CGSize(width: longEdgeLength, height: .zero)) { [weak self] (result) in
             guard let result = result else { return }
             
             DispatchQueue.main.async {

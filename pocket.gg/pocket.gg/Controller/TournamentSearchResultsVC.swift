@@ -25,7 +25,7 @@ final class TournamentSearchResultsVC: TournamentListVC {
         self.preferredGameIDs = preferredGameIDs
         currentSearchResultsPage = 0
         
-        let longEdgeLength = UIScreen.main.bounds.height > UIScreen.main.bounds.width ? UIScreen.main.bounds.height : UIScreen.main.bounds.width
+        let longEdgeLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         //TODO: find actual num instead of 20
         numTournamentsToLoad = max(20, 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight))
         featured = UserDefaults.standard.bool(forKey: k.UserDefaults.onlySearchFeatured)

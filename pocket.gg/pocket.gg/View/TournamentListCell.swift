@@ -50,7 +50,8 @@ final class TournamentListCell: UITableViewCell {
         
         imageView?.layer.cornerRadius = k.Sizes.cornerRadius
         imageView?.layer.masksToBounds = true
-        NetworkService.getImage(imageUrl: imageURL, cache: cache) { [weak self] (image) in
+        let newSize = CGSize(width: k.Sizes.tournamentListCellHeight, height: k.Sizes.tournamentListCellHeight)
+        NetworkService.getImage(imageUrl: imageURL, cache: cache, newSize: newSize) { [weak self] (image) in
             guard let image = image else { return }
             DispatchQueue.main.async {
                 guard let imageView = self?.imageView else { return }
