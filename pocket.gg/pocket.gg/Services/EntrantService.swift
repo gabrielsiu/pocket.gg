@@ -1,0 +1,141 @@
+//
+//  EntrantService.swift
+//  pocket.gg
+//
+//  Created by Gabriel Siu on 2021-06-05.
+//  Copyright © 2021 Gabriel Siu. All rights reserved.
+//
+
+import Foundation
+
+class EntrantService {
+    
+    // MARK: getTournamentDetailsById
+    //       TournamentVC
+    
+    static func getEventWinner(_ event: TournamentDetailsByIdQuery.Data.Tournament.Event?) -> Entrant? {
+        guard let event = event else { return nil }
+        
+        if let participants = event.standings?.nodes?[safe: 0]??.entrant?.participants, participants.count == 1 {
+            let teamName = getTeamName(combined: event.standings?.nodes?[safe: 0]??.entrant?.name,
+                                       entrantName: participants[0]?.gamerTag)
+            return Entrant(id: nil, name: participants[0]?.gamerTag, teamName: teamName)
+        }
+        
+        return Entrant(id: nil, name: event.standings?.nodes?[safe: 0]??.entrant?.name, teamName: nil)
+    }
+    
+    // MARK: getEventById
+    //       EventVC
+    
+    static func getEntrantAndStanding(_ standing: EventByIdQuery.Data.Event.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+        guard let standing = standing else { return nil }
+        
+        if let participants = standing.entrant?.participants, participants.count == 1 {
+            let entrantName = standing.entrant?.participants?[0]?.gamerTag
+            let teamName = getTeamName(combined: standing.entrant?.name, entrantName: entrantName)
+            let entrant = Entrant(id: nil, name: entrantName, teamName: teamName)
+            return (entrant: entrant, placement: standing.placement)
+        }
+        
+        return (entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
+    }
+    
+    // MARK: getPhaseGroupStandingsById
+    //       PhaseGroupVC
+    
+    static func getEntrantAndStanding2(_ standing: PhaseGroupStandingsByIdQuery.Data.PhaseGroup.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+        guard let standing = standing else { return nil }
+        
+        if let participants = standing.entrant?.participants, participants.count == 1 {
+            let entrantName = standing.entrant?.participants?[0]?.gamerTag
+            let teamName = getTeamName(combined: standing.entrant?.name, entrantName: entrantName)
+            let entrant = Entrant(id: nil, name: entrantName, teamName: teamName)
+            return (entrant: entrant, placement: standing.placement)
+        }
+        
+        return (entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
+    }
+    
+    static func getEntrantsForSet(displayScore: String?, slots: [PhaseGroupStandingsByIdQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
+        guard let slots = slots else { return nil }
+        
+        let entrantsInfo = slots.compactMap { slot -> (entrant: Entrant, fullName: String)? in
+            if let participants = slot?.entrant?.participants, participants.count == 1 {
+                let entrantName = slot?.entrant?.participants?[0]?.gamerTag
+                let teamName = getTeamName(combined: slot?.entrant?.name, entrantName: entrantName)
+                let entrant = Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: entrantName, teamName: teamName)
+                return (entrant: entrant, fullName: slot?.entrant?.name ?? "")
+            }
+            
+            return (entrant: Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: slot?.entrant?.name, teamName: nil),
+                    fullName: slot?.entrant?.name ?? "")
+        }
+        
+        guard let displayScore = displayScore else {
+            return entrantsInfo.map { (entrant: $0.entrant, score: nil) }
+        }
+        
+        let entrantStrings = displayScore.components(separatedBy: " - ")
+        return entrantsInfo.map {
+            for entrantString in entrantStrings where entrantString.contains($0.fullName) {
+                guard let index = entrantString.lastIndex(of: " ") else {
+                    return (entrant: $0.entrant, score: nil)
+                }
+                return (entrant: $0.entrant,
+                        score: String(entrantString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            return (entrant: $0.entrant, score: nil)
+        }
+    }
+    
+    // MARK: - getPhaseGroupSets
+    //         PhaseGroupVC
+    
+    static func getEntrantsForSet2(displayScore: String?, slots: [PhaseGroupSetsPageQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
+        guard let slots = slots else { return nil }
+        
+        let entrantsInfo = slots.compactMap { slot -> (entrant: Entrant, fullName: String)? in
+            if let participants = slot?.entrant?.participants, participants.count == 1 {
+                let entrantName = slot?.entrant?.participants?[0]?.gamerTag
+                let teamName = getTeamName(combined: slot?.entrant?.name, entrantName: entrantName)
+                let entrant = Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: entrantName, teamName: teamName)
+                return (entrant: entrant, fullName: slot?.entrant?.name ?? "")
+            }
+            
+            return (entrant: Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: slot?.entrant?.name, teamName: nil),
+                    fullName: slot?.entrant?.name ?? "")
+        }
+        
+        guard let displayScore = displayScore else {
+            return entrantsInfo.map { (entrant: $0.entrant, score: nil) }
+        }
+        
+        let entrantStrings = displayScore.components(separatedBy: " - ")
+        return entrantsInfo.map {
+            for entrantString in entrantStrings where entrantString.contains($0.fullName) {
+                guard let index = entrantString.lastIndex(of: " ") else {
+                    return (entrant: $0.entrant, score: nil)
+                }
+                return (entrant: $0.entrant,
+                        score: String(entrantString[index...]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            return (entrant: $0.entrant, score: nil)
+        }
+    }
+    
+    // MARK: - Private Helpers
+    
+    private static func getTeamName(combined: String?, entrantName: String?) -> String? {
+        guard let combined = combined, let entrantName = entrantName else { return nil }
+
+        // entrantName is the name of the entrant (e.g. Mang0)
+        // If the entrant doesn't have a team, then combined will be the same as gamerTag
+        // If they do have a team, then combined will be the team name + " | " + gamerTag (e.g. C9 | Mang0)
+        // So check if combined includes " | ", and if it does, then extract the team name
+        if let range = combined.range(of: " | " + entrantName) {
+            return String(combined[..<range.lowerBound])
+        }
+        return nil
+    }
+}

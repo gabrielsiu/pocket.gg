@@ -16,7 +16,7 @@ struct Event {
     let id: Int?
     let name: String?
     let state: String?
-    let winner: String?
+    let winner: Entrant?
     
     // Preloaded data for EventVC
     // Query 1 - TournamentDetailsById
@@ -28,6 +28,6 @@ struct Event {
     // On-demand data for EventVC
     // Query 2 - EventById
     var phases: [Phase]?
-    var topStandings: [(name: String?, placement: Int?)]?
+    var topStandings: [(entrant: Entrant?, placement: Int?)]?
     var slug: String?
 }

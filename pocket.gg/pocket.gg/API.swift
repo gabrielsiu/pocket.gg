@@ -853,6 +853,10 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
               entrant {
                 __typename
                 name
+                participants {
+                  __typename
+                  gamerTag
+                }
               }
             }
           }
@@ -1243,6 +1247,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
                 return [
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("name", type: .scalar(String.self)),
+                  GraphQLField("participants", type: .list(.object(Participant.selections))),
                 ]
               }
 
@@ -1252,8 +1257,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
                 self.resultMap = unsafeResultMap
               }
 
-              public init(name: String? = nil) {
-                self.init(unsafeResultMap: ["__typename": "Entrant", "name": name])
+              public init(name: String? = nil, participants: [Participant?]? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Entrant", "name": name, "participants": participants.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }])
               }
 
               public var __typename: String {
@@ -1272,6 +1277,55 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
                 }
                 set {
                   resultMap.updateValue(newValue, forKey: "name")
+                }
+              }
+
+              public var participants: [Participant?]? {
+                get {
+                  return (resultMap["participants"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Participant?] in value.map { (value: ResultMap?) -> Participant? in value.flatMap { (value: ResultMap) -> Participant in Participant(unsafeResultMap: value) } } }
+                }
+                set {
+                  resultMap.updateValue(newValue.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }, forKey: "participants")
+                }
+              }
+
+              public struct Participant: GraphQLSelectionSet {
+                public static let possibleTypes: [String] = ["Participant"]
+
+                public static var selections: [GraphQLSelection] {
+                  return [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("gamerTag", type: .scalar(String.self)),
+                  ]
+                }
+
+                public private(set) var resultMap: ResultMap
+
+                public init(unsafeResultMap: ResultMap) {
+                  self.resultMap = unsafeResultMap
+                }
+
+                public init(gamerTag: String? = nil) {
+                  self.init(unsafeResultMap: ["__typename": "Participant", "gamerTag": gamerTag])
+                }
+
+                public var __typename: String {
+                  get {
+                    return resultMap["__typename"]! as! String
+                  }
+                  set {
+                    resultMap.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                /// The tag that was used in registration e.g. Mang0
+                public var gamerTag: String? {
+                  get {
+                    return resultMap["gamerTag"] as? String
+                  }
+                  set {
+                    resultMap.updateValue(newValue, forKey: "gamerTag")
+                  }
                 }
               }
             }
@@ -1473,6 +1527,10 @@ public final class EventByIdQuery: GraphQLQuery {
             entrant {
               __typename
               name
+              participants {
+                __typename
+                gamerTag
+              }
             }
           }
         }
@@ -1770,6 +1828,7 @@ public final class EventByIdQuery: GraphQLQuery {
               return [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("name", type: .scalar(String.self)),
+                GraphQLField("participants", type: .list(.object(Participant.selections))),
               ]
             }
 
@@ -1779,8 +1838,8 @@ public final class EventByIdQuery: GraphQLQuery {
               self.resultMap = unsafeResultMap
             }
 
-            public init(name: String? = nil) {
-              self.init(unsafeResultMap: ["__typename": "Entrant", "name": name])
+            public init(name: String? = nil, participants: [Participant?]? = nil) {
+              self.init(unsafeResultMap: ["__typename": "Entrant", "name": name, "participants": participants.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }])
             }
 
             public var __typename: String {
@@ -1799,6 +1858,55 @@ public final class EventByIdQuery: GraphQLQuery {
               }
               set {
                 resultMap.updateValue(newValue, forKey: "name")
+              }
+            }
+
+            public var participants: [Participant?]? {
+              get {
+                return (resultMap["participants"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Participant?] in value.map { (value: ResultMap?) -> Participant? in value.flatMap { (value: ResultMap) -> Participant in Participant(unsafeResultMap: value) } } }
+              }
+              set {
+                resultMap.updateValue(newValue.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }, forKey: "participants")
+              }
+            }
+
+            public struct Participant: GraphQLSelectionSet {
+              public static let possibleTypes: [String] = ["Participant"]
+
+              public static var selections: [GraphQLSelection] {
+                return [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("gamerTag", type: .scalar(String.self)),
+                ]
+              }
+
+              public private(set) var resultMap: ResultMap
+
+              public init(unsafeResultMap: ResultMap) {
+                self.resultMap = unsafeResultMap
+              }
+
+              public init(gamerTag: String? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Participant", "gamerTag": gamerTag])
+              }
+
+              public var __typename: String {
+                get {
+                  return resultMap["__typename"]! as! String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// The tag that was used in registration e.g. Mang0
+              public var gamerTag: String? {
+                get {
+                  return resultMap["gamerTag"] as? String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "gamerTag")
+                }
               }
             }
           }
@@ -2033,6 +2141,10 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               __typename
               id
               name
+              participants {
+                __typename
+                gamerTag
+              }
             }
           }
         }
@@ -2053,6 +2165,10 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                 __typename
                 id
                 name
+                participants {
+                  __typename
+                  gamerTag
+                }
               }
             }
           }
@@ -2308,6 +2424,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("id", type: .scalar(GraphQLID.self)),
                 GraphQLField("name", type: .scalar(String.self)),
+                GraphQLField("participants", type: .list(.object(Participant.selections))),
               ]
             }
 
@@ -2317,8 +2434,8 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               self.resultMap = unsafeResultMap
             }
 
-            public init(id: GraphQLID? = nil, name: String? = nil) {
-              self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name])
+            public init(id: GraphQLID? = nil, name: String? = nil, participants: [Participant?]? = nil) {
+              self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name, "participants": participants.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }])
             }
 
             public var __typename: String {
@@ -2346,6 +2463,55 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
               }
               set {
                 resultMap.updateValue(newValue, forKey: "name")
+              }
+            }
+
+            public var participants: [Participant?]? {
+              get {
+                return (resultMap["participants"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Participant?] in value.map { (value: ResultMap?) -> Participant? in value.flatMap { (value: ResultMap) -> Participant in Participant(unsafeResultMap: value) } } }
+              }
+              set {
+                resultMap.updateValue(newValue.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }, forKey: "participants")
+              }
+            }
+
+            public struct Participant: GraphQLSelectionSet {
+              public static let possibleTypes: [String] = ["Participant"]
+
+              public static var selections: [GraphQLSelection] {
+                return [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("gamerTag", type: .scalar(String.self)),
+                ]
+              }
+
+              public private(set) var resultMap: ResultMap
+
+              public init(unsafeResultMap: ResultMap) {
+                self.resultMap = unsafeResultMap
+              }
+
+              public init(gamerTag: String? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Participant", "gamerTag": gamerTag])
+              }
+
+              public var __typename: String {
+                get {
+                  return resultMap["__typename"]! as! String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              /// The tag that was used in registration e.g. Mang0
+              public var gamerTag: String? {
+                get {
+                  return resultMap["gamerTag"] as? String
+                }
+                set {
+                  resultMap.updateValue(newValue, forKey: "gamerTag")
+                }
               }
             }
           }
@@ -2549,6 +2715,7 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .scalar(GraphQLID.self)),
                   GraphQLField("name", type: .scalar(String.self)),
+                  GraphQLField("participants", type: .list(.object(Participant.selections))),
                 ]
               }
 
@@ -2558,8 +2725,8 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                 self.resultMap = unsafeResultMap
               }
 
-              public init(id: GraphQLID? = nil, name: String? = nil) {
-                self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name])
+              public init(id: GraphQLID? = nil, name: String? = nil, participants: [Participant?]? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name, "participants": participants.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }])
               }
 
               public var __typename: String {
@@ -2587,6 +2754,55 @@ public final class PhaseGroupStandingsByIdQuery: GraphQLQuery {
                 }
                 set {
                   resultMap.updateValue(newValue, forKey: "name")
+                }
+              }
+
+              public var participants: [Participant?]? {
+                get {
+                  return (resultMap["participants"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Participant?] in value.map { (value: ResultMap?) -> Participant? in value.flatMap { (value: ResultMap) -> Participant in Participant(unsafeResultMap: value) } } }
+                }
+                set {
+                  resultMap.updateValue(newValue.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }, forKey: "participants")
+                }
+              }
+
+              public struct Participant: GraphQLSelectionSet {
+                public static let possibleTypes: [String] = ["Participant"]
+
+                public static var selections: [GraphQLSelection] {
+                  return [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("gamerTag", type: .scalar(String.self)),
+                  ]
+                }
+
+                public private(set) var resultMap: ResultMap
+
+                public init(unsafeResultMap: ResultMap) {
+                  self.resultMap = unsafeResultMap
+                }
+
+                public init(gamerTag: String? = nil) {
+                  self.init(unsafeResultMap: ["__typename": "Participant", "gamerTag": gamerTag])
+                }
+
+                public var __typename: String {
+                  get {
+                    return resultMap["__typename"]! as! String
+                  }
+                  set {
+                    resultMap.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                /// The tag that was used in registration e.g. Mang0
+                public var gamerTag: String? {
+                  get {
+                    return resultMap["gamerTag"] as? String
+                  }
+                  set {
+                    resultMap.updateValue(newValue, forKey: "gamerTag")
+                  }
                 }
               }
             }
@@ -2621,6 +2837,10 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
                 __typename
                 id
                 name
+                participants {
+                  __typename
+                  gamerTag
+                }
               }
             }
           }
@@ -2908,6 +3128,7 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
                   GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                   GraphQLField("id", type: .scalar(GraphQLID.self)),
                   GraphQLField("name", type: .scalar(String.self)),
+                  GraphQLField("participants", type: .list(.object(Participant.selections))),
                 ]
               }
 
@@ -2917,8 +3138,8 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
                 self.resultMap = unsafeResultMap
               }
 
-              public init(id: GraphQLID? = nil, name: String? = nil) {
-                self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name])
+              public init(id: GraphQLID? = nil, name: String? = nil, participants: [Participant?]? = nil) {
+                self.init(unsafeResultMap: ["__typename": "Entrant", "id": id, "name": name, "participants": participants.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }])
               }
 
               public var __typename: String {
@@ -2946,6 +3167,55 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
                 }
                 set {
                   resultMap.updateValue(newValue, forKey: "name")
+                }
+              }
+
+              public var participants: [Participant?]? {
+                get {
+                  return (resultMap["participants"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Participant?] in value.map { (value: ResultMap?) -> Participant? in value.flatMap { (value: ResultMap) -> Participant in Participant(unsafeResultMap: value) } } }
+                }
+                set {
+                  resultMap.updateValue(newValue.flatMap { (value: [Participant?]) -> [ResultMap?] in value.map { (value: Participant?) -> ResultMap? in value.flatMap { (value: Participant) -> ResultMap in value.resultMap } } }, forKey: "participants")
+                }
+              }
+
+              public struct Participant: GraphQLSelectionSet {
+                public static let possibleTypes: [String] = ["Participant"]
+
+                public static var selections: [GraphQLSelection] {
+                  return [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("gamerTag", type: .scalar(String.self)),
+                  ]
+                }
+
+                public private(set) var resultMap: ResultMap
+
+                public init(unsafeResultMap: ResultMap) {
+                  self.resultMap = unsafeResultMap
+                }
+
+                public init(gamerTag: String? = nil) {
+                  self.init(unsafeResultMap: ["__typename": "Participant", "gamerTag": gamerTag])
+                }
+
+                public var __typename: String {
+                  get {
+                    return resultMap["__typename"]! as! String
+                  }
+                  set {
+                    resultMap.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                /// The tag that was used in registration e.g. Mang0
+                public var gamerTag: String? {
+                  get {
+                    return resultMap["gamerTag"] as? String
+                  }
+                  set {
+                    resultMap.updateValue(newValue, forKey: "gamerTag")
+                  }
                 }
               }
             }

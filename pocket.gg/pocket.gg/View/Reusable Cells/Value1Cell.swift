@@ -23,8 +23,12 @@ final class Value1Cell: UITableViewCell {
     
     // MARK: - Public Methods
     
-    func updateLabels(text: String?, detailText: String?) {
-        textLabel?.text = text
+    func updateLabels(text: String? = nil, attributedText: NSAttributedString? = nil, detailText: String?) {
+        if let attributedText = attributedText {
+            textLabel?.attributedText = attributedText
+        } else {
+            textLabel?.text = text
+        }
         detailTextLabel?.text = detailText
     }
 }

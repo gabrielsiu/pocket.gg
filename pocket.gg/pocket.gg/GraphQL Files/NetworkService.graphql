@@ -71,6 +71,9 @@ query TournamentDetailsById($id: ID) {
                 nodes {
                     entrant {
                         name
+                        participants {
+                            gamerTag
+                        }
                     }
                 }
             }
@@ -115,6 +118,9 @@ query EventById($id: ID) {
                 placement
                 entrant {
                     name
+                    participants {
+                        gamerTag
+                    }
                 }
             }
         }
@@ -148,6 +154,9 @@ query PhaseGroupStandingsById($id: ID) {
                 entrant {
                     id
                     name
+                    participants {
+                        gamerTag
+                    }
                 }
             }
         }
@@ -164,6 +173,9 @@ query PhaseGroupStandingsById($id: ID) {
                     entrant {
                         id
                         name
+                        participants {
+                            gamerTag
+                        }
                     }
                 }
             }
@@ -186,6 +198,9 @@ query PhaseGroupSetsPage($id: ID, $page: Int) {
                     entrant {
                         id
                         name
+                        participants {
+                            gamerTag
+                        }
                     }
                 }
             }

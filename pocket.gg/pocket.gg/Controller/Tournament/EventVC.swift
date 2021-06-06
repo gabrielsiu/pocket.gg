@@ -62,7 +62,7 @@ final class EventVC: UITableViewController {
                 return
             }
             self?.event.phases = result["phases"] as? [Phase]
-            self?.event.topStandings = result["topStandings"] as? [(String, Int)]
+            self?.event.topStandings = result["topStandings"] as? [(Entrant, Int)]
             self?.event.slug = result["slug"] as? String
             
             self?.doneRequest = true
@@ -170,8 +170,26 @@ final class EventVC: UITableViewController {
                 guard let standing = event.topStandings?[safe: indexPath.row] else {
                     return UITableViewCell()
                 }
+                
+                let name: String
+                let teamNameLength: Int
+                if let teamName = standing.entrant?.teamName, let entrantName = standing.entrant?.name {
+                    name = teamName + " " + entrantName
+                    teamNameLength = teamName.count
+                } else if let entrantName = standing.entrant?.name {
+                    name = entrantName
+                    teamNameLength = 0
+                } else {
+                    name = ""
+                    teamNameLength = 0
+                }
+                
                 guard let placementNum = standing.placement else {
-                    cell.updateLabels(text: standing.name ?? "", detailText: nil)
+                    let attributedText = NSMutableAttributedString(string: name)
+                    attributedText.addAttribute(.foregroundColor,
+                                                value: UIColor.systemGray,
+                                                range: NSRange(location: 0, length: teamNameLength))
+                    cell.updateLabels(attributedText: attributedText, detailText: nil)
                     return cell
                 }
                 
@@ -184,7 +202,13 @@ final class EventVC: UITableViewController {
                 default: placement = " \(placementNum):  "
                 }
                 cell.selectionStyle = .none
-                cell.updateLabels(text: placement + (standing.name ?? ""), detailText: nil)
+                
+                // placement needs to be converted to NSString to get the correct length for when there is an emoji
+                let attributedText = NSMutableAttributedString(string: placement + name)
+                attributedText.addAttribute(.foregroundColor,
+                                            value: UIColor.systemGray,
+                                            range: NSRange(location: (placement as NSString).length, length: teamNameLength))
+                cell.updateLabels(attributedText: attributedText, detailText: nil)
                 return cell
             }
         default: break

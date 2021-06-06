@@ -169,6 +169,9 @@ final class TournamentVC: UITableViewController {
                 cell.accessoryType = .disclosureIndicator
                 cell.imageView?.image = UIImage(named: "game-controller")
                 
+                var teamNameStart: Int?
+                var teamNameLength: Int?
+                
                 var detailText = "● "
                 let dotColor: UIColor
                 switch event.state ?? "" {
@@ -176,8 +179,14 @@ final class TournamentVC: UITableViewController {
                     detailText += "In Progress"
                     dotColor = .systemGreen
                 case "COMPLETED":
-                    guard let winner = event.winner else { fallthrough }
-                    detailText += "1st place: " + winner
+                    guard let winnerName = event.winner?.name else { fallthrough }
+                    detailText += "1st place: "
+                    if let teamName = event.winner?.teamName {
+                        teamNameStart = detailText.count
+                        teamNameLength = teamName.count
+                        detailText += teamName + " "
+                    }
+                    detailText += winnerName
                     dotColor = .systemGray
                 default:
                     detailText += DateFormatter.shared.dateFromTimestamp(event.startDate)
@@ -186,6 +195,9 @@ final class TournamentVC: UITableViewController {
                 
                 let attributedDetailText = NSMutableAttributedString(string: detailText)
                 attributedDetailText.addAttribute(.foregroundColor, value: dotColor, range: NSRange(location: 0, length: 1))
+                if let location = teamNameStart, let length = teamNameLength {
+                    attributedDetailText.addAttribute(.foregroundColor, value: UIColor.systemGray, range: NSRange(location: location, length: length))
+                }
                 
                 cell.updateView(text: event.name, imageInfo: event.videogameImage, detailText: nil, newRatio: k.Sizes.eventImageRatio)
                 cell.detailTextLabel?.attributedText = attributedDetailText

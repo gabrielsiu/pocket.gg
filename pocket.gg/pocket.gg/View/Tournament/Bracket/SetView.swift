@@ -41,8 +41,24 @@ final class SetView: UIView {
         let name1Label = UILabel()
         let size = name0Label.font.pointSize
         
-        name0Label.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.entrant?.name, size: size, entrantNum: 0)
-        name1Label.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.entrant?.name, size: size, entrantNum: 1)
+        let fullName0: String?
+        var teamName0Length: Int?
+        if let teamName = set.entrants?[safe: 0]?.entrant?.teamName, let entrantName = set.entrants?[safe: 0]?.entrant?.name {
+            fullName0 = teamName + " " + entrantName
+            teamName0Length = teamName.count
+        } else {
+            fullName0 = set.entrants?[safe: 0]?.entrant?.name
+        }
+        let fullName1: String?
+        var teamName1Length: Int?
+        if let teamName = set.entrants?[safe: 1]?.entrant?.teamName, let entrantName = set.entrants?[safe: 1]?.entrant?.name {
+            fullName1 = teamName + " " + entrantName
+            teamName1Length = teamName.count
+        } else {
+            fullName1 = set.entrants?[safe: 1]?.entrant?.name
+        }
+        name0Label.attributedText = getAttributedText(text: fullName0, size: size, entrantNum: 0, teamNameLength: teamName0Length)
+        name1Label.attributedText = getAttributedText(text: fullName1, size: size, entrantNum: 1, teamNameLength: teamName1Length)
         
         entrantsStackView.setup(subviews: [name0Label, name1Label], axis: .vertical, alignment: .leading)
         entrantsStackView.distribution = .fillEqually
@@ -79,16 +95,21 @@ final class SetView: UIView {
     
     @objc private func presentSetCard() {
         // TODO: Present set card
+//        NotificationCenter.default.post(name: Notification.Name("didTapSet"), object: set)
     }
     
     // MARK: - Private Helpers
     
-    private func getAttributedText(text: String?, size: CGFloat, entrantNum: Int, addColor: Bool = false) -> NSMutableAttributedString {
+    private func getAttributedText(text: String?, size: CGFloat, entrantNum: Int, teamNameLength: Int? = nil, addColor: Bool = false) -> NSMutableAttributedString {
         guard let text = text else { return NSMutableAttributedString(string: "") }
         guard let score0 = set.entrants?[safe: 0]?.score else { return NSMutableAttributedString(string: text) }
         guard let score1 = set.entrants?[safe: 1]?.score else { return NSMutableAttributedString(string: text) }
         
         var attributedText = NSMutableAttributedString(string: text)
+        
+        if let teamNameLength = teamNameLength {
+            attributedText.addAttribute(.foregroundColor, value: UIColor.systemGray, range: NSRange(location: 0, length: teamNameLength))
+        }
         
         if let score0Num = Int(score0), let score1Num = Int(score1) {
             if (entrantNum == 0 && score0Num > score1Num) || (entrantNum == 1 && score1Num > score0Num) {

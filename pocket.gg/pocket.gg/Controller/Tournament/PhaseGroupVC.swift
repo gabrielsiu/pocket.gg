@@ -245,23 +245,37 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
             
             var placementText = ""
             var progressedText: String?
+            
+            var teamNameStart: Int?
+            var teamNameLength: Int?
             if let placement = standings[indexPath.row].placement {
                 placementText = "\(placement): "
+                teamNameStart = placementText.count
                 if let progressionsOut = phaseGroup?.progressionsOut, progressionsOut.contains(placement) {
                     // TODO: If possible with the API, also display where the player has progressed to
                     progressedText = "Progressed"
                 }
             }
-            if let name = standings[indexPath.row].entrant?.name {
-                placementText += name
+            if let entrantName = standings[indexPath.row].entrant?.name {
+                if let teamName = standings[indexPath.row].entrant?.teamName {
+                    placementText += teamName + " "
+                    teamNameLength = teamName.count
+                }
+                placementText += entrantName
             }
             
-            cell.updateLabels(text: placementText, detailText: progressedText)
+            let attributedText = NSMutableAttributedString(string: placementText)
+            if let location = teamNameStart, let length = teamNameLength {
+                attributedText.addAttribute(.foregroundColor, value: UIColor.systemGray, range: NSRange(location: location, length: length))
+            }
+            
+            cell.updateLabels(attributedText: attributedText, detailText: progressedText)
             return cell
         }
         return UITableViewCell()
     }
     
+    // TODO: Redesign this
     private func phaseGroupMatchCell(standings: [(entrant: Entrant?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
             cell.selectionStyle = .none
