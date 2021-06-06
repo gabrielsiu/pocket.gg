@@ -90,8 +90,11 @@ final class MainVC: UITableViewController {
         
         let dispatchGroup = DispatchGroup()
         let gameIDs = preferredGames.map { $0.id }
-        for i in 0..<numSections {
+        
+        for _ in 0..<numSections {
             dispatchGroup.enter()
+        }
+        for i in 0..<numSections {
             let featured = showFeatured && i == 0
             let gameIDs = i < numTopSections ? gameIDs : [gameIDs[i - numTopSections]]
             

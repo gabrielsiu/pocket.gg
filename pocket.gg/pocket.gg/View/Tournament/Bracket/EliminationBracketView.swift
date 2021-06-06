@@ -274,6 +274,6 @@ final class EliminationBracketView: UIView, BracketView {
         isValid = false
         invalidationCause = cause
         subviews.forEach { $0.removeFromSuperview() }
-        frame = .zero
+        frame = .null
     }
 }

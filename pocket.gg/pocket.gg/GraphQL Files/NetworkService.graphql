@@ -142,13 +142,16 @@ query PhaseGroupsById($id: ID, $perPage: Int) {
     }
 }
 
-query PhaseGroupStandingsById($id: ID) {
+query PhaseGroupById($id: ID) {
     phaseGroup(id: $id) {
         bracketType
         progressionsOut{
             originPlacement
         }
-        standings {
+        standings(query: {
+            page: 1
+            perPage: 65
+        }) {
             nodes {
                 placement
                 entrant {
@@ -176,6 +179,26 @@ query PhaseGroupStandingsById($id: ID) {
                         participants {
                             gamerTag
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+query PhaseGroupStandingsPage($id: ID, $page: Int) {
+    phaseGroup(id: $id) {
+        standings(query: {
+            page: $page
+            perPage: 65
+        }) {
+            nodes {
+                placement
+                entrant {
+                    id
+                    name
+                    participants {
+                        gamerTag
                     }
                 }
             }

@@ -115,7 +115,7 @@ final class PhaseGroupVC: UIViewController {
             return
         }
         
-        NetworkService.getPhaseGroupStandingsById(id: id) { [weak self] (result) in
+        NetworkService.getPhaseGroupById(id: id) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
                 let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
@@ -130,9 +130,18 @@ final class PhaseGroupVC: UIViewController {
             self?.phaseGroup?.standings = result["standings"] as? [(entrant: Entrant?, placement: Int?)]
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
+            guard let standings = self?.phaseGroup?.standings, let matches = self?.phaseGroup?.matches else {
+                self?.setupBracketView()
+                self?.doneRequest = true
+                self?.tableView.reloadData()
+                return
+            }
+            
             // If 100 sets were returned, there may be more sets in total, so load the next page of sets
-            if let matches = self?.phaseGroup?.matches, matches.count == 100 {
-                self?.loadRemainingPhaseGroupSetsPages(id: id, page: 2)
+            if standings.count == 65 || matches.count == 100 {
+                let nextStandingsPage: Int? = standings.count == 65 ? 2 : nil
+                let nextSetsPage: Int? = matches.count == 100 ? 2 : nil
+                self?.loadRemainingPhaseGroupData(id: id, standingsPage: nextStandingsPage, setsPage: nextSetsPage)
             } else {
                 self?.setupBracketView()
                 self?.doneRequest = true
@@ -141,18 +150,73 @@ final class PhaseGroupVC: UIViewController {
         }
     }
     
-    private func loadRemainingPhaseGroupSetsPages(id: Int, page: Int) {
-        // Upper limit to prevent potential infinite recursive calls
-        guard page < 6 else { return }
+    private func loadRemainingPhaseGroupData(id: Int, standingsPage: Int?, setsPage: Int?) {
+        let dispatchGroup = DispatchGroup()
         
-        NetworkService.getPhaseGroupSets(id: id, page: page) { [weak self] (sets) in
-            guard let sets = sets, !sets.isEmpty else { return }
-            // Add the new sets to the exisiting array of sets
-            self?.phaseGroup?.matches?.append(contentsOf: sets)
+        // If more data needs to be loaded, these will hold the next page number to load from. Else, they will be nil
+        var numStandingsReturned: Int?
+        var numSetsReturned: Int?
+        
+        // Enter block(s) to the dispatch group if more standings and/or sets need to be loaded
+        if standingsPage != nil { dispatchGroup.enter() }
+        if setsPage != nil { dispatchGroup.enter() }
+        
+        // If more standings need to be loaded, load them and leave the dispatch group once finished
+        if let page = standingsPage {
+            // Upper limit to prevent potential infinite recursive calls
+            if page < 6 {
+                NetworkService.getPhaseGroupStandings(id: id, page: page) { [weak self] (standings) in
+                    guard let standings = standings, !standings.isEmpty else {
+                        dispatchGroup.leave()
+                        return
+                    }
+                    self?.phaseGroup?.standings?.append(contentsOf: standings)
+                    
+                    numStandingsReturned = standings.count
+                    dispatchGroup.leave()
+                }
+            } else {
+                dispatchGroup.leave()
+            }
+        }
+        
+        // If more sets need to be loaded, load them and leave the dispatch group once finished
+        if let page = setsPage {
+            // Upper limit to prevent potential infinite recursive calls
+            if page < 6 {
+                NetworkService.getPhaseGroupSets(id: id, page: page) { [weak self] (sets) in
+                    guard let sets = sets, !sets.isEmpty else {
+                        dispatchGroup.leave()
+                        return
+                    }
+                    self?.phaseGroup?.matches?.append(contentsOf: sets)
+                    
+                    numSetsReturned = sets.count
+                    dispatchGroup.leave()
+                }
+            } else {
+                dispatchGroup.leave()
+            }
+        }
+        
+        // Callback for when the request(s) finishes
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            var nextStandingsPage: Int?
+            var nextSetsPage: Int?
+            if let numStandingsReturned = numStandingsReturned, numStandingsReturned == 65 {
+                if let standingsPage = standingsPage {
+                    nextStandingsPage = standingsPage + 1
+                }
+            }
+            if let numSetsReturned = numSetsReturned, numSetsReturned == 100 {
+                if let setsPage = setsPage {
+                    nextSetsPage = setsPage + 1
+                }
+            }
             
-            // If 100 sets were returned, recursively call this function until all of the sets are loaded
-            if sets.count == 100 {
-                self?.loadRemainingPhaseGroupSetsPages(id: id, page: page + 1)
+            // If more data needs to be loaded, recursively call this function until all of the data is loaded
+            if nextStandingsPage != nil || nextSetsPage != nil {
+                self?.loadRemainingPhaseGroupData(id: id, standingsPage: nextStandingsPage, setsPage: nextSetsPage)
             } else {
                 self?.setupBracketView()
                 self?.doneRequest = true

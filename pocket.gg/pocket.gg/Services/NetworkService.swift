@@ -232,8 +232,8 @@ final class NetworkService {
         }
     }
     
-    static func getPhaseGroupStandingsById(id: Int, complete: @escaping (_ standings: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupStandingsByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+    static func getPhaseGroupById(id: Int, complete: @escaping (_ phaseGroup: [String: Any?]?) -> Void) {
+        ApolloService.shared.client.fetch(query: PhaseGroupByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -279,6 +279,27 @@ final class NetworkService {
         }
     }
     
+    // MARK: - Remaining Standings & Sets
+    
+    static func getPhaseGroupStandings(id: Int, page: Int, complete: @escaping (_ standings: [(entrant: Entrant?, placement: Int?)]?) -> Void) {
+        ApolloService.shared.client.fetch(query: PhaseGroupStandingsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                DispatchQueue.main.async { complete(nil) }
+                return
+                
+            case .success(let graphQLResult):
+                var standings: [(entrant: Entrant?, placement: Int?)]?
+                if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
+                    standings = nodes.compactMap { EntrantService.getEntrantAndStanding3($0) }
+                }
+                
+                DispatchQueue.main.async { complete(standings) }
+            }
+        }
+    }
+    
     static func getPhaseGroupSets(id: Int, page: Int, complete: @escaping (_ sets: [PhaseGroupSet]?) -> Void) {
         ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
             switch result {
@@ -310,6 +331,8 @@ final class NetworkService {
             }
         }
     }
+    
+    // MARK: - Image Fetching
     
     static func getImage(imageUrl: String?, cache: Cache = .regular, newSize: CGSize? = nil, complete: @escaping (_ image: UIImage?) -> Void) {
         guard let imageUrl = imageUrl else {
