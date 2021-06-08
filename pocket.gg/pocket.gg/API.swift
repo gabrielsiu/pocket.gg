@@ -875,7 +875,6 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
         streams {
           __typename
           streamName
-          streamGame
           streamLogo
           streamSource
         }
@@ -1438,7 +1437,6 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           return [
             GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
             GraphQLField("streamName", type: .scalar(String.self)),
-            GraphQLField("streamGame", type: .scalar(String.self)),
             GraphQLField("streamLogo", type: .scalar(String.self)),
             GraphQLField("streamSource", type: .scalar(StreamSource.self)),
           ]
@@ -1450,8 +1448,8 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           self.resultMap = unsafeResultMap
         }
 
-        public init(streamName: String? = nil, streamGame: String? = nil, streamLogo: String? = nil, streamSource: StreamSource? = nil) {
-          self.init(unsafeResultMap: ["__typename": "Streams", "streamName": streamName, "streamGame": streamGame, "streamLogo": streamLogo, "streamSource": streamSource])
+        public init(streamName: String? = nil, streamLogo: String? = nil, streamSource: StreamSource? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Streams", "streamName": streamName, "streamLogo": streamLogo, "streamSource": streamSource])
         }
 
         public var __typename: String {
@@ -1469,15 +1467,6 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
           }
           set {
             resultMap.updateValue(newValue, forKey: "streamName")
-          }
-        }
-
-        public var streamGame: String? {
-          get {
-            return resultMap["streamGame"] as? String
-          }
-          set {
-            resultMap.updateValue(newValue, forKey: "streamGame")
           }
         }
 

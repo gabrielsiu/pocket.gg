@@ -150,7 +150,6 @@ final class NetworkService {
                 
                 let streams = tournament.streams?.map({ (stream) -> Stream in
                     return Stream(name: stream?.streamName,
-                                  game: stream?.streamGame,
                                   logoUrl: stream?.streamLogo,
                                   sourceUrl: stream?.streamSource?.rawValue)
                 })

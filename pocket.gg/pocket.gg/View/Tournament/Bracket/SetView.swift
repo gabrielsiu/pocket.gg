@@ -35,60 +35,113 @@ final class SetView: UIView {
     }
     
     private func setupLabels() {
-        // Entrants Stack View
-        let entrantsStackView = UIStackView()
-        let name0Label = UILabel()
-        let name1Label = UILabel()
-        let size = name0Label.font.pointSize
-        
-        let fullName0: String?
-        var teamName0Length: Int?
-        if let teamName = set.entrants?[safe: 0]?.entrant?.teamName, let entrantName = set.entrants?[safe: 0]?.entrant?.name {
-            fullName0 = teamName + " " + entrantName
-            teamName0Length = teamName.count
-        } else {
-            fullName0 = set.entrants?[safe: 0]?.entrant?.name
-        }
-        let fullName1: String?
-        var teamName1Length: Int?
-        if let teamName = set.entrants?[safe: 1]?.entrant?.teamName, let entrantName = set.entrants?[safe: 1]?.entrant?.name {
-            fullName1 = teamName + " " + entrantName
-            teamName1Length = teamName.count
-        } else {
-            fullName1 = set.entrants?[safe: 1]?.entrant?.name
-        }
-        name0Label.attributedText = getAttributedText(text: fullName0, size: size, entrantNum: 0, teamNameLength: teamName0Length)
-        name1Label.attributedText = getAttributedText(text: fullName1, size: size, entrantNum: 1, teamNameLength: teamName1Length)
-        
-        entrantsStackView.setup(subviews: [name0Label, name1Label], axis: .vertical, alignment: .leading)
-        entrantsStackView.distribution = .fillEqually
-        
-        // Score Stack View
-        let scoreStackView = UIStackView()
-        let score0Label = UILabel()
-        let score1Label = UILabel()
-        
-        score0Label.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.score, size: size, entrantNum: 0, addColor: true)
-        score1Label.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.score, size: size, entrantNum: 1, addColor: true)
-        
-        scoreStackView.setup(subviews: [score0Label, score1Label], axis: .vertical, alignment: .trailing)
-        scoreStackView.distribution = .fillEqually
-        
-        // Total Stack View
-        let totalStackView = UIStackView()
+        // Set Identifier Label
         let setIdentifierLabel = UILabel()
-        
         setIdentifierLabel.textAlignment = .center
         setIdentifierLabel.text = set.identifier
+        addSubview(setIdentifierLabel)
         
-        totalStackView.setup(subviews: [setIdentifierLabel, entrantsStackView, scoreStackView], axis: .horizontal, spacing: 10)
+        // Entrant Labels Container
+        let labelsContainer = UIView()
+        addSubview(labelsContainer)
         
-        addSubview(totalStackView)
-        totalStackView.setEdgeConstraints(top: topAnchor,
-                                          bottom: bottomAnchor,
-                                          leading: leadingAnchor,
-                                          trailing: trailingAnchor,
-                                          padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        let teamLabel0 = UILabel()
+        teamLabel0.text = set.entrants?[safe: 0]?.entrant?.teamName
+        labelsContainer.addSubview(teamLabel0)
+        
+        let entrantLabel0 = UILabel()
+        entrantLabel0.text = set.entrants?[safe: 0]?.entrant?.name
+        labelsContainer.addSubview(entrantLabel0)
+        
+        let teamLabel1 = UILabel()
+        teamLabel1.text = set.entrants?[safe: 1]?.entrant?.teamName
+        labelsContainer.addSubview(teamLabel1)
+        
+        let entrantLabel1 = UILabel()
+        entrantLabel1.text = set.entrants?[safe: 1]?.entrant?.name
+        labelsContainer.addSubview(entrantLabel1)
+        
+        // Score Labels
+        let scoreLabel0Container = UIView()
+        addSubview(scoreLabel0Container)
+        
+        let scoreLabel1Container = UIView()
+        addSubview(scoreLabel1Container)
+        
+        let scoreLabel0 = UILabel()
+        scoreLabel0.text = set.entrants?[safe: 0]?.score
+        scoreLabel0.textAlignment = .center
+        scoreLabel0Container.addSubview(scoreLabel0)
+        
+        let scoreLabel1 = UILabel()
+        scoreLabel1.text = set.entrants?[safe: 1]?.score
+        scoreLabel1.textAlignment = .center
+        scoreLabel1Container.addSubview(scoreLabel1)
+        
+        // Content Hugging & Compression Resistance Priorities
+        setIdentifierLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        teamLabel0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        teamLabel1.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        teamLabel0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        teamLabel1.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        entrantLabel0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        entrantLabel1.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+        scoreLabel0Container.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        scoreLabel1Container.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        scoreLabel0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        scoreLabel1.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        // Constraints
+        setIdentifierLabel.widthAnchor.constraint(equalToConstant: setIdentifierLabel.intrinsicContentSize.width).isActive = true
+        setIdentifierLabel.setEdgeConstraints(top: topAnchor,
+                                              bottom: bottomAnchor,
+                                              leading: leadingAnchor,
+                                              trailing: labelsContainer.leadingAnchor,
+                                              padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        labelsContainer.setEdgeConstraints(top: topAnchor,
+                                           bottom: bottomAnchor,
+                                           leading: setIdentifierLabel.trailingAnchor,
+                                           padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        teamLabel0.widthAnchor.constraint(greaterThanOrEqualToConstant: k.Sizes.setWidth / 7).isActive = true
+        teamLabel0.setEdgeConstraints(top: labelsContainer.topAnchor,
+                                      leading: labelsContainer.leadingAnchor,
+                                      trailing: entrantLabel0.leadingAnchor,
+                                      padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        entrantLabel0.setEdgeConstraints(top: labelsContainer.topAnchor,
+                                         leading: teamLabel0.trailingAnchor,
+                                         trailing: labelsContainer.trailingAnchor,
+                                         padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        teamLabel1.widthAnchor.constraint(greaterThanOrEqualToConstant: k.Sizes.setWidth / 7).isActive = true
+        teamLabel1.setEdgeConstraints(bottom: labelsContainer.bottomAnchor,
+                                      leading: labelsContainer.leadingAnchor,
+                                      trailing: entrantLabel1.leadingAnchor,
+                                      padding: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        entrantLabel1.setEdgeConstraints(bottom: labelsContainer.bottomAnchor,
+                                         leading: teamLabel1.trailingAnchor,
+                                         trailing: labelsContainer.trailingAnchor,
+                                         padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        
+        scoreLabel0Container.setEdgeConstraints(top: topAnchor,
+                                                bottom: centerYAnchor,
+                                                leading: labelsContainer.trailingAnchor,
+                                                trailing: trailingAnchor)
+        scoreLabel1Container.setEdgeConstraints(top: centerYAnchor,
+                                                bottom: bottomAnchor,
+                                                leading: labelsContainer.trailingAnchor,
+                                                trailing: trailingAnchor)
+        scoreLabel0.setEdgeConstraints(top: scoreLabel0Container.topAnchor,
+                                       bottom: scoreLabel0Container.bottomAnchor,
+                                       leading: scoreLabel0Container.leadingAnchor,
+                                       trailing: scoreLabel0Container.trailingAnchor,
+                                       padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        scoreLabel1.setEdgeConstraints(top: scoreLabel1Container.topAnchor,
+                                       bottom: scoreLabel1Container.bottomAnchor,
+                                       leading: scoreLabel1Container.leadingAnchor,
+                                       trailing: scoreLabel1Container.trailingAnchor,
+                                       padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
     }
     
     // MARK: - Actions

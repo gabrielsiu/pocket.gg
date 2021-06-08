@@ -216,7 +216,7 @@ final class TournamentVC: UITableViewController {
                 guard let stream = tournament.streams?[safe: indexPath.row] else { break }
                 cell.accessoryType = .disclosureIndicator
                 cell.imageView?.image = UIImage(named: "placeholder")
-                cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: stream.game)
+                cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: nil)
                 return cell
             }
             

@@ -89,7 +89,6 @@ query TournamentDetailsById($id: ID) {
         }
         streams {
             streamName
-            streamGame
             streamLogo
             streamSource
         }
