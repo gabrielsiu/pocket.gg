@@ -48,8 +48,6 @@ final class MainVC: UITableViewController {
         super.viewDidLoad()
         title = "Tournaments"
         tableView.register(ScrollableRowCell.self, forCellReuseIdentifier: k.Identifiers.tournamentsRowCell)
-        
-        tableView.rowHeight = k.Sizes.tournamentCellHeight
         tableView.separatorColor = .clear
         
         refreshControl = UIRefreshControl()
@@ -144,6 +142,10 @@ final class MainVC: UITableViewController {
         return numSections
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: .zero)
         
@@ -177,26 +179,42 @@ final class MainVC: UITableViewController {
         
         return headerView
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? ScrollableRowCell else { return }
-        cell.setCollectionViewProperties(self, forSection: indexPath.section)
-    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard doneRequest[indexPath.section] else { return LoadingCell(color: .secondarySystemBackground) }
-        guard !preferredGames.isEmpty else { return NoEnabledGamesCell() }
-        guard !tournaments[indexPath.section].isEmpty else { return NoTournamentsCell() }
+        guard !preferredGames.isEmpty else {
+            let text = "You haven't enabled any video games. Add your favorite video games to see tournaments that feature those games."
+            let cell = UITableViewCell().setupDisabled(text)
+            cell.textLabel?.numberOfLines = 0
+            cell.backgroundColor = .systemGroupedBackground
+            return cell
+        }
+        guard !tournaments[indexPath.section].isEmpty else {
+            let cell = UITableViewCell().setupDisabled("No tournaments found for this category")
+            cell.textLabel?.numberOfLines = 0
+            cell.backgroundColor = .systemGroupedBackground
+            return cell
+        }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentsRowCell, for: indexPath) as? ScrollableRowCell {
             return cell
         }
         
         return UITableViewCell()
+    }
+    
+    // MARK: - Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? ScrollableRowCell else { return }
+        cell.setCollectionViewProperties(self, forSection: indexPath.section)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard doneRequest[indexPath.section], !preferredGames.isEmpty, !tournaments[indexPath.section].isEmpty else {
+            return UITableView.automaticDimension
+        }
+        return k.Sizes.tournamentCellHeight
     }
 }
 

@@ -34,6 +34,7 @@ final class VideoGamesVC: UITableViewController {
         super.viewDidLoad()
         title = "Video Game Selection"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.videoGameCell)
+        tableView.keyboardDismissMode = .onDrag
         navigationItem.rightBarButtonItem = enabledGames.isEmpty ? nil : editButtonItem
         setupHeaderView()
     }
