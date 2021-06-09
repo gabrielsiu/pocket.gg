@@ -191,6 +191,8 @@ final class EliminationBracketView: UIView, BracketView {
             // Add the set to the BracketView at the calculated position
             if firstRoundHasMostSets || (!firstRoundHasMostSets && roundIndex >= maxIndex) {
                 addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
+                let offset = k.Sizes.setHeight / 4
+                addSubview(SetIdentifierView(setIdentifier: set.identifier, xPos: xPosition - offset, yPos: yPosition + offset))
             } else {
                 leftoverSets.append(set)
             }
@@ -221,6 +223,8 @@ final class EliminationBracketView: UIView, BracketView {
                 
                 addSetPathView(numPrecedingSets: 1, x: xPosition + k.Sizes.setWidth, y: yPosition, height: k.Sizes.setHeight)
                 addSubview(SetView(set: set, xPos: xPosition, yPos: yPosition))
+                let offset = k.Sizes.setHeight / 4
+                addSubview(SetIdentifierView(setIdentifier: set.identifier, xPos: xPosition - offset, yPos: yPosition + offset))
                 prevRoundNum = set.roundNum
             }
         }

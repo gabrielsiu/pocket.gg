@@ -73,6 +73,7 @@
 		DAECFB652647436000661EDA /* PreferredGamesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECFB642647436000661EDA /* PreferredGamesService.swift */; };
 		DAF0BE412665BAB8000F7506 /* AppIconVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0BE402665BAB8000F7506 /* AppIconVC.swift */; };
 		DAF0BE51266C03FD000F7506 /* EntrantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0BE50266C03FD000F7506 /* EntrantService.swift */; };
+		DAF0BE57267032DA000F7506 /* SetIdentifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0BE56267032DA000F7506 /* SetIdentifierView.swift */; };
 		DAF2A20D256B345B00580AAB /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2A20C256B345B00580AAB /* API.swift */; };
 		DAF39622265F4D5C00FA9778 /* VideoGamesSearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF39621265F4D5C00FA9778 /* VideoGamesSearchResultsVC.swift */; };
 		DAF618E9241E176100AB4D93 /* UIStackView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */; };
@@ -157,6 +158,7 @@
 		DAECFB642647436000661EDA /* PreferredGamesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredGamesService.swift; sourceTree = "<group>"; };
 		DAF0BE402665BAB8000F7506 /* AppIconVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconVC.swift; sourceTree = "<group>"; };
 		DAF0BE50266C03FD000F7506 /* EntrantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntrantService.swift; sourceTree = "<group>"; };
+		DAF0BE56267032DA000F7506 /* SetIdentifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetIdentifierView.swift; sourceTree = "<group>"; };
 		DAF2A20C256B345B00580AAB /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DAF39621265F4D5C00FA9778 /* VideoGamesSearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGamesSearchResultsVC.swift; sourceTree = "<group>"; };
 		DAF618E8241E176100AB4D93 /* UIStackView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Setup.swift"; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				DA0E5D54255773B600FF6E42 /* SetView.swift */,
+				DAF0BE56267032DA000F7506 /* SetIdentifierView.swift */,
 				DA68B683257C9A6B00A010F3 /* SetPathView.swift */,
 				DA68B6AD257D322200A010F3 /* InvalidBracketView.swift */,
 				DAEACF8E250AF53E002F0674 /* EliminationBracketView.swift */,
@@ -553,6 +556,7 @@
 				DA68B6AE257D322200A010F3 /* InvalidBracketView.swift in Sources */,
 				DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */,
 				DA266131265C89A100ACEA8D /* AuthTokenStepsVC.swift in Sources */,
+				DAF0BE57267032DA000F7506 /* SetIdentifierView.swift in Sources */,
 				DA2E80A92659A95900B876F1 /* TournamentSearchResultsVC.swift in Sources */,
 				DA68B6C1257EB7CB00A010F3 /* BracketView.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventVC.swift in Sources */,
