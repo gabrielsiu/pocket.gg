@@ -285,15 +285,22 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if phaseGroupViewControl.selectedSegmentIndex == 0 {
-            return phaseGroup?.standings?.count ?? 1
+            guard let count = phaseGroup?.standings?.count, count != 0  else {
+                return 1
+            }
+            return count
         } else {
-            return phaseGroup?.matches?.count ?? 1
+            guard let count = phaseGroup?.matches?.count, count != 0  else {
+                return 1
+            }
+            return count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let standings = phaseGroup?.standings, !standings.isEmpty else {
-            return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
+            let text = phaseGroupViewControl.selectedSegmentIndex == 0 ? "No standings found" : "No matches found"
+            return doneRequest ? UITableViewCell().setupDisabled(text) : LoadingCell()
         }
         
         switch phaseGroupViewControl.selectedSegmentIndex {
