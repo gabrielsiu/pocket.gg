@@ -12,7 +12,28 @@ final class InvalidBracketView: UIView {
     
     let cause: InvalidBracketViewCause
     var unsupportedBracketType: String?
-    var labelText: String {
+    
+    var imageName: String {
+        switch cause {
+        case .bracketLayoutError: return "tournament-bracket-error"
+        case .bracketNotStarted: return "tournament-bracket-not-started"
+        case .noEntrants: return "tournament-bracket-missing-data"
+        case .noSets: return "tournament-bracket-missing-data"
+        case .unsupportedBracketType: return "tournament-bracket-unsupported"
+        }
+    }
+    
+    var titleText: String {
+        switch cause {
+        case .bracketLayoutError: return "Error generating Bracket"
+        case .bracketNotStarted: return "Bracket not started"
+        case .noEntrants: return "No Entrants"
+        case .noSets: return "No Sets"
+        case .unsupportedBracketType: return "Unsupported Bracket type"
+        }
+    }
+    
+    var messageText: String {
         switch cause {
         case .bracketLayoutError: return "Unable to generate a bracket view for this bracket"
         case .bracketNotStarted: return "This bracket has not started yet. Check back again when the bracket starts"
@@ -41,18 +62,41 @@ final class InvalidBracketView: UIView {
     
     private func setup() {
         // TODO: Finish design of this view, fix constraints
-        let stackView = UIStackView()
         
-        let imageView = UIImageView(image: UIImage(named: "placeholder"))
+        let imageView = UIImageView(image: UIImage(named: imageName))
         imageView.contentMode = .scaleAspectFit
         
-        let label = UILabel(frame: .zero)
-        label.text = labelText
-        label.textAlignment = .center
+        let titleLabel = UILabel()
+        titleLabel.text = titleText
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont.boldSystemFont(ofSize: titleLabel.font.pointSize)
+        titleLabel.numberOfLines = 0
         
-        stackView.setup(subviews: [imageView, label], axis: .vertical, spacing: 20)
+        let messageLabel = UILabel()
+        messageLabel.text = messageText
+        messageLabel.textAlignment = .center
+        messageLabel.numberOfLines = 0
         
-        addSubview(stackView)
-        stackView.setAxisConstraints(xAnchor: centerXAnchor, yAnchor: centerYAnchor)
+        addSubview(imageView)
+        addSubview(titleLabel)
+        addSubview(messageLabel)
+        
+        messageLabel.setAxisConstraints(yAnchor: centerYAnchor)
+        messageLabel.setEdgeConstraints(top: titleLabel.bottomAnchor,
+                                 leading: leadingAnchor,
+                                 trailing: trailingAnchor,
+                                 padding: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
+        
+        titleLabel.setEdgeConstraints(top: imageView.bottomAnchor,
+                                      bottom: messageLabel.topAnchor,
+                                      leading: messageLabel.leadingAnchor,
+                                      trailing: messageLabel.trailingAnchor,
+                                      padding: UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0))
+        
+        imageView.setAxisConstraints(xAnchor: centerXAnchor)
+        imageView.setEdgeConstraints(bottom: titleLabel.topAnchor,
+                                     padding: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        imageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16).isActive = true
     }
 }

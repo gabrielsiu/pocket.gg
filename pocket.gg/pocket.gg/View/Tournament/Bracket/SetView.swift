@@ -72,7 +72,7 @@ final class SetView: UIView {
         
         let entrantLabel0 = UILabel()
         if outcome == .entrant0Won {
-            entrantLabel0.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.entrant?.name, size: size)
+            entrantLabel0.addAttributes(text: set.entrants?[safe: 0]?.entrant?.name, bold: true)
         } else {
             entrantLabel0.text = set.entrants?[safe: 0]?.entrant?.name
         }
@@ -80,7 +80,7 @@ final class SetView: UIView {
         
         let entrantLabel1 = UILabel()
         if outcome == .entrant1Won {
-            entrantLabel1.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.entrant?.name, size: size)
+            entrantLabel1.addAttributes(text: set.entrants?[safe: 1]?.entrant?.name, bold: true)
         } else {
             entrantLabel1.text = set.entrants?[safe: 1]?.entrant?.name
         }
@@ -97,8 +97,7 @@ final class SetView: UIView {
         // Team for Entrant 0
         if set.entrants?[safe: 0]?.entrant?.teamName != nil {
             let teamLabel0 = UILabel()
-            teamLabel0.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.entrant?.teamName,
-                                                          size: size, bold: outcome == .entrant0Won, color: .systemGray)
+            teamLabel0.addAttributes(text: set.entrants?[safe: 0]?.entrant?.teamName, bold: outcome == .entrant0Won, color: .systemGray)
             labelsContainer.addSubview(teamLabel0)
             
             teamLabel0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -124,8 +123,7 @@ final class SetView: UIView {
         // Team for Entrant 1
         if set.entrants?[safe: 1]?.entrant?.teamName != nil {
             let teamLabel1 = UILabel()
-            teamLabel1.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.entrant?.teamName,
-                                                          size: size, bold: outcome == .entrant1Won, color: .systemGray)
+            teamLabel1.addAttributes(text: set.entrants?[safe: 1]?.entrant?.teamName, bold: outcome == .entrant1Won, color: .systemGray)
             labelsContainer.addSubview(teamLabel1)
             
             teamLabel1.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -164,14 +162,14 @@ final class SetView: UIView {
         scoreLabel1Container.addSubview(scoreLabel1)
         
         if outcome == .entrant0Won {
-            scoreLabel0.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.score, size: size, color: .white)
+            scoreLabel0.addAttributes(text: set.entrants?[safe: 0]?.score, bold: true, color: .white)
             scoreLabel0Container.backgroundColor = .systemGreen
-            scoreLabel1.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.score, size: size, bold: false, color: .white)
+            scoreLabel1.addAttributes(text: set.entrants?[safe: 1]?.score, bold: false, color: .white)
             scoreLabel1Container.backgroundColor = .systemGray2
         } else if outcome == .entrant1Won {
-            scoreLabel1.attributedText = getAttributedText(text: set.entrants?[safe: 1]?.score, size: size, color: .white)
+            scoreLabel1.addAttributes(text: set.entrants?[safe: 1]?.score, bold: true, color: .white)
             scoreLabel1Container.backgroundColor = .systemGreen
-            scoreLabel0.attributedText = getAttributedText(text: set.entrants?[safe: 0]?.score, size: size, bold: false, color: .white)
+            scoreLabel0.addAttributes(text: set.entrants?[safe: 0]?.score, bold: false, color: .white)
             scoreLabel0Container.backgroundColor = .systemGray2
         }
         
@@ -207,20 +205,18 @@ final class SetView: UIView {
         // TODO: Present set card
 //        NotificationCenter.default.post(name: Notification.Name("didTapSet"), object: set)
     }
-    
-    // MARK: - Private Helpers
-    
-    private func getAttributedText(text: String?, size: CGFloat, bold: Bool = true, color: UIColor? = nil) -> NSMutableAttributedString {
-        guard let text = text else { return NSMutableAttributedString(string: "") }
-        
-        let attributedText = NSMutableAttributedString(string: text)
+}
+
+// MARK: - UILabel Attribute Helper
+
+private extension UILabel {
+    func addAttributes(text: String?, bold: Bool, color: UIColor? = nil) {
+        self.text = text
         if bold {
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: size), range: NSRange(location: 0, length: text.count))
+            font = UIFont.boldSystemFont(ofSize: font.pointSize)
         }
         if let color = color {
-            attributedText.addAttribute(.foregroundColor, value: color, range: NSRange(location: 0, length: text.count))
+            textColor = color
         }
-        
-        return attributedText
     }
 }

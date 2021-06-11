@@ -18,6 +18,7 @@ final class PhaseGroupVC: UIViewController {
     
     let bracketScrollView: UIScrollView
     var bracketView: BracketView?
+    let bracketViewSpinner: UIActivityIndicatorView
     
     // MARK: - Initialization
     
@@ -31,6 +32,7 @@ final class PhaseGroupVC: UIViewController {
         tableView = UITableView(frame: .zero, style: .plain)
         
         bracketScrollView = UIScrollView(frame: .zero)
+        bracketViewSpinner = UIActivityIndicatorView(style: .medium)
         
         super.init(nibName: nil, bundle: nil)
         self.title = title
@@ -88,6 +90,10 @@ final class PhaseGroupVC: UIViewController {
         tableView.delegate = self
         
         bracketScrollView.isHidden = true
+        
+        bracketViewSpinner.startAnimating()
+        bracketScrollView.addSubview(bracketViewSpinner)
+        bracketViewSpinner.setAxisConstraints(xAnchor: bracketScrollView.centerXAnchor, yAnchor: bracketScrollView.centerYAnchor)
         
         phaseGroupViewControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
     }
@@ -247,6 +253,7 @@ final class PhaseGroupVC: UIViewController {
         } else {
             showInvalidBracketView(cause: .unsupportedBracketType, bracketType: phaseGroup?.bracketType)
         }
+        bracketViewSpinner.isHidden = true
     }
     
     // MARK: - Actions
