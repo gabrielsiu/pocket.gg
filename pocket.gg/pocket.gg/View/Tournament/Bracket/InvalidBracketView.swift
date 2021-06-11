@@ -16,7 +16,8 @@ final class InvalidBracketView: UIView {
         switch cause {
         case .bracketLayoutError: return "Unable to generate a bracket view for this bracket"
         case .bracketNotStarted: return "This bracket has not started yet. Check back again when the bracket starts"
-        case .noEntrants: return "This entrant currently has no entrants."
+        case .noEntrants: return "This event currently has no entrants."
+        case .noSets: return "This bracket currently has no sets to be displayed."
         case .unsupportedBracketType:
             let bracketType = unsupportedBracketType != nil ? " (\(unsupportedBracketType ?? ""))" : ""
             return "This type of bracket is currently not supported." + bracketType

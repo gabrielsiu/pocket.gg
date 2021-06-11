@@ -57,7 +57,7 @@ class EntrantService {
         return (entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
     }
     
-    static func getEntrantsForSet(displayScore: String?, slots: [PhaseGroupByIdQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
+    static func getEntrantsForSet(displayScore: String?, winnerID: Int?, slots: [PhaseGroupByIdQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
         guard let slots = slots else { return nil }
         
         let entrantsInfo = slots.compactMap { slot -> (entrant: Entrant, fullName: String)? in
@@ -74,6 +74,14 @@ class EntrantService {
         
         guard let displayScore = displayScore else {
             return entrantsInfo.map { (entrant: $0.entrant, score: nil) }
+        }
+        
+        if displayScore == "DQ" {
+            guard let winnerID = winnerID else { return entrantsInfo.map { (entrant: $0.entrant, score: nil) } }
+            return entrantsInfo.map {
+                guard let entrantID = $0.entrant.id else { return (entrant: $0.entrant, score: nil) }
+                return (entrant: $0.entrant, score: entrantID == winnerID ? "✓" : "DQ")
+            }
         }
         
         let entrantStrings = displayScore.components(separatedBy: " - ")
@@ -110,7 +118,7 @@ class EntrantService {
     // MARK: getPhaseGroupSets
     //       PhaseGroupVC
     
-    static func getEntrantsForSet2(displayScore: String?, slots: [PhaseGroupSetsPageQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
+    static func getEntrantsForSet2(displayScore: String?, winnerID: Int?, slots: [PhaseGroupSetsPageQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
         guard let slots = slots else { return nil }
         
         let entrantsInfo = slots.compactMap { slot -> (entrant: Entrant, fullName: String)? in
@@ -127,6 +135,14 @@ class EntrantService {
         
         guard let displayScore = displayScore else {
             return entrantsInfo.map { (entrant: $0.entrant, score: nil) }
+        }
+        
+        if displayScore == "DQ" {
+            guard let winnerID = winnerID else { return entrantsInfo.map { (entrant: $0.entrant, score: nil) } }
+            return entrantsInfo.map {
+                guard let entrantID = $0.entrant.id else { return (entrant: $0.entrant, score: nil) }
+                return (entrant: $0.entrant, score: entrantID == winnerID ? "✓" : "DQ")
+            }
         }
         
         let entrantStrings = displayScore.components(separatedBy: " - ")

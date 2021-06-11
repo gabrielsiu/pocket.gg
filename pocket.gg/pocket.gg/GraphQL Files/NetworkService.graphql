@@ -170,6 +170,7 @@ query PhaseGroupById($id: ID) {
                 identifier
                 fullRoundText
                 displayScore
+                winnerId
                 slots {
                     prereqId
                     entrant {
@@ -215,6 +216,7 @@ query PhaseGroupSetsPage($id: ID, $page: Int) {
                 identifier
                 fullRoundText
                 displayScore
+                winnerId
                 slots {
                     prereqId
                     entrant {

@@ -263,7 +263,9 @@ final class NetworkService {
                                                             return Int(prevRoundID)
                                                           }),
                                                           entrants: nil)
-                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet(displayScore: set?.displayScore, slots: set?.slots)
+                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet(displayScore: set?.displayScore,
+                                                                                  winnerID: set?.winnerId,
+                                                                                  slots: set?.slots)
                         return phaseGroupSet
                     })
                 }
@@ -321,7 +323,9 @@ final class NetworkService {
                                                             return Int(prevRoundID)
                                                           }),
                                                           entrants: nil)
-                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet2(displayScore: set?.displayScore, slots: set?.slots)
+                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet2(displayScore: set?.displayScore,
+                                                                                   winnerID: set?.winnerId,
+                                                                                   slots: set?.slots)
                         return phaseGroupSet
                     })
                 }

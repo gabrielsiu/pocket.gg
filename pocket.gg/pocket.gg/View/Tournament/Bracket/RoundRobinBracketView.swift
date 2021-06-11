@@ -21,7 +21,7 @@ final class RoundRobinBracketView: UIView, BracketView {
     init(sets: [PhaseGroupSet]?, entrants: [Entrant]?) {
         self.sets = sets
         
-        guard let entrants = entrants else {
+        guard let entrants = entrants, !entrants.isEmpty else {
             self.entrants = []
             super.init(frame: .zero)
             isValid = false

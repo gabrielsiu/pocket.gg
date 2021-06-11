@@ -10,6 +10,7 @@ import UIKit
 
 enum InvalidBracketViewCause {
     case noEntrants
+    case noSets
     case bracketNotStarted
     case bracketLayoutError
     case unsupportedBracketType

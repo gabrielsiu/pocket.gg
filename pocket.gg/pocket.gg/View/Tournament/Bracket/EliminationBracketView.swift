@@ -23,9 +23,15 @@ final class EliminationBracketView: UIView, BracketView {
     // MARK: - Initialization
     
     init(sets: [PhaseGroupSet]?) {
+        guard let sets = sets, !sets.isEmpty else {
+            super.init(frame: .zero)
+            invalidateBracketView(with: .noSets)
+            return
+        }
+        
         // First sort the sets by the number of characters in their identifier
         // Then sort the the sets by their identifier's alphabetical order
-        self.sets = sets?.sorted {
+        self.sets = sets.sorted {
             if $0.identifier.count != $1.identifier.count {
                 return $0.identifier.count < $1.identifier.count
             } else {

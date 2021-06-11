@@ -2147,6 +2147,7 @@ public final class PhaseGroupByIdQuery: GraphQLQuery {
             identifier
             fullRoundText
             displayScore
+            winnerId
             slots {
               __typename
               prereqId
@@ -2557,6 +2558,7 @@ public final class PhaseGroupByIdQuery: GraphQLQuery {
               GraphQLField("identifier", type: .scalar(String.self)),
               GraphQLField("fullRoundText", type: .scalar(String.self)),
               GraphQLField("displayScore", type: .scalar(String.self)),
+              GraphQLField("winnerId", type: .scalar(Int.self)),
               GraphQLField("slots", type: .list(.object(Slot.selections))),
             ]
           }
@@ -2567,8 +2569,8 @@ public final class PhaseGroupByIdQuery: GraphQLQuery {
             self.resultMap = unsafeResultMap
           }
 
-          public init(id: GraphQLID? = nil, state: Int? = nil, round: Int? = nil, identifier: String? = nil, fullRoundText: String? = nil, displayScore: String? = nil, slots: [Slot?]? = nil) {
-            self.init(unsafeResultMap: ["__typename": "Set", "id": id, "state": state, "round": round, "identifier": identifier, "fullRoundText": fullRoundText, "displayScore": displayScore, "slots": slots.flatMap { (value: [Slot?]) -> [ResultMap?] in value.map { (value: Slot?) -> ResultMap? in value.flatMap { (value: Slot) -> ResultMap in value.resultMap } } }])
+          public init(id: GraphQLID? = nil, state: Int? = nil, round: Int? = nil, identifier: String? = nil, fullRoundText: String? = nil, displayScore: String? = nil, winnerId: Int? = nil, slots: [Slot?]? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Set", "id": id, "state": state, "round": round, "identifier": identifier, "fullRoundText": fullRoundText, "displayScore": displayScore, "winnerId": winnerId, "slots": slots.flatMap { (value: [Slot?]) -> [ResultMap?] in value.map { (value: Slot?) -> ResultMap? in value.flatMap { (value: Slot) -> ResultMap in value.resultMap } } }])
           }
 
           public var __typename: String {
@@ -2634,6 +2636,15 @@ public final class PhaseGroupByIdQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "displayScore")
+            }
+          }
+
+          public var winnerId: Int? {
+            get {
+              return resultMap["winnerId"] as? Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "winnerId")
             }
           }
 
@@ -3120,6 +3131,7 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
             identifier
             fullRoundText
             displayScore
+            winnerId
             slots {
               __typename
               prereqId
@@ -3271,6 +3283,7 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
               GraphQLField("identifier", type: .scalar(String.self)),
               GraphQLField("fullRoundText", type: .scalar(String.self)),
               GraphQLField("displayScore", type: .scalar(String.self)),
+              GraphQLField("winnerId", type: .scalar(Int.self)),
               GraphQLField("slots", type: .list(.object(Slot.selections))),
             ]
           }
@@ -3281,8 +3294,8 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
             self.resultMap = unsafeResultMap
           }
 
-          public init(id: GraphQLID? = nil, state: Int? = nil, round: Int? = nil, identifier: String? = nil, fullRoundText: String? = nil, displayScore: String? = nil, slots: [Slot?]? = nil) {
-            self.init(unsafeResultMap: ["__typename": "Set", "id": id, "state": state, "round": round, "identifier": identifier, "fullRoundText": fullRoundText, "displayScore": displayScore, "slots": slots.flatMap { (value: [Slot?]) -> [ResultMap?] in value.map { (value: Slot?) -> ResultMap? in value.flatMap { (value: Slot) -> ResultMap in value.resultMap } } }])
+          public init(id: GraphQLID? = nil, state: Int? = nil, round: Int? = nil, identifier: String? = nil, fullRoundText: String? = nil, displayScore: String? = nil, winnerId: Int? = nil, slots: [Slot?]? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Set", "id": id, "state": state, "round": round, "identifier": identifier, "fullRoundText": fullRoundText, "displayScore": displayScore, "winnerId": winnerId, "slots": slots.flatMap { (value: [Slot?]) -> [ResultMap?] in value.map { (value: Slot?) -> ResultMap? in value.flatMap { (value: Slot) -> ResultMap in value.resultMap } } }])
           }
 
           public var __typename: String {
@@ -3348,6 +3361,15 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
             }
             set {
               resultMap.updateValue(newValue, forKey: "displayScore")
+            }
+          }
+
+          public var winnerId: Int? {
+            get {
+              return resultMap["winnerId"] as? Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "winnerId")
             }
           }
 

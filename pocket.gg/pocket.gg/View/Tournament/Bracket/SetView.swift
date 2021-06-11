@@ -37,9 +37,9 @@ final class SetView: UIView {
                 } else {
                     outcome = .noWinner
                 }
-            } else if score0 == "W" {
+            } else if score0 == "W" || score0 == "✓" {
                 outcome = .entrant0Won
-            } else if score1 == "W" {
+            } else if score1 == "W" || score1 == "✓" {
                 outcome = .entrant1Won
             } else {
                 outcome = .noWinner
