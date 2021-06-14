@@ -15,6 +15,8 @@ final class TournamentSearchVC: UITableViewController {
     
     let featuredCell: UITableViewCell
     let olderTournamentsFirstCell: UITableViewCell
+    let searchUsingEnabledGamesCell: UITableViewCell
+    let searchUsingEnabledGamesSwitch: UISwitch
     
     // MARK: - Initialization
     
@@ -23,6 +25,8 @@ final class TournamentSearchVC: UITableViewController {
         recentSearches = UserDefaults.standard.array(forKey: k.UserDefaults.recentSearches) as? [String] ?? []
         featuredCell = UITableViewCell()
         olderTournamentsFirstCell = UITableViewCell()
+        searchUsingEnabledGamesCell = UITableViewCell()
+        searchUsingEnabledGamesSwitch = UISwitch()
         super.init(style: .insetGrouped)
     }
     
@@ -54,6 +58,12 @@ final class TournamentSearchVC: UITableViewController {
         olderTournamentsFirstCell.accessoryView = olderTournamentsFirstSwitch
         olderTournamentsFirstCell.selectionStyle = .none
         olderTournamentsFirstCell.textLabel?.text = "Show older tournaments first"
+        
+        searchUsingEnabledGamesSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.searchUsingEnabledGames)
+        searchUsingEnabledGamesSwitch.addTarget(self, action: #selector(searchUsingEnabledGamesSwitchToggled(_:)), for: .valueChanged)
+        searchUsingEnabledGamesCell.accessoryView = searchUsingEnabledGamesSwitch
+        searchUsingEnabledGamesCell.selectionStyle = .none
+        searchUsingEnabledGamesCell.textLabel?.text = "Search using enabled games"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +81,10 @@ final class TournamentSearchVC: UITableViewController {
         UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.showOlderTournamentsFirst)
     }
     
+    @objc private func searchUsingEnabledGamesSwitchToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.searchUsingEnabledGames)
+    }
+    
     // MARK: - Table View Data Source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -79,7 +93,7 @@ final class TournamentSearchVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 2
+        case 0: return 3
         case 1: return recentSearches.isEmpty ? 1 : recentSearches.count
         case 2: return 1
         default: return 0
@@ -92,6 +106,7 @@ final class TournamentSearchVC: UITableViewController {
             switch indexPath.row {
             case 0: return featuredCell
             case 1: return olderTournamentsFirstCell
+            case 2: return searchUsingEnabledGamesCell
             default: return UITableViewCell()
             }
         case 1:
@@ -116,6 +131,16 @@ final class TournamentSearchVC: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 0 {
+            return """
+            If "Search using enabled games" is enabled, only tournaments that feature the games enabled in the Video Game Selection \
+            will appear as search results
+            """
+        }
+        return nil
+    }
+    
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -125,7 +150,7 @@ final class TournamentSearchVC: UITableViewController {
                 tableView.deselectRow(at: indexPath, animated: true)
                 return
             }
-            let preferredGameIDs = PreferredGamesService.getEnabledGames().map { $0.id }
+            let preferredGameIDs = searchUsingEnabledGamesSwitch.isOn ? PreferredGamesService.getEnabledGames().map { $0.id } : []
             navigationController?.pushViewController(TournamentSearchResultsVC(searchTerm: text, preferredGameIDs: preferredGameIDs), animated: true)
         case 2:
             recentSearches.removeAll()
@@ -154,7 +179,7 @@ extension TournamentSearchVC: UISearchBarDelegate {
         searchBar.endEditing(true)
         guard let text = searchBar.text, text != "" else { return }
         
-        let preferredGameIDs = PreferredGamesService.getEnabledGames().map { $0.id }
+        let preferredGameIDs = searchUsingEnabledGamesSwitch.isOn ? PreferredGamesService.getEnabledGames().map { $0.id } : []
         navigationController?.pushViewController(TournamentSearchResultsVC(searchTerm: text, preferredGameIDs: preferredGameIDs), animated: true)
         
         // If the search term is already present, just move it to the front of the array
