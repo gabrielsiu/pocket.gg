@@ -23,6 +23,8 @@ final class TournamentVC: UITableViewController {
         return tournament.isOnline ?? true
     }
     let cacheForLogo: Cache
+    var tournamentIsPinned: Bool
+    var pinnedStatusChanged: Bool
     
     // MARK: - Initialization
     
@@ -30,6 +32,8 @@ final class TournamentVC: UITableViewController {
         self.tournament = tournament
         self.cacheForLogo = cacheForLogo
         generalInfoCell = TournamentGeneralInfoCell(tournament, cacheForLogo: cacheForLogo)
+        tournamentIsPinned = PinnedTournamentsService.tournamentIsPinned(tournament.id ?? -1)
+        pinnedStatusChanged = false
         super.init(style: .grouped)
     }
     
@@ -43,6 +47,9 @@ final class TournamentVC: UITableViewController {
         super.viewDidLoad()
         
         title = tournament.name
+        let imageName = tournamentIsPinned ? "pin.slash.fill" : "pin.fill"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: imageName), style: .plain,
+                                                            target: self, action: #selector(togglePinnedTournament))
         
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.streamCell)
@@ -54,6 +61,14 @@ final class TournamentVC: UITableViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         locationCell?.updateImageForOrientation()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if pinnedStatusChanged {
+            NotificationCenter.default.post(name: Notification.Name(k.Notification.tournamentPinToggled), object: nil)
+            pinnedStatusChanged = false
+        }
     }
     
     // MARK: - UI Setup
@@ -106,6 +121,22 @@ final class TournamentVC: UITableViewController {
             self?.doneRequest = true
             self?.tableView.reloadData()
         }
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func togglePinnedTournament() {
+        guard PinnedTournamentsService.togglePinnedTournament(tournament) else {
+            // TODO: Finalize wording
+            let message = "You can only have up to 10 pinned tournaments"
+            let alert = UIAlertController(title: k.Error.genericTitle, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            present(alert, animated: true)
+            return
+        }
+        tournamentIsPinned.toggle()
+        pinnedStatusChanged.toggle()
+        navigationItem.rightBarButtonItem?.image = tournamentIsPinned ? UIImage(systemName: "pin.slash.fill") : UIImage(systemName: "pin.fill")
     }
     
     // MARK: - Table View Data Source

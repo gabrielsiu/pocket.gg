@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.tintColor = .systemRed
         
+        PinnedTournamentsService.initPinnedTournaments()
+        
         if UserDefaults.standard.string(forKey: k.UserDefaults.authToken) == nil {
             window?.rootViewController = AuthTokenVC()
         } else {

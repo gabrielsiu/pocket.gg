@@ -10,15 +10,17 @@ import UIKit
 
 final class MainVC: UITableViewController {
     
+    // If showPinned == true, index 0 of tournaments will be empty (the pinned tournaments are retrieved from PinnedTournamentsService)
     var tournaments: [[Tournament]]
     var preferredGames: [VideoGame]
     var doneRequest: [Bool]
     let numTournamentsToLoad: Int
     
+    var showPinned: Bool
     var showFeatured: Bool
     var showUpcoming: Bool
     var numTopSections: Int {
-        return (showFeatured ? 1 : 0) + (showUpcoming ? 1 : 0)
+        return (showPinned ? 1 : 0) + (showFeatured ? 1 : 0) + (showUpcoming ? 1 : 0)
     }
     var numSections: Int {
         return numTopSections + preferredGames.count
@@ -32,6 +34,7 @@ final class MainVC: UITableViewController {
         doneRequest = []
         let longEdgeLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         numTournamentsToLoad = 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
+        showPinned = UserDefaults.standard.bool(forKey: k.UserDefaults.showPinnedTournaments)
         showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
         
@@ -49,6 +52,9 @@ final class MainVC: UITableViewController {
         title = "Tournaments"
         tableView.register(ScrollableRowCell.self, forCellReuseIdentifier: k.Identifiers.tournamentsRowCell)
         tableView.separatorColor = .clear
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadPinnedTournaments),
+                                               name: Notification.Name(k.Notification.tournamentPinToggled), object: nil)
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refreshTournamentList), for: .valueChanged)
@@ -68,6 +74,7 @@ final class MainVC: UITableViewController {
     // MARK: - Actions
     
     @objc private func refreshTournamentList() {
+        showPinned = UserDefaults.standard.bool(forKey: k.UserDefaults.showPinnedTournaments)
         showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
         
@@ -89,13 +96,15 @@ final class MainVC: UITableViewController {
         let dispatchGroup = DispatchGroup()
         let gameIDs = preferredGames.map { $0.id }
         
-        for _ in 0..<numSections {
+        let startSectionIndex = showPinned ? 1 : 0
+        let topSectionsEndIndex = startSectionIndex + (showFeatured ? 1 : 0) + (showUpcoming ? 1 : 0)
+        
+        for _ in startSectionIndex..<numSections {
             dispatchGroup.enter()
         }
-        for i in 0..<numSections {
-            let featured = showFeatured && i == 0
-            let gameIDs = i < numTopSections ? gameIDs : [gameIDs[i - numTopSections]]
-            
+        for i in startSectionIndex..<numSections {
+            let featured = showFeatured && i == startSectionIndex
+            let gameIDs = i < topSectionsEndIndex ? gameIDs : [gameIDs[i - topSectionsEndIndex]]
             NetworkService.getTournamentsByVideogames(perPage: numTournamentsToLoad,
                                                       pageNum: 1,
                                                       featured: featured,
@@ -120,20 +129,8 @@ final class MainVC: UITableViewController {
         }
     }
     
-    private func sectionHeaderTitle(for section: Int) -> String? {
-        switch section {
-        case 0:
-            if showFeatured { return "Featured Tournaments" }
-            if showUpcoming { return "Upcoming Tournaments" }
-            return preferredGames[section].name
-        case 1:
-            if showFeatured && showUpcoming { return "Upcoming Tournaments" }
-            guard section - numTopSections < preferredGames.count else { return nil }
-            return preferredGames[section - numTopSections].name
-        default:
-            guard section - numTopSections < preferredGames.count else { return nil }
-            return preferredGames[section - numTopSections].name
-        }
+    @objc private func reloadPinnedTournaments() {
+        tableView.reloadSections([0], with: .automatic)
     }
     
     // MARK: - Table View Data Source
@@ -144,6 +141,28 @@ final class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
+    }
+    
+    private func sectionHeaderTitle(for section: Int) -> String? {
+        switch section {
+        case 0:
+            if showPinned { return "Pinned Tournaments" }
+            if showFeatured { return "Featured Tournaments" }
+            if showUpcoming { return "Upcoming Tournaments" }
+            return preferredGames[section].name
+        case 1:
+            if showPinned && showFeatured { return "Featured Tournaments" }
+            if showUpcoming { return "Upcoming Tournaments" }
+            guard section - numTopSections < preferredGames.count else { return nil }
+            return preferredGames[section - numTopSections].name
+        case 2:
+            if showPinned && showFeatured && showUpcoming { return "Upcoming Tournaments" }
+            guard section - numTopSections < preferredGames.count else { return nil }
+            return preferredGames[section - numTopSections].name
+        default:
+            guard section - numTopSections < preferredGames.count else { return nil }
+            return preferredGames[section - numTopSections].name
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -165,9 +184,17 @@ final class MainVC: UITableViewController {
                                   bottom: headerView.bottomAnchor,
                                   trailing: headerView.trailingAnchor,
                                   padding: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 16))
+        
+        // Show "Edit" button to allow for rearranging of pinned tournaments
+        if section == 0, showPinned, PinnedTournamentsService.numPinnedTournaments != 0 {
+            button.setTitle("Edit", for: .normal)
+            button.setTitleColor(.systemRed, for: .normal)
+            button.addTarget(self, action: #selector(editPinnedTournaments), for: .touchUpInside)
+            button.leadingAnchor.constraint(greaterThanOrEqualTo: textLabel.trailingAnchor, constant: 5).isActive = true
+        }
         // If there are more than 10 tournaments in a section, show the "View All" button
         // To make the vertical spacing consistent, the "View All" button is always added (just not visible when there are 10 or less tournaments)
-        if tournaments[section].count > 10 {
+        else if tournaments[section].count > 10 {
             button.setTitle("View All", for: .normal)
             button.setTitleColor(.systemRed, for: .normal)
             button.addTarget(self, action: #selector(viewAllTournaments(sender:)), for: .touchUpInside)
@@ -181,6 +208,21 @@ final class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Pinned Tournaments Section
+        if showPinned, indexPath.section == 0 {
+            guard PinnedTournamentsService.numPinnedTournaments != 0 else {
+                let text = "You don't have any pinned tournaments"
+                let cell = UITableViewCell().setupDisabled(text)
+                cell.textLabel?.numberOfLines = 0
+                cell.backgroundColor = .systemGroupedBackground
+                return cell
+            }
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentsRowCell, for: indexPath) as? ScrollableRowCell {
+                return cell
+            }
+            return UITableViewCell()
+        }
+        
         guard doneRequest[indexPath.section] else { return LoadingCell(color: .secondarySystemBackground) }
         guard !preferredGames.isEmpty else {
             let text = "You haven't enabled any video games. Add your favorite video games to see tournaments that feature those games."
@@ -211,6 +253,12 @@ final class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if showPinned, indexPath.section == 0 {
+            guard PinnedTournamentsService.numPinnedTournaments != 0 else {
+                return UITableView.automaticDimension
+            }
+            return k.Sizes.tournamentCellHeight
+        }
         guard doneRequest[indexPath.section], !preferredGames.isEmpty, !tournaments[indexPath.section].isEmpty else {
             return UITableView.automaticDimension
         }
@@ -222,6 +270,8 @@ final class MainVC: UITableViewController {
 
 extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if showPinned, collectionView.tag == 0 { return PinnedTournamentsService.numPinnedTournaments }
+        
         guard doneRequest[collectionView.tag] else { return 0 }
         // If more than 10 tournaments were returned, only show the first 10 and show a "View All" button in the header view
         return tournaments[collectionView.tag].count > 10 ? 10 : tournaments[collectionView.tag].count
@@ -229,13 +279,27 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: k.Identifiers.tournamentCell, for: indexPath) as? ScrollableRowItemCell {
-            guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return cell }
+            
+            let tournamentToShow: Tournament
+            if showPinned, collectionView.tag == 0 {
+                if let tournament = PinnedTournamentsService.pinnedTournament(at: indexPath.row) {
+                    tournamentToShow = tournament
+                } else {
+                    return cell
+                }
+            } else {
+                if let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] {
+                    tournamentToShow = tournament
+                } else {
+                    return cell
+                }
+            }
             
             cell.imageView.image = nil
             cell.setLabelsStyle()
-            var detailText = tournament.date ?? ""
-            detailText += tournament.isOnline ?? true ? "\nOnline" : ""
-            cell.updateView(text: tournament.name, imageURL: tournament.logoUrl, detailText: detailText)
+            var detailText = tournamentToShow.date ?? ""
+            detailText += tournamentToShow.isOnline ?? true ? "\nOnline" : ""
+            cell.updateView(text: tournamentToShow.name, imageURL: tournamentToShow.logoUrl, detailText: detailText)
             
             return cell
         }
@@ -251,6 +315,12 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if showPinned, collectionView.tag == 0 {
+            guard let tournament = PinnedTournamentsService.pinnedTournament(at: indexPath.row) else { return }
+            navigationController?.pushViewController(TournamentVC(tournament, cacheForLogo: .viewAllTournaments), animated: true)
+            return
+        }
+        
         guard let tournament = tournaments[safe: collectionView.tag]?[safe: indexPath.row] else { return }
         navigationController?.pushViewController(TournamentVC(tournament, cacheForLogo: .viewAllTournaments), animated: true)
     }
@@ -264,5 +334,10 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
         navigationController?.pushViewController(ViewAllTournamentsVC(tournaments[section],
                                                                       info: info,
                                                                       title: sectionHeaderTitle(for: section)), animated: true)
+    }
+    
+    @objc private func editPinnedTournaments() {
+        let editPinnedTournamentsVC = EditPinnedTournamentsVC()
+        present(UINavigationController(rootViewController: editPinnedTournamentsVC), animated: true, completion: nil)
     }
 }

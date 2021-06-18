@@ -22,6 +22,7 @@
 		DA2E80A92659A95900B876F1 /* TournamentSearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2E80A82659A95900B876F1 /* TournamentSearchResultsVC.swift */; };
 		DA395A4B265ABE43008086EB /* TournamentSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA395A4A265ABE43008086EB /* TournamentSearchVC.swift */; };
 		DA3FE2C2263DFBC000593504 /* ScrollableRowItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */; };
+		DA4A1C5B2679A4F800736D8F /* EditPinnedTournamentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4A1C5A2679A4F800736D8F /* EditPinnedTournamentsVC.swift */; };
 		DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B495F24FCC6ED00BE7E0E /* Event.swift */; };
 		DA4B496224FCC6FC00BE7E0E /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496124FCC6FC00BE7E0E /* Location.swift */; };
 		DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496324FCC72000BE7E0E /* Stream.swift */; };
@@ -59,6 +60,7 @@
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86242526630A8E00FD0A9C /* TournamentListCell.swift */; };
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
+		DAA59C192676DC3000A27B43 /* PinnedTournamentsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA59C182676DC3000A27B43 /* PinnedTournamentsService.swift */; };
 		DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */; };
 		DAC290F2251B854F003D05B9 /* AuthTokenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC290F1251B854F003D05B9 /* AuthTokenVC.swift */; };
 		DAC4257A26503C0600F523CC /* TournamentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC4257926503C0600F523CC /* TournamentListVC.swift */; };
@@ -104,6 +106,7 @@
 		DA2E80A82659A95900B876F1 /* TournamentSearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentSearchResultsVC.swift; sourceTree = "<group>"; };
 		DA395A4A265ABE43008086EB /* TournamentSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentSearchVC.swift; sourceTree = "<group>"; };
 		DA3FE2C1263DFBC000593504 /* ScrollableRowItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableRowItemCell.swift; sourceTree = "<group>"; };
+		DA4A1C5A2679A4F800736D8F /* EditPinnedTournamentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPinnedTournamentsVC.swift; sourceTree = "<group>"; };
 		DA4B495F24FCC6ED00BE7E0E /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA4B496124FCC6FC00BE7E0E /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA4B496324FCC72000BE7E0E /* Stream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 		DA86242526630A8E00FD0A9C /* TournamentListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListCell.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
 		DA9429A924F1CF19002595AF /* videoGame.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = videoGame.sqlite; sourceTree = "<group>"; };
+		DAA59C182676DC3000A27B43 /* PinnedTournamentsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedTournamentsService.swift; sourceTree = "<group>"; };
 		DAAF59142413FC18008F79DA /* UIImage+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Helpers.swift"; sourceTree = "<group>"; };
 		DAC290F1251B854F003D05B9 /* AuthTokenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenVC.swift; sourceTree = "<group>"; };
 		DAC4257926503C0600F523CC /* TournamentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListVC.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 				DAF0BE50266C03FD000F7506 /* EntrantService.swift */,
 				DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */,
 				DAECFB642647436000661EDA /* PreferredGamesService.swift */,
+				DAA59C182676DC3000A27B43 /* PinnedTournamentsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				DAC290F1251B854F003D05B9 /* AuthTokenVC.swift */,
 				DA266130265C89A100ACEA8D /* AuthTokenStepsVC.swift */,
 				DA759E5A23E4FE5500D4B3E7 /* MainVC.swift */,
+				DA4A1C5A2679A4F800736D8F /* EditPinnedTournamentsVC.swift */,
 				DAC4257926503C0600F523CC /* TournamentListVC.swift */,
 				DA2E80A42659A91500B876F1 /* ViewAllTournamentsVC.swift */,
 				DA395A4A265ABE43008086EB /* TournamentSearchVC.swift */,
@@ -559,6 +565,7 @@
 				DAC290F2251B854F003D05B9 /* AuthTokenVC.swift in Sources */,
 				DA7AF01824F5E53C009A00E2 /* PhaseGroupListVC.swift in Sources */,
 				DA51F6CE265E0551004D6EE5 /* AuthTokenSettingsVC.swift in Sources */,
+				DAA59C192676DC3000A27B43 /* PinnedTournamentsService.swift in Sources */,
 				DAEACF8F250AF53E002F0674 /* EliminationBracketView.swift in Sources */,
 				DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */,
 				DAF39622265F4D5C00FA9778 /* VideoGamesSearchResultsVC.swift in Sources */,
@@ -574,6 +581,7 @@
 				DA759E5B23E4FE5500D4B3E7 /* MainVC.swift in Sources */,
 				DAF2A20D256B345B00580AAB /* API.swift in Sources */,
 				DA1DD9C8263C479800A1B4A9 /* ScrollableRowCell.swift in Sources */,
+				DA4A1C5B2679A4F800736D8F /* EditPinnedTournamentsVC.swift in Sources */,
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,

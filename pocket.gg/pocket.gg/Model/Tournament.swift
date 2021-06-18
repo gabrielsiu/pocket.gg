@@ -30,3 +30,30 @@ struct Tournament {
     var contact: (info: String?, type: String?)?
     var slug: String?
 }
+
+extension Tournament {
+    init(_ tournament: SavedTournament) {
+        id = tournament.id
+        name = tournament.name
+        date = tournament.date
+        logoUrl = tournament.logoUrl
+        isOnline = tournament.isOnline
+        
+        location = Location(address: tournament.address)
+        
+        headerImage = (url: tournament.headerImageURL, ratio: tournament.headerImageRatio)
+    }
+}
+
+struct SavedTournament: Codable {
+    let id: Int?
+    let name: String?
+    let date: String?
+    let logoUrl: String?
+    let isOnline: Bool?
+    
+    let address: String?
+    
+    let headerImageURL: String?
+    let headerImageRatio: Double?
+}

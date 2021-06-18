@@ -9,7 +9,8 @@
 import UIKit
 
 final class SettingsVC: UITableViewController {
-
+    
+    var pinnedCell = UITableViewCell()
     var featuredCell = UITableViewCell()
     var upcomingCell = UITableViewCell()
     var videoGameSelectionCell = UITableViewCell()
@@ -30,6 +31,13 @@ final class SettingsVC: UITableViewController {
     // MARK: - Setup
     
     private func setupCells() {
+        let pinnedSwitch = UISwitch()
+        pinnedSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.showPinnedTournaments)
+        pinnedSwitch.addTarget(self, action: #selector(pinnedSwitchToggled(_:)), for: .valueChanged)
+        pinnedCell.accessoryView = pinnedSwitch
+        pinnedCell.selectionStyle = .none
+        pinnedCell.textLabel?.text = "Pinned"
+        
         let featuredSwitch = UISwitch()
         featuredSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         featuredSwitch.addTarget(self, action: #selector(featuredSwitchToggled(_:)), for: .valueChanged)
@@ -59,6 +67,10 @@ final class SettingsVC: UITableViewController {
     
     // MARK: - Actions
     
+    @objc private func pinnedSwitchToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.showPinnedTournaments)
+    }
+    
     @objc private func featuredSwitchToggled(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.featuredTournaments)
     }
@@ -75,7 +87,7 @@ final class SettingsVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 2
+        case 0: return 3
         case 1, 2, 3, 4: return 1
         default: return 0
         }
@@ -85,8 +97,9 @@ final class SettingsVC: UITableViewController {
         switch indexPath.section {
         case 0:
             switch indexPath.row {
-            case 0: return featuredCell
-            case 1: return upcomingCell
+            case 0: return pinnedCell
+            case 1: return featuredCell
+            case 2: return upcomingCell
             default: return UITableViewCell()
             }
         case 1: return videoGameSelectionCell
@@ -106,7 +119,7 @@ final class SettingsVC: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         // TODO: CHANGE THIS WORDING
-        case 0: return "Enable/Disable these to show/hide the \"Featured Tournaments\" and/or \"Upcoming Tournaments\" sections on the main screen"
+        case 0: return "Enable/Disable these to show/hide the various sections on the main screen"
         case 1: return "Only tournaments that feature events with at least 1 of the video games selected here will show up on the main screen"
         case 3:
             if let date = authTokenDate {

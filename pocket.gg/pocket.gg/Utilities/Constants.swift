@@ -74,6 +74,8 @@ struct Constants {
         static let authToken = "authToken"
         static let authTokenDate = "authTokenDate"
         
+        static let pinnedTournaments = "pinnedTournaments"
+        static let showPinnedTournaments = "showPinnedTournaments"
         static let featuredTournaments = "featuredTournaments"
         static let upcomingTournaments = "upcomingTournaments"
         static let preferredVideoGames = "preferredVideoGames"
@@ -82,6 +84,12 @@ struct Constants {
         static let showOlderTournamentsFirst = "showOlderTournamentsFirst"
         static let searchUsingEnabledGames = "searchUsingEnabledGames"
         static let recentSearches = "recentSearches"
+    }
+    
+    // MARK: - Notification Center
+    
+    struct Notification {
+        static let tournamentPinToggled = "tournamentPinToggled"
     }
     
     // MARK: - Error Messages
