@@ -84,6 +84,8 @@ struct Constants {
         static let showOlderTournamentsFirst = "showOlderTournamentsFirst"
         static let searchUsingEnabledGames = "searchUsingEnabledGames"
         static let recentSearches = "recentSearches"
+        
+        static let alternateAppIconUsed = "alternateAppIconUsed"
     }
     
     // MARK: - Notification Center

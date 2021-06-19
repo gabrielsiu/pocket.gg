@@ -60,5 +60,26 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>CFBundleIcons</key>
+    <dict>
+        <key>CFBundlePrimaryIcon</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array>
+                <string>icon_60pt</string>
+            </array>
+        </dict>
+        
+        <key>CFBundleAlternateIcons</key>
+        <dict>
+            <key>alternateAppIcon</key>
+            <dict>
+                <key>CFBundleIconFiles</key>
+                <array>
+                    <string>icon_alt</string>
+                </array>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>

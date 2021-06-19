@@ -185,7 +185,7 @@ final class MainVC: UITableViewController {
                                   trailing: headerView.trailingAnchor,
                                   padding: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 16))
         
-        // Show "Edit" button to allow for rearranging of pinned tournaments
+        // If the pinned tournaments sections is enabled, show the "Edit" button to allow for rearranging of the pinned tournaments
         if section == 0, showPinned, PinnedTournamentsService.numPinnedTournaments != 0 {
             button.setTitle("Edit", for: .normal)
             button.setTitleColor(.systemRed, for: .normal)
