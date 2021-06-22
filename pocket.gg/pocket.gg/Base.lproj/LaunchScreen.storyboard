@@ -20,7 +20,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Cyv-gn-frz">
                                 <rect key="frame" x="65.5" y="283.5" width="244.5" height="100"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreen-icon" translatesAutoresizingMaskIntoConstraints="NO" id="j7y-WT-NqH">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tournament-red" translatesAutoresizingMaskIntoConstraints="NO" id="j7y-WT-NqH">
                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pocket.gg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDB-V4-YaN">
@@ -45,7 +45,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchscreen-icon" width="100" height="100"/>
+        <image name="tournament-red" width="100" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -17,7 +17,7 @@ final class AboutInfoCell: UITableViewCell {
     var iconImageView: UIImageView?
     var aboutInfoStackView: UIStackView?
     var appIconVisible = true
-    let appIcon = UIImage(named: "placeholder") // TODO: Replace with actual app icon
+    let appIcon = UIImage(named: "tournament-red")
     
     // MARK: - Initialization
 
