@@ -41,7 +41,8 @@ final class PhaseGroupVC: UIViewController {
         bracketScrollView.maximumZoomScale = 2
         bracketScrollView.minimumZoomScale = 0.5
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(presentSetVC(_:)), name: Notification.Name("didTapSet"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentSetVC(_:)),
+                                               name: Notification.Name(k.Notification.didTapSet), object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -259,9 +260,9 @@ final class PhaseGroupVC: UIViewController {
     // MARK: - Actions
     
     @objc private func presentSetVC(_ notification: Notification) {
-//        if let set = notification.object as? PhaseGroupSet {
-//            present(UINavigationController(rootViewController: SetViewController(set)), animated: true, completion: nil)
-//        }
+        if let set = notification.object as? PhaseGroupSet {
+            present(UINavigationController(rootViewController: SetViewController(set)), animated: true, completion: nil)
+        }
     }
     
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {

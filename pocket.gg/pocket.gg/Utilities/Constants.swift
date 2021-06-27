@@ -92,6 +92,7 @@ struct Constants {
     
     struct Notification {
         static let tournamentPinToggled = "tournamentPinToggled"
+        static let didTapSet = "didTapSet"
     }
     
     // MARK: - Error Messages

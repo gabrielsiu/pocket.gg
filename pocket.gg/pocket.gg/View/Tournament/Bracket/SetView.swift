@@ -27,26 +27,7 @@ final class SetView: UIView {
     
     init(set: PhaseGroupSet, xPos: CGFloat, yPos: CGFloat) {
         self.set = set
-        
-        if let score0 = set.entrants?[safe: 0]?.score, let score1 = set.entrants?[safe: 1]?.score {
-            if let score0Num = Int(score0), let score1Num = Int(score1) {
-                if score0Num > score1Num {
-                    outcome = .entrant0Won
-                } else if score1Num > score0Num {
-                    outcome = .entrant1Won
-                } else {
-                    outcome = .noWinner
-                }
-            } else if score0 == "W" || score0 == "✓" {
-                outcome = .entrant0Won
-            } else if score1 == "W" || score1 == "✓" {
-                outcome = .entrant1Won
-            } else {
-                outcome = .noWinner
-            }
-        } else {
-            outcome = .noWinner
-        }
+        outcome = SetUtilities.getSetOutcome(set)
         super.init(frame: CGRect(x: xPos, y: yPos, width: k.Sizes.setWidth, height: k.Sizes.setHeight))
         
         setupAppearance()
@@ -203,20 +184,6 @@ final class SetView: UIView {
     
     @objc private func presentSetCard() {
         // TODO: Present set card
-//        NotificationCenter.default.post(name: Notification.Name("didTapSet"), object: set)
-    }
-}
-
-// MARK: - UILabel Attribute Helper
-
-private extension UILabel {
-    func addAttributes(text: String?, bold: Bool, color: UIColor? = nil) {
-        self.text = text
-        if bold {
-            font = UIFont.boldSystemFont(ofSize: font.pointSize)
-        }
-        if let color = color {
-            textColor = color
-        }
+        NotificationCenter.default.post(name: Notification.Name(k.Notification.didTapSet), object: set)
     }
 }

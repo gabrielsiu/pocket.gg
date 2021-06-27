@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */; };
+		DA0C4CEC26818C1B004831EC /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0C4CEB26818C1B004831EC /* SetViewController.swift */; };
+		DA0C4CF02683F6E3004831EC /* SetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0C4CEF2683F6E2004831EC /* SetCell.swift */; };
 		DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E5D54255773B600FF6E42 /* SetView.swift */; };
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
 		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
@@ -47,6 +49,7 @@
 		DA6CBE68243039EA006DB38F /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = DA6CBE67243039EA006DB38F /* GRDB */; };
 		DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */; };
 		DA759E5B23E4FE5500D4B3E7 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA759E5A23E4FE5500D4B3E7 /* MainVC.swift */; };
+		DA770573268656C300BBD8CA /* SetUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA770572268656C300BBD8CA /* SetUtilities.swift */; };
 		DA79A6312589AA7800651BB4 /* RoundRobinSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79A6302589AA7800651BB4 /* RoundRobinSetCell.swift */; };
 		DA7AF00E24F59BAB009A00E2 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = DA7AF00D24F59BAB009A00E2 /* schema.json */; };
 		DA7AF01224F5B2DC009A00E2 /* Value1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7AF01124F5B2DC009A00E2 /* Value1Cell.swift */; };
@@ -92,6 +95,8 @@
 
 /* Begin PBXFileReference section */
 		DA04E3A7242726F400AB2EF0 /* UITableViewCells+Create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCells+Create.swift"; sourceTree = "<group>"; };
+		DA0C4CEB26818C1B004831EC /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
+		DA0C4CEF2683F6E2004831EC /* SetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCell.swift; sourceTree = "<group>"; };
 		DA0E5D54255773B600FF6E42 /* SetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetView.swift; sourceTree = "<group>"; };
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
 		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
@@ -131,6 +136,7 @@
 		DA6CBE6424300B0A006DB38F /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGameDatabase.swift; sourceTree = "<group>"; };
 		DA759E5A23E4FE5500D4B3E7 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		DA770572268656C300BBD8CA /* SetUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUtilities.swift; sourceTree = "<group>"; };
 		DA79A6302589AA7800651BB4 /* RoundRobinSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRobinSetCell.swift; sourceTree = "<group>"; };
 		DA7AF00D24F59BAB009A00E2 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
 		DA7AF01124F5B2DC009A00E2 /* Value1Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Value1Cell.swift; sourceTree = "<group>"; };
@@ -252,6 +258,7 @@
 			children = (
 				DA56559323E50C51003FEF20 /* Constants.swift */,
 				DA6CBE6924303D1E006DB38F /* VideoGameDatabase.swift */,
+				DA770572268656C300BBD8CA /* SetUtilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -276,6 +283,7 @@
 				DA64A2FC241DF1AA00481280 /* EventVC.swift */,
 				DA7AF01724F5E53C009A00E2 /* PhaseGroupListVC.swift */,
 				DA7AF02A24F71A83009A00E2 /* PhaseGroupVC.swift */,
+				DA0C4CEB26818C1B004831EC /* SetViewController.swift */,
 			);
 			path = Tournament;
 			sourceTree = "<group>";
@@ -283,6 +291,7 @@
 		DA68B6B3257EB27000A010F3 /* Bracket */ = {
 			isa = PBXGroup;
 			children = (
+				DA0C4CEF2683F6E2004831EC /* SetCell.swift */,
 				DA0E5D54255773B600FF6E42 /* SetView.swift */,
 				DAF0BE56267032DA000F7506 /* SetIdentifierView.swift */,
 				DA68B683257C9A6B00A010F3 /* SetPathView.swift */,
@@ -576,6 +585,8 @@
 				DADBE41524074A38005B707F /* AboutVC.swift in Sources */,
 				DA68B6B5257EB3BE00A010F3 /* RoundRobinBracketView.swift in Sources */,
 				DAC290F2251B854F003D05B9 /* AuthTokenVC.swift in Sources */,
+				DA770573268656C300BBD8CA /* SetUtilities.swift in Sources */,
+				DA0C4CEC26818C1B004831EC /* SetViewController.swift in Sources */,
 				DA7AF01824F5E53C009A00E2 /* PhaseGroupListVC.swift in Sources */,
 				DA51F6CE265E0551004D6EE5 /* AuthTokenSettingsVC.swift in Sources */,
 				DAA59C192676DC3000A27B43 /* PinnedTournamentsService.swift in Sources */,
@@ -589,6 +600,7 @@
 				DA64A2F0241B3FCA00481280 /* DateFormatter+FromTimestamp.swift in Sources */,
 				DA4B496024FCC6ED00BE7E0E /* Event.swift in Sources */,
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
+				DA0C4CF02683F6E3004831EC /* SetCell.swift in Sources */,
 				DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */,
 				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* MainVC.swift in Sources */,
