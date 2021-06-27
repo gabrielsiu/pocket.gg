@@ -10,21 +10,14 @@ import UIKit
 
 final class SetCell: UITableViewCell {
     
-    let vsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "vs."
-        label.textAlignment = .center
-        return label
-    }()
-    
+    let entrantLabel0 = UILabel()
+    let entrantLabel1 = UILabel()
     let scoreLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         return label
     }()
-    
-    let entrantLabel0 = UILabel()
-    let entrantLabel1 = UILabel()
+    let setStateLabel = UILabel()
     
     // MARK: - Initialization
     
@@ -39,6 +32,10 @@ final class SetCell: UITableViewCell {
     }
     
     private func setupLabels() {
+        let vsLabel = UILabel()
+        vsLabel.text = "vs."
+        vsLabel.textAlignment = .center
+        
         entrantLabel0.numberOfLines = 0
         entrantLabel1.numberOfLines = 0
         
@@ -46,8 +43,10 @@ final class SetCell: UITableViewCell {
         labelsContainer.addSubview(vsLabel)
         labelsContainer.addSubview(entrantLabel0)
         labelsContainer.addSubview(entrantLabel1)
+        
         contentView.addSubview(labelsContainer)
         contentView.addSubview(scoreLabel)
+        contentView.addSubview(setStateLabel)
         vsLabel.setAxisConstraints(xAnchor: labelsContainer.centerXAnchor)
         vsLabel.setEdgeConstraints(top: labelsContainer.topAnchor,
                                    bottom: labelsContainer.bottomAnchor,
@@ -64,23 +63,30 @@ final class SetCell: UITableViewCell {
                                          leading: vsLabel.trailingAnchor,
                                          trailing: labelsContainer.trailingAnchor,
                                          padding: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0))
-        
         labelsContainer.setEdgeConstraints(top: contentView.topAnchor,
                                            bottom: scoreLabel.topAnchor,
                                            leading: contentView.leadingAnchor,
                                            trailing: contentView.trailingAnchor,
                                            padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        
         scoreLabel.setEdgeConstraints(top: labelsContainer.bottomAnchor,
-                                      bottom: contentView.bottomAnchor,
+                                      bottom: setStateLabel.topAnchor,
                                       leading: contentView.leadingAnchor,
                                       trailing: contentView.trailingAnchor,
                                       padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        setStateLabel.setEdgeConstraints(top: scoreLabel.bottomAnchor,
+                                         bottom: contentView.bottomAnchor,
+                                         leading: contentView.leadingAnchor,
+                                         trailing: contentView.trailingAnchor,
+                                         padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
     }
     
     func addSetInfo(_ set: PhaseGroupSet?) {
         guard let set = set else { return }
         let outcome = SetUtilities.getSetOutcome(set)
+        
+        setStateLabel.text = set.state?.capitalized
+        setStateLabel.textAlignment = .right
+        setStateLabel.textColor = .systemGray
         
         let entrant0Name = set.entrants?[safe: 0]?.entrant?.name
         let entrant0TeamName = set.entrants?[safe: 0]?.entrant?.teamName

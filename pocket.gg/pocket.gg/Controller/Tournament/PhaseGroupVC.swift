@@ -87,6 +87,7 @@ final class PhaseGroupVC: UIViewController {
                                              trailing: view.trailingAnchor)
         
         tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
+        tableView.register(SetCell.self, forCellReuseIdentifier: k.Identifiers.tournamentSetCell)
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -312,120 +313,51 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
         }
         
         switch phaseGroupViewControl.selectedSegmentIndex {
-        case 0: return phaseGroupStandingCell(standings: standings, indexPath: indexPath)
-        case 1: return phaseGroupMatchCell(standings: standings, indexPath: indexPath)
+        case 0:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
+                cell.selectionStyle = .none
+                
+                var placementText = ""
+                var progressedText: String?
+                
+                var teamNameStart: Int?
+                var teamNameLength: Int?
+                if let placement = standings[indexPath.row].placement {
+                    placementText = "\(placement): "
+                    teamNameStart = placementText.count
+                    if let progressionsOut = phaseGroup?.progressionsOut, progressionsOut.contains(placement) {
+                        // TODO: If possible with the API, also display where the player has progressed to
+                        progressedText = "Progressed"
+                    }
+                }
+                if let entrantName = standings[indexPath.row].entrant?.name {
+                    if let teamName = standings[indexPath.row].entrant?.teamName {
+                        placementText += teamName + " "
+                        teamNameLength = teamName.count
+                    }
+                    placementText += entrantName
+                }
+                
+                let attributedText = NSMutableAttributedString(string: placementText)
+                if let location = teamNameStart, let length = teamNameLength {
+                    attributedText.addAttribute(.foregroundColor, value: UIColor.systemGray, range: NSRange(location: location, length: length))
+                }
+                
+                cell.updateLabels(attributedText: attributedText, detailText: progressedText)
+                return cell
+            }
+            return UITableViewCell()
+            
+        case 1:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentSetCell, for: indexPath) as? SetCell {
+                guard let set = phaseGroup?.matches?[safe: indexPath.row] else { return UITableViewCell() }
+                cell.addSetInfo(set)
+                return cell
+            }
+            return UITableViewCell()
+            
         default: return UITableViewCell()
         }
-    }
-    
-    private func phaseGroupStandingCell(standings: [(entrant: Entrant?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
-            cell.selectionStyle = .none
-            
-            var placementText = ""
-            var progressedText: String?
-            
-            var teamNameStart: Int?
-            var teamNameLength: Int?
-            if let placement = standings[indexPath.row].placement {
-                placementText = "\(placement): "
-                teamNameStart = placementText.count
-                if let progressionsOut = phaseGroup?.progressionsOut, progressionsOut.contains(placement) {
-                    // TODO: If possible with the API, also display where the player has progressed to
-                    progressedText = "Progressed"
-                }
-            }
-            if let entrantName = standings[indexPath.row].entrant?.name {
-                if let teamName = standings[indexPath.row].entrant?.teamName {
-                    placementText += teamName + " "
-                    teamNameLength = teamName.count
-                }
-                placementText += entrantName
-            }
-            
-            let attributedText = NSMutableAttributedString(string: placementText)
-            if let location = teamNameStart, let length = teamNameLength {
-                attributedText.addAttribute(.foregroundColor, value: UIColor.systemGray, range: NSRange(location: location, length: length))
-            }
-            
-            cell.updateLabels(attributedText: attributedText, detailText: progressedText)
-            return cell
-        }
-        return UITableViewCell()
-    }
-    
-    // TODO: Redesign this
-    private func phaseGroupMatchCell(standings: [(entrant: Entrant?, placement: Int?)], indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
-            cell.selectionStyle = .none
-            
-            guard let set = phaseGroup?.matches?[safe: indexPath.row] else {
-                return UITableViewCell()
-            }
-            
-            cell.updateLabels(text: nil, detailText: set.state?.capitalized)
-            cell.textLabel?.attributedText = phaseGroupMatchText(set, cell.textLabel?.font.pointSize ?? UIFont.labelFontSize)
-            return cell
-        }
-        return UITableViewCell()
-    }
-    
-    private func phaseGroupMatchText(_ set: PhaseGroupSet, _ size: CGFloat) -> NSAttributedString {
-        var text = (set.fullRoundText ?? "") + " Match " + set.identifier
-        
-        var winningScoreLocation: Int?
-        var boldTextLength: Int?
-        var winnerPresent = false
-        var entrant0Won = false
-        
-        if let entrants = set.entrants, !entrants.isEmpty {
-            text += "\n"
-            
-            if entrants.count == 2, let name0 = entrants[0].entrant?.name,
-                                    let score0 = entrants[0].score,
-                                    let name1 = entrants[1].entrant?.name,
-                                    let score1 = entrants[1].score {
-                if let score0Num = Int(score0), let score1Num = Int(score1) {
-                    winnerPresent = true
-                    entrant0Won = score0Num > score1Num
-                } else if let score0 = entrants[0].score, score0 == "W" {
-                    winnerPresent = true
-                    entrant0Won = true
-                } else if let score1 = entrants[1].score, score1 == "W" {
-                    winnerPresent = true
-                }
-                
-                if winnerPresent, entrant0Won {
-                    winningScoreLocation = text.count
-                    boldTextLength = name0.count + 1 + score0.count
-                }
-                text += name0 + " "
-                text += score0
-                
-                text += " - "
-                if winnerPresent, !entrant0Won {
-                    winningScoreLocation = text.count
-                    boldTextLength = name1.count + 1 + score1.count
-                }
-                text += score1
-                text += " "
-                text += name1
-            } else if entrants.count == 1, let name0 = entrants[0].entrant?.name {
-                text += name0
-            }
-        }
-        
-        let attributedText = NSMutableAttributedString(string: text)
-        if let location = winningScoreLocation, let length = boldTextLength {
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: size), range: NSRange(location: location, length: length))
-            let scoreLocation = entrant0Won ? location + length - 1 : location
-            attributedText.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: NSRange(location: scoreLocation, length: 1))
-        }
-        return attributedText
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return phaseGroupViewControl.selectedSegmentIndex == 0 ? UITableView.automaticDimension : 60
     }
 }
 
