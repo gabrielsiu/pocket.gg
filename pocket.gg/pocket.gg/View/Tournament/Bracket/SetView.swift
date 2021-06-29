@@ -67,9 +67,6 @@ final class SetView: UIView {
         }
         labelsContainer.addSubview(entrantLabel1)
         
-        entrantLabel0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        entrantLabel1.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        
         labelsContainer.setEdgeConstraints(top: topAnchor,
                                            bottom: bottomAnchor,
                                            leading: leadingAnchor,
@@ -84,7 +81,8 @@ final class SetView: UIView {
             teamLabel0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             teamLabel0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             
-            teamLabel0.widthAnchor.constraint(greaterThanOrEqualToConstant: k.Sizes.setWidth / 7).isActive = true
+            let minWidth = min(teamLabel0.intrinsicContentSize.width, k.Sizes.setWidth / 7)
+            teamLabel0.widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth).isActive = true
             
             teamLabel0.setEdgeConstraints(top: labelsContainer.topAnchor,
                                           leading: labelsContainer.leadingAnchor,
@@ -110,7 +108,9 @@ final class SetView: UIView {
             teamLabel1.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             teamLabel1.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             
-            teamLabel1.widthAnchor.constraint(greaterThanOrEqualToConstant: k.Sizes.setWidth / 7).isActive = true
+            let minWidth = min(teamLabel1.intrinsicContentSize.width, k.Sizes.setWidth / 7)
+            teamLabel1.widthAnchor.constraint(greaterThanOrEqualToConstant: minWidth).isActive = true
+            
             teamLabel1.setEdgeConstraints(bottom: labelsContainer.bottomAnchor,
                                           leading: labelsContainer.leadingAnchor,
                                           trailing: entrantLabel1.leadingAnchor,
@@ -154,12 +154,6 @@ final class SetView: UIView {
             scoreLabel0Container.backgroundColor = .systemGray2
         }
         
-        scoreLabel0Container.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        scoreLabel1Container.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        scoreLabel0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        scoreLabel1.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
         scoreLabel0Container.setEdgeConstraints(top: topAnchor,
                                                 bottom: centerYAnchor,
                                                 leading: labelsContainer.trailingAnchor,
@@ -178,6 +172,9 @@ final class SetView: UIView {
                                        leading: scoreLabel1Container.leadingAnchor,
                                        trailing: scoreLabel1Container.trailingAnchor,
                                        padding: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        let maxWidth = max(scoreLabel0.intrinsicContentSize.width, scoreLabel1.intrinsicContentSize.width)
+        scoreLabel0.widthAnchor.constraint(equalToConstant: maxWidth).isActive = true
+        scoreLabel1.widthAnchor.constraint(equalToConstant: maxWidth).isActive = true
     }
     
     // MARK: - Actions
