@@ -359,6 +359,13 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
         default: return UITableViewCell()
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard phaseGroupViewControl.selectedSegmentIndex == 1 else { return }
+        guard let set = phaseGroup?.matches?[safe: indexPath.row] else { return }
+        present(UINavigationController(rootViewController: SetViewController(set)), animated: true, completion: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 // MARK: - Scroll View Delegate

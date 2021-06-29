@@ -280,6 +280,24 @@ final class NetworkService {
         }
     }
     
+    static func getPhaseGroupSetGames(_ id: Int, complete: @escaping (_ games: [PhaseGroupSetGame]?) -> Void) {
+        ApolloService.shared.client.fetch(query: PhaseGroupSetGamesQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                DispatchQueue.main.async { complete(nil) }
+                return
+            
+            case .success(let graphQLResult):
+                var games = [PhaseGroupSetGame]()
+                if let nodes = graphQLResult.data?.set?.games {
+                    games = nodes.map { PhaseGroupSetGame(winnerID: $0?.winnerId, stageName: $0?.stage?.name) }
+                }
+                DispatchQueue.main.async { complete(games) }
+            }
+        }
+    }
+    
     // MARK: - Remaining Standings & Sets
     
     static func getPhaseGroupStandings(id: Int, page: Int, complete: @escaping (_ standings: [(entrant: Entrant?, placement: Int?)]?) -> Void) {

@@ -3537,3 +3537,194 @@ public final class PhaseGroupSetsPageQuery: GraphQLQuery {
     }
   }
 }
+
+public final class PhaseGroupSetGamesQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    query PhaseGroupSetGames($id: ID!) {
+      set(id: $id) {
+        __typename
+        games {
+          __typename
+          winnerId
+          stage {
+            __typename
+            name
+          }
+        }
+      }
+    }
+    """
+
+  public let operationName: String = "PhaseGroupSetGames"
+
+  public var id: GraphQLID
+
+  public init(id: GraphQLID) {
+    self.id = id
+  }
+
+  public var variables: GraphQLMap? {
+    return ["id": id]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Query"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("set", arguments: ["id": GraphQLVariable("id")], type: .object(Set.selections)),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(`set`: Set? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "set": `set`.flatMap { (value: Set) -> ResultMap in value.resultMap }])
+    }
+
+    /// Returns a set given its id
+    public var `set`: Set? {
+      get {
+        return (resultMap["set"] as? ResultMap).flatMap { Set(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "set")
+      }
+    }
+
+    public struct Set: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["Set"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("games", type: .list(.object(Game.selections))),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(games: [Game?]? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Set", "games": games.flatMap { (value: [Game?]) -> [ResultMap?] in value.map { (value: Game?) -> ResultMap? in value.flatMap { (value: Game) -> ResultMap in value.resultMap } } }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var games: [Game?]? {
+        get {
+          return (resultMap["games"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Game?] in value.map { (value: ResultMap?) -> Game? in value.flatMap { (value: ResultMap) -> Game in Game(unsafeResultMap: value) } } }
+        }
+        set {
+          resultMap.updateValue(newValue.flatMap { (value: [Game?]) -> [ResultMap?] in value.map { (value: Game?) -> ResultMap? in value.flatMap { (value: Game) -> ResultMap in value.resultMap } } }, forKey: "games")
+        }
+      }
+
+      public struct Game: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["Game"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("winnerId", type: .scalar(Int.self)),
+            GraphQLField("stage", type: .object(Stage.selections)),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(winnerId: Int? = nil, stage: Stage? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Game", "winnerId": winnerId, "stage": stage.flatMap { (value: Stage) -> ResultMap in value.resultMap }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var winnerId: Int? {
+          get {
+            return resultMap["winnerId"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "winnerId")
+          }
+        }
+
+        /// The stage that this game was played on (if applicable)
+        public var stage: Stage? {
+          get {
+            return (resultMap["stage"] as? ResultMap).flatMap { Stage(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "stage")
+          }
+        }
+
+        public struct Stage: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["Stage"]
+
+          public static var selections: [GraphQLSelection] {
+            return [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("name", type: .scalar(String.self)),
+            ]
+          }
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(name: String? = nil) {
+            self.init(unsafeResultMap: ["__typename": "Stage", "name": name])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          /// Stage name
+          public var name: String? {
+            get {
+              return resultMap["name"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "name")
+            }
+          }
+        }
+      }
+    }
+  }
+}

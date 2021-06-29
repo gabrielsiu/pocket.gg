@@ -13,6 +13,7 @@
 		DA0E5D55255773B600FF6E42 /* SetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0E5D54255773B600FF6E42 /* SetView.swift */; };
 		DA1C9279241220AE00E5BA96 /* TournamentLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */; };
 		DA1C927F2413311D00E5BA96 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */; };
+		DA1D51C82688FA82000BBD4A /* PhaseGroupSetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D51C72688FA82000BBD4A /* PhaseGroupSetGame.swift */; };
 		DA1DD9C8263C479800A1B4A9 /* ScrollableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */; };
 		DA266131265C89A100ACEA8D /* AuthTokenStepsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA266130265C89A100ACEA8D /* AuthTokenStepsVC.swift */; };
 		DA2939CA23E7CAF400E5DB3A /* Tournament.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2939C923E7CAF400E5DB3A /* Tournament.swift */; };
@@ -100,6 +101,7 @@
 		DA0E5D54255773B600FF6E42 /* SetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetView.swift; sourceTree = "<group>"; };
 		DA1C9278241220AE00E5BA96 /* TournamentLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentLocationCell.swift; sourceTree = "<group>"; };
 		DA1C927E2413311D00E5BA96 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
+		DA1D51C72688FA82000BBD4A /* PhaseGroupSetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroupSetGame.swift; sourceTree = "<group>"; };
 		DA1DD9C7263C479800A1B4A9 /* ScrollableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableRowCell.swift; sourceTree = "<group>"; };
 		DA266130265C89A100ACEA8D /* AuthTokenStepsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenStepsVC.swift; sourceTree = "<group>"; };
 		DA2939C923E7CAF400E5DB3A /* Tournament.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tournament.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				DA4B496524FCC72D00BE7E0E /* Phase.swift */,
 				DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */,
 				DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */,
+				DA1D51C72688FA82000BBD4A /* PhaseGroupSetGame.swift */,
 				DA5C7D35257F3C6400CB787E /* Entrant.swift */,
 				DA4B496124FCC6FC00BE7E0E /* Location.swift */,
 				DA4B496324FCC72000BE7E0E /* Stream.swift */,
@@ -616,6 +619,7 @@
 				DA3FE2C2263DFBC000593504 /* ScrollableRowItemCell.swift in Sources */,
 				DA5C7D36257F3C6400CB787E /* Entrant.swift in Sources */,
 				DA395A4B265ABE43008086EB /* TournamentSearchVC.swift in Sources */,
+				DA1D51C82688FA82000BBD4A /* PhaseGroupSetGame.swift in Sources */,
 				DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */,
 				DA6CBE6A24303D1E006DB38F /* VideoGameDatabase.swift in Sources */,
 				DAAF59152413FC18008F79DA /* UIImage+Helpers.swift in Sources */,

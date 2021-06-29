@@ -23,7 +23,6 @@ final class SetCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none
         setupLabels()
     }
     

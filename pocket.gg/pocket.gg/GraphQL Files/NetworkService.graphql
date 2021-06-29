@@ -231,3 +231,14 @@ query PhaseGroupSetsPage($id: ID, $page: Int) {
         }
     }
 }
+
+query PhaseGroupSetGames($id: ID!) {
+    set(id: $id) {
+        games {
+            winnerId
+            stage {
+                name
+            }
+        }
+    }
+}
