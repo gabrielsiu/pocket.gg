@@ -180,7 +180,6 @@ final class SetView: UIView {
     // MARK: - Actions
     
     @objc private func presentSetCard() {
-        // TODO: Present set card
         NotificationCenter.default.post(name: Notification.Name(k.Notification.didTapSet), object: set)
     }
 }

@@ -28,6 +28,7 @@ class RoundRobinSetCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupLabel()
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentSetCard)))
     }
     
     required init?(coder: NSCoder) {
@@ -42,6 +43,13 @@ class RoundRobinSetCell: UICollectionViewCell {
                                  bottom: contentView.bottomAnchor,
                                  leading: contentView.leadingAnchor,
                                  trailing: contentView.trailingAnchor)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func presentSetCard() {
+        guard let type = type, type == .setScore else { return }
+        NotificationCenter.default.post(name: Notification.Name(k.Notification.didTapSet), object: set)
     }
     
     // MARK: - Public Methods
