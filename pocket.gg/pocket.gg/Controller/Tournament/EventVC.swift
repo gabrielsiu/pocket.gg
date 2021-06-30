@@ -14,12 +14,6 @@ final class EventVC: UITableViewController {
     var event: Event
     var doneRequest = false
     var requestSuccessful = true
-    var numTopStandings: Int {
-        guard let numStandings = event.topStandings?.count else { return 1 }
-        guard numStandings != 0 else { return 1 }
-        guard numStandings == 8 else { return numStandings }
-        return numStandings + 1
-    }
     
     // MARK: - Initialization
     
@@ -45,27 +39,23 @@ final class EventVC: UITableViewController {
         guard let id = event.id else {
             doneRequest = true
             requestSuccessful = false
-            let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            present(alert, animated: true)
             tableView.reloadData()
             return
         }
-        NetworkService.getEventById(id: id) { [weak self] (result) in
+        NetworkService.getEvent(id) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
-                let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                self?.present(alert, animated: true)
                 self?.tableView.reloadData()
                 return
             }
+            
             self?.event.phases = result["phases"] as? [Phase]
             self?.event.topStandings = result["topStandings"] as? [(Entrant, Int)]
             self?.event.slug = result["slug"] as? String
             
             self?.doneRequest = true
+            self?.requestSuccessful = true
             self?.tableView.reloadData()
         }
     }
@@ -80,13 +70,14 @@ final class EventVC: UITableViewController {
         switch section {
         case 0: return 1
         case 1:
-            if !doneRequest {
-                return 1
-            } else {
-                guard let numPhases = event.phases?.count, numPhases > 0 else { return 1 }
-                return numPhases
-            }
-        case 2: return numTopStandings
+            guard doneRequest, requestSuccessful else { return 1 }
+            guard let phases = event.phases, !phases.isEmpty else { return 1 }
+            return phases.count
+        case 2:
+            guard doneRequest, requestSuccessful else { return 1 }
+            guard let standings = event.topStandings, !standings.isEmpty else { return 1 }
+            guard standings.count == 8 else { return standings.count }
+            return 9
         default: return 0
         }
     }
@@ -142,34 +133,28 @@ final class EventVC: UITableViewController {
             return cell
             
         case 1:
-            guard requestSuccessful else {
-                return UITableViewCell().setupDisabled("Unable to load brackets")
-            }
-            guard let phases = event.phases, !phases.isEmpty else {
-                return doneRequest ? UITableViewCell().setupDisabled("No brackets found") : LoadingCell()
-            }
+            guard doneRequest else { return LoadingCell() }
+            guard requestSuccessful, let phases = event.phases else { return UITableViewCell().setupDisabled(k.Message.errorLoadingBrackets) }
+            guard !phases.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noBrackets) }
+            guard let phase = phases[safe: indexPath.row] else { break }
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
                 cell.accessoryType = .disclosureIndicator
-                cell.updateLabels(text: phases[indexPath.row].name, detailText: phases[indexPath.row].state?.capitalized)
+                cell.updateLabels(text: phase.name, detailText: phase.state?.capitalized)
                 return cell
             }
-            
+            // TODO: Do top 8 section or wtvr
         case 2:
-            guard requestSuccessful else {
-                return UITableViewCell().setupDisabled("Unable to load standings")
-            }
-            guard numTopStandings != 1 else {
-                return doneRequest ? UITableViewCell().setupDisabled("No standings found") : LoadingCell()
-            }
+            guard doneRequest else { return LoadingCell() }
+            guard requestSuccessful, let standings = event.topStandings else { return UITableViewCell().setupDisabled(k.Message.errorLoadingStandings) }
+            guard !standings.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noStandings) }
+            
             if indexPath.row == 8 {
                 return UITableViewCell().setupActive(textColor: .systemRed, text: "View all standings")
             }
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
-                guard let standing = event.topStandings?[safe: indexPath.row] else {
-                    return UITableViewCell()
-                }
+                guard let standing = standings[safe: indexPath.row] else { break }
                 
                 let name: String
                 let teamNameLength: Int

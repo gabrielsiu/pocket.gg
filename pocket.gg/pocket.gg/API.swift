@@ -831,11 +831,11 @@ public final class SearchForTournamentsQuery: GraphQLQuery {
   }
 }
 
-public final class TournamentDetailsByIdQuery: GraphQLQuery {
+public final class TournamentDetailsQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query TournamentDetailsById($id: ID) {
+    query TournamentDetails($id: ID) {
       tournament(id: $id) {
         __typename
         venueName
@@ -887,7 +887,7 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
     }
     """
 
-  public let operationName: String = "TournamentDetailsById"
+  public let operationName: String = "TournamentDetails"
 
   public var id: GraphQLID?
 
@@ -1492,11 +1492,11 @@ public final class TournamentDetailsByIdQuery: GraphQLQuery {
   }
 }
 
-public final class EventByIdQuery: GraphQLQuery {
+public final class EventQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query EventById($id: ID) {
+    query Event($id: ID) {
       event(id: $id) {
         __typename
         phases {
@@ -1528,7 +1528,7 @@ public final class EventByIdQuery: GraphQLQuery {
     }
     """
 
-  public let operationName: String = "EventById"
+  public let operationName: String = "Event"
 
   public var id: GraphQLID?
 
@@ -1905,11 +1905,11 @@ public final class EventByIdQuery: GraphQLQuery {
   }
 }
 
-public final class PhaseGroupsByIdQuery: GraphQLQuery {
+public final class PhaseGroupsQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query PhaseGroupsById($id: ID, $perPage: Int) {
+    query PhaseGroups($id: ID, $perPage: Int) {
       phase(id: $id) {
         __typename
         phaseGroups(query: {perPage: $perPage}) {
@@ -1925,7 +1925,7 @@ public final class PhaseGroupsByIdQuery: GraphQLQuery {
     }
     """
 
-  public let operationName: String = "PhaseGroupsById"
+  public let operationName: String = "PhaseGroups"
 
   public var id: GraphQLID?
   public var perPage: Int?
@@ -2109,11 +2109,11 @@ public final class PhaseGroupsByIdQuery: GraphQLQuery {
   }
 }
 
-public final class PhaseGroupByIdQuery: GraphQLQuery {
+public final class PhaseGroupQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =
     """
-    query PhaseGroupById($id: ID) {
+    query PhaseGroup($id: ID) {
       phaseGroup(id: $id) {
         __typename
         bracketType
@@ -2167,7 +2167,7 @@ public final class PhaseGroupByIdQuery: GraphQLQuery {
     }
     """
 
-  public let operationName: String = "PhaseGroupById"
+  public let operationName: String = "PhaseGroup"
 
   public var id: GraphQLID?
 

@@ -15,7 +15,7 @@ final class InvalidBracketView: UIView {
     
     var imageName: String {
         switch cause {
-        case .bracketLayoutError: return "tournament-bracket-error"
+        case .bracketLayoutError, .errorLoadingBracket: return "tournament-bracket-error"
         case .bracketNotStarted: return "tournament-bracket-not-started"
         case .noEntrants: return "tournament-bracket-missing-data"
         case .noSets: return "tournament-bracket-missing-data"
@@ -30,6 +30,7 @@ final class InvalidBracketView: UIView {
         case .noEntrants: return "No Entrants"
         case .noSets: return "No Sets"
         case .unsupportedBracketType: return "Unsupported Bracket type"
+        case .errorLoadingBracket: return "Error loading Bracket"
         }
     }
     
@@ -42,6 +43,7 @@ final class InvalidBracketView: UIView {
         case .unsupportedBracketType:
             let bracketType = unsupportedBracketType != nil ? " (\(unsupportedBracketType ?? ""))" : ""
             return "This type of bracket is currently not supported." + bracketType
+        case .errorLoadingBracket: return "There was an error loading this bracket, try checking your internet connection."
         }
     }
     

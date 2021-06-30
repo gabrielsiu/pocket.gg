@@ -160,7 +160,7 @@ final class AuthTokenVC: UIViewController {
                 window.rootViewController = tabBarController
                 window.makeKeyAndVisible()
             } else {
-                let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.invalidAuthToken, preferredStyle: .alert)
+                let alert = UIAlertController(title: k.Error.title, message: k.Error.invalidAuthToken, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                 self?.present(alert, animated: true)
             }

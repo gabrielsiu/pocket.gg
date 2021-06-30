@@ -14,6 +14,7 @@ final class MainVC: UITableViewController {
     var tournaments: [[Tournament]]
     var preferredGames: [VideoGame]
     var doneRequest: [Bool]
+    var requestSuccessful: [Bool]
     let numTournamentsToLoad: Int
     
     var showPinned: Bool
@@ -32,6 +33,7 @@ final class MainVC: UITableViewController {
         tournaments = []
         preferredGames = []
         doneRequest = []
+        requestSuccessful = []
         let longEdgeLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         numTournamentsToLoad = 2 * Int(longEdgeLength / k.Sizes.tournamentListCellHeight)
         showPinned = UserDefaults.standard.bool(forKey: k.UserDefaults.showPinnedTournaments)
@@ -61,6 +63,7 @@ final class MainVC: UITableViewController {
         
         preferredGames = PreferredGamesService.getEnabledGames()
         doneRequest = [Bool](repeating: false, count: numSections)
+        requestSuccessful = [Bool](repeating: true, count: numSections)
         tournaments = [[Tournament]](repeating: [], count: numSections)
         
         getTournaments()
@@ -80,6 +83,7 @@ final class MainVC: UITableViewController {
         
         preferredGames = PreferredGamesService.getEnabledGames()
         doneRequest = [Bool](repeating: false, count: numSections)
+        requestSuccessful = [Bool](repeating: true, count: numSections)
         tournaments = [[Tournament]](repeating: [], count: numSections)
         tableView.reloadData()
         getTournaments()
@@ -88,6 +92,7 @@ final class MainVC: UITableViewController {
     private func getTournaments() {
         guard !preferredGames.isEmpty else {
             doneRequest = [Bool](repeating: true, count: numSections)
+            requestSuccessful = [Bool](repeating: true, count: numSections)
             refreshControl?.endRefreshing()
             tableView.reloadData()
             return
@@ -112,11 +117,13 @@ final class MainVC: UITableViewController {
                                                       gameIDs: gameIDs) { [weak self] (tournaments) in
                 guard let tournaments = tournaments else {
                     self?.doneRequest[i] = true
+                    self?.requestSuccessful[i] = false
                     dispatchGroup.leave()
                     return
                 }
                 self?.tournaments[i] = tournaments
                 self?.doneRequest[i] = true
+                self?.requestSuccessful[i] = true
                 
                 self?.tableView.reloadSections([i], with: .automatic)
                 dispatchGroup.leave()
@@ -211,8 +218,7 @@ final class MainVC: UITableViewController {
         // Pinned Tournaments Section
         if showPinned, indexPath.section == 0 {
             guard PinnedTournamentsService.numPinnedTournaments != 0 else {
-                let text = "You don't have any pinned tournaments"
-                let cell = UITableViewCell().setupDisabled(text)
+                let cell = UITableViewCell().setupDisabled(k.Message.noPinnedTournaments)
                 cell.textLabel?.numberOfLines = 0
                 cell.backgroundColor = .systemGroupedBackground
                 return cell
@@ -224,15 +230,20 @@ final class MainVC: UITableViewController {
         }
         
         guard doneRequest[indexPath.section] else { return LoadingCell(color: .secondarySystemBackground) }
+        guard requestSuccessful[indexPath.section] else {
+            let cell = UITableViewCell().setupDisabled(k.Message.errorLoadingTournaments)
+            cell.textLabel?.numberOfLines = 0
+            cell.backgroundColor = .systemGroupedBackground
+            return cell
+        }
         guard !preferredGames.isEmpty else {
-            let text = "You haven't enabled any video games. Add your favorite video games to see tournaments that feature those games."
-            let cell = UITableViewCell().setupDisabled(text)
+            let cell = UITableViewCell().setupDisabled(k.Message.noPreferredGames)
             cell.textLabel?.numberOfLines = 0
             cell.backgroundColor = .systemGroupedBackground
             return cell
         }
         guard !tournaments[indexPath.section].isEmpty else {
-            let cell = UITableViewCell().setupDisabled("No tournaments found for this category")
+            let cell = UITableViewCell().setupDisabled(k.Message.noTournaments)
             cell.textLabel?.numberOfLines = 0
             cell.backgroundColor = .systemGroupedBackground
             return cell
@@ -272,7 +283,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if showPinned, collectionView.tag == 0 { return PinnedTournamentsService.numPinnedTournaments }
         
-        guard doneRequest[collectionView.tag] else { return 0 }
+        guard doneRequest[collectionView.tag], requestSuccessful[collectionView.tag] else { return 0 }
         // If more than 10 tournaments were returned, only show the first 10 and show a "View All" button in the header view
         return tournaments[collectionView.tag].count > 10 ? 10 : tournaments[collectionView.tag].count
     }

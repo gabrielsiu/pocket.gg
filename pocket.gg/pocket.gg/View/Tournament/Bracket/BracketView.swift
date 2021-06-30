@@ -14,6 +14,7 @@ enum InvalidBracketViewCause {
     case bracketNotStarted
     case bracketLayoutError
     case unsupportedBracketType
+    case errorLoadingBracket
 }
 
 protocol BracketView: UIView {

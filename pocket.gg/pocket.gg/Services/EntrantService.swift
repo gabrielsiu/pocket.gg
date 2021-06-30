@@ -10,10 +10,10 @@ import Foundation
 
 class EntrantService {
     
-    // MARK: getTournamentDetailsById
+    // MARK: getTournamentDetails
     //       TournamentVC
     
-    static func getEventWinner(_ event: TournamentDetailsByIdQuery.Data.Tournament.Event?) -> Entrant? {
+    static func getEventWinner(_ event: TournamentDetailsQuery.Data.Tournament.Event?) -> Entrant? {
         guard let event = event else { return nil }
         
         if let participants = event.standings?.nodes?[safe: 0]??.entrant?.participants, participants.count == 1 {
@@ -25,10 +25,10 @@ class EntrantService {
         return Entrant(id: nil, name: event.standings?.nodes?[safe: 0]??.entrant?.name, teamName: nil)
     }
     
-    // MARK: getEventById
+    // MARK: getEvent
     //       EventVC
     
-    static func getEntrantAndStanding(_ standing: EventByIdQuery.Data.Event.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+    static func getEntrantAndStanding(_ standing: EventQuery.Data.Event.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
         guard let standing = standing else { return nil }
         
         if let participants = standing.entrant?.participants, participants.count == 1 {
@@ -41,10 +41,10 @@ class EntrantService {
         return (entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
     }
     
-    // MARK: getPhaseGroupById
+    // MARK: getPhaseGroup
     //       PhaseGroupVC
     
-    static func getEntrantAndStanding2(_ standing: PhaseGroupByIdQuery.Data.PhaseGroup.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+    static func getEntrantAndStanding2(_ standing: PhaseGroupQuery.Data.PhaseGroup.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
         guard let standing = standing else { return nil }
         
         if let participants = standing.entrant?.participants, participants.count == 1 {
@@ -58,7 +58,7 @@ class EntrantService {
         return (entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: standing.entrant?.name, teamName: nil), placement: standing.placement)
     }
     
-    static func getEntrantsForSet(displayScore: String?, winnerID: Int?, slots: [PhaseGroupByIdQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
+    static func getEntrantsForSet(displayScore: String?, winnerID: Int?, slots: [PhaseGroupQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
         guard let slots = slots else { return nil }
         
         let entrantsInfo = slots.compactMap { slot -> (entrant: Entrant, fullName: String)? in

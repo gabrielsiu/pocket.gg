@@ -56,7 +56,7 @@ query SearchForTournaments($search: String, $videogameIds: [ID], $featured: Bool
     }
 }
 
-query TournamentDetailsById($id: ID) {
+query TournamentDetails($id: ID) {
     tournament(id: $id) {
         venueName
         lng
@@ -100,7 +100,7 @@ query TournamentDetailsById($id: ID) {
     }
 }
 
-query EventById($id: ID) {
+query Event($id: ID) {
     event(id: $id) {
         phases {
             id
@@ -127,7 +127,7 @@ query EventById($id: ID) {
     }
 }
 
-query PhaseGroupsById($id: ID, $perPage: Int) {
+query PhaseGroups($id: ID, $perPage: Int) {
     phase(id: $id) {
         phaseGroups(query: {
             perPage: $perPage
@@ -141,7 +141,7 @@ query PhaseGroupsById($id: ID, $perPage: Int) {
     }
 }
 
-query PhaseGroupById($id: ID) {
+query PhaseGroup($id: ID) {
     phaseGroup(id: $id) {
         bracketType
         progressionsOut{

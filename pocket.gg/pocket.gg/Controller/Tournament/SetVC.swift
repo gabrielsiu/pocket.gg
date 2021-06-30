@@ -1,5 +1,5 @@
 //
-//  SetViewController.swift
+//  SetVC.swift
 //  pocket.gg
 //
 //  Created by Gabriel Siu on 2021-06-21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class SetViewController: UITableViewController {
+final class SetVC: UITableViewController {
     
     let set: PhaseGroupSet
     var games: [PhaseGroupSetGame]
@@ -40,6 +40,7 @@ final class SetViewController: UITableViewController {
     
     private func loadPhaseGroupSetGames() {
         doneRequest = false
+        requestSuccessful = true
         guard let id = set.id else {
             doneRequest = true
             requestSuccessful = false
@@ -53,8 +54,11 @@ final class SetViewController: UITableViewController {
                 self?.tableView.reloadData()
                 return
             }
+            
             self?.games = games
+            
             self?.doneRequest = true
+            self?.requestSuccessful = true
             self?.tableView.reloadData()
         }
     }
@@ -92,19 +96,20 @@ final class SetViewController: UITableViewController {
             cell.selectionStyle = .none
             return cell
         }
-        guard requestSuccessful else { return UITableViewCell().setupDisabled("Unable to load games") }
         guard doneRequest else { return LoadingCell() }
-        guard !games.isEmpty else { return UITableViewCell().setupDisabled("No games reported") }
+        guard requestSuccessful else { return UITableViewCell().setupDisabled(k.Message.errorLoadingGames) }
+        guard !games.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noGames) }
+        guard let game = games[safe: indexPath.row] else { return UITableViewCell() }
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentSetGameCell, for: indexPath) as? SubtitleCell {
             let text: String
-            if let stageName = games[indexPath.row].stageName {
+            if let stageName = game.stageName {
                 text = "Game \(indexPath.row + 1): " + stageName
             } else {
                 text = "Game \(indexPath.row + 1)"
             }
             cell.textLabel?.text = text
-            if let winnerID = games[indexPath.row].winnerID {
+            if let winnerID = game.winnerID {
                 let winner = set.entrants?.first(where: {
                     guard let id = $0.entrant?.id else { return false }
                     return id == winnerID

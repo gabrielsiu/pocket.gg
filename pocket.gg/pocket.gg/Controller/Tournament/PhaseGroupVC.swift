@@ -13,6 +13,7 @@ final class PhaseGroupVC: UIViewController {
     var phaseGroup: PhaseGroup?
     var phaseID: Int?
     var doneRequest = false
+    var requestSuccessful = true
     let phaseGroupViewControl: UISegmentedControl
     let tableView: UITableView
     
@@ -103,7 +104,7 @@ final class PhaseGroupVC: UIViewController {
     private func getPhaseGroup(_ complete: @escaping () -> Void) {
         guard let id = phaseID else { return }
         
-        NetworkService.getPhaseGroupsById(id: id, numPhaseGroups: 1) { [weak self] (result) in
+        NetworkService.getPhaseGroups(id, numPhaseGroups: 1) { [weak self] (result) in
             guard let result = result, !result.isEmpty else {
                 complete()
                 return
@@ -116,20 +117,18 @@ final class PhaseGroupVC: UIViewController {
     private func loadPhaseGroupDetails() {
         guard let id = phaseGroup?.id else {
             doneRequest = true
-            let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateEventMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            self.present(alert, animated: true)
+            requestSuccessful = false
             tableView.reloadData()
+            showInvalidBracketView(cause: .errorLoadingBracket)
             return
         }
         
-        NetworkService.getPhaseGroupById(id: id) { [weak self] (result) in
+        NetworkService.getPhaseGroup(id) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
-                let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getEventDetailsMessage, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                self?.present(alert, animated: true)
+                self?.requestSuccessful = false
                 self?.tableView.reloadData()
+                self?.showInvalidBracketView(cause: .errorLoadingBracket)
                 return
             }
             
@@ -139,9 +138,10 @@ final class PhaseGroupVC: UIViewController {
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
             guard let standings = self?.phaseGroup?.standings, let matches = self?.phaseGroup?.matches else {
-                self?.setupBracketView()
                 self?.doneRequest = true
+                self?.requestSuccessful = false
                 self?.tableView.reloadData()
+                self?.showInvalidBracketView(cause: .errorLoadingBracket)
                 return
             }
             
@@ -151,9 +151,10 @@ final class PhaseGroupVC: UIViewController {
                 let nextSetsPage: Int? = matches.count == 100 ? 2 : nil
                 self?.loadRemainingPhaseGroupData(id: id, standingsPage: nextStandingsPage, setsPage: nextSetsPage)
             } else {
-                self?.setupBracketView()
                 self?.doneRequest = true
+                self?.requestSuccessful = true
                 self?.tableView.reloadData()
+                self?.setupBracketView()
             }
         }
     }
@@ -173,7 +174,7 @@ final class PhaseGroupVC: UIViewController {
         if let page = standingsPage {
             // Upper limit to prevent potential infinite recursive calls
             if page < 6 {
-                NetworkService.getPhaseGroupStandings(id: id, page: page) { [weak self] (standings) in
+                NetworkService.getPhaseGroupStandings(id, page: page) { [weak self] (standings) in
                     guard let standings = standings, !standings.isEmpty else {
                         dispatchGroup.leave()
                         return
@@ -192,7 +193,7 @@ final class PhaseGroupVC: UIViewController {
         if let page = setsPage {
             // Upper limit to prevent potential infinite recursive calls
             if page < 6 {
-                NetworkService.getPhaseGroupSets(id: id, page: page) { [weak self] (sets) in
+                NetworkService.getPhaseGroupSets(id, page: page) { [weak self] (sets) in
                     guard let sets = sets, !sets.isEmpty else {
                         dispatchGroup.leave()
                         return
@@ -226,9 +227,10 @@ final class PhaseGroupVC: UIViewController {
             if nextStandingsPage != nil || nextSetsPage != nil {
                 self?.loadRemainingPhaseGroupData(id: id, standingsPage: nextStandingsPage, setsPage: nextSetsPage)
             } else {
-                self?.setupBracketView()
                 self?.doneRequest = true
+                self?.requestSuccessful = true
                 self?.tableView.reloadData()
+                self?.setupBracketView()
             }
         }
     }
@@ -247,6 +249,7 @@ final class PhaseGroupVC: UIViewController {
         
         if let bracketView = bracketView {
             if bracketView.isValid {
+                bracketViewSpinner.isHidden = true
                 bracketScrollView.contentSize = bracketView.bounds.size
                 bracketScrollView.addSubview(bracketView)
             } else {
@@ -255,14 +258,13 @@ final class PhaseGroupVC: UIViewController {
         } else {
             showInvalidBracketView(cause: .unsupportedBracketType, bracketType: phaseGroup?.bracketType)
         }
-        bracketViewSpinner.isHidden = true
     }
     
     // MARK: - Actions
     
     @objc private func presentSetVC(_ notification: Notification) {
         if let set = notification.object as? PhaseGroupSet {
-            present(UINavigationController(rootViewController: SetViewController(set)), animated: true, completion: nil)
+            present(UINavigationController(rootViewController: SetVC(set)), animated: true, completion: nil)
         }
     }
     
@@ -276,6 +278,7 @@ final class PhaseGroupVC: UIViewController {
     }
     
     private func showInvalidBracketView(cause: InvalidBracketViewCause, bracketType: String? = nil) {
+        bracketViewSpinner.isHidden = true
         let invalidBracketView = InvalidBracketView(cause: cause, bracketType: bracketType)
         bracketScrollView.addSubview(invalidBracketView)
         invalidBracketView.setEdgeConstraints(top: bracketScrollView.safeAreaLayoutGuide.topAnchor,
@@ -293,28 +296,45 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if phaseGroupViewControl.selectedSegmentIndex == 0 {
-            guard let count = phaseGroup?.standings?.count, count != 0  else {
-                return 1
-            }
-            return count
-        } else {
-            guard let count = phaseGroup?.matches?.count, count != 0  else {
-                return 1
-            }
-            return count
+        guard doneRequest, requestSuccessful else { return 1 }
+        switch phaseGroupViewControl.selectedSegmentIndex {
+        case 0:
+            guard let standings = phaseGroup?.standings, !standings.isEmpty else { return 1 }
+            return standings.count
+        case 1:
+            guard let sets = phaseGroup?.matches, !sets.isEmpty else { return 1 }
+            return sets.count
+        default: return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let standings = phaseGroup?.standings, !standings.isEmpty else {
-            let text = phaseGroupViewControl.selectedSegmentIndex == 0 ? "No standings found" : "No matches found"
-            return doneRequest ? UITableViewCell().setupDisabled(text) : LoadingCell()
+        guard doneRequest else { return LoadingCell() }
+        guard requestSuccessful else {
+            let text = phaseGroupViewControl.selectedSegmentIndex == 0 ? k.Message.errorLoadingPhaseGroupStandings : k.Message.errorLoadingSets
+            return UITableViewCell().setupDisabled(text)
+        }
+        
+        var standings = [(entrant: Entrant?, placement: Int?)]()
+        var sets = [PhaseGroupSet]()
+        
+        switch phaseGroupViewControl.selectedSegmentIndex {
+        case 0:
+            guard let phaseGroupStandings = phaseGroup?.standings else { return UITableViewCell().setupDisabled(k.Message.errorLoadingPhaseGroupStandings) }
+            guard !phaseGroupStandings.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noStandings) }
+            standings = phaseGroupStandings
+        case 1:
+            guard let phaseGroupSets = phaseGroup?.matches else { return UITableViewCell().setupDisabled(k.Message.errorLoadingSets) }
+            guard !phaseGroupSets.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noSets) }
+            sets = phaseGroupSets
+        default: return UITableViewCell()
         }
         
         switch phaseGroupViewControl.selectedSegmentIndex {
         case 0:
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
+                guard let standing = standings[safe: indexPath.row] else { break }
+                
                 cell.selectionStyle = .none
                 
                 var placementText = ""
@@ -322,7 +342,7 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
                 
                 var teamNameStart: Int?
                 var teamNameLength: Int?
-                if let placement = standings[indexPath.row].placement {
+                if let placement = standing.placement {
                     placementText = "\(placement): "
                     teamNameStart = placementText.count
                     if let progressionsOut = phaseGroup?.progressionsOut, progressionsOut.contains(placement) {
@@ -330,8 +350,8 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
                         progressedText = "Progressed"
                     }
                 }
-                if let entrantName = standings[indexPath.row].entrant?.name {
-                    if let teamName = standings[indexPath.row].entrant?.teamName {
+                if let entrantName = standing.entrant?.name {
+                    if let teamName = standing.entrant?.teamName {
                         placementText += teamName + " "
                         teamNameLength = teamName.count
                     }
@@ -346,24 +366,23 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
                 cell.updateLabels(attributedText: attributedText, detailText: progressedText)
                 return cell
             }
-            return UITableViewCell()
             
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.tournamentSetCell, for: indexPath) as? SetCell {
-                guard let set = phaseGroup?.matches?[safe: indexPath.row] else { return UITableViewCell() }
+                guard let set = sets[safe: indexPath.row] else { break }
                 cell.addSetInfo(set)
                 return cell
             }
-            return UITableViewCell()
             
-        default: return UITableViewCell()
+        default: break
         }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard phaseGroupViewControl.selectedSegmentIndex == 1 else { return }
         guard let set = phaseGroup?.matches?[safe: indexPath.row] else { return }
-        present(UINavigationController(rootViewController: SetViewController(set)), animated: true, completion: nil)
+        present(UINavigationController(rootViewController: SetVC(set)), animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

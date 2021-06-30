@@ -35,37 +35,36 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                var tournaments: [Tournament]?
+                var tournaments = [Tournament]()
                 if let nodes = graphQLResult.data?.tournaments?.nodes {
-                    tournaments = nodes.map({ (tournament) -> Tournament in
-                        let start = DateFormatter.shared.dateFromTimestamp(tournament?.startAt)
-                        let end = DateFormatter.shared.dateFromTimestamp(tournament?.endAt)
+                    tournaments = nodes.map {
+                        let start = DateFormatter.shared.dateFromTimestamp($0?.startAt)
+                        let end = DateFormatter.shared.dateFromTimestamp($0?.endAt)
                         let date = start == end ? start : "\(start) - \(end)"
                         
-                        let logo = tournament?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
+                        let logo = $0?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
                             guard let url = image?.url else { return smallestImage }
                             guard let ratio = image?.ratio else { return smallestImage }
                             if ratio < smallestImage.1 { return (url, ratio) }
                             return smallestImage
                         })
                         
-                        let header = tournament?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
+                        let header = $0?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
                             guard let url = image?.url else { return widestImage }
                             guard let ratio = image?.ratio else { return widestImage }
                             if ratio > widestImage.1 { return (url, ratio) }
                             return widestImage
                         })
                         
-                        return Tournament(id: Int(tournament?.id ?? "-1"),
-                                          name: tournament?.name,
+                        return Tournament(id: Int($0?.id ?? "-1"),
+                                          name: $0?.name,
                                           date: date,
                                           logoUrl: logo?.0,
-                                          isOnline: tournament?.isOnline,
-                                          location: Location(address: tournament?.venueAddress),
+                                          isOnline: $0?.isOnline,
+                                          location: Location(address: $0?.venueAddress),
                                           headerImage: header)
-                    })
+                    }
                 }
-                
                 DispatchQueue.main.async { complete(tournaments) }
             }
         }
@@ -86,44 +85,43 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                var tournaments: [Tournament]?
+                var tournaments = [Tournament]()
                 if let nodes = graphQLResult.data?.tournaments?.nodes {
-                    tournaments = nodes.map({ (tournament) -> Tournament in
-                        let start = DateFormatter.shared.dateFromTimestamp(tournament?.startAt)
-                        let end = DateFormatter.shared.dateFromTimestamp(tournament?.endAt)
+                    tournaments = nodes.map {
+                        let start = DateFormatter.shared.dateFromTimestamp($0?.startAt)
+                        let end = DateFormatter.shared.dateFromTimestamp($0?.endAt)
                         let date = start == end ? start : "\(start) - \(end)"
                         
-                        let logo = tournament?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
+                        let logo = $0?.images?.reduce(("", 10), { (smallestImage, image) -> (String, Double) in
                             guard let url = image?.url else { return smallestImage }
                             guard let ratio = image?.ratio else { return smallestImage }
                             if ratio < smallestImage.1 { return (url, ratio) }
                             return smallestImage
                         })
                         
-                        let header = tournament?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
+                        let header = $0?.images?.reduce(("", 1), { (widestImage, image) -> (String, Double) in
                             guard let url = image?.url else { return widestImage }
                             guard let ratio = image?.ratio else { return widestImage }
                             if ratio > widestImage.1 { return (url, ratio) }
                             return widestImage
                         })
                         
-                        return Tournament(id: Int(tournament?.id ?? "-1"),
-                                          name: tournament?.name,
+                        return Tournament(id: Int($0?.id ?? "-1"),
+                                          name: $0?.name,
                                           date: date,
                                           logoUrl: logo?.0,
-                                          isOnline: tournament?.isOnline,
-                                          location: Location(address: tournament?.venueAddress),
+                                          isOnline: $0?.isOnline,
+                                          location: Location(address: $0?.venueAddress),
                                           headerImage: header)
-                    })
+                    }
                 }
-                
                 DispatchQueue.main.async { complete(tournaments) }
             }
         }
     }
     
-    static func getTournamentDetailsById(id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: TournamentDetailsByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+    static func getTournamentDetails(_ id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
+        ApolloService.shared.client.fetch(query: TournamentDetailsQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -132,27 +130,32 @@ final class NetworkService {
                 
             case .success(let graphQLResult):
                 guard let tournament = graphQLResult.data?.tournament else {
-                    debugPrint(k.Error.tournamentFromId)
                     DispatchQueue.main.async { complete(nil) }
                     return
                 }
                 
-                let events = tournament.events?.map({ (event) -> Event in
-                    return Event(id: Int(event?.id ?? "-1"),
-                                 name: event?.name,
-                                 state: event?.state?.rawValue,
-                                 winner: EntrantService.getEventWinner(event),
-                                 startDate: event?.startAt,
-                                 eventType: event?.type,
-                                 videogameName: event?.videogame?.name,
-                                 videogameImage: event?.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
-                })
+                var events = [Event]()
+                if let tournamentEvents = tournament.events {
+                    events = tournamentEvents.map {
+                        Event(id: Int($0?.id ?? "-1"),
+                                     name: $0?.name,
+                                     state: $0?.state?.rawValue,
+                                     winner: EntrantService.getEventWinner($0),
+                                     startDate: $0?.startAt,
+                                     eventType: $0?.type,
+                                     videogameName: $0?.videogame?.name,
+                                     videogameImage: $0?.videogame?.images?.compactMap { return ($0?.url, $0?.ratio) }.first)
+                    }
+                }
                 
-                let streams = tournament.streams?.map({ (stream) -> Stream in
-                    return Stream(name: stream?.streamName,
-                                  logoUrl: stream?.streamLogo,
-                                  sourceUrl: stream?.streamSource?.rawValue)
-                })
+                var streams = [Stream]()
+                if let tournamentStreams = tournament.streams {
+                    streams = tournamentStreams.map {
+                        Stream(name: $0?.streamName,
+                               logoUrl: $0?.streamLogo,
+                               sourceUrl: $0?.streamSource?.rawValue)
+                    }
+                }
                 
                 DispatchQueue.main.async {
                     complete(["venueName": tournament.venueName,
@@ -170,8 +173,8 @@ final class NetworkService {
         }
     }
     
-    static func getEventById(id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: EventByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+    static func getEvent(_ id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
+        ApolloService.shared.client.fetch(query: EventQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -179,19 +182,19 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                var phases: [Phase]?
+                var phases = [Phase]()
                 if let eventPhases = graphQLResult.data?.event?.phases {
-                    phases = eventPhases.map({ (phase) -> Phase in
-                        return Phase(id: Int(phase?.id ?? "-1"),
-                                     name: phase?.name,
-                                     state: phase?.state?.rawValue,
-                                     numPhaseGroups: phase?.groupCount,
-                                     numEntrants: phase?.numSeeds,
-                                     bracketType: phase?.bracketType?.rawValue)
-                    })
+                    phases = eventPhases.map {
+                        return Phase(id: Int($0?.id ?? "-1"),
+                                     name: $0?.name,
+                                     state: $0?.state?.rawValue,
+                                     numPhaseGroups: $0?.groupCount,
+                                     numEntrants: $0?.numSeeds,
+                                     bracketType: $0?.bracketType?.rawValue)
+                    }
                 }
                 
-                var topStandings: [(entrant: Entrant?, placement: Int?)]?
+                var topStandings = [(entrant: Entrant?, placement: Int?)]()
                 if let nodes = graphQLResult.data?.event?.standings?.nodes {
                     topStandings = nodes.compactMap { EntrantService.getEntrantAndStanding($0) }
                 }
@@ -207,8 +210,8 @@ final class NetworkService {
         }
     }
     
-    static func getPhaseGroupsById(id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [PhaseGroup]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupsByIdQuery(id: "\(id)", perPage: numPhaseGroups),
+    static func getPhaseGroups(_ id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [PhaseGroup]?) -> Void) {
+        ApolloService.shared.client.fetch(query: PhaseGroupsQuery(id: "\(id)", perPage: numPhaseGroups),
                                           queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -217,22 +220,21 @@ final class NetworkService {
                 return
             
             case .success(let graphQLResult):
-                var phaseGroups: [PhaseGroup]?
+                var phaseGroups = [PhaseGroup]()
                 if let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes {
-                    phaseGroups = nodes.map({ (phaseGroup) -> PhaseGroup in
-                        return PhaseGroup(id: Int(phaseGroup?.id ?? "-1"),
-                                          name: phaseGroup?.displayIdentifier,
-                                          state: ActivityState.allCases[(phaseGroup?.state ?? 5) - 1].rawValue)
-                    })
+                    phaseGroups = nodes.map {
+                        return PhaseGroup(id: Int($0?.id ?? "-1"),
+                                          name: $0?.displayIdentifier,
+                                          state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue)
+                    }
                 }
-                
                 DispatchQueue.main.async { complete(phaseGroups) }
             }
         }
     }
     
-    static func getPhaseGroupById(id: Int, complete: @escaping (_ phaseGroup: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupByIdQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+    static func getPhaseGroup(_ id: Int, complete: @escaping (_ phaseGroup: [String: Any?]?) -> Void) {
+        ApolloService.shared.client.fetch(query: PhaseGroupQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -240,34 +242,34 @@ final class NetworkService {
                 return
             
             case .success(let graphQLResult):
-                var progressionsOut: [Int]?
+                var progressionsOut = [Int]()
                 if let nodes = graphQLResult.data?.phaseGroup?.progressionsOut {
                     progressionsOut = nodes.compactMap { $0?.originPlacement }
                 }
                 
-                var standings: [(entrant: Entrant?, placement: Int?)]?
+                var standings = [(entrant: Entrant?, placement: Int?)]()
                 if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
                     standings = nodes.compactMap { EntrantService.getEntrantAndStanding2($0) }
                 }
                 
-                var sets: [PhaseGroupSet]?
+                var sets = [PhaseGroupSet]()
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
-                    sets = nodes.map({ (set) -> PhaseGroupSet in
-                        var phaseGroupSet = PhaseGroupSet(id: Int(set?.id ?? "-1"),
-                                                          state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
-                                                          roundNum: set?.round ?? 0,
-                                                          identifier: set?.identifier ?? "",
-                                                          fullRoundText: set?.fullRoundText,
-                                                          prevRoundIDs: set?.slots?.compactMap({ (slot) -> Int? in
-                                                            guard let prevRoundID = slot?.prereqId else { return nil }
+                    sets = nodes.map {
+                        var phaseGroupSet = PhaseGroupSet(id: Int($0?.id ?? "-1"),
+                                                          state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
+                                                          roundNum: $0?.round ?? 0,
+                                                          identifier: $0?.identifier ?? "",
+                                                          fullRoundText: $0?.fullRoundText,
+                                                          prevRoundIDs: $0?.slots?.compactMap {
+                                                            guard let prevRoundID = $0?.prereqId else { return nil }
                                                             return Int(prevRoundID)
-                                                          }),
+                                                          },
                                                           entrants: nil)
-                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet(displayScore: set?.displayScore,
-                                                                                  winnerID: set?.winnerId,
-                                                                                  slots: set?.slots)
+                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet(displayScore: $0?.displayScore,
+                                                                                  winnerID: $0?.winnerId,
+                                                                                  slots: $0?.slots)
                         return phaseGroupSet
-                    })
+                    }
                 }
                 
                 DispatchQueue.main.async {
@@ -300,7 +302,7 @@ final class NetworkService {
     
     // MARK: - Remaining Standings & Sets
     
-    static func getPhaseGroupStandings(id: Int, page: Int, complete: @escaping (_ standings: [(entrant: Entrant?, placement: Int?)]?) -> Void) {
+    static func getPhaseGroupStandings(_ id: Int, page: Int, complete: @escaping (_ standings: [(entrant: Entrant?, placement: Int?)]?) -> Void) {
         ApolloService.shared.client.fetch(query: PhaseGroupStandingsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -309,17 +311,16 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                var standings: [(entrant: Entrant?, placement: Int?)]?
+                var standings = [(entrant: Entrant?, placement: Int?)]()
                 if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
                     standings = nodes.compactMap { EntrantService.getEntrantAndStanding3($0) }
                 }
-                
                 DispatchQueue.main.async { complete(standings) }
             }
         }
     }
     
-    static func getPhaseGroupSets(id: Int, page: Int, complete: @escaping (_ sets: [PhaseGroupSet]?) -> Void) {
+    static func getPhaseGroupSets(_ id: Int, page: Int, complete: @escaping (_ sets: [PhaseGroupSet]?) -> Void) {
         ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -328,26 +329,25 @@ final class NetworkService {
                 return
             
             case .success(let graphQLResult):
-                var sets: [PhaseGroupSet]?
+                var sets = [PhaseGroupSet]()
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
-                    sets = nodes.map({ (set) -> PhaseGroupSet in
-                        var phaseGroupSet = PhaseGroupSet(id: Int(set?.id ?? "-1"),
-                                                          state: ActivityState.allCases[(set?.state ?? 5) - 1].rawValue,
-                                                          roundNum: set?.round ?? 0,
-                                                          identifier: set?.identifier ?? "",
-                                                          fullRoundText: set?.fullRoundText,
-                                                          prevRoundIDs: set?.slots?.compactMap({ (slot) -> Int? in
+                    sets = nodes.map {
+                        var phaseGroupSet = PhaseGroupSet(id: Int($0?.id ?? "-1"),
+                                                          state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
+                                                          roundNum: $0?.round ?? 0,
+                                                          identifier: $0?.identifier ?? "",
+                                                          fullRoundText: $0?.fullRoundText,
+                                                          prevRoundIDs: $0?.slots?.compactMap({ (slot) -> Int? in
                                                             guard let prevRoundID = slot?.prereqId else { return nil }
                                                             return Int(prevRoundID)
                                                           }),
                                                           entrants: nil)
-                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet2(displayScore: set?.displayScore,
-                                                                                   winnerID: set?.winnerId,
-                                                                                   slots: set?.slots)
+                        phaseGroupSet.entrants = EntrantService.getEntrantsForSet2(displayScore: $0?.displayScore,
+                                                                                   winnerID: $0?.winnerId,
+                                                                                   slots: $0?.slots)
                         return phaseGroupSet
-                    })
+                    }
                 }
-                
                 DispatchQueue.main.async { complete(sets) }
             }
         }

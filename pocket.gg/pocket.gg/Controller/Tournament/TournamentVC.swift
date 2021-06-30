@@ -74,8 +74,8 @@ final class TournamentVC: UITableViewController {
     // MARK: - UI Setup
     
     private func setupHeaderImageView() {
-        let longEdgeLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-        NetworkService.getImage(imageUrl: tournament.headerImage?.url, newSize: CGSize(width: longEdgeLength, height: .zero)) { [weak self] (result) in
+        let maxLength = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        NetworkService.getImage(imageUrl: tournament.headerImage?.url, newSize: CGSize(width: maxLength, height: .zero)) { [weak self] (result) in
             guard let result = result else { return }
             
             DispatchQueue.main.async {
@@ -93,13 +93,16 @@ final class TournamentVC: UITableViewController {
     }
     
     private func loadTournamentDetails() {
-        NetworkService.getTournamentDetailsById(id: tournament.id ?? -1) { [weak self] (result) in
+        guard let id = tournament.id else {
+            doneRequest = true
+            requestSuccessful = false
+            tableView.reloadData()
+            return
+        }
+        NetworkService.getTournamentDetails(id) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
-                let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateTournamentMessage, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                self?.present(alert, animated: true)
                 self?.tableView.reloadData()
                 return
             }
@@ -119,6 +122,7 @@ final class TournamentVC: UITableViewController {
             self?.tournament.contact = result["contact"] as? (String, String)
             
             self?.doneRequest = true
+            self?.requestSuccessful = true
             self?.tableView.reloadData()
         }
     }
@@ -127,9 +131,7 @@ final class TournamentVC: UITableViewController {
     
     @objc private func togglePinnedTournament() {
         guard PinnedTournamentsService.togglePinnedTournament(tournament) else {
-            // TODO: Finalize wording
-            let message = "You can only have up to 10 pinned tournaments"
-            let alert = UIAlertController(title: k.Error.genericTitle, message: message, preferredStyle: .alert)
+            let alert = UIAlertController(title: k.Error.title, message: k.Error.pinnedTournamentLimit, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
             present(alert, animated: true)
             return
@@ -157,8 +159,14 @@ final class TournamentVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return tournament.events?.count ?? 1
-        case 2: return tournament.streams?.count ?? 1
+        case 1:
+            guard doneRequest, requestSuccessful else { return 1 }
+            guard let events = tournament.events, !events.isEmpty else { return 1 }
+            return events.count
+        case 2:
+            guard doneRequest, requestSuccessful else { return 1 }
+            guard let streams = tournament.streams, !streams.isEmpty else { return 1 }
+            return streams.count
         default: break
         }
         
@@ -188,15 +196,12 @@ final class TournamentVC: UITableViewController {
         case 0: return generalInfoCell
             
         case 1:
-            guard requestSuccessful else {
-                return UITableViewCell().setupDisabled("Unable to load events")
-            }
-            guard !(tournament.events?.isEmpty ?? true) else {
-                return doneRequest ? UITableViewCell().setupDisabled("No events currently available") : LoadingCell()
-            }
+            guard doneRequest else { return LoadingCell() }
+            guard requestSuccessful, let events = tournament.events else { return UITableViewCell().setupDisabled(k.Message.errorLoadingEvents) }
+            guard !events.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noEvents) }
+            guard let event = events[safe: indexPath.row] else { break }
+            
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventCell) as? SubtitleCell {
-                guard let event = tournament.events?[safe: indexPath.row] else { break }
-                
                 cell.accessoryType = .disclosureIndicator
                 cell.imageView?.image = UIImage(named: "game-controller")
                 
@@ -237,14 +242,12 @@ final class TournamentVC: UITableViewController {
             }
             
         case 2:
-            guard requestSuccessful else {
-                return UITableViewCell().setupDisabled("Unable to load streams")
-            }
-            guard !(tournament.streams?.isEmpty ?? true) else {
-                return doneRequest ? UITableViewCell().setupDisabled("No streams currently available") : LoadingCell()
-            }
+            guard doneRequest else { return LoadingCell() }
+            guard requestSuccessful, let streams = tournament.streams else { return UITableViewCell().setupDisabled(k.Message.errorLoadingStreams) }
+            guard !streams.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noStreams) }
+            guard let stream = streams[safe: indexPath.row] else { break }
+            
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.streamCell) as? SubtitleCell {
-                guard let stream = tournament.streams?[safe: indexPath.row] else { break }
                 cell.accessoryType = .disclosureIndicator
                 cell.imageView?.image = UIImage(named: "placeholder")
                 cell.updateView(text: stream.name, imageInfo: (stream.logoUrl, nil), detailText: nil)
@@ -262,10 +265,9 @@ final class TournamentVC: UITableViewController {
     // MARK: - Section-Dependent Table View Cells
     
     private func locationSectionCell(_ indexPath: IndexPath) -> UITableViewCell {
-        guard requestSuccessful else {
-            return UITableViewCell().setupDisabled("Unable to load location")
-        }
         guard doneRequest else { return LoadingCell() }
+        guard requestSuccessful else { return UITableViewCell().setupDisabled(k.Message.errorLoadingLocation) }
+        
         switch indexPath.row {
         case 0:
             if let locationCell = locationCell { return locationCell }
@@ -274,7 +276,7 @@ final class TournamentVC: UITableViewController {
                     locationCell = TournamentLocationCell(id: id, latitude: latitude, longitude: longitude)
                     return locationCell ?? TournamentLocationCell(id: id, latitude: latitude, longitude: longitude)
                 } else {
-                    return UITableViewCell().setupDisabled("No location available")
+                    return UITableViewCell().setupDisabled(k.Message.noLocation)
                 }
             }
         case 1:
@@ -294,13 +296,10 @@ final class TournamentVC: UITableViewController {
     }
     
     private func contactInfoSectionCell() -> UITableViewCell {
-        guard requestSuccessful else {
-            return UITableViewCell().setupDisabled("Unable to load contact info")
-        }
         guard doneRequest else { return LoadingCell() }
-        guard let contactInfo = tournament.contact?.info else {
-            return UITableViewCell().setupDisabled("No contact info available")
-        }
+        guard requestSuccessful else { return UITableViewCell().setupDisabled(k.Message.errorLoadingContactInfo) }
+        guard let contactInfo = tournament.contact?.info else { return UITableViewCell().setupDisabled(k.Message.noContactInfo) }
+        
         let cell = UITableViewCell()
         cell.textLabel?.textColor = .systemRed
         cell.textLabel?.text = contactInfo
@@ -309,10 +308,9 @@ final class TournamentVC: UITableViewController {
     }
     
     private func registrationSectionCell() -> UITableViewCell {
-        guard requestSuccessful else {
-            return UITableViewCell().setupDisabled("Unable to load registration info")
-        }
         guard doneRequest else { return LoadingCell() }
+        guard requestSuccessful else { return UITableViewCell().setupDisabled(k.Message.errorLoadingRegistrationInfo) }
+        
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         let registrationOpen = tournament.registration?.isOpen ?? false
         let closeDate = DateFormatter.shared.dateFromTimestamp(tournament.registration?.closeDate)

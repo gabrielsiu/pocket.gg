@@ -58,8 +58,8 @@ class SetUtilities {
             attributedText.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: NSRange(location: 0, length: score0.count))
         } else if outcome == .entrant1Won {
             let location = score0.count + 3
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: size), range: NSRange(location: location, length: score0.count))
-            attributedText.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: NSRange(location: location, length: score0.count))
+            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: size), range: NSRange(location: location, length: score1.count))
+            attributedText.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: NSRange(location: location, length: score1.count))
         }
         
         return attributedText

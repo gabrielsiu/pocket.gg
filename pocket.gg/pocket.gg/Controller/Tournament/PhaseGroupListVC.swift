@@ -38,20 +38,14 @@ final class PhaseGroupListVC: UITableViewController {
         guard let id = phase.id else {
             doneRequest = true
             requestSuccessful = false
-            let alert = UIAlertController(title: k.Error.genericTitle, message: k.Error.generateBracketMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            present(alert, animated: true)
             tableView.reloadData()
             return
         }
         
-        NetworkService.getPhaseGroupsById(id: id, numPhaseGroups: phase.numPhaseGroups ?? 100) { [weak self] (result) in
+        NetworkService.getPhaseGroups(id, numPhaseGroups: phase.numPhaseGroups ?? 100) { [weak self] (result) in
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
-                let alert = UIAlertController(title: k.Error.requestTitle, message: k.Error.getBracketDetailsMessage, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                self?.present(alert, animated: true)
                 self?.tableView.reloadData()
                 return
             }
@@ -59,6 +53,7 @@ final class PhaseGroupListVC: UITableViewController {
             self?.phase.phaseGroups = result
             
             self?.doneRequest = true
+            self?.requestSuccessful = true
             self?.tableView.reloadData()
         }
     }
@@ -72,7 +67,10 @@ final class PhaseGroupListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return phase.phaseGroups?.count ?? 1
+        case 1:
+            guard doneRequest, requestSuccessful else { return 1 }
+            guard let phaseGroups = phase.phaseGroups, !phaseGroups.isEmpty else { return 1 }
+            return phaseGroups.count
         default: return 0
         }
     }
@@ -106,25 +104,22 @@ final class PhaseGroupListVC: UITableViewController {
             return cell
             
         case 1:
-            guard requestSuccessful else {
-                return UITableViewCell().setupDisabled("Unable to load pools")
-            }
-            guard let phaseGroups = phase.phaseGroups else {
-                return doneRequest ? UITableViewCell().setupDisabled("No pools found") : LoadingCell()
-            }
+            guard doneRequest else { return LoadingCell() }
+            guard requestSuccessful, let phaseGroups = phase.phaseGroups else { return UITableViewCell().setupDisabled(k.Message.errorLoadingPhaseGroups) }
+            guard !phaseGroups.isEmpty else { return UITableViewCell().setupDisabled(k.Message.noPhaseGroups) }
+            guard let phaseGroup = phaseGroups[safe: indexPath.row] else { break }
 
             if let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.value1Cell, for: indexPath) as? Value1Cell {
                 cell.accessoryType = .disclosureIndicator
                 var text: String?
-                if let poolId = phaseGroups[indexPath.row].name {
+                if let poolId = phaseGroup.name {
                     text = "Pool " + poolId
                 }
-                cell.updateLabels(text: text, detailText: phaseGroups[indexPath.row].state?.capitalized)
+                cell.updateLabels(text: text, detailText: phaseGroup.state?.capitalized)
                 return cell
             }
         default: break
         }
-        
         return UITableViewCell()
     }
     

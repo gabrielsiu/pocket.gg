@@ -97,10 +97,10 @@ struct Constants {
         static let didTapSet = "didTapSet"
     }
     
-    // MARK: - Error Messages
+    // MARK: - Errors
     
     struct Error {
-        static let genericTitle = "Error"
+        static let title = "Error"
         
         static let invalidAuthToken = "Invalid auth token"
         
@@ -109,22 +109,52 @@ struct Constants {
         static let networkRequest = "Network request failed with error: "
         static let missingData = "ERROR: Missing data from network request."
         static let imageFromData = "ERROR: Could not create image from given data."
-
-        static let endpointUrl = "ERROR: Could not make URL from endpoint."
-        static let apolloFetch = "Error fetching GraphQL query: "
-        static let tournamentNodes = "ERROR: Could not fetch tournament nodes."
-        static let tournamentFromId = "ERROR: Could not create tournament from its ID."
-        static let phases = "ERROR: Could not fetch event phases."
-        static let standingsNodes = "ERROR: Could not fetch event standings nodes."
-        static let phaseGroupsNodes = "ERROR: Could not fetch phase groups nodes."
         
-        static let requestTitle = "Request error"
-        static let getTournamentsMessage = "Unable to fetch tournaments from smash.gg"
-        static let generateTournamentMessage = "Unable to load tournament details"
-        static let generateEventMessage = "Unable to load event"
-        static let getEventDetailsMessage = "Unable to fetch event details"
-        static let generateBracketMessage = "Unable to load bracket"
-        static let getBracketDetailsMessage = "Unable to fetch bracket details"
+        static let apolloFetch = "Error fetching GraphQL query: "
+        
+        // TODO: Finalize wording
+        static let pinnedTournamentLimit = "You can only have up to 10 pinned tournaments"
+    }
+    
+    // MARK: - Messages
+    
+    struct Message {
+        // MARK: MainVC
+        static let errorLoadingTournaments = "Unable to load tournaments"
+        static let noTournaments = "No tournaments found for this category"
+        static let noPinnedTournaments = "You don't have any pinned tournaments"
+        static let noPreferredGames = "You haven't enabled any video games. Add your favorite video games to see tournaments that feature those games."
+        
+        // MARK: TournamentVC
+        static let errorLoadingEvents = "Unable to load events"
+        static let noEvents = "No events found"
+        static let errorLoadingStreams = "Unable to load streams"
+        static let noStreams = "No streams found"
+        static let errorLoadingLocation = "Unable to load location"
+        static let noLocation = "No location found"
+        static let errorLoadingContactInfo = "Unable to load contact info"
+        static let noContactInfo = "No contact info found"
+        static let errorLoadingRegistrationInfo = "Unable to load registration info"
+        
+        // MARK: EventVC
+        static let errorLoadingBrackets = "Unable to load brackets"
+        static let noBrackets = "No brackets found"
+        static let errorLoadingStandings = "Unable to load standings"
+        static let noStandings = "No standings found"
+        
+        // MARK: PhaseGroupListVC
+        static let errorLoadingPhaseGroups = "Unable to load pools"
+        static let noPhaseGroups = "No pools found"
+        
+        // MARK: PhaseGroupVC
+        static let errorLoadingPhaseGroupStandings = "Unable to load standings"
+        static let noPhaseGroupStandings = "No standings found"
+        static let errorLoadingSets = "Unable to load matches"
+        static let noSets = "No matches found"
+        
+        // MARK: SetVC
+        static let errorLoadingGames = "Unable to load games"
+        static let noGames = "No games reported"
     }
 }
 
