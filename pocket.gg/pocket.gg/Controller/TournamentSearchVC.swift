@@ -177,7 +177,7 @@ extension TournamentSearchVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
-        guard let text = searchBar.text, text != "" else { return }
+        guard let text = searchBar.text, !text.isEmpty else { return }
         
         let preferredGameIDs = searchUsingEnabledGamesSwitch.isOn ? PreferredGamesService.getEnabledGames().map { $0.id } : []
         navigationController?.pushViewController(TournamentSearchResultsVC(searchTerm: text, preferredGameIDs: preferredGameIDs), animated: true)

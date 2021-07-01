@@ -23,26 +23,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         PinnedTournamentsService.initPinnedTournaments()
         
-        if UserDefaults.standard.string(forKey: k.UserDefaults.authToken) == nil {
+        guard let authToken = UserDefaults.standard.string(forKey: k.UserDefaults.authToken), !authToken.isEmpty else {
             window?.rootViewController = AuthTokenVC()
-        } else {
-            let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
-                               UITabBarItem(tabBarSystemItem: .search, tag: 1),
-                               UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 2)]
-            let tabBarVCs = [UINavigationController(rootViewController: MainVC(style: .grouped)),
-                             UINavigationController(rootViewController: TournamentSearchVC()),
-                             UINavigationController(rootViewController: SettingsVC(style: .insetGrouped))]
-            let tabBarController = UITabBarController()
-            tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
-                navController.navigationBar.prefersLargeTitles = true
-                navController.tabBarItem = tabBarItems[index]
-                return navController
-            })
-            tabBarController.selectedIndex = 0
-            
-            self.window?.rootViewController = tabBarController
+            window?.makeKeyAndVisible()
+            return
         }
-        self.window?.makeKeyAndVisible()
+        
+        let tabBarItems = [UITabBarItem(title: "Tournaments", image: UIImage(named: "tournament"), tag: 0),
+                           UITabBarItem(tabBarSystemItem: .search, tag: 1),
+                           UITabBarItem(title: "Settings", image: UIImage(named: "settings"), tag: 2)]
+        let tabBarVCs = [UINavigationController(rootViewController: MainVC(style: .grouped)),
+                         UINavigationController(rootViewController: TournamentSearchVC()),
+                         UINavigationController(rootViewController: SettingsVC(style: .insetGrouped))]
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = tabBarVCs.enumerated().map({ (index, navController) -> UINavigationController in
+            navController.navigationBar.prefersLargeTitles = true
+            navController.tabBarItem = tabBarItems[index]
+            return navController
+        })
+        tabBarController.selectedIndex = 0
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

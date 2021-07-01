@@ -118,13 +118,14 @@ final class MainVC: UITableViewController {
                 guard let tournaments = tournaments else {
                     self?.doneRequest[i] = true
                     self?.requestSuccessful[i] = false
+                    self?.tableView.reloadSections([i], with: .automatic)
                     dispatchGroup.leave()
                     return
                 }
                 self?.tournaments[i] = tournaments
+                
                 self?.doneRequest[i] = true
                 self?.requestSuccessful[i] = true
-                
                 self?.tableView.reloadSections([i], with: .automatic)
                 dispatchGroup.leave()
             }
@@ -184,7 +185,7 @@ final class MainVC: UITableViewController {
                                      leading: headerView.leadingAnchor,
                                      padding: UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 0))
         
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         headerView.addSubview(button)
         button.setEdgeConstraints(top: headerView.topAnchor,

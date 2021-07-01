@@ -254,8 +254,9 @@ final class NetworkService {
                 
                 var sets = [PhaseGroupSet]()
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
-                    sets = nodes.map {
-                        var phaseGroupSet = PhaseGroupSet(id: Int($0?.id ?? "-1"),
+                    sets = nodes.compactMap {
+                        guard let id = Int($0?.id ?? "-1"), id != -1 else { return nil }
+                        var phaseGroupSet = PhaseGroupSet(id: id,
                                                           state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
                                                           roundNum: $0?.round ?? 0,
                                                           identifier: $0?.identifier ?? "",
@@ -331,8 +332,9 @@ final class NetworkService {
             case .success(let graphQLResult):
                 var sets = [PhaseGroupSet]()
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
-                    sets = nodes.map {
-                        var phaseGroupSet = PhaseGroupSet(id: Int($0?.id ?? "-1"),
+                    sets = nodes.compactMap {
+                        guard let id = Int($0?.id ?? "-1"), id != -1 else { return nil }
+                        var phaseGroupSet = PhaseGroupSet(id: id,
                                                           state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
                                                           roundNum: $0?.round ?? 0,
                                                           identifier: $0?.identifier ?? "",

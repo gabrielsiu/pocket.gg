@@ -54,7 +54,7 @@ final class AuthTokenVC: UIViewController {
     // MARK: - Setup
     
     private func setupViews() {
-        let logoImageView = UIImageView(image: UIImage(named: "placeholder"))
+        let logoImageView = UIImageView(image: UIImage(named: "tournament-red"))
         let appNameLabel = UILabel(frame: .zero)
         appNameLabel.text = "pocket.gg"
         appNameLabel.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
@@ -76,7 +76,7 @@ final class AuthTokenVC: UIViewController {
         authTokenField.clearButtonMode = .whileEditing
         authTokenField.addTarget(self, action: #selector(verifyAuthToken), for: .editingDidEndOnExit)
         
-        let authTokenStepsButton = UIButton()
+        let authTokenStepsButton = UIButton(type: .system)
         authTokenStepsButton.setTitle("How do I get an Auth Token?", for: .normal)
         authTokenStepsButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         authTokenStepsButton.contentHorizontalAlignment = .leading

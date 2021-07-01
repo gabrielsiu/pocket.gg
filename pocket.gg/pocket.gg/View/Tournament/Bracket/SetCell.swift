@@ -10,6 +10,7 @@ import UIKit
 
 final class SetCell: UITableViewCell {
     
+    let setDescriptionLabel = UILabel()
     let entrantLabel0 = UILabel()
     let entrantLabel1 = UILabel()
     let scoreLabel: UILabel = {
@@ -43,9 +44,15 @@ final class SetCell: UITableViewCell {
         labelsContainer.addSubview(entrantLabel0)
         labelsContainer.addSubview(entrantLabel1)
         
+        contentView.addSubview(setDescriptionLabel)
         contentView.addSubview(labelsContainer)
         contentView.addSubview(scoreLabel)
         contentView.addSubview(setStateLabel)
+        setDescriptionLabel.setEdgeConstraints(top: contentView.topAnchor,
+                                               bottom: labelsContainer.topAnchor,
+                                               leading: contentView.leadingAnchor,
+                                               trailing: contentView.trailingAnchor,
+                                               padding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
         vsLabel.setAxisConstraints(xAnchor: labelsContainer.centerXAnchor)
         vsLabel.setEdgeConstraints(top: labelsContainer.topAnchor,
                                    bottom: labelsContainer.bottomAnchor,
@@ -62,7 +69,7 @@ final class SetCell: UITableViewCell {
                                          leading: vsLabel.trailingAnchor,
                                          trailing: labelsContainer.trailingAnchor,
                                          padding: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0))
-        labelsContainer.setEdgeConstraints(top: contentView.topAnchor,
+        labelsContainer.setEdgeConstraints(top: setDescriptionLabel.bottomAnchor,
                                            bottom: scoreLabel.topAnchor,
                                            leading: contentView.leadingAnchor,
                                            trailing: contentView.trailingAnchor,
@@ -82,6 +89,17 @@ final class SetCell: UITableViewCell {
     func addSetInfo(_ set: PhaseGroupSet?) {
         guard let set = set else { return }
         let outcome = SetUtilities.getSetOutcome(set)
+        
+        var setDescriptionText = ""
+        if let fullRoundText = set.fullRoundText {
+            setDescriptionText += fullRoundText
+        }
+        if !set.identifier.isEmpty {
+            setDescriptionText += " • Match " + set.identifier
+        }
+        setDescriptionLabel.text = setDescriptionText
+        setDescriptionLabel.textAlignment = .center
+        setDescriptionLabel.textColor = .systemGray
         
         setStateLabel.text = set.state?.capitalized
         setStateLabel.textAlignment = .right

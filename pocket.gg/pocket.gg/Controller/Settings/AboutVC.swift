@@ -61,18 +61,16 @@ final class AboutVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            switch indexPath.row {
-            case 0: return aboutInfoCell
-            default: fatalError("Invalid row in section 0")
-            }
+            if indexPath.row == 0 { return aboutInfoCell }
         case 1:
             switch indexPath.row {
             case 0: return smashGgAPICell
             case 1: return apolloiOSCell
-            default: fatalError("Invalid row in section 1")
+            default: break
             }
-        default: fatalError("Invalid section")
+        default: break
         }
+        return UITableViewCell()
     }
     
     // MARK: - Table View Delegate

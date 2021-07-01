@@ -65,7 +65,6 @@ final class AuthTokenStepsVC: UIViewController {
         """
         label2.text = text
         
-        
         let label3 = UILabel(frame: .zero)
         label3.text = "What is an Auth Token? Why do I need one?"
         label3.textAlignment = .left
@@ -82,8 +81,8 @@ final class AuthTokenStepsVC: UIViewController {
 
         smash.gg uses a GraphQL API (which this app is powered by), which uses token-based authentication. \
         As mentioned in the steps above, once you log into smash.gg you can obtain an auth token, which can be used for 1 year before it expires. \
-        By providing pocket.gg (this app) with an auth token, you are allowing pocket.gg to fetch information from smash.gg's servers (such as tournament data), \
-        without having to provide pocket.gg with your username & password.
+        By providing pocket.gg (this app) with an auth token, you are allowing pocket.gg to fetch information from smash.gg's servers \
+        (such as tournament data), without having to provide pocket.gg with your username & password.
         """
         label4.text = text2
         

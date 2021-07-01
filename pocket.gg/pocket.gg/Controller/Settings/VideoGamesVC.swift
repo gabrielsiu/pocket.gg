@@ -133,7 +133,7 @@ extension VideoGamesVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
-        guard let text = searchBar.text, text != "" else { return }
+        guard let text = searchBar.text, !text.isEmpty else { return }
         let videoGamesSearchResultsVC = VideoGamesSearchResultsVC(searchTerm: text, enabledGames: enabledGames)
         videoGamesSearchResultsVC.reloadEnabledGames = { [weak self] in
             // If the list of enabled games was changed in VideoGamesSearchResultsVC, reload the table view
