@@ -20,15 +20,21 @@ final class VideoGamesSearchResultsVC: UITableViewController {
     var enabledGamesChanged: Bool
     var reloadEnabledGames: (() -> Void)?
     
+    /// Determines whether the VC can notify MainVC that a setting was changed, and that the tournaments should be reloaded
+    /// - Will be initialized to true whenever the view appears
+    /// - When a setting is changed, the notification is sent, this is set to false, and is not set to true again until the view disappears
+    var canSendNotification: Bool
+    
     // MARK: - Initialization
     
     init(searchTerm: String?, enabledGames: [VideoGame]) {
         self.searchTerm = searchTerm
-        self.searchResults = []
         self.enabledGames = enabledGames
+        searchResults = []
         enabledGameIDs = enabledGames.reduce(into: Set<Int>()) { $0.insert($1.id) }
-        self.doneLoading = false
-        self.enabledGamesChanged = false
+        doneLoading = false
+        enabledGamesChanged = false
+        canSendNotification = true
         super.init(style: .insetGrouped)
         title = searchTerm
     }
@@ -49,8 +55,10 @@ final class VideoGamesSearchResultsVC: UITableViewController {
         super.viewWillDisappear(animated)
         // Save the list of enabled video games
         PreferredGamesService.updateEnabledGames(enabledGames)
+        canSendNotification = true
         if let reloadEnabledGames = reloadEnabledGames, enabledGamesChanged {
             reloadEnabledGames()
+            enabledGamesChanged = false
         }
     }
     
@@ -92,6 +100,7 @@ final class VideoGamesSearchResultsVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         // If at least 1 game was selected/deselected, reload the previous screen's table view upon exiting this screen
         enabledGamesChanged = true
+        requestTournamentsReload()
         
         let selectedID = searchResults[indexPath.row].id
         // If the game was already enabled, disable it
@@ -106,6 +115,15 @@ final class VideoGamesSearchResultsVC: UITableViewController {
             enabledGameIDs.insert(selectedID)
             enabledGames.append(searchResults[indexPath.row])
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }
+    }
+    
+    // MARK: - Actions
+    
+    private func requestTournamentsReload() {
+        if canSendNotification {
+            NotificationCenter.default.post(name: Notification.Name(k.Notification.settingsChanged), object: nil)
+            canSendNotification = false
         }
     }
 }

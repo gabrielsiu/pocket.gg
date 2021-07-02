@@ -14,6 +14,11 @@ final class VideoGamesVC: UITableViewController {
     let searchBar: UISearchBar
     var enabledGames: [VideoGame]
     
+    /// Determines whether the VC can notify MainVC that a setting was changed, and that the tournaments should be reloaded
+    /// - Will be initialized to true whenever the view appears
+    /// - When a setting is changed, the notification is sent, this is set to false, and is not set to true again until the view disappears
+    var canSendNotification: Bool
+    
     // MARK: - Initialization
     
     init() {
@@ -21,6 +26,7 @@ final class VideoGamesVC: UITableViewController {
         enabledGames = PreferredGamesService.getEnabledGames()
         headerView = UIView(frame: .zero)
         searchBar = UISearchBar(frame: .zero)
+        canSendNotification = true
         super.init(style: .insetGrouped)
     }
     
@@ -37,6 +43,11 @@ final class VideoGamesVC: UITableViewController {
         tableView.keyboardDismissMode = .onDrag
         navigationItem.rightBarButtonItem = enabledGames.isEmpty ? nil : editButtonItem
         setupHeaderView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        canSendNotification = true
     }
     
     private func setupHeaderView() {
@@ -101,6 +112,7 @@ final class VideoGamesVC: UITableViewController {
         let movedVideoGame = enabledGames.remove(at: sourceIndexPath.row)
         enabledGames.insert(movedVideoGame, at: destinationIndexPath.row)
         PreferredGamesService.updateEnabledGames(enabledGames)
+        requestTournamentsReload()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -111,6 +123,16 @@ final class VideoGamesVC: UITableViewController {
                 navigationItem.rightBarButtonItem = nil
             }
             PreferredGamesService.updateEnabledGames(enabledGames)
+            requestTournamentsReload()
+        }
+    }
+    
+    // MARK: - Actions
+    
+    private func requestTournamentsReload() {
+        if canSendNotification {
+            NotificationCenter.default.post(name: Notification.Name(k.Notification.settingsChanged), object: nil)
+            canSendNotification = false
         }
     }
 }

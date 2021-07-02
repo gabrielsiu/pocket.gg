@@ -24,8 +24,10 @@ struct Constants {
     
     struct URL {
         static let apolloiOS = "https://www.apollographql.com/docs/ios/"
-        static let smashGgAPI = "https://developer.smash.gg/docs/intro"
+        static let smashggAPI = "https://developer.smash.gg/docs/intro"
         static let twitch = "https://www.twitch.tv/"
+        
+        static let twitter = "https://twitter.com/gabrielsiu_dev"
     }
     
     // MARK: - UI/Structure Constants
@@ -94,6 +96,7 @@ struct Constants {
     
     struct Notification {
         static let tournamentPinToggled = "tournamentPinToggled"
+        static let settingsChanged = "settingsChanged"
         static let didTapSet = "didTapSet"
     }
     

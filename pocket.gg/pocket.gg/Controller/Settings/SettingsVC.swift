@@ -20,12 +20,22 @@ final class SettingsVC: UITableViewController {
     
     let authTokenDate = UserDefaults.standard.string(forKey: k.UserDefaults.authTokenDate)
     
+    /// Determines whether the VC can notify MainVC that a setting was changed, and that the tournaments should be reloaded
+    /// - Will be initialized to true whenever the view appears
+    /// - When a setting is changed, the notification is sent, this is set to false, and is not set to true again until the view disappears
+    var canSendNotification = true
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Settings"
         setupCells()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        canSendNotification = true
     }
     
     // MARK: - Setup
@@ -69,14 +79,24 @@ final class SettingsVC: UITableViewController {
     
     @objc private func pinnedSwitchToggled(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.showPinnedTournaments)
+        requestTournamentsReload()
     }
     
     @objc private func featuredSwitchToggled(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.featuredTournaments)
+        requestTournamentsReload()
     }
     
     @objc private func upcomingSwitchToggled(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.upcomingTournaments)
+        requestTournamentsReload()
+    }
+    
+    private func requestTournamentsReload() {
+        if canSendNotification {
+            NotificationCenter.default.post(name: Notification.Name(k.Notification.settingsChanged), object: nil)
+            canSendNotification = false
+        }
     }
     
     // MARK: - Table View Data Source

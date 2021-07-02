@@ -10,7 +10,7 @@ import UIKit
 
 final class MainVC: UITableViewController {
     
-    // If showPinned == true, index 0 of tournaments will be empty (the pinned tournaments are retrieved from PinnedTournamentsService)
+    /// - If showPinned == true, index 0 of tournaments will be empty (the pinned tournaments are retrieved from PinnedTournamentsService)
     var tournaments: [[Tournament]]
     var preferredGames: [VideoGame]
     var doneRequest: [Bool]
@@ -27,6 +27,12 @@ final class MainVC: UITableViewController {
         return numTopSections + preferredGames.count
     }
     
+    /// Determines whether the VC should reload the list of tournaments to reflect a settings change
+    /// - Initialized to false
+    /// - When a setting is changed, the notification is sent, and this variable is set to true
+    /// - Once the view appears again, if this variable is true, the list of tournaments is reloaded and this variable is set back to false
+    var shouldReloadTournaments: Bool
+    
     // MARK: - Initialization
     
     override init(style: UITableView.Style) {
@@ -39,6 +45,7 @@ final class MainVC: UITableViewController {
         showPinned = UserDefaults.standard.bool(forKey: k.UserDefaults.showPinnedTournaments)
         showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
+        shouldReloadTournaments = false
         
         super.init(style: .grouped)
     }
@@ -57,9 +64,11 @@ final class MainVC: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPinnedTournaments),
                                                name: Notification.Name(k.Notification.tournamentPinToggled), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(scheduleTournamentsReload),
+                                               name: Notification.Name(k.Notification.settingsChanged), object: nil)
         
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(refreshTournamentList), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(reloadTournamentList), for: .valueChanged)
         
         preferredGames = PreferredGamesService.getEnabledGames()
         doneRequest = [Bool](repeating: false, count: numSections)
@@ -72,11 +81,16 @@ final class MainVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ImageCacheService.clearCache(.viewAllTournaments)
+        
+        if shouldReloadTournaments {
+            shouldReloadTournaments = false
+            reloadTournamentList()
+        }
     }
     
     // MARK: - Actions
     
-    @objc private func refreshTournamentList() {
+    @objc private func reloadTournamentList() {
         showPinned = UserDefaults.standard.bool(forKey: k.UserDefaults.showPinnedTournaments)
         showFeatured = UserDefaults.standard.bool(forKey: k.UserDefaults.featuredTournaments)
         showUpcoming = UserDefaults.standard.bool(forKey: k.UserDefaults.upcomingTournaments)
@@ -139,6 +153,10 @@ final class MainVC: UITableViewController {
     
     @objc private func reloadPinnedTournaments() {
         tableView.reloadSections([0], with: .automatic)
+    }
+    
+    @objc private func scheduleTournamentsReload() {
+        shouldReloadTournaments = true
     }
     
     // MARK: - Table View Data Source
