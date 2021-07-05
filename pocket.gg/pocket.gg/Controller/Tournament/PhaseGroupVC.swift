@@ -134,7 +134,7 @@ final class PhaseGroupVC: UIViewController {
             
             self?.phaseGroup?.bracketType = result["bracketType"] as? String
             self?.phaseGroup?.progressionsOut = result["progressionsOut"] as? [Int]
-            self?.phaseGroup?.standings = result["standings"] as? [(entrant: Entrant?, placement: Int?)]
+            self?.phaseGroup?.standings = result["standings"] as? [Standing]
             self?.phaseGroup?.matches = result["sets"] as? [PhaseGroupSet]
             
             guard let standings = self?.phaseGroup?.standings, let matches = self?.phaseGroup?.matches else {
@@ -315,7 +315,7 @@ extension PhaseGroupVC: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell().setupDisabled(text)
         }
         
-        var standings = [(entrant: Entrant?, placement: Int?)]()
+        var standings = [Standing]()
         var sets = [PhaseGroupSet]()
         
         switch phaseGroupViewControl.selectedSegmentIndex {

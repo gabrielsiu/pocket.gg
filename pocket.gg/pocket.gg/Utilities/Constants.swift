@@ -42,6 +42,7 @@ struct Constants {
         static let eventCell = "eventCell"
         static let streamCell = "streamCell"
         static let value1Cell = "value1Cell"
+        static let eventStandingCell = "eventStandingCell"
         static let roundRobinSetCell = "roundRobinSetCell"
     }
     

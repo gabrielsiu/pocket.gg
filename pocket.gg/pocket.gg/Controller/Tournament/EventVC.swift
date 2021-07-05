@@ -51,7 +51,7 @@ final class EventVC: UITableViewController {
             }
             
             self?.event.phases = result["phases"] as? [Phase]
-            self?.event.topStandings = result["topStandings"] as? [(Entrant, Int)]
+            self?.event.topStandings = result["topStandings"] as? [Standing]
             self?.event.slug = result["slug"] as? String
             
             self?.doneRequest = true
@@ -76,7 +76,7 @@ final class EventVC: UITableViewController {
         case 2:
             guard doneRequest, requestSuccessful else { return 1 }
             guard let standings = event.topStandings, !standings.isEmpty else { return 1 }
-            guard standings.count == 8 else { return standings.count }
+            guard standings.count > 8 else { return standings.count }
             return 9
         default: return 0
         }
@@ -143,7 +143,7 @@ final class EventVC: UITableViewController {
                 cell.updateLabels(text: phase.name, detailText: phase.state?.capitalized)
                 return cell
             }
-            // TODO: Do top 8 section or wtvr
+            
         case 2:
             guard doneRequest else { return LoadingCell() }
             guard requestSuccessful, let standings = event.topStandings else { return UITableViewCell().setupDisabled(k.Message.errorLoadingStandings) }
@@ -231,12 +231,7 @@ final class EventVC: UITableViewController {
             }
         case 2:
             guard indexPath.row == 8 else { return }
-            guard let slug = event.slug else { return }
-            guard let url = URL(string: "https://smash.gg/\(slug)/standings") else {
-                debugPrint(k.Error.urlGeneration, "https://smash.gg/\(slug)/standings")
-                return
-            }
-            present(SFSafariViewController(url: url), animated: true)
+            navigationController?.pushViewController(StandingsVC(event.topStandings ?? [], eventID: event.id), animated: true)
         default:
             return
         }

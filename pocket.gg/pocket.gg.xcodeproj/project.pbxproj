@@ -32,6 +32,7 @@
 		DA4B496624FCC72D00BE7E0E /* Phase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496524FCC72D00BE7E0E /* Phase.swift */; };
 		DA4B496824FCC73400BE7E0E /* PhaseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */; };
 		DA4CE1FC23EF9CDA00BDE107 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */; };
+		DA5121AC26921A190086CBED /* StandingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5121AB26921A190086CBED /* StandingsVC.swift */; };
 		DA51F6CE265E0551004D6EE5 /* AuthTokenSettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA51F6CD265E0551004D6EE5 /* AuthTokenSettingsVC.swift */; };
 		DA56559423E50C51003FEF20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56559323E50C51003FEF20 /* Constants.swift */; };
 		DA5C7D36257F3C6400CB787E /* Entrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C7D35257F3C6400CB787E /* Entrant.swift */; };
@@ -60,6 +61,7 @@
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
+		DA81E8AC2693A28200C256D2 /* Standing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8AB2693A28200C256D2 /* Standing.swift */; };
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86242526630A8E00FD0A9C /* TournamentListCell.swift */; };
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
@@ -121,6 +123,7 @@
 		DA4B496524FCC72D00BE7E0E /* Phase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phase.swift; sourceTree = "<group>"; };
 		DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseGroup.swift; sourceTree = "<group>"; };
 		DA4CE1FB23EF9CDA00BDE107 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
+		DA5121AB26921A190086CBED /* StandingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsVC.swift; sourceTree = "<group>"; };
 		DA51F6CD265E0551004D6EE5 /* AuthTokenSettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenSettingsVC.swift; sourceTree = "<group>"; };
 		DA56559323E50C51003FEF20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA5C7D35257F3C6400CB787E /* Entrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entrant.swift; sourceTree = "<group>"; };
@@ -150,6 +153,7 @@
 		DA7E51A623E46EAC0037E757 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA7E51A923E46EAC0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA81E8AB2693A28200C256D2 /* Standing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Standing.swift; sourceTree = "<group>"; };
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		DA86242526630A8E00FD0A9C /* TournamentListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListCell.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				DA4B496724FCC73400BE7E0E /* PhaseGroup.swift */,
 				DAEACF96250AF963002F0674 /* PhaseGroupSet.swift */,
 				DA1D51C72688FA82000BBD4A /* PhaseGroupSetGame.swift */,
+				DA81E8AB2693A28200C256D2 /* Standing.swift */,
 				DA5C7D35257F3C6400CB787E /* Entrant.swift */,
 				DA4B496124FCC6FC00BE7E0E /* Location.swift */,
 				DA4B496324FCC72000BE7E0E /* Stream.swift */,
@@ -284,6 +289,7 @@
 			children = (
 				DA637A9023F7A6FE00268A85 /* TournamentVC.swift */,
 				DA64A2FC241DF1AA00481280 /* EventVC.swift */,
+				DA5121AB26921A190086CBED /* StandingsVC.swift */,
 				DA7AF01724F5E53C009A00E2 /* PhaseGroupListVC.swift */,
 				DA7AF02A24F71A83009A00E2 /* PhaseGroupVC.swift */,
 				DA0C4CEB26818C1B004831EC /* SetVC.swift */,
@@ -605,6 +611,7 @@
 				DA2939D223E7D1D800E5DB3A /* NetworkService.swift in Sources */,
 				DA0C4CF02683F6E3004831EC /* SetCell.swift in Sources */,
 				DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */,
+				DA81E8AC2693A28200C256D2 /* Standing.swift in Sources */,
 				DAEACF97250AF963002F0674 /* PhaseGroupSet.swift in Sources */,
 				DA759E5B23E4FE5500D4B3E7 /* MainVC.swift in Sources */,
 				DAF2A20D256B345B00580AAB /* API.swift in Sources */,
@@ -613,6 +620,7 @@
 				DA64A2F6241DADB000481280 /* SubtitleCell.swift in Sources */,
 				DA04E3A8242726F400AB2EF0 /* UITableViewCells+Create.swift in Sources */,
 				DA637A9323F7B1A800268A85 /* TournamentGeneralInfoCell.swift in Sources */,
+				DA5121AC26921A190086CBED /* StandingsVC.swift in Sources */,
 				DA7E519E23E46EAB0037E757 /* AppDelegate.swift in Sources */,
 				DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */,
 				DA4B496424FCC72000BE7E0E /* Stream.swift in Sources */,

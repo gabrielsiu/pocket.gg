@@ -21,6 +21,6 @@ struct PhaseGroup {
     // Query 4 - PhaseGroupStandingsById
     var bracketType: String?
     var progressionsOut: [Int]?
-    var standings: [(entrant: Entrant?, placement: Int?)]?
+    var standings: [Standing]?
     var matches: [PhaseGroupSet]?
 }

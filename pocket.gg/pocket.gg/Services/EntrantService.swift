@@ -28,35 +28,53 @@ class EntrantService {
     // MARK: getEvent
     //       EventVC
     
-    static func getEntrantAndStanding(_ standing: EventQuery.Data.Event.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+    static func getEntrantAndStanding(_ standing: EventQuery.Data.Event.Standing.Node?) -> Standing? {
         guard let standing = standing else { return nil }
         
         if let participants = standing.entrant?.participants, participants.count == 1 {
             let entrantName = standing.entrant?.participants?[0]?.gamerTag
             let teamName = getTeamName(combined: standing.entrant?.name, entrantName: entrantName)
             let entrant = Entrant(id: nil, name: entrantName, teamName: teamName)
-            return (entrant: entrant, placement: standing.placement)
+            return Standing(entrant: entrant, placement: standing.placement)
         }
         
-        return (entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
+        return Standing(entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
+    }
+    
+    // MARK: getEventStandings
+    //       StandingsVC
+    
+    static func getEntrantAndStanding2(_ standing: EventStandingsQuery.Data.Event.Standing.Node?) -> Standing? {
+        guard let standing = standing else { return nil }
+        
+        if let participants = standing.entrant?.participants, participants.count == 1 {
+            let entrantName = standing.entrant?.participants?[0]?.gamerTag
+            let teamName = getTeamName(combined: standing.entrant?.name, entrantName: entrantName)
+            let entrant = Entrant(id: nil, name: entrantName, teamName: teamName)
+            return Standing(entrant: entrant, placement: standing.placement)
+        }
+        
+        return Standing(entrant: Entrant(id: nil, name: standing.entrant?.name, teamName: nil), placement: standing.placement)
     }
     
     // MARK: getPhaseGroup
     //       PhaseGroupVC
     
-    static func getEntrantAndStanding2(_ standing: PhaseGroupQuery.Data.PhaseGroup.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+    static func getEntrantAndStanding3(_ standing: PhaseGroupQuery.Data.PhaseGroup.Standing.Node?) -> Standing? {
         guard let standing = standing else { return nil }
         guard let entrant = standing.entrant else { return nil }
         
         if let participants = entrant.participants, participants.count == 1 {
+            // TODO: Replace "-1" with "nil" and all associated logic
             let id = Int(entrant.id ?? "-1")
             let name = entrant.participants?[0]?.gamerTag
             let teamName = getTeamName(combined: entrant.name, entrantName: name)
             let entrant = Entrant(id: id, name: name, teamName: teamName)
-            return (entrant: entrant, placement: standing.placement)
+            return Standing(entrant: entrant, placement: standing.placement)
         }
         
-        return (entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: entrant.name, teamName: nil), placement: standing.placement)
+        return Standing(entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: standing.entrant?.name, teamName: nil),
+                        placement: standing.placement)
     }
     
     static func getEntrantsForSet(displayScore: String?, winnerID: Int?, slots: [PhaseGroupQuery.Data.PhaseGroup.Set.Node.Slot?]?) -> [(entrant: Entrant?, score: String?)]? {
@@ -104,7 +122,7 @@ class EntrantService {
     // MARK: getPhaseGroupStandings
     //       PhaseGroupVC
     
-    static func getEntrantAndStanding3(_ standing: PhaseGroupStandingsPageQuery.Data.PhaseGroup.Standing.Node?) -> (entrant: Entrant?, placement: Int?)? {
+    static func getEntrantAndStanding4(_ standing: PhaseGroupStandingsPageQuery.Data.PhaseGroup.Standing.Node?) -> Standing? {
         guard let standing = standing else { return nil }
         guard let entrant = standing.entrant else { return nil }
         
@@ -113,10 +131,11 @@ class EntrantService {
             let name = entrant.participants?[0]?.gamerTag
             let teamName = getTeamName(combined: entrant.name, entrantName: name)
             let entrant = Entrant(id: id, name: name, teamName: teamName)
-            return (entrant: entrant, placement: standing.placement)
+            return Standing(entrant: entrant, placement: standing.placement)
         }
         
-        return (entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: entrant.name, teamName: nil), placement: standing.placement)
+        return Standing(entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: standing.entrant?.name, teamName: nil),
+                        placement: standing.placement)
     }
     
     // MARK: getPhaseGroupSets

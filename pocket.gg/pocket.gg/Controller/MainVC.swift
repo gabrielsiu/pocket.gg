@@ -78,8 +78,8 @@ final class MainVC: UITableViewController {
         getTournaments()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         ImageCacheService.clearCache(.viewAllTournaments)
         
         if shouldReloadTournaments {
@@ -148,6 +148,32 @@ final class MainVC: UITableViewController {
         // Hide the refresh control once all the requests have finished
         dispatchGroup.notify(queue: .main) { [weak self] in
             self?.refreshControl?.endRefreshing()
+            
+            var requestStatuses = self?.requestSuccessful
+            if let showPinned = self?.showPinned, showPinned {
+                requestStatuses?.removeFirst()
+            }
+            if requestStatuses?.allSatisfy({ !$0 }) ?? false {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM d, yyyy"
+                
+                let message: String
+                if let currentDate = dateFormatter.date(from: DateFormatter.shared.dateFromTimestamp("\(Int(Date().timeIntervalSince1970))")),
+                   let authTokenDate = dateFormatter.date(from: UserDefaults.standard.string(forKey: k.UserDefaults.authTokenDate) ?? ""),
+                   let numDaysDifference = Calendar.current.dateComponents([.day], from: authTokenDate, to: currentDate).day,
+                   numDaysDifference >= 365 {
+                    message = """
+                    It looks like your auth token may have expired. To restore this app's functionality, clear the current auth token by clicking \
+                    Settings → Auth Token → Clear Auth Token. You can then obtain a new auth token from smash.gg and paste it in this app's \
+                    Auth Token field.
+                    """
+                } else {
+                    message = "There was an error fetching tournaments, try checking your internet connection."
+                }
+                let alert = UIAlertController(title: k.Error.title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                self?.present(alert, animated: true)
+            }
         }
     }
     
@@ -178,7 +204,7 @@ final class MainVC: UITableViewController {
             return preferredGames[section].name
         case 1:
             if showPinned && showFeatured { return "Featured Tournaments" }
-            if showUpcoming { return "Upcoming Tournaments" }
+            if (showPinned || showFeatured) && showUpcoming { return "Upcoming Tournaments" }
             guard section - numTopSections < preferredGames.count else { return nil }
             return preferredGames[section - numTopSections].name
         case 2:
@@ -192,9 +218,9 @@ final class MainVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: .zero)
+        let headerView = UIView()
         
-        let textLabel = UILabel(frame: .zero)
+        let textLabel = UILabel()
         textLabel.text = sectionHeaderTitle(for: section)
         textLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         headerView.addSubview(textLabel)

@@ -194,7 +194,7 @@ final class NetworkService {
                     }
                 }
                 
-                var topStandings = [(entrant: Entrant?, placement: Int?)]()
+                var topStandings = [Standing]()
                 if let nodes = graphQLResult.data?.event?.standings?.nodes {
                     topStandings = nodes.compactMap { EntrantService.getEntrantAndStanding($0) }
                 }
@@ -206,6 +206,25 @@ final class NetworkService {
                               "topStandings": topStandings,
                               "slug": slug])
                 }
+            }
+        }
+    }
+    
+    static func getEventStandings(_ id: Int, page: Int, complete: @escaping (_ standings: [Standing]?) -> Void) {
+        ApolloService.shared.client.fetch(query: EventStandingsQuery(id: "\(id)", page: page),
+                                          queue: .global(qos: .utility)) { (result) in
+            switch result {
+            case .failure(let error):
+                debugPrint(k.Error.apolloFetch, error as Any)
+                DispatchQueue.main.async { complete(nil) }
+                return
+            
+            case .success(let graphQLResult):
+                var standings = [Standing]()
+                if let nodes = graphQLResult.data?.event?.standings?.nodes {
+                    standings = nodes.compactMap { EntrantService.getEntrantAndStanding2($0) }
+                }
+                DispatchQueue.main.async { complete(standings) }
             }
         }
     }
@@ -247,9 +266,9 @@ final class NetworkService {
                     progressionsOut = nodes.compactMap { $0?.originPlacement }
                 }
                 
-                var standings = [(entrant: Entrant?, placement: Int?)]()
+                var standings = [Standing]()
                 if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
-                    standings = nodes.compactMap { EntrantService.getEntrantAndStanding2($0) }
+                    standings = nodes.compactMap { EntrantService.getEntrantAndStanding3($0) }
                 }
                 
                 var sets = [PhaseGroupSet]()
@@ -303,7 +322,7 @@ final class NetworkService {
     
     // MARK: - Remaining Standings & Sets
     
-    static func getPhaseGroupStandings(_ id: Int, page: Int, complete: @escaping (_ standings: [(entrant: Entrant?, placement: Int?)]?) -> Void) {
+    static func getPhaseGroupStandings(_ id: Int, page: Int, complete: @escaping (_ standings: [Standing]?) -> Void) {
         ApolloService.shared.client.fetch(query: PhaseGroupStandingsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -312,9 +331,9 @@ final class NetworkService {
                 return
                 
             case .success(let graphQLResult):
-                var standings = [(entrant: Entrant?, placement: Int?)]()
+                var standings = [Standing]()
                 if let nodes = graphQLResult.data?.phaseGroup?.standings?.nodes {
-                    standings = nodes.compactMap { EntrantService.getEntrantAndStanding3($0) }
+                    standings = nodes.compactMap { EntrantService.getEntrantAndStanding4($0) }
                 }
                 DispatchQueue.main.async { complete(standings) }
             }

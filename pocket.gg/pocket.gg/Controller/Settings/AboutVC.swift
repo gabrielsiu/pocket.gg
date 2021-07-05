@@ -34,26 +34,17 @@ final class AboutVC: UITableViewController {
         apolloiOSCell.textLabel?.text = "Apollo iOS"
     }
     
-    // MARK: - Actions
-    
-    private func showWebpage(with pageUrl: String) {
-        guard let url = URL(string: pageUrl) else {
-            debugPrint(k.Error.urlGeneration, pageUrl)
-            return
-        }
-        present(SFSafariViewController(url: url), animated: true)
-    }
-
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
         case 1: return 2
+        case 2: return 1
         default: return 0
         }
     }
@@ -68,6 +59,13 @@ final class AboutVC: UITableViewController {
             case 1: return apolloiOSCell
             default: break
             }
+        case 2:
+            let cell = UITableViewCell()
+            cell.textLabel?.text = "@gabrielsiu_dev"
+            cell.imageView?.image = UIImage(named: "icon-twitter")
+            cell.imageView?.layer.masksToBounds = true
+            cell.imageView?.layer.cornerRadius = k.Sizes.cornerRadius
+            return cell
         default: break
         }
         return UITableViewCell()
@@ -76,17 +74,27 @@ final class AboutVC: UITableViewController {
     // MARK: - Table View Delegate
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? "Libraries & Thanks" : nil
+        return section == 2 ? "Contact" : nil
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        switch indexPath.section {
+        case 1:
             switch indexPath.row {
-            case 0: showWebpage(with: k.URL.smashGgAPI)
-            case 1: showWebpage(with: k.URL.apolloiOS)
-            default: tableView.deselectRow(at: indexPath, animated: true)
+            case 0:
+                guard let url = URL(string: k.URL.smashggAPI) else { break }
+                present(SFSafariViewController(url: url), animated: true)
+            case 1:
+                guard let url = URL(string: k.URL.apolloiOS) else { break }
+                present(SFSafariViewController(url: url), animated: true)
+            default: break
             }
+        case 2:
+            guard let url = URL(string: k.URL.twitter) else { break }
+            UIApplication.shared.open(url)
+        default: break
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

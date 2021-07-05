@@ -28,6 +28,6 @@ struct Event {
     // On-demand data for EventVC
     // Query 2 - EventById
     var phases: [Phase]?
-    var topStandings: [(entrant: Entrant?, placement: Int?)]?
+    var topStandings: [Standing]?
     var slug: String?
 }

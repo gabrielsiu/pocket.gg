@@ -111,7 +111,7 @@ query Event($id: ID) {
             bracketType
         }
         standings(query: {
-            perPage: 8
+            perPage: 65
         }) {
             nodes {
                 placement
@@ -124,6 +124,25 @@ query Event($id: ID) {
             }
         }
         slug
+    }
+}
+
+query EventStandings($id: ID, $page: Int) {
+    event(id: $id) {
+        standings(query: {
+            page: $page
+            perPage: 65
+        }) {
+            nodes {
+                placement
+                entrant {
+                    name
+                    participants {
+                        gamerTag
+                    }
+                }
+            }
+        }
     }
 }
 
