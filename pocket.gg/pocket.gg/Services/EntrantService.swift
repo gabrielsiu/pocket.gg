@@ -65,15 +65,14 @@ class EntrantService {
         guard let entrant = standing.entrant else { return nil }
         
         if let participants = entrant.participants, participants.count == 1 {
-            // TODO: Replace "-1" with "nil" and all associated logic
-            let id = Int(entrant.id ?? "-1")
+            let id = Int(entrant.id ?? "nil")
             let name = entrant.participants?[0]?.gamerTag
             let teamName = getTeamName(combined: entrant.name, entrantName: name)
             let entrant = Entrant(id: id, name: name, teamName: teamName)
             return Standing(entrant: entrant, placement: standing.placement)
         }
         
-        return Standing(entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: standing.entrant?.name, teamName: nil),
+        return Standing(entrant: Entrant(id: Int(standing.entrant?.id ?? "nil"), name: standing.entrant?.name, teamName: nil),
                         placement: standing.placement)
     }
     
@@ -84,11 +83,11 @@ class EntrantService {
             if let participants = slot?.entrant?.participants, participants.count == 1 {
                 let entrantName = slot?.entrant?.participants?[0]?.gamerTag
                 let teamName = getTeamName(combined: slot?.entrant?.name, entrantName: entrantName)
-                let entrant = Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: entrantName, teamName: teamName)
+                let entrant = Entrant(id: Int(slot?.entrant?.id ?? "nil"), name: entrantName, teamName: teamName)
                 return (entrant: entrant, fullName: slot?.entrant?.name ?? "")
             }
             
-            return (entrant: Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: slot?.entrant?.name, teamName: nil),
+            return (entrant: Entrant(id: Int(slot?.entrant?.id ?? "nil"), name: slot?.entrant?.name, teamName: nil),
                     fullName: slot?.entrant?.name ?? "")
         }
         
@@ -127,14 +126,14 @@ class EntrantService {
         guard let entrant = standing.entrant else { return nil }
         
         if let participants = entrant.participants, participants.count == 1 {
-            let id = Int(entrant.id ?? "-1")
+            let id = Int(entrant.id ?? "nil")
             let name = entrant.participants?[0]?.gamerTag
             let teamName = getTeamName(combined: entrant.name, entrantName: name)
             let entrant = Entrant(id: id, name: name, teamName: teamName)
             return Standing(entrant: entrant, placement: standing.placement)
         }
         
-        return Standing(entrant: Entrant(id: Int(standing.entrant?.id ?? "-1"), name: standing.entrant?.name, teamName: nil),
+        return Standing(entrant: Entrant(id: Int(standing.entrant?.id ?? "nil"), name: standing.entrant?.name, teamName: nil),
                         placement: standing.placement)
     }
     
@@ -148,11 +147,11 @@ class EntrantService {
             if let participants = slot?.entrant?.participants, participants.count == 1 {
                 let entrantName = slot?.entrant?.participants?[0]?.gamerTag
                 let teamName = getTeamName(combined: slot?.entrant?.name, entrantName: entrantName)
-                let entrant = Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: entrantName, teamName: teamName)
+                let entrant = Entrant(id: Int(slot?.entrant?.id ?? "nil"), name: entrantName, teamName: teamName)
                 return (entrant: entrant, fullName: slot?.entrant?.name ?? "")
             }
             
-            return (entrant: Entrant(id: Int(slot?.entrant?.id ?? "-1"), name: slot?.entrant?.name, teamName: nil),
+            return (entrant: Entrant(id: Int(slot?.entrant?.id ?? "nil"), name: slot?.entrant?.name, teamName: nil),
                     fullName: slot?.entrant?.name ?? "")
         }
         

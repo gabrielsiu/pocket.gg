@@ -15,6 +15,8 @@ final class EventVC: UITableViewController {
     var doneRequest = false
     var requestSuccessful = true
     
+    var lastRefreshTime: Date?
+    
     // MARK: - Initialization
     
     init(_ event: Event) {
@@ -32,6 +34,8 @@ final class EventVC: UITableViewController {
         super.viewDidLoad()
         title = event.name
         tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         loadEventDetails()
     }
     
@@ -39,6 +43,7 @@ final class EventVC: UITableViewController {
         guard let id = event.id else {
             doneRequest = true
             requestSuccessful = false
+            refreshControl?.endRefreshing()
             tableView.reloadData()
             return
         }
@@ -46,18 +51,34 @@ final class EventVC: UITableViewController {
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
+                self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
                 return
             }
             
             self?.event.phases = result["phases"] as? [Phase]
             self?.event.topStandings = result["topStandings"] as? [Standing]
-            self?.event.slug = result["slug"] as? String
             
             self?.doneRequest = true
             self?.requestSuccessful = true
+            self?.refreshControl?.endRefreshing()
             self?.tableView.reloadData()
         }
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func refreshData() {
+        if let lastRefreshTime = lastRefreshTime {
+            // Don't allow refreshing more than once every 5 seconds
+            guard Date().timeIntervalSince(lastRefreshTime) > 5 else {
+                refreshControl?.endRefreshing()
+                return
+            }
+        }
+        
+        lastRefreshTime = Date()
+        loadEventDetails()
     }
 
     // MARK: - Table View Data Source

@@ -68,7 +68,6 @@ final class TournamentSearchResultsVC: TournamentListVC {
                                             page: currentSearchResultsPage) { [weak self] (tournaments) in
             guard let tournaments = tournaments else {
                 self?.doneRequest = true
-                // TODO: Make error popup
                 self?.tableView.reloadData()
                 return
             }

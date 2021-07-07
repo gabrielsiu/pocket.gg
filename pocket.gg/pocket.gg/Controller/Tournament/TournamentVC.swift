@@ -26,6 +26,8 @@ final class TournamentVC: UITableViewController {
     var tournamentIsPinned: Bool
     var pinnedStatusChanged: Bool
     
+    var lastRefreshTime: Date?
+    
     // MARK: - Initialization
     
     init(_ tournament: Tournament, cacheForLogo: Cache) {
@@ -53,6 +55,9 @@ final class TournamentVC: UITableViewController {
         
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.eventCell)
         tableView.register(SubtitleCell.self, forCellReuseIdentifier: k.Identifiers.streamCell)
+        
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
         setupHeaderImageView()
         loadTournamentDetails()
@@ -96,6 +101,7 @@ final class TournamentVC: UITableViewController {
         guard let id = tournament.id else {
             doneRequest = true
             requestSuccessful = false
+            refreshControl?.endRefreshing()
             tableView.reloadData()
             return
         }
@@ -103,6 +109,7 @@ final class TournamentVC: UITableViewController {
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
+                self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
                 return
             }
@@ -123,11 +130,25 @@ final class TournamentVC: UITableViewController {
             
             self?.doneRequest = true
             self?.requestSuccessful = true
+            self?.refreshControl?.endRefreshing()
             self?.tableView.reloadData()
         }
     }
     
     // MARK: - Actions
+    
+    @objc private func refreshData() {
+        if let lastRefreshTime = lastRefreshTime {
+            // Don't allow refreshing more than once every 5 seconds
+            guard Date().timeIntervalSince(lastRefreshTime) > 5 else {
+                refreshControl?.endRefreshing()
+                return
+            }
+        }
+        
+        lastRefreshTime = Date()
+        loadTournamentDetails()
+    }
     
     @objc private func togglePinnedTournament() {
         guard PinnedTournamentsService.togglePinnedTournament(tournament) else {

@@ -74,18 +74,18 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
             // Top Row of Entrant Names
             } else if (1...numEntrants).contains(indexPath.row) {
                 cell.setupCell(type: .entrantName)
-                cell.showText(entrants[indexPath.row - 1].name ?? "")
+                cell.setupEntrantCell(entrants[safe: indexPath.row - 1])
                 
             // Left Column of Entrant Names
             } else if indexPath.row % (numEntrants + 2) == 0 {
                 cell.setupCell(type: .entrantName)
                 let entrantIndex = indexPath.row / (numEntrants + 2) - 1
-                cell.showText(entrants[entrantIndex].name ?? "")
+                cell.setupEntrantCell(entrants[safe: entrantIndex])
                 
             // Right Column of Overall Entrant Scores
             } else if (indexPath.row + 1) % (numEntrants + 2) == 0 {
                 cell.setupCell(type: .overallEntrantScore)
-                cell.showText(getOverallEntrantScoreText(index: indexPath.row))
+                cell.setupOverallEntrantScoreCell(getOverallEntrantScoreText(index: indexPath.row))
                 
             // Diagonal of Blanks
             } else if indexPath.row % (numEntrants + 3) == 0 {
@@ -99,8 +99,7 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
                 guard let entrant0 = entrants[safe: entrantIndex],
                       let entrant1 = entrants[safe: (indexPath.row % (entrants.count + 2)) - 1] else {
                     cell.setupCell(type: .setScore, set: nil)
-                    cell.getColor(entrant: nil)
-                    cell.showBorderAndScore()
+                    cell.setupSetScoreCell(nil)
                     return cell
                 }
                 
@@ -118,8 +117,7 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
                 })
                 
                 cell.setupCell(type: .setScore, set: set)
-                cell.getColor(entrant: entrant0)
-                cell.showBorderAndScore()
+                cell.setupSetScoreCell(entrant0)
             }
             
             return cell
@@ -182,6 +180,14 @@ extension RoundRobinBracketView: UICollectionViewDataSource, UICollectionViewDel
                     } else if name == name1 {
                         setsWon += score1 == "W" ? 1 : 0
                         setsLost += score0 == "W" ? 1 : 0
+                    }
+                } else if score0 == "✓" || score1 == "✓" {
+                    if name == name0 {
+                        setsWon += score0 == "✓" ? 1 : 0
+                        setsLost += score1 == "✓" ? 1 : 0
+                    } else if name == name1 {
+                        setsWon += score1 == "✓" ? 1 : 0
+                        setsLost += score0 == "✓" ? 1 : 0
                     }
                 }
             }

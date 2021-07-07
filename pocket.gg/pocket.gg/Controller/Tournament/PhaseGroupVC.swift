@@ -14,12 +14,15 @@ final class PhaseGroupVC: UIViewController {
     var phaseID: Int?
     var doneRequest = false
     var requestSuccessful = true
+    
+    var lastRefreshTime: Date?
+    
     let phaseGroupViewControl: UISegmentedControl
     let tableView: UITableView
-    
     let bracketScrollView: UIScrollView
     var bracketView: BracketView?
     let bracketViewSpinner: UIActivityIndicatorView
+    let refreshPhaseGroupView: RefreshPhaseGroupView
     
     // MARK: - Initialization
     
@@ -30,17 +33,24 @@ final class PhaseGroupVC: UIViewController {
         phaseGroupViewControl = UISegmentedControl(items: ["Standings", "Matches", "Bracket"])
         phaseGroupViewControl.selectedSegmentIndex = 0
         
-        tableView = UITableView(frame: .zero, style: .plain)
+        tableView = UITableView(frame: .zero, style: .insetGrouped)
         
         bracketScrollView = UIScrollView(frame: .zero)
         bracketViewSpinner = UIActivityIndicatorView(style: .medium)
+        refreshPhaseGroupView = RefreshPhaseGroupView()
         
         super.init(nibName: nil, bundle: nil)
         self.title = title
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
         bracketScrollView.delegate = self
         bracketScrollView.maximumZoomScale = 2
         bracketScrollView.minimumZoomScale = 0.5
+        
+        refreshPhaseGroupView.refreshButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
         
         NotificationCenter.default.addObserver(self, selector: #selector(presentSetVC(_:)),
                                                name: Notification.Name(k.Notification.didTapSet), object: nil)
@@ -74,6 +84,7 @@ final class PhaseGroupVC: UIViewController {
         view.addSubview(phaseGroupViewControl)
         view.addSubview(tableView)
         view.addSubview(bracketScrollView)
+        view.addSubview(refreshPhaseGroupView)
         phaseGroupViewControl.setEdgeConstraints(top: view.layoutMarginsGuide.topAnchor,
                                                  bottom: tableView.topAnchor,
                                                  leading: view.leadingAnchor,
@@ -83,9 +94,13 @@ final class PhaseGroupVC: UIViewController {
                                      leading: view.leadingAnchor,
                                      trailing: view.trailingAnchor)
         bracketScrollView.setEdgeConstraints(top: phaseGroupViewControl.bottomAnchor,
-                                             bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                             bottom: refreshPhaseGroupView.topAnchor,
                                              leading: view.leadingAnchor,
                                              trailing: view.trailingAnchor)
+        refreshPhaseGroupView.setEdgeConstraints(top: bracketScrollView.bottomAnchor,
+                                                 bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                                 leading: view.leadingAnchor,
+                                                 trailing: view.trailingAnchor)
         
         tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
         tableView.register(SetCell.self, forCellReuseIdentifier: k.Identifiers.tournamentSetCell)
@@ -93,6 +108,7 @@ final class PhaseGroupVC: UIViewController {
         tableView.delegate = self
         
         bracketScrollView.isHidden = true
+        refreshPhaseGroupView.isHidden = true
         
         bracketViewSpinner.startAnimating()
         bracketScrollView.addSubview(bracketViewSpinner)
@@ -118,6 +134,8 @@ final class PhaseGroupVC: UIViewController {
         guard let id = phaseGroup?.id else {
             doneRequest = true
             requestSuccessful = false
+            tableView.refreshControl?.endRefreshing()
+            refreshPhaseGroupView.updateView(isLoading: false)
             tableView.reloadData()
             showInvalidBracketView(cause: .errorLoadingBracket)
             return
@@ -127,6 +145,8 @@ final class PhaseGroupVC: UIViewController {
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.refreshPhaseGroupView.updateView(isLoading: false)
                 self?.tableView.reloadData()
                 self?.showInvalidBracketView(cause: .errorLoadingBracket)
                 return
@@ -140,6 +160,8 @@ final class PhaseGroupVC: UIViewController {
             guard let standings = self?.phaseGroup?.standings, let matches = self?.phaseGroup?.matches else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.refreshPhaseGroupView.updateView(isLoading: false)
                 self?.tableView.reloadData()
                 self?.showInvalidBracketView(cause: .errorLoadingBracket)
                 return
@@ -153,6 +175,8 @@ final class PhaseGroupVC: UIViewController {
             } else {
                 self?.doneRequest = true
                 self?.requestSuccessful = true
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.refreshPhaseGroupView.updateView(isLoading: false)
                 self?.tableView.reloadData()
                 self?.setupBracketView()
             }
@@ -229,6 +253,8 @@ final class PhaseGroupVC: UIViewController {
             } else {
                 self?.doneRequest = true
                 self?.requestSuccessful = true
+                self?.tableView.refreshControl?.endRefreshing()
+                self?.refreshPhaseGroupView.updateView(isLoading: false)
                 self?.tableView.reloadData()
                 self?.setupBracketView()
             }
@@ -262,6 +288,27 @@ final class PhaseGroupVC: UIViewController {
     
     // MARK: - Actions
     
+    @objc private func refreshData() {
+        tableView.refreshControl?.beginRefreshing()
+        refreshPhaseGroupView.updateView(isLoading: true)
+        if let lastRefreshTime = lastRefreshTime {
+            // Don't allow refreshing more than once every 5 seconds
+            guard Date().timeIntervalSince(lastRefreshTime) > 5 else {
+                tableView.refreshControl?.endRefreshing()
+                refreshPhaseGroupView.updateView(isLoading: false)
+                return
+            }
+        }
+        
+        bracketView?.removeFromSuperview()
+        bracketView = nil
+        bracketViewSpinner.isHidden = false
+        bracketScrollView.contentSize = .zero
+        
+        lastRefreshTime = Date()
+        loadPhaseGroupDetails()
+    }
+    
     @objc private func presentSetVC(_ notification: Notification) {
         if let set = notification.object as? PhaseGroupSet {
             present(UINavigationController(rootViewController: SetVC(set)), animated: true, completion: nil)
@@ -271,6 +318,7 @@ final class PhaseGroupVC: UIViewController {
     @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         tableView.isHidden = sender.selectedSegmentIndex == 2
         bracketScrollView.isHidden = sender.selectedSegmentIndex != 2
+        refreshPhaseGroupView.isHidden = sender.selectedSegmentIndex != 2
         
         if sender.selectedSegmentIndex != 2 {
             tableView.reloadData()

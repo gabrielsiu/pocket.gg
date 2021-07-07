@@ -66,6 +66,7 @@ final class VideoGamesSearchResultsVC: UITableViewController {
         do {
             searchResults = try VideoGameDatabase.getVideoGamesForSearch(searchTerm ?? "")
         } catch {
+            searchResults = []
             print(error)
             // TODO: Show error
         }

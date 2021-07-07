@@ -13,6 +13,8 @@ final class PhaseGroupListVC: UITableViewController {
     var phase: Phase
     var doneRequest = false
     var requestSuccessful = true
+    
+    var lastRefreshTime: Date?
 
     // MARK: - Initialization
     
@@ -31,6 +33,8 @@ final class PhaseGroupListVC: UITableViewController {
         super.viewDidLoad()
         title = phase.name
         tableView.register(Value1Cell.self, forCellReuseIdentifier: k.Identifiers.value1Cell)
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         loadPhaseGroups()
     }
     
@@ -38,6 +42,7 @@ final class PhaseGroupListVC: UITableViewController {
         guard let id = phase.id else {
             doneRequest = true
             requestSuccessful = false
+            refreshControl?.endRefreshing()
             tableView.reloadData()
             return
         }
@@ -46,6 +51,7 @@ final class PhaseGroupListVC: UITableViewController {
             guard let result = result else {
                 self?.doneRequest = true
                 self?.requestSuccessful = false
+                self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
                 return
             }
@@ -54,8 +60,22 @@ final class PhaseGroupListVC: UITableViewController {
             
             self?.doneRequest = true
             self?.requestSuccessful = true
+            self?.refreshControl?.endRefreshing()
             self?.tableView.reloadData()
         }
+    }
+    
+    @objc private func refreshData() {
+        if let lastRefreshTime = lastRefreshTime {
+            // Don't allow refreshing more than once every 5 seconds
+            guard Date().timeIntervalSince(lastRefreshTime) > 5 else {
+                refreshControl?.endRefreshing()
+                return
+            }
+        }
+        
+        lastRefreshTime = Date()
+        loadPhaseGroups()
     }
 
     // MARK: - Table View Data Source

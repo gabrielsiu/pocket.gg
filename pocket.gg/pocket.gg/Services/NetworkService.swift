@@ -56,7 +56,7 @@ final class NetworkService {
                             return widestImage
                         })
                         
-                        return Tournament(id: Int($0?.id ?? "-1"),
+                        return Tournament(id: Int($0?.id ?? "nil"),
                                           name: $0?.name,
                                           date: date,
                                           logoUrl: logo?.0,
@@ -106,7 +106,7 @@ final class NetworkService {
                             return widestImage
                         })
                         
-                        return Tournament(id: Int($0?.id ?? "-1"),
+                        return Tournament(id: Int($0?.id ?? "nil"),
                                           name: $0?.name,
                                           date: date,
                                           logoUrl: logo?.0,
@@ -137,7 +137,7 @@ final class NetworkService {
                 var events = [Event]()
                 if let tournamentEvents = tournament.events {
                     events = tournamentEvents.map {
-                        Event(id: Int($0?.id ?? "-1"),
+                        Event(id: Int($0?.id ?? "nil"),
                                      name: $0?.name,
                                      state: $0?.state?.rawValue,
                                      winner: EntrantService.getEventWinner($0),
@@ -185,7 +185,7 @@ final class NetworkService {
                 var phases = [Phase]()
                 if let eventPhases = graphQLResult.data?.event?.phases {
                     phases = eventPhases.map {
-                        return Phase(id: Int($0?.id ?? "-1"),
+                        return Phase(id: Int($0?.id ?? "nil"),
                                      name: $0?.name,
                                      state: $0?.state?.rawValue,
                                      numPhaseGroups: $0?.groupCount,
@@ -199,12 +199,9 @@ final class NetworkService {
                     topStandings = nodes.compactMap { EntrantService.getEntrantAndStanding($0) }
                 }
                 
-                let slug = graphQLResult.data?.event?.slug
-                
                 DispatchQueue.main.async {
                     complete(["phases": phases,
-                              "topStandings": topStandings,
-                              "slug": slug])
+                              "topStandings": topStandings])
                 }
             }
         }
@@ -242,7 +239,7 @@ final class NetworkService {
                 var phaseGroups = [PhaseGroup]()
                 if let nodes = graphQLResult.data?.phase?.phaseGroups?.nodes {
                     phaseGroups = nodes.map {
-                        return PhaseGroup(id: Int($0?.id ?? "-1"),
+                        return PhaseGroup(id: Int($0?.id ?? "nil"),
                                           name: $0?.displayIdentifier,
                                           state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue)
                     }
@@ -274,7 +271,7 @@ final class NetworkService {
                 var sets = [PhaseGroupSet]()
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
                     sets = nodes.compactMap {
-                        guard let id = Int($0?.id ?? "-1"), id != -1 else { return nil }
+                        guard let id = Int($0?.id ?? "nil") else { return nil }
                         var phaseGroupSet = PhaseGroupSet(id: id,
                                                           state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
                                                           roundNum: $0?.round ?? 0,
@@ -352,7 +349,7 @@ final class NetworkService {
                 var sets = [PhaseGroupSet]()
                 if let nodes = graphQLResult.data?.phaseGroup?.sets?.nodes {
                     sets = nodes.compactMap {
-                        guard let id = Int($0?.id ?? "-1"), id != -1 else { return nil }
+                        guard let id = Int($0?.id ?? "nil") else { return nil }
                         var phaseGroupSet = PhaseGroupSet(id: id,
                                                           state: ActivityState.allCases[($0?.state ?? 5) - 1].rawValue,
                                                           roundNum: $0?.round ?? 0,

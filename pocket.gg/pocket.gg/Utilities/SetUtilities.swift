@@ -33,8 +33,18 @@ class SetUtilities {
         }
     }
     
-    static func getAttributedEntrantText(_ text: String?, bold: Bool, size: CGFloat, teamNameLength: Int?) -> NSAttributedString {
-        guard let text = text else { return NSMutableAttributedString() }
+    static func getAttributedEntrantText(_ entrant: Entrant?, bold: Bool, size: CGFloat, teamNameLength: Int?) -> NSAttributedString {
+        guard let entrant = entrant else { return NSMutableAttributedString() }
+        
+        let text: String
+        if let teamName = entrant.teamName {
+            text = teamName + " " + (entrant.name ?? "")
+        } else if let entrantName = entrant.name {
+            text = entrantName
+        } else {
+            return NSMutableAttributedString()
+        }
+        
         let attributedText = NSMutableAttributedString(string: text)
         
         if bold {

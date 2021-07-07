@@ -16,6 +16,10 @@ final class StandingsVC: UITableViewController {
     var noMoreStandings: Bool
     var currentStandingsPage: Int
     
+    var lastRefreshTime: Date?
+    
+    // MARK: - Initialization
+    
     init(_ standings: [Standing], eventID: Int?) {
         self.standings = standings
         self.eventID = eventID
@@ -29,16 +33,21 @@ final class StandingsVC: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Standings"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: k.Identifiers.eventStandingCell)
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     private func loadStandings() {
-        guard doneRequest else { return }
-        guard !noMoreStandings else { return }
-        guard let id = eventID else { return }
+        guard doneRequest, !noMoreStandings, let id = eventID else {
+            refreshControl?.endRefreshing()
+            return
+        }
         
         currentStandingsPage += 1
         doneRequest = false
@@ -46,6 +55,7 @@ final class StandingsVC: UITableViewController {
         NetworkService.getEventStandings(id, page: currentStandingsPage) { [weak self] standings in
             guard let standings = standings else {
                 self?.doneRequest = true
+                self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
                 return
             }
@@ -53,6 +63,7 @@ final class StandingsVC: UITableViewController {
             guard !standings.isEmpty else {
                 self?.doneRequest = true
                 self?.noMoreStandings = true
+                self?.refreshControl?.endRefreshing()
                 return
             }
             
@@ -64,8 +75,11 @@ final class StandingsVC: UITableViewController {
                 self?.tableView.performBatchUpdates({
                     self?.standings.append(contentsOf: standings)
                     self?.tableView.insertRows(at: indexPaths, with: .none)
-                }, completion: nil)
+                }, completion: { _ in
+                    self?.refreshControl?.endRefreshing()
+                })
             } else {
+                self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
             }
             
@@ -76,21 +90,34 @@ final class StandingsVC: UITableViewController {
             }
         }
     }
+    
+    // MARK: - Actions
+    
+    @objc private func refreshData() {
+        if let lastRefreshTime = lastRefreshTime {
+            // Don't allow refreshing more than once every 5 seconds
+            guard Date().timeIntervalSince(lastRefreshTime) > 5 else {
+                refreshControl?.endRefreshing()
+                return
+            }
+        }
+        
+        lastRefreshTime = Date()
+        standings.removeAll()
+        tableView.reloadData()
+        doneRequest = true
+        noMoreStandings = false
+        currentStandingsPage = 0
+        loadStandings()
+    }
 
     // MARK: - Table View Data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return standings.isEmpty ? 1 : standings.count
+        return standings.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard !standings.isEmpty else {
-            // This should never get executed; this VC should only show if there were more than 8 standings
-            let cell = UITableViewCell().setupDisabled("No standings found")
-            cell.backgroundColor = .secondarySystemBackground
-            return cell
-        }
-        
         // If we are approaching the end of the list, load more standings
         if indexPath.row == standings.count - 3 {
             loadStandings()
@@ -99,26 +126,16 @@ final class StandingsVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: k.Identifiers.eventStandingCell, for: indexPath)
         cell.selectionStyle = .none
         
-        // COULD BE REPLACED
-        var name = ""
-        var teamNameLength: Int?
-        if let teamName = standings[indexPath.row].entrant?.teamName, let entrantName = standings[indexPath.row].entrant?.name {
-            name = teamName + " " + entrantName
-            teamNameLength = teamName.count
-        } else if let entrantName = standings[indexPath.row].entrant?.name {
-            name = entrantName
-        }
-        
         var placement = ""
         if let placementNum = standings[indexPath.row].placement {
             placement = "\(placementNum): "
         }
         
+        let entrant = standings[indexPath.row].entrant
         let attributedText = NSMutableAttributedString(string: placement)
-        attributedText.append(SetUtilities.getAttributedEntrantText(name, bold: false, size: cell.textLabel?.font.pointSize ?? 10,
-                                                                   teamNameLength: teamNameLength))
+        attributedText.append(SetUtilities.getAttributedEntrantText(entrant, bold: false, size: cell.textLabel?.font.pointSize ?? 10,
+                                                                    teamNameLength: entrant?.teamName?.count))
         cell.textLabel?.attributedText = attributedText
-        //------------------
         
         return cell
     }

@@ -12,7 +12,7 @@ import SafariServices
 final class AboutVC: UITableViewController {
 
     var aboutInfoCell = AboutInfoCell()
-    var smashGgAPICell = UITableViewCell()
+    var smashggAPICell = UITableViewCell()
     var apolloiOSCell = UITableViewCell()
     
     // MARK: - Life Cycle
@@ -27,8 +27,8 @@ final class AboutVC: UITableViewController {
     // MARK: - Setup
     
     private func setupCells() {
-        smashGgAPICell.accessoryType = .disclosureIndicator
-        smashGgAPICell.textLabel?.text = "smash.gg GraphQL API"
+        smashggAPICell.accessoryType = .disclosureIndicator
+        smashggAPICell.textLabel?.text = "smash.gg GraphQL API"
         
         apolloiOSCell.accessoryType = .disclosureIndicator
         apolloiOSCell.textLabel?.text = "Apollo iOS"
@@ -55,7 +55,7 @@ final class AboutVC: UITableViewController {
             if indexPath.row == 0 { return aboutInfoCell }
         case 1:
             switch indexPath.row {
-            case 0: return smashGgAPICell
+            case 0: return smashggAPICell
             case 1: return apolloiOSCell
             default: break
             }

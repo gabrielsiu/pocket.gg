@@ -63,8 +63,6 @@ final class InvalidBracketView: UIView {
     // MARK: - Setup
     
     private func setup() {
-        // TODO: Finish design of this view, fix constraints
-        
         let imageView = UIImageView(image: UIImage(named: imageName))
         imageView.contentMode = .scaleAspectFit
         

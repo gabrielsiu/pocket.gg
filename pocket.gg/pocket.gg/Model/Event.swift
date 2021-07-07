@@ -29,5 +29,4 @@ struct Event {
     // Query 2 - EventById
     var phases: [Phase]?
     var topStandings: [Standing]?
-    var slug: String?
 }

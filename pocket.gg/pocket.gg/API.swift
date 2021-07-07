@@ -1523,7 +1523,6 @@ public final class EventQuery: GraphQLQuery {
             }
           }
         }
-        slug
       }
     }
     """
@@ -1577,7 +1576,6 @@ public final class EventQuery: GraphQLQuery {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("phases", type: .list(.object(Phase.selections))),
           GraphQLField("standings", arguments: ["query": ["perPage": 65]], type: .object(Standing.selections)),
-          GraphQLField("slug", type: .scalar(String.self)),
         ]
       }
 
@@ -1587,8 +1585,8 @@ public final class EventQuery: GraphQLQuery {
         self.resultMap = unsafeResultMap
       }
 
-      public init(phases: [Phase?]? = nil, standings: Standing? = nil, slug: String? = nil) {
-        self.init(unsafeResultMap: ["__typename": "Event", "phases": phases.flatMap { (value: [Phase?]) -> [ResultMap?] in value.map { (value: Phase?) -> ResultMap? in value.flatMap { (value: Phase) -> ResultMap in value.resultMap } } }, "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }, "slug": slug])
+      public init(phases: [Phase?]? = nil, standings: Standing? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Event", "phases": phases.flatMap { (value: [Phase?]) -> [ResultMap?] in value.map { (value: Phase?) -> ResultMap? in value.flatMap { (value: Phase) -> ResultMap in value.resultMap } } }, "standings": standings.flatMap { (value: Standing) -> ResultMap in value.resultMap }])
       }
 
       public var __typename: String {
@@ -1617,15 +1615,6 @@ public final class EventQuery: GraphQLQuery {
         }
         set {
           resultMap.updateValue(newValue?.resultMap, forKey: "standings")
-        }
-      }
-
-      public var slug: String? {
-        get {
-          return resultMap["slug"] as? String
-        }
-        set {
-          resultMap.updateValue(newValue, forKey: "slug")
         }
       }
 

@@ -20,7 +20,6 @@ class RoundRobinSetCell: UICollectionViewCell {
     
     var type: RoundRobinSetCellType?
     var set: PhaseGroupSet?
-    var color: UIColor?
     let label = UILabel()
     
     // MARK: - Initialization
@@ -37,7 +36,6 @@ class RoundRobinSetCell: UICollectionViewCell {
     
     private func setupLabel() {
         label.textAlignment = .center
-        
         contentView.addSubview(label)
         label.setEdgeConstraints(top: contentView.topAnchor,
                                  bottom: contentView.bottomAnchor,
@@ -71,111 +69,66 @@ class RoundRobinSetCell: UICollectionViewCell {
         }
     }
     
-    func getColor(entrant: Entrant?) {
-        guard let name = entrant?.name, let entrants = set?.entrants else {
-            color = .systemGray
-            return
-        }
+    func setupSetScoreCell(_ entrant: Entrant?) {
+        let color: UIColor
+        let outcome = SetUtilities.getSetOutcome(set)
         
-        if entrants.count == 2, let name0 = entrants[0].entrant?.name,
-                                let score0 = entrants[0].score,
-                                let name1 = entrants[1].entrant?.name,
-                                let score1 = entrants[1].score {
-            
-            if name != name0 && name != name1 {
+        switch outcome {
+        case .entrant0Won:
+            guard let id = entrant?.id, let id0 = set?.entrants?[safe: 0]?.entrant?.id else {
                 color = .systemGray
                 return
             }
-            
-            var entrantWon: Bool?
-            if let score0Num = Int(score0), let score1Num = Int(score1) {
-                if name == name0 {
-                    entrantWon = score0Num > score1Num
-                } else if name == name1 {
-                    entrantWon = score0Num < score1Num
-                }
-            } else if let score0 = entrants[0].score, score0 == "W" {
-                entrantWon = name == name0
-            } else if let score1 = entrants[1].score, score1 == "W" {
-                entrantWon = name == name1
-            }
-            
-            if let entrantWon = entrantWon {
-                color = entrantWon ? .systemGreen : .systemRed
-            } else {
+            color = id == id0 ? .systemGreen : .systemRed
+        case .entrant1Won:
+            guard let id = entrant?.id, let id1 = set?.entrants?[safe: 1]?.entrant?.id else {
                 color = .systemGray
+                return
             }
-        } else {
+            color = id == id1 ? .systemGreen : .systemRed
+        case .noWinner:
             color = .systemGray
         }
-    }
-    
-    func showBorderAndScore() {
-        guard let color = color else { return }
         
+        let score0 = set?.entrants?[safe: 0]?.score ?? "_"
+        let score1 = set?.entrants?[safe: 1]?.score ?? "_"
+        
+        let text: String
+        if (outcome == .entrant0Won && color == UIColor.systemGreen) || (outcome == .entrant1Won && color == UIColor.systemRed) {
+            text = score0 + " - " + score1
+        } else if (outcome == .entrant0Won && color == UIColor.systemRed) || (outcome == .entrant1Won && color == UIColor.systemGreen) {
+            text = score1 + " - " + score0
+        } else {
+            text = "-"
+        }
+        
+        label.text = text
+        label.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
+        label.textColor = color
         contentView.layer.borderWidth = 2
         contentView.layer.borderColor = color.cgColor
-        
-        guard let entrants = set?.entrants else { return }
-        guard entrants.count == 2, let score0 = entrants[0].score, let score1 = entrants[1].score else { return }
-        
-        if let score0Num = Int(score0), let score1Num = Int(score1) {
-            if score0Num > score1Num {
-                label.attributedText = getAttributedText("\(color == UIColor.systemRed ? score1 : score0) - \(color == UIColor.systemRed ? score0 : score1)")
-            } else {
-                label.attributedText = getAttributedText("\(color == UIColor.systemRed ? score0 : score1) - \(color == UIColor.systemRed ? score1 : score0)")
-            }
-        } else {
-            switch color {
-            case .systemRed:
-                label.attributedText = getAttributedText("L")
-            case .systemGreen:
-                label.attributedText = getAttributedText("W")
-            default:
-                label.attributedText = getAttributedText("-")
-            }
-        }
-        label.textColor = color
     }
     
-    func showText(_ text: String?) {
-        label.attributedText = getAttributedText(text)
+    func setupEntrantCell(_ entrant: Entrant?) {
+        label.attributedText = SetUtilities.getAttributedEntrantText(entrant, bold: true, size: label.font.pointSize, teamNameLength: entrant?.teamName?.count)
     }
     
-    // MARK: - Private Helpers
-    
-    private func getAttributedText(_ text: String?) -> NSAttributedString {
-        guard let type = type else { return NSMutableAttributedString() }
-        guard let text = text else { return NSMutableAttributedString() }
+    func setupOverallEntrantScoreCell(_ text: String?) {
+        guard let text = text else { return }
         
         let attributedText = NSMutableAttributedString(string: text)
         attributedText.addAttribute(.font,
                                     value: UIFont.boldSystemFont(ofSize: label.font.pointSize),
                                     range: NSRange(location: 0, length: text.count))
         
-        switch type {
-        case .entrantName:
-            if let range = text.range(of: " | ") {
-                let sponsorLength = text[..<range.lowerBound].count
-                attributedText.addAttribute(.foregroundColor,
-                                            value: UIColor.systemGray,
-                                            range: NSRange(location: 0, length: sponsorLength))
-                attributedText.deleteCharacters(in: NSRange(location: sponsorLength, length: 2))
-            }
-            return attributedText
-            
-        case .overallEntrantScore:
-            if let range = text.range(of: "\n") {
-                let gameScoreIndex = text[..<range.lowerBound].count
-                let gameScoreLength = text[range.upperBound...].count + 1
-                attributedText.addAttribute(.foregroundColor,
-                                            value: UIColor.systemGray,
-                                            range: NSRange(location: gameScoreIndex, length: gameScoreLength))
-            }
-            return attributedText
-            
-        default:
-            return attributedText
+        if let range = text.range(of: "\n") {
+            let gameScoreIndex = text[..<range.lowerBound].count
+            let gameScoreLength = text[range.upperBound...].count + 1
+            attributedText.addAttribute(.foregroundColor,
+                                        value: UIColor.systemGray,
+                                        range: NSRange(location: gameScoreIndex, length: gameScoreLength))
         }
+        
+        label.attributedText = attributedText
     }
 }

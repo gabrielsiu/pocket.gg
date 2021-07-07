@@ -105,34 +105,18 @@ final class SetCell: UITableViewCell {
         setStateLabel.textAlignment = .right
         setStateLabel.textColor = .systemGray
         
-        let entrant0Name = set.entrants?[safe: 0]?.entrant?.name
-        let entrant0TeamName = set.entrants?[safe: 0]?.entrant?.teamName
-        let entrant1Name = set.entrants?[safe: 1]?.entrant?.name
-        let entrant1TeamName = set.entrants?[safe: 1]?.entrant?.teamName
-        
-        let entrantLabel0Text: String?
-        if let entrant0TeamName = entrant0TeamName {
-            entrantLabel0Text = entrant0TeamName + " " + (entrant0Name ?? "")
-        } else {
-            entrantLabel0Text = entrant0Name
-        }
+        let entrant0 = set.entrants?[safe: 0]?.entrant
+        let entrant1 = set.entrants?[safe: 1]?.entrant
         
         entrantLabel0.textAlignment = .right
-        entrantLabel0.attributedText = SetUtilities.getAttributedEntrantText(entrantLabel0Text,
+        entrantLabel0.attributedText = SetUtilities.getAttributedEntrantText(entrant0,
                                                                              bold: outcome == .entrant0Won,
                                                                              size: entrantLabel0.font.pointSize,
-                                                                             teamNameLength: entrant0TeamName?.count)
-        
-        let entrantLabel1Text: String?
-        if let entrant1TeamName = entrant1TeamName {
-            entrantLabel1Text = entrant1TeamName + " " + (entrant1Name ?? "")
-        } else {
-            entrantLabel1Text = entrant1Name
-        }
-        entrantLabel1.attributedText = SetUtilities.getAttributedEntrantText(entrantLabel1Text,
+                                                                             teamNameLength: entrant0?.teamName?.count)
+        entrantLabel1.attributedText = SetUtilities.getAttributedEntrantText(entrant1,
                                                                              bold: outcome == .entrant1Won,
                                                                              size: entrantLabel1.font.pointSize,
-                                                                             teamNameLength: entrant1TeamName?.count)
+                                                                             teamNameLength: entrant1?.teamName?.count)
         
         scoreLabel.attributedText = SetUtilities.getAttributedScoreText(entrant0Score: set.entrants?[safe: 0]?.score,
                                                                         entrant1Score: set.entrants?[safe: 1]?.score,

@@ -115,14 +115,8 @@ final class SetVC: UITableViewController {
                     return id == winnerID
                 })?.entrant
                 
-                var text: String?
-                if let teamName = winner?.teamName {
-                    text = teamName + " " + (winner?.name ?? "")
-                } else {
-                    text = winner?.name
-                }
                 let attributedText = NSMutableAttributedString(string: "Winner: ")
-                attributedText.append(SetUtilities.getAttributedEntrantText(text, bold: false,
+                attributedText.append(SetUtilities.getAttributedEntrantText(winner, bold: false,
                                                                             size: cell.detailTextLabel?.font.pointSize ?? 10,
                                                                             teamNameLength: winner?.teamName?.count))
                 cell.detailTextLabel?.attributedText = attributedText

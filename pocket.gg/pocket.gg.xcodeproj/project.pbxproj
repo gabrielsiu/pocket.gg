@@ -62,6 +62,7 @@
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
 		DA81E8AC2693A28200C256D2 /* Standing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8AB2693A28200C256D2 /* Standing.swift */; };
+		DA81E8B2269415F200C256D2 /* RefreshPhaseGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */; };
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
 		DA86242626630A8E00FD0A9C /* TournamentListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA86242526630A8E00FD0A9C /* TournamentListCell.swift */; };
 		DA9429AA24F1CF19002595AF /* videoGame.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = DA9429A924F1CF19002595AF /* videoGame.sqlite */; };
@@ -154,6 +155,7 @@
 		DA7E51A923E46EAC0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA81E8AB2693A28200C256D2 /* Standing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Standing.swift; sourceTree = "<group>"; };
+		DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshPhaseGroupView.swift; sourceTree = "<group>"; };
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		DA86242526630A8E00FD0A9C /* TournamentListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TournamentListCell.swift; sourceTree = "<group>"; };
 		DA92DF1623E812350084FEB1 /* NetworkService.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NetworkService.graphql; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				DA68B6B4257EB3BE00A010F3 /* RoundRobinBracketView.swift */,
 				DA68B6C0257EB7CB00A010F3 /* BracketView.swift */,
 				DA79A6302589AA7800651BB4 /* RoundRobinSetCell.swift */,
+				DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */,
 			);
 			path = Bracket;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				DA6CBE6524300B0A006DB38F /* LoadingCell.swift in Sources */,
 				DA637A8B23F5010D00268A85 /* SettingsVC.swift in Sources */,
 				DA2E80A52659A91500B876F1 /* ViewAllTournamentsVC.swift in Sources */,
+				DA81E8B2269415F200C256D2 /* RefreshPhaseGroupView.swift in Sources */,
 				DAF0BE51266C03FD000F7506 /* EntrantService.swift in Sources */,
 				DA56559423E50C51003FEF20 /* Constants.swift in Sources */,
 				DA7AF02B24F71A83009A00E2 /* PhaseGroupVC.swift in Sources */,
