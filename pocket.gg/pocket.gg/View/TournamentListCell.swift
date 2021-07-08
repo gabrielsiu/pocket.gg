@@ -41,24 +41,4 @@ final class TournamentListCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Public Methods
-    
-    func updateView(text: String?, imageURL: String?, detailText: String?, cache: Cache) {
-        textLabel?.text = text
-        detailTextLabel?.text = detailText
-        
-        imageView?.layer.cornerRadius = k.Sizes.cornerRadius
-        imageView?.layer.masksToBounds = true
-        let newSize = CGSize(width: k.Sizes.tournamentListCellHeight, height: k.Sizes.tournamentListCellHeight)
-        NetworkService.getImage(imageUrl: imageURL, cache: cache, newSize: newSize) { [weak self] (image) in
-            guard let image = image else { return }
-            DispatchQueue.main.async {
-                guard let imageView = self?.imageView else { return }
-                UIView.transition(with: imageView, duration: 0.3, options: .transitionCrossDissolve, animations: {
-                    self?.imageView?.image = image
-                }, completion: nil)
-            }
-        }
-    }
 }

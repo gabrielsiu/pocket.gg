@@ -42,7 +42,7 @@ class SetUtilities {
         } else if let entrantName = entrant.name {
             text = entrantName
         } else {
-            return NSMutableAttributedString()
+            text = "_"
         }
         
         let attributedText = NSMutableAttributedString(string: text)

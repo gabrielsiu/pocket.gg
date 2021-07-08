@@ -67,7 +67,10 @@ final class ScrollableRowItemCell: UICollectionViewCell {
             let image = image ?? UIImage(named: "placeholder")
             DispatchQueue.main.async {
                 guard let imageView = self?.imageView else { return }
-                UIView.transition(with: imageView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+                // FIXME: This cell sometimes displays the wrong image, due to the closure holding a reference to the cell,
+                //        and how cells are reused (explanation here: https://stackoverflow.com/a/42916541)
+                //        This issue was fixed for TournamentListVC, but a different solution is needed for MainVC, as it has multiple sections
+                UIView.transition(with: imageView, duration: 0.2, options: .transitionCrossDissolve, animations: {
                     self?.imageView.image = image
                 }, completion: nil)
             }

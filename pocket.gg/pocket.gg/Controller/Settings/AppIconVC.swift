@@ -33,7 +33,12 @@ final class AppIconVC: UITableViewController {
     let alternateIconCell: UITableViewCell = {
         let cell = UITableViewCell()
         cell.textLabel?.text = "Alternate"
-        cell.imageView?.image = UIImage(named: "icon_alt")
+        guard let iconsDictionary = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
+              let altIconsDictionary = iconsDictionary["CFBundleAlternateIcons"] as? [String: Any],
+              let alternateAppIcon = altIconsDictionary["alternateAppIcon"] as? [String: Any],
+              let iconFiles = alternateAppIcon["CFBundleIconFiles"] as? [String],
+              let lastIcon = iconFiles.last else { return cell }
+        cell.imageView?.image = UIImage(named: lastIcon)
         cell.imageView?.layer.cornerRadius = 9
         cell.imageView?.layer.masksToBounds = true
         cell.imageView?.setEdgeConstraints(top: cell.contentView.topAnchor,

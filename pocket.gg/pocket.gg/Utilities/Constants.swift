@@ -23,8 +23,9 @@ struct Constants {
     }
     
     struct URL {
-        static let apolloiOS = "https://www.apollographql.com/docs/ios/"
         static let smashggAPI = "https://developer.smash.gg/docs/intro"
+        static let apolloiOS = "https://www.apollographql.com/docs/ios/"
+        static let grdb = "https://github.com/groue/GRDB.swift"
         static let twitch = "https://www.twitch.tv/"
         
         static let twitter = "https://twitter.com/gabrielsiu_dev"

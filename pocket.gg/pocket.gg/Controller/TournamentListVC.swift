@@ -71,6 +71,7 @@ class TournamentListVC: UITableViewController {
             guard let tournament = tournaments[safe: indexPath.row] else {
                 return UITableViewCell()
             }
+            cell.tag = indexPath.row
             cell.accessoryType = .disclosureIndicator
             cell.backgroundColor = .systemGroupedBackground
             cell.imageView?.image = UIImage(named: "placeholder")
@@ -78,7 +79,25 @@ class TournamentListVC: UITableViewController {
             cell.detailTextLabel?.numberOfLines = 2
             var detailText = tournament.date ?? ""
             detailText += tournament.isOnline ?? true ? "\nOnline" : ""
-            cell.updateView(text: tournament.name, imageURL: tournament.logoUrl, detailText: detailText, cache: imageCache)
+            
+            cell.textLabel?.text = tournament.name
+            cell.detailTextLabel?.text = detailText
+            
+            cell.imageView?.layer.cornerRadius = k.Sizes.cornerRadius
+            cell.imageView?.layer.masksToBounds = true
+            let newSize = CGSize(width: k.Sizes.tournamentListCellHeight, height: k.Sizes.tournamentListCellHeight)
+            NetworkService.getImage(imageUrl: tournament.logoUrl, cache: imageCache, newSize: newSize) { image in
+                guard let image = image else { return }
+                DispatchQueue.main.async {
+                    guard let imageView = cell.imageView else { return }
+                    if cell.tag == indexPath.row {
+                        UIView.transition(with: imageView, duration: 0.2, options: .transitionCrossDissolve, animations: {
+                            cell.imageView?.image = image
+                        }, completion: nil)
+                    }
+                }
+            }
+            
             return cell
         }
         return UITableViewCell()

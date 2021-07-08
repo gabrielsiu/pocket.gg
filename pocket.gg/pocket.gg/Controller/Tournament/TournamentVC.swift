@@ -275,8 +275,8 @@ final class TournamentVC: UITableViewController {
                 return cell
             }
             
-        case 3: return tournamentIsOnline ? contactInfoSectionCell() : locationSectionCell(indexPath)
-        case 4: return tournamentIsOnline ? registrationSectionCell() : contactInfoSectionCell()
+        case 3: return tournamentIsOnline ? contactInfoSectionCell(tournament.contact?.type) : locationSectionCell(indexPath)
+        case 4: return tournamentIsOnline ? registrationSectionCell() : contactInfoSectionCell(tournament.contact?.type)
         case 5: return registrationSectionCell()
         default: break
         }
@@ -316,7 +316,7 @@ final class TournamentVC: UITableViewController {
         return UITableViewCell()
     }
     
-    private func contactInfoSectionCell() -> UITableViewCell {
+    private func contactInfoSectionCell(_ type: String?) -> UITableViewCell {
         guard doneRequest else { return LoadingCell() }
         guard requestSuccessful else { return UITableViewCell().setupDisabled(k.Message.errorLoadingContactInfo) }
         guard let contactInfo = tournament.contact?.info else { return UITableViewCell().setupDisabled(k.Message.noContactInfo) }
@@ -325,6 +325,17 @@ final class TournamentVC: UITableViewController {
         cell.textLabel?.textColor = .systemRed
         cell.textLabel?.text = contactInfo
         cell.accessoryType = .disclosureIndicator
+        
+        if let type = type {
+            var image: UIImage?
+            if type == "email" {
+                image = UIImage(systemName: "envelope.fill")
+            } else if type == "discord" {
+                image = UIImage(named: "icon-discord")?.withRenderingMode(.alwaysTemplate)
+            }
+            cell.imageView?.image = image
+        }
+        
         return cell
     }
     

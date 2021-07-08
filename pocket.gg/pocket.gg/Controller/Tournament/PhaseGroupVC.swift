@@ -21,6 +21,7 @@ final class PhaseGroupVC: UIViewController {
     let tableView: UITableView
     let bracketScrollView: UIScrollView
     var bracketView: BracketView?
+    var invalidBracketView: InvalidBracketView?
     let bracketViewSpinner: UIActivityIndicatorView
     let refreshPhaseGroupView: RefreshPhaseGroupView
     
@@ -302,6 +303,8 @@ final class PhaseGroupVC: UIViewController {
         
         bracketView?.removeFromSuperview()
         bracketView = nil
+        invalidBracketView?.removeFromSuperview()
+        invalidBracketView = nil
         bracketViewSpinner.isHidden = false
         bracketScrollView.contentSize = .zero
         
@@ -327,7 +330,8 @@ final class PhaseGroupVC: UIViewController {
     
     private func showInvalidBracketView(cause: InvalidBracketViewCause, bracketType: String? = nil) {
         bracketViewSpinner.isHidden = true
-        let invalidBracketView = InvalidBracketView(cause: cause, bracketType: bracketType)
+        invalidBracketView = InvalidBracketView(cause: cause, bracketType: bracketType)
+        guard let invalidBracketView = invalidBracketView else { return }
         bracketScrollView.addSubview(invalidBracketView)
         invalidBracketView.setEdgeConstraints(top: bracketScrollView.safeAreaLayoutGuide.topAnchor,
                                               bottom: bracketScrollView.safeAreaLayoutGuide.bottomAnchor,
