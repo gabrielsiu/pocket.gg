@@ -11,7 +11,7 @@ import Apollo
 
 final class NetworkService {
     static func isAuthTokenValid(complete: @escaping (_ valid: Bool) -> Void) {
-        ApolloService.shared.client.fetch(query: AuthTokenTestQuery(), queue: .global(qos: .utility)) { result in
+        ApolloService.shared.client.fetch(query: AuthTokenTestQuery(), cachePolicy: .fetchIgnoringCacheCompletely, queue: .global(qos: .utility)) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .failure: complete(false)
@@ -27,6 +27,7 @@ final class NetworkService {
                                                                               videogameIds: gameIDs.map { String($0) },
                                                                               featured: featured,
                                                                               upcoming: upcoming),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
                                           queue: .global(qos: .utility)) { result in
             switch result {
             case .failure(let error):
@@ -77,6 +78,7 @@ final class NetworkService {
                                                                            sortBy: sortBy,
                                                                            perPage: perPage,
                                                                            page: page),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
                                           queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -121,7 +123,9 @@ final class NetworkService {
     }
     
     static func getTournamentDetails(_ id: Int, complete: @escaping (_ tournament: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: TournamentDetailsQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+        ApolloService.shared.client.fetch(query: TournamentDetailsQuery(id: "\(id)"),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -174,7 +178,9 @@ final class NetworkService {
     }
     
     static func getEvent(_ id: Int, complete: @escaping (_ event: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: EventQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+        ApolloService.shared.client.fetch(query: EventQuery(id: "\(id)"),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -209,6 +215,7 @@ final class NetworkService {
     
     static func getEventStandings(_ id: Int, page: Int, complete: @escaping (_ standings: [Standing]?) -> Void) {
         ApolloService.shared.client.fetch(query: EventStandingsQuery(id: "\(id)", page: page),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
                                           queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -228,6 +235,7 @@ final class NetworkService {
     
     static func getPhaseGroups(_ id: Int, numPhaseGroups: Int, complete: @escaping (_ phaseGroups: [PhaseGroup]?) -> Void) {
         ApolloService.shared.client.fetch(query: PhaseGroupsQuery(id: "\(id)", perPage: numPhaseGroups),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
                                           queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
@@ -250,7 +258,9 @@ final class NetworkService {
     }
     
     static func getPhaseGroup(_ id: Int, complete: @escaping (_ phaseGroup: [String: Any?]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupQuery(id: "\(id)"),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -300,7 +310,9 @@ final class NetworkService {
     }
     
     static func getPhaseGroupSetGames(_ id: Int, complete: @escaping (_ games: [PhaseGroupSetGame]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupSetGamesQuery(id: "\(id)"), queue: .global(qos: .utility)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupSetGamesQuery(id: "\(id)"),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -320,7 +332,9 @@ final class NetworkService {
     // MARK: - Remaining Standings & Sets
     
     static func getPhaseGroupStandings(_ id: Int, page: Int, complete: @escaping (_ standings: [Standing]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupStandingsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupStandingsPageQuery(id: "\(id)", page: page),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
@@ -338,7 +352,9 @@ final class NetworkService {
     }
     
     static func getPhaseGroupSets(_ id: Int, page: Int, complete: @escaping (_ sets: [PhaseGroupSet]?) -> Void) {
-        ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page), queue: .global(qos: .utility)) { (result) in
+        ApolloService.shared.client.fetch(query: PhaseGroupSetsPageQuery(id: "\(id)", page: page),
+                                          cachePolicy: .fetchIgnoringCacheCompletely,
+                                          queue: .global(qos: .utility)) { (result) in
             switch result {
             case .failure(let error):
                 debugPrint(k.Error.apolloFetch, error as Any)
