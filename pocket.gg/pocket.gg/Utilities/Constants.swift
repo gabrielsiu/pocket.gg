@@ -26,6 +26,7 @@ struct Constants {
         static let smashggAPI = "https://developer.smash.gg/docs/intro"
         static let apolloiOS = "https://www.apollographql.com/docs/ios/"
         static let grdb = "https://github.com/groue/GRDB.swift"
+        static let firebase = "https://github.com/firebase/firebase-ios-sdk"
         static let twitch = "https://www.twitch.tv/"
         
         static let twitter = "https://twitter.com/gabrielsiu_dev"
@@ -77,8 +78,10 @@ struct Constants {
     // MARK: - User Defaults
     
     struct UserDefaults {
+        static let returningUser = "returningUser"
         static let authToken = "authToken"
         static let authTokenDate = "authTokenDate"
+        static let firebaseEnabled = "firebaseEnabled"
         
         static let pinnedTournaments = "pinnedTournaments"
         static let showPinnedTournaments = "showPinnedTournaments"

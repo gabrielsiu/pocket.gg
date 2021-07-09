@@ -329,6 +329,9 @@ final class PhaseGroupVC: UIViewController {
     }
     
     private func showInvalidBracketView(cause: InvalidBracketViewCause, bracketType: String? = nil) {
+        if cause == .bracketLayoutError {
+            AnalyticsService.reportPhaseGroup(phaseID != nil ? phaseID : phaseGroup?.id)
+        }
         bracketViewSpinner.isHidden = true
         invalidBracketView = InvalidBracketView(cause: cause, bracketType: bracketType)
         guard let invalidBracketView = invalidBracketView else { return }

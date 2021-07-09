@@ -75,6 +75,10 @@
 		DA7E51A023E46EAB0037E757 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7E519F23E46EAB0037E757 /* SceneDelegate.swift */; };
 		DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A623E46EAC0037E757 /* Assets.xcassets */; };
 		DA7E51AA23E46EAC0037E757 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */; };
+		DA80061F2697AE57003FD3F7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DA80061E2697AE57003FD3F7 /* FirebaseAnalytics */; };
+		DA8006212697AE57003FD3F7 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DA8006202697AE57003FD3F7 /* FirebaseCrashlytics */; };
+		DA80062E2698DD8E003FD3F7 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA80062D2698DD8E003FD3F7 /* AnalyticsService.swift */; };
+		DA8006342698E793003FD3F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA8006332698E793003FD3F7 /* GoogleService-Info.plist */; };
 		DA81E8AC2693A28200C256D2 /* Standing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8AB2693A28200C256D2 /* Standing.swift */; };
 		DA81E8B2269415F200C256D2 /* RefreshPhaseGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */; };
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
@@ -180,6 +184,8 @@
 		DA7E51A623E46EAC0037E757 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA7E51A923E46EAC0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA80062D2698DD8E003FD3F7 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		DA8006332698E793003FD3F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA81E8AB2693A28200C256D2 /* Standing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Standing.swift; sourceTree = "<group>"; };
 		DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshPhaseGroupView.swift; sourceTree = "<group>"; };
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
@@ -217,7 +223,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA6CBE68243039EA006DB38F /* GRDB in Frameworks */,
+				DA8006212697AE57003FD3F7 /* FirebaseCrashlytics in Frameworks */,
 				DA2D5F2B256B389000C44EEC /* Apollo in Frameworks */,
+				DA80061F2697AE57003FD3F7 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +303,7 @@
 				DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */,
 				DAECFB642647436000661EDA /* PreferredGamesService.swift */,
 				DAA59C182676DC3000A27B43 /* PinnedTournamentsService.swift */,
+				DA80062D2698DD8E003FD3F7 /* AnalyticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -421,6 +430,7 @@
 				DA7E51A623E46EAC0037E757 /* Assets.xcassets */,
 				DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */,
 				DA7E51AB23E46EAC0037E757 /* Info.plist */,
+				DA8006332698E793003FD3F7 /* GoogleService-Info.plist */,
 			);
 			path = pocket.gg;
 			sourceTree = "<group>";
@@ -480,6 +490,7 @@
 				DA7E519623E46EAB0037E757 /* Sources */,
 				DA7E519723E46EAB0037E757 /* Frameworks */,
 				DA7E519823E46EAB0037E757 /* Resources */,
+				DA8006262697BA77003FD3F7 /* Upload Firebase Crashlytics Debug Symbols */,
 			);
 			buildRules = (
 			);
@@ -489,6 +500,8 @@
 			packageProductDependencies = (
 				DA6CBE67243039EA006DB38F /* GRDB */,
 				DA2D5F2A256B389000C44EEC /* Apollo */,
+				DA80061E2697AE57003FD3F7 /* FirebaseAnalytics */,
+				DA8006202697AE57003FD3F7 /* FirebaseCrashlytics */,
 			);
 			productName = pocket.gg;
 			productReference = DA7E519A23E46EAB0037E757 /* pocket.gg.app */;
@@ -525,6 +538,7 @@
 			packageReferences = (
 				DA6CBE66243039E9006DB38F /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				DA2D5F29256B389000C44EEC /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				DA80061D2697AE57003FD3F7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = DA7E519B23E46EAB0037E757 /* Products */;
 			projectDirPath = "";
@@ -565,6 +579,7 @@
 				DA234B1D269797A400E0E6C9 /* icon_alt_83.5pt@2x.png in Resources */,
 				DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */,
 				DA234B2A269797A400E0E6C9 /* icon_alt_60pt@2x.png in Resources */,
+				DA8006342698E793003FD3F7 /* GoogleService-Info.plist in Resources */,
 				DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */,
 				DA234B23269797A400E0E6C9 /* icon_alt_29pt.png in Resources */,
 			);
@@ -609,6 +624,26 @@
 			shellPath = /bin/sh;
 			shellScript = "# Go to the build root and search up the chain to find the Derived Data Path where the source packages are checked out.\nDERIVED_DATA_CANDIDATE=\"${BUILD_ROOT}\"\n\nwhile ! [ -d \"${DERIVED_DATA_CANDIDATE}/SourcePackages\" ]; do\n  if [ \"${DERIVED_DATA_CANDIDATE}\" = / ]; then\n    echo >&2 \"error: Unable to locate SourcePackages directory from BUILD_ROOT: '${BUILD_ROOT}'\"\n    exit 1\n  fi\n\n  DERIVED_DATA_CANDIDATE=\"$(dirname \"${DERIVED_DATA_CANDIDATE}\")\"\ndone\n\n# Grab a reference to the directory where scripts are checked out\nSCRIPT_PATH=\"${DERIVED_DATA_CANDIDATE}/SourcePackages/checkouts/apollo-ios/scripts\"\n\nif [ -z \"${SCRIPT_PATH}\" ]; then\n    echo >&2 \"error: Couldn't find the CLI script in your checked out SPM packages; make sure to add the framework to your project.\"\n    exit 1\nfi\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API.swift\n";
 		};
+		DA8006262697BA77003FD3F7 /* Upload Firebase Crashlytics Debug Symbols */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Upload Firebase Crashlytics Debug Symbols";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -641,6 +676,7 @@
 				DAF0BE57267032DA000F7506 /* SetIdentifierView.swift in Sources */,
 				DA2E80A92659A95900B876F1 /* TournamentSearchResultsVC.swift in Sources */,
 				DA68B6C1257EB7CB00A010F3 /* BracketView.swift in Sources */,
+				DA80062E2698DD8E003FD3F7 /* AnalyticsService.swift in Sources */,
 				DA64A2FD241DF1AA00481280 /* EventVC.swift in Sources */,
 				DADBE41524074A38005B707F /* AboutVC.swift in Sources */,
 				DA68B6B5257EB3BE00A010F3 /* RoundRobinBracketView.swift in Sources */,
@@ -812,6 +848,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -866,6 +903,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -878,13 +916,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H5HY9QQ8RU;
 				INFOPLIST_FILE = pocket.gg/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-gg";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gabrielsiu.pocketgg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -898,11 +938,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H5HY9QQ8RU;
 				INFOPLIST_FILE = pocket.gg/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "gcsiu.pocket-gg";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gabrielsiu.pocketgg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -958,6 +999,14 @@
 				minimumVersion = 4.12.0;
 			};
 		};
+		DA80061D2697AE57003FD3F7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -970,6 +1019,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DA6CBE66243039E9006DB38F /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		DA80061E2697AE57003FD3F7 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA80061D2697AE57003FD3F7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		DA8006202697AE57003FD3F7 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA80061D2697AE57003FD3F7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

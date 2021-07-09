@@ -46,7 +46,7 @@ final class AboutVC: UITableViewController {
         case 0: return 1
         case 1: return 1
         case 2: return 2
-        case 3: return 2
+        case 3: return 3
         default: return 0
         }
     }
@@ -88,6 +88,9 @@ final class AboutVC: UITableViewController {
             case 1:
                 cell.textLabel?.text = "GRDB"
                 return cell
+            case 2:
+                cell.textLabel?.text = "Firebase"
+                return cell
             default: break
             }
         default: break
@@ -115,7 +118,7 @@ final class AboutVC: UITableViewController {
                     mail.setToRecipients(["pocketggapp@gmail.com"])
                     mail.setSubject("pocket.gg Support Request")
                     let message = """
-                    Please enter your support request below the line, also including any screenshots if applicable
+                    Please enter your support request below the line, and include any screenshots if applicable
                     ---------------------------------------
 
 
@@ -146,6 +149,9 @@ final class AboutVC: UITableViewController {
                 present(SFSafariViewController(url: url), animated: true)
             case 1:
                 guard let url = URL(string: k.URL.grdb) else { break }
+                present(SFSafariViewController(url: url), animated: true)
+            case 2:
+                guard let url = URL(string: k.URL.firebase) else { break }
                 present(SFSafariViewController(url: url), animated: true)
             default: break
             }

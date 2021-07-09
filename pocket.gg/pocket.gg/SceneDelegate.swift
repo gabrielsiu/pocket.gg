@@ -23,6 +23,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         PinnedTournamentsService.initPinnedTournaments()
         
+        if !UserDefaults.standard.bool(forKey: k.UserDefaults.returningUser) {
+            UserDefaults.standard.set(true, forKey: k.UserDefaults.returningUser)
+            UserDefaults.standard.set(true, forKey: k.UserDefaults.showPinnedTournaments)
+            UserDefaults.standard.set(true, forKey: k.UserDefaults.featuredTournaments)
+            UserDefaults.standard.set(true, forKey: k.UserDefaults.upcomingTournaments)
+            UserDefaults.standard.set(true, forKey: k.UserDefaults.firebaseEnabled)
+        }
+        
         guard let authToken = UserDefaults.standard.string(forKey: k.UserDefaults.authToken), !authToken.isEmpty else {
             window?.rootViewController = AuthTokenVC()
             window?.makeKeyAndVisible()

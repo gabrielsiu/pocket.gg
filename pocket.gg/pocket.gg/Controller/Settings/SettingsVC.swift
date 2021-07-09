@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseCrashlytics
+import FirebaseAnalytics
 
 final class SettingsVC: UITableViewController {
     
@@ -16,6 +18,7 @@ final class SettingsVC: UITableViewController {
     var videoGameSelectionCell = UITableViewCell()
     var authTokenCell = UITableViewCell()
     var appIconCell = UITableViewCell()
+    var firebaseCell = UITableViewCell()
     var aboutCell = UITableViewCell()
     
     let authTokenDate = UserDefaults.standard.string(forKey: k.UserDefaults.authTokenDate)
@@ -71,6 +74,13 @@ final class SettingsVC: UITableViewController {
         appIconCell.accessoryType = .disclosureIndicator
         appIconCell.textLabel?.text = "App Icon"
         
+        let firebaseSwitch = UISwitch()
+        firebaseSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.firebaseEnabled)
+        firebaseSwitch.addTarget(self, action: #selector(firebaseSwitchToggled(_:)), for: .valueChanged)
+        firebaseCell.accessoryView = firebaseSwitch
+        firebaseCell.selectionStyle = .none
+        firebaseCell.textLabel?.text = "Crash Reporting & Analytics"
+        
         aboutCell.accessoryType = .disclosureIndicator
         aboutCell.textLabel?.text = "About"
     }
@@ -92,6 +102,12 @@ final class SettingsVC: UITableViewController {
         requestTournamentsReload()
     }
     
+    @objc private func firebaseSwitchToggled(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: k.UserDefaults.firebaseEnabled)
+        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(sender.isOn)
+        Analytics.setAnalyticsCollectionEnabled(sender.isOn)
+    }
+    
     private func requestTournamentsReload() {
         if canSendNotification {
             NotificationCenter.default.post(name: Notification.Name(k.Notification.settingsChanged), object: nil)
@@ -102,13 +118,13 @@ final class SettingsVC: UITableViewController {
     // MARK: - Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 3
-        case 1, 2, 3, 4: return 1
+        case 1, 2, 3, 4, 5: return 1
         default: return 0
         }
     }
@@ -125,7 +141,8 @@ final class SettingsVC: UITableViewController {
         case 1: return videoGameSelectionCell
         case 2: return appIconCell
         case 3: return authTokenCell
-        case 4: return aboutCell
+        case 4: return firebaseCell
+        case 5: return aboutCell
         default: return UITableViewCell()
         }
     }
@@ -147,6 +164,11 @@ final class SettingsVC: UITableViewController {
             } else {
                 return "No auth token present"
             }
+        case 4:
+            return """
+            Enables anonymous crash reporting & analytics for pocket.gg. This greatly helps for debugging app crashes or other issues, \
+            such as potential errors when generating a tournament event bracket view.
+            """
         default: return nil
         }
     }
@@ -156,7 +178,7 @@ final class SettingsVC: UITableViewController {
         case 1: navigationController?.pushViewController(VideoGamesVC(), animated: true)
         case 2: navigationController?.pushViewController(AppIconVC(), animated: true)
         case 3: navigationController?.pushViewController(AuthTokenSettingsVC(authTokenDate), animated: true)
-        case 4: navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
+        case 5: navigationController?.pushViewController(AboutVC(style: .insetGrouped), animated: true)
         default: return
         }
     }

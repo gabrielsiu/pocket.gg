@@ -8,6 +8,7 @@
 
 import UIKit
 import GRDB
+import Firebase
 
 var dbQueue: DatabaseQueue?
 
@@ -24,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             debugPrint("ERROR: Unable to setup database: \(error.localizedDescription)")
         }
+        FirebaseApp.configure()
         return true
     }
     
