@@ -78,6 +78,7 @@
 		DA80061F2697AE57003FD3F7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DA80061E2697AE57003FD3F7 /* FirebaseAnalytics */; };
 		DA8006212697AE57003FD3F7 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DA8006202697AE57003FD3F7 /* FirebaseCrashlytics */; };
 		DA80062E2698DD8E003FD3F7 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA80062D2698DD8E003FD3F7 /* AnalyticsService.swift */; };
+		DA80063C2698FEFD003FD3F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA80063B2698FEFD003FD3F7 /* GoogleService-Info.plist */; };
 		DA81E8AC2693A28200C256D2 /* Standing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8AB2693A28200C256D2 /* Standing.swift */; };
 		DA81E8B2269415F200C256D2 /* RefreshPhaseGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */; };
 		DA83B1DE23F7B372002D06C1 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */; };
@@ -184,6 +185,7 @@
 		DA7E51A923E46EAC0037E757 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA7E51AB23E46EAC0037E757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA80062D2698DD8E003FD3F7 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		DA80063B2698FEFD003FD3F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA81E8AB2693A28200C256D2 /* Standing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Standing.swift; sourceTree = "<group>"; };
 		DA81E8B1269415F200C256D2 /* RefreshPhaseGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshPhaseGroupView.swift; sourceTree = "<group>"; };
 		DA83B1DD23F7B372002D06C1 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				DA7E51A623E46EAC0037E757 /* Assets.xcassets */,
 				DA7E51A823E46EAC0037E757 /* LaunchScreen.storyboard */,
 				DA7E51AB23E46EAC0037E757 /* Info.plist */,
+				DA80063B2698FEFD003FD3F7 /* GoogleService-Info.plist */,
 			);
 			path = pocket.gg;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				DA234B1D269797A400E0E6C9 /* icon_alt_83.5pt@2x.png in Resources */,
 				DACC4AD523E81990004A8CF3 /* NetworkService.graphql in Resources */,
 				DA234B2A269797A400E0E6C9 /* icon_alt_60pt@2x.png in Resources */,
+				DA80063C2698FEFD003FD3F7 /* GoogleService-Info.plist in Resources */,
 				DA7E51A723E46EAC0037E757 /* Assets.xcassets in Resources */,
 				DA234B23269797A400E0E6C9 /* icon_alt_29pt.png in Resources */,
 			);
