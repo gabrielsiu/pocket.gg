@@ -73,8 +73,7 @@ final class AboutInfoCell: UITableViewCell {
     @objc private func iconImageViewTapped() {
         guard appIconVisible else { return }
         guard let iconImageView = iconImageView else { return }
-        // TODO: Replace with another icon of the same size
-        guard let image = UIImage(named: "placeholder") else { return }
+        guard let image = UIImage(named: "mang0") else { return }
         appIconVisible = false
         
         UIView.transition(with: iconImageView, duration: 0.3, options: .transitionFlipFromRight, animations: { [weak self] in

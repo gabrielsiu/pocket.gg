@@ -23,9 +23,9 @@ final class TournamentSearchVC: UITableViewController {
     init() {
         searchBar = UISearchBar(frame: .zero)
         recentSearches = UserDefaults.standard.array(forKey: k.UserDefaults.recentSearches) as? [String] ?? []
-        featuredCell = UITableViewCell()
-        olderTournamentsFirstCell = UITableViewCell()
-        searchUsingEnabledGamesCell = UITableViewCell()
+        featuredCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        olderTournamentsFirstCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        searchUsingEnabledGamesCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         searchUsingEnabledGamesSwitch = UISwitch()
         super.init(style: .insetGrouped)
     }
@@ -50,20 +50,25 @@ final class TournamentSearchVC: UITableViewController {
         featuredSwitch.addTarget(self, action: #selector(featuredSwitchToggled(_:)), for: .valueChanged)
         featuredCell.accessoryView = featuredSwitch
         featuredCell.selectionStyle = .none
-        featuredCell.textLabel?.text = "Only show featured tournaments"
+        featuredCell.textLabel?.text = "Featured"
+        featuredCell.detailTextLabel?.text = "Only search for tournaments that are featured on smash.gg"
+        featuredCell.detailTextLabel?.numberOfLines = 0
         
         let olderTournamentsFirstSwitch = UISwitch()
         olderTournamentsFirstSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.showOlderTournamentsFirst)
         olderTournamentsFirstSwitch.addTarget(self, action: #selector(olderTournamentsFirstSwitchToggled(_:)), for: .valueChanged)
         olderTournamentsFirstCell.accessoryView = olderTournamentsFirstSwitch
         olderTournamentsFirstCell.selectionStyle = .none
-        olderTournamentsFirstCell.textLabel?.text = "Show older tournaments first"
-        
+        olderTournamentsFirstCell.textLabel?.text = "Older tournaments first"
+        olderTournamentsFirstCell.detailTextLabel?.text = "Show older tournaments at the top rather than newer tournaments"
+        olderTournamentsFirstCell.detailTextLabel?.numberOfLines = 0
         searchUsingEnabledGamesSwitch.isOn = UserDefaults.standard.bool(forKey: k.UserDefaults.searchUsingEnabledGames)
         searchUsingEnabledGamesSwitch.addTarget(self, action: #selector(searchUsingEnabledGamesSwitchToggled(_:)), for: .valueChanged)
         searchUsingEnabledGamesCell.accessoryView = searchUsingEnabledGamesSwitch
         searchUsingEnabledGamesCell.selectionStyle = .none
         searchUsingEnabledGamesCell.textLabel?.text = "Search using enabled games"
+        searchUsingEnabledGamesCell.detailTextLabel?.text = "Only search for tournaments that feature the games enabled in Video Game Selection"
+        searchUsingEnabledGamesCell.detailTextLabel?.numberOfLines = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,16 +134,6 @@ final class TournamentSearchVC: UITableViewController {
         case 1: return "Recent Searches"
         default: return nil
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section == 0 {
-            return """
-            If "Search using enabled games" is enabled, only tournaments that feature the games enabled in the Video Game Selection \
-            will appear as search results
-            """
-        }
-        return nil
     }
     
     // MARK: - Table View Delegate
